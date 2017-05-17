@@ -4,7 +4,8 @@
 #include <age/core/EventQueue.h>
 #include <age/core/FixedProcessor.h>
 #include <age/core/PimplImpl.h>
-#include <age/core/VariableProcessor.h>
+#include <age/core/Timer.h>
+#include <age/core/RenderProcessor.h>
 
 #include <iostream>
 #include <thread>
@@ -14,16 +15,22 @@ using namespace age::core;
 class Engine::Impl
 {
 public:
-	Impl() : frameStart{std::chrono::steady_clock::now()}, eventQueue{std::make_unique<EventQueue>()}
+	Impl() : eventQueue{std::make_unique<EventQueue>()}, fixedDelta{10000}, frameSkip{5}, accumulatedDelta{0}
 	{
 	}
 
-	std::chrono::time_point<std::chrono::steady_clock> frameStart;
 	std::unique_ptr<EventQueue> eventQueue;
+	Timer timer;
+	std::chrono::microseconds fixedDelta;
+	std::chrono::microseconds accumulatedDelta;
 	EngineState engineState;
+
+	/// Set max number of frames to process before moving on.
+	/// Helps prevent getting stuck updating frames on slow machines.
+	const size_t frameSkip;
 };
 
-Engine::Engine() : Object(), pimpl()
+Engine::Engine() : Object{}, pimpl{}
 {
 }
 
@@ -33,43 +40,34 @@ Engine::~Engine()
 
 void Engine::frame()
 {
-	typedef std::chrono::duration<double> seconds;
-	// TODO: Change this game loop to a fixed time step with variable rendering (this requires extrapolation of entities).
-	const auto currentTime = std::chrono::steady_clock::now();
-	const auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - this->pimpl->frameStart);
-	this->pimpl->frameStart = currentTime;
-
-	const auto frameTime = std::chrono::duration_cast<seconds>(elapsedTime);
-	std::cerr << "FrameT: " << frameTime.count() << "\n";
-	std::cerr << "FPS: " << 1.0 / frameTime.count() << "\n";
-
+	this->pimpl->accumulatedDelta += this->pimpl->timer.reset();
 	const auto fprocessors = this->getChildren<FixedProcessor>();
-	const auto vprocessors = this->getChildren<VariableProcessor>();
+	const auto rprocessors = this->getChildren<RenderProcessor>();
 
-	for(const auto& fixed : fprocessors)
+	for(const auto& render : rprocessors)
 	{
-		fixed->preframe();
-	}
-
-	for(const auto& variable : vprocessors)
-	{
-		variable->preframe();
+		render->pollEvents();
 	}
 
 	this->pimpl->eventQueue->processEvents();
 
-	for(const auto& fixed : fprocessors)
+	size_t count{0};
+
+	while(this->pimpl->accumulatedDelta >= this->pimpl->fixedDelta && count < this->pimpl->frameSkip)
 	{
-		fixed->frame(elapsedTime);
+		for(const auto& fixed : fprocessors)
+		{
+			fixed->frame(this->pimpl->fixedDelta);
+		}
+
+		this->pimpl->accumulatedDelta -= this->pimpl->fixedDelta;
+		count++;
 	}
 
-	for(const auto& variable : vprocessors)
+	for(const auto& render : rprocessors)
 	{
-		variable->frame(elapsedTime);
+		render->frame(std::chrono::microseconds(this->pimpl->accumulatedDelta / this->pimpl->fixedDelta));
 	}
-
-	// Run at 60Hz.
-	std::this_thread::sleep_for(seconds(1.0 / 60.0) - std::chrono::duration_cast<seconds>(elapsedTime));
 }
 
 void Engine::setEngineState(const EngineState& x)
@@ -81,6 +79,11 @@ void Engine::setEngineState(const EngineState& x)
 EngineState Engine::getEngineState() const
 {
 	return this->pimpl->engineState;
+}
+
+void Engine::setFixedDelta(std::chrono::microseconds x)
+{
+	this->pimpl->fixedDelta = x;
 }
 
 void Engine::sendEvent(std::unique_ptr<Event> x, bool async)

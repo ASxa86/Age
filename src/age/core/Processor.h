@@ -32,7 +32,7 @@ namespace age
 			///
 			///	\param x The elapsed/delta time in milliseconds.
 			///
-			virtual void frame(const std::chrono::milliseconds& x) = 0;
+			virtual void frame(std::chrono::microseconds x) = 0;
 		};
 	}
 }

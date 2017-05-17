@@ -15,7 +15,8 @@ set(TARGET_H
 	Pimpl.h
 	PimplImpl.h
 	Processor.h
-	VariableProcessor.h
+	RenderProcessor.h
+	Timer.h
 )
 
 set(TARGET_SRC
@@ -28,7 +29,8 @@ set(TARGET_SRC
 	FixedProcessor.cpp
 	Object.cpp
 	Processor.cpp
-	VariableProcessor.cpp
+	RenderProcessor.cpp
+	Timer.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})

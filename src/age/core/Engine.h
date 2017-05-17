@@ -2,6 +2,7 @@
 
 #include <age/core/Event.h>
 #include <age/core/Object.h>
+#include <chrono>
 
 namespace age
 {
@@ -35,6 +36,13 @@ namespace age
 
 			void setEngineState(const EngineState& x);
 			EngineState getEngineState() const;
+
+			///
+			///	Set the fixed rate at which to run fixed frames. Default 100Hz.
+			///
+			///	This does not effect graphical frame rate.
+			///
+			void setFixedDelta(std::chrono::microseconds x);
 
 			///
 			///	Send events synchronously or asynchronously to all registered handlers.

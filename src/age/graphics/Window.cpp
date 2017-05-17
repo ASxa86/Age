@@ -1,6 +1,7 @@
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/PimplImpl.h>
+#include <age/core/Timer.h>
 #include <age/graphics/Window.h>
 
 #include <SFML/Graphics.hpp>
@@ -18,9 +19,10 @@ public:
 	}
 
 	sf::RenderWindow window;
+	Timer timer;
 };
 
-Window::Window(uint16_t width, uint16_t height) : VariableProcessor(), pimpl(width, height)
+Window::Window(uint16_t width, uint16_t height) : RenderProcessor(), pimpl(width, height)
 {
 }
 
@@ -28,7 +30,7 @@ Window::~Window()
 {
 }
 
-void Window::preframe()
+void Window::pollEvents()
 {
 	sf::Event e;
 	const auto engine = this->getParent<Engine>();
@@ -57,10 +59,11 @@ void Window::preframe()
 	}
 }
 
-void Window::frame(const std::chrono::milliseconds& x)
+void Window::frame(std::chrono::microseconds x)
 {
 	if(this->pimpl->window.isOpen() == true)
 	{
+		auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
 		this->pimpl->window.clear();
 
 		// Loop through all drawable components of the Entity Component System.
