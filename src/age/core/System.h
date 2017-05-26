@@ -10,22 +10,17 @@ namespace age
 		///
 		///	\class Processor
 		///
-		///	\brief Abstract class for processing a single non-fixed time frame.
+		///	\brief The System in Entity Component System. Override to process game logic for specific components on entities.
 		///
 		///	\date May 6, 2017
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT Processor : public Object
+		class AGE_CORE_EXPORT System : public Object
 		{
 		public:
-			Processor();
-			virtual ~Processor();
-
-			///
-			///	Preframe is called by the engine before frame. This is useful for polling events.
-			///
-			virtual void preframe();
+			System();
+			virtual ~System();
 
 			///
 			///	Override for frame functionality.

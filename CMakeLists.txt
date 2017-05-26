@@ -3,7 +3,17 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(Age)
 
-add_compile_options(/wd4251) # w4251 - 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
+if(MSVC) 
+	add_compile_options(/wd4251) # w4251 - 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
+	add_compile_options(/W4)
+	add_compile_options(/MP)
+
+	add_definitions("/WX")
+elseif(CMAKE_COMPILER_IS_GNUCXX) 
+	add_definitions("-Werror")
+elseif(CMAKE_COMPILER_IS_GNUCC)
+	add_definitions("-Werror")
+endif()
 
 set(CMAKE_DEBUG_POSTFIX          "d" CACHE STRING "add a postfix, usually d on windows")
 set(CMAKE_RELEASE_POSTFIX        "" CACHE STRING "add a postfix, usually empty on windows")

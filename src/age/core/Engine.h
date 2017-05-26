@@ -34,7 +34,16 @@ namespace age
 			///
 			virtual void frame();
 
+			///
+			///	Set the engines state.
+			///
+			///	Setting the state will cause an event to be sent to all registered handlers.
+			///
 			void setEngineState(const EngineState& x);
+
+			///
+			///	Get the current state of the engine.
+			///
 			EngineState getEngineState() const;
 
 			///
@@ -43,6 +52,16 @@ namespace age
 			///	This does not effect graphical frame rate.
 			///
 			void setFixedDelta(std::chrono::microseconds x);
+
+			///
+			///	Set the maximum number of fixed frames that can be processed within a single engine frame.
+			///
+			///	Depending on the amount of time between engine frames, a number of fixed frames could run to catch up to
+			///	the amount of time that has elapsed. In order to prevent increasing the time between engine frames on slower machines,
+			///	a fixed frame limit is provided.
+			///	Default 5.
+			///
+			void setFixedFrameLimit(uint8_t x);
 
 			///
 			///	Send events synchronously or asynchronously to all registered handlers.

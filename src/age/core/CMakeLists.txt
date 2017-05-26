@@ -7,15 +7,16 @@ set(TARGET_H
 	Engine.h
 	EngineState.h
 	EngineStateEvent.h
+	Entity.h
 	Event.h
 	EventQueue.h
 	Export.h
-	FixedProcessor.h
+	FixedSystem.h
 	Object.h
 	Pimpl.h
 	PimplImpl.h
-	Processor.h
-	RenderProcessor.h
+	RenderSystem.h
+	System.h
 	Timer.h
 )
 
@@ -24,12 +25,13 @@ set(TARGET_SRC
 	Engine.cpp
 	EngineState.cpp
 	EngineStateEvent.cpp
+	Entity.cpp
 	Event.cpp
 	EventQueue.cpp
-	FixedProcessor.cpp
+	FixedSystem.cpp
 	Object.cpp
-	Processor.cpp
-	RenderProcessor.cpp
+	RenderSystem.cpp
+	System.cpp
 	Timer.cpp
 )
 

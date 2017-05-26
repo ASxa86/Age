@@ -11,10 +11,12 @@ add_definitions(-D${PROJECT_NAME}_Export)
 
 set(TARGET_H
 	Export.h
+	SpriteComponent.h
 	Window.h
 )
 
 set(TARGET_SRC
+	SpriteComponent.cpp
 	Window.cpp
 )
 
@@ -22,7 +24,6 @@ add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})
 
 target_link_libraries(${PROJECT_NAME}
 	AgeCore
-	AgeEntity
 	${SFML_GRAPHICS_LIBRARY}
 	${SFML_SYSTEM_LIBRARY}
 	${SFML_WINDOW_LIBRARY}

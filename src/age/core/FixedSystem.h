@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Processor.h>
+#include <age/core/System.h>
 #include <chrono>
 
 namespace age
@@ -16,11 +16,11 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT FixedProcessor : public Processor
+		class AGE_CORE_EXPORT FixedSystem : public System
 		{
 		public:
-			FixedProcessor();
-			virtual ~FixedProcessor();
+			FixedSystem();
+			virtual ~FixedSystem();
 		};
 	}
 }

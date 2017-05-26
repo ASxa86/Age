@@ -1,8 +1,10 @@
+#include <age/core/Entity.h>
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
 #include <age/graphics/Window.h>
+#include <age/graphics/SpriteComponent.h>
 
 #include <SFML/Graphics.hpp>
 
@@ -22,7 +24,7 @@ public:
 	Timer timer;
 };
 
-Window::Window(uint16_t width, uint16_t height) : RenderProcessor(), pimpl(width, height)
+Window::Window(uint16_t width, uint16_t height) : RenderSystem(), pimpl(width, height)
 {
 }
 
@@ -59,15 +61,20 @@ void Window::pollEvents()
 	}
 }
 
-void Window::frame(std::chrono::microseconds x)
+void Window::frame(std::chrono::microseconds /*x*/)
 {
 	if(this->pimpl->window.isOpen() == true)
 	{
 		auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
 		this->pimpl->window.clear();
 
-		// Loop through all drawable components of the Entity Component System.
-		// this->pimpl->window.draw();
+		const auto entities = this->getParent<Engine>()->getChildren<Entity>();
+
+		for(const auto& entity : entities)
+		{
+			const auto sprite = entity->getChild<SpriteComponent>();
+			this->pimpl->window.draw(sprite->getSprite());
+		}
 
 		this->pimpl->window.display();
 	}
