@@ -11,11 +11,13 @@ add_definitions(-D${PROJECT_NAME}_Export)
 
 set(TARGET_H
 	Export.h
+	DrawableComponent.h
 	SpriteComponent.h
 	Window.h
 )
 
 set(TARGET_SRC
+	DrawableComponent.cpp
 	SpriteComponent.cpp
 	Window.cpp
 )

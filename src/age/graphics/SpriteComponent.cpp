@@ -1,6 +1,8 @@
 #include <age/graphics/SpriteComponent.h>
 #include <age/core/PimplImpl.h>
 
+#include <SFML/Graphics.hpp>
+
 using namespace age::graphics;
 
 class SpriteComponent::Impl
@@ -9,7 +11,7 @@ public:
 	sf::Sprite sprite;
 };
 
-SpriteComponent::SpriteComponent() : Object(), pimpl()
+SpriteComponent::SpriteComponent() : DrawableComponent(), pimpl()
 {
 }
 
@@ -25,4 +27,9 @@ void SpriteComponent::setSprite(const sf::Sprite& x)
 sf::Sprite SpriteComponent::getSprite() const
 {
 	return this->pimpl->sprite;
+}
+
+void SpriteComponent::draw(sf::RenderWindow& x)
+{
+	x.draw(this->pimpl->sprite);
 }

@@ -20,7 +20,7 @@ namespace age
 		{
 		public:
 			System();
-			virtual ~System();
+			virtual ~System() override;
 
 			///
 			///	Override for frame functionality.

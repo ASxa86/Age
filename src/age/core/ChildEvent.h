@@ -12,7 +12,7 @@ namespace age
 		{
 		public:
 			ChildEvent(Object* parent, Object* child);
-			virtual ~ChildEvent();
+			~ChildEvent() override;
 
 			Object* getParent() const;
 			Object* getChild() const;

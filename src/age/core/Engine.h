@@ -27,7 +27,7 @@ namespace age
 		{
 		public:
 			Engine();
-			virtual ~Engine();
+			~Engine() override;
 
 			///
 			///	Handles updating the engines state and forwarding any queued events.

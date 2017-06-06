@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Object.h>
+#include <age/graphics/DrawableComponent.h>
 #include <age/graphics/Export.h>
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -17,11 +17,11 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_GRAPHICS_EXPORT SpriteComponent : public age::core::Object
+		class AGE_GRAPHICS_EXPORT SpriteComponent : public DrawableComponent
 		{
 		public:
 			SpriteComponent();
-			virtual ~SpriteComponent();
+			~SpriteComponent() override;
 
 			///
 			///	Set the sprite for this component.
@@ -32,6 +32,11 @@ namespace age
 			///	Get the sprite for this component.
 			///
 			sf::Sprite getSprite() const;
+
+			///
+			///	\brief Handles rendering the sprite.
+			///
+			void draw(sf::RenderWindow& x) override;
 
 		private:
 			class Impl;

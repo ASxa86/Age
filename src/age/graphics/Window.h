@@ -24,9 +24,9 @@ namespace age
 			Window(uint16_t width = 1280, uint16_t height = 720);
 			~Window();
 
-			virtual void pollEvents();
+			virtual void pollEvents() override;
 
-			virtual void frame(std::chrono::microseconds x);
+			virtual void frame(std::chrono::microseconds x) override;
 
 		private:
 			class Impl;

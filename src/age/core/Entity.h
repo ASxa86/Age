@@ -19,7 +19,7 @@ namespace age
 		{
 		public:
 			Entity();
-			virtual ~Entity();
+			~Entity() override;
 
 			///
 			///	\brief Gets a unique ID for this entity.

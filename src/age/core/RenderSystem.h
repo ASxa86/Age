@@ -23,7 +23,7 @@ namespace age
 		{
 		public:
 			RenderSystem();
-			virtual ~RenderSystem();
+			virtual ~RenderSystem() override;
 
 			///
 			///	\brief Override to handle polling for events.

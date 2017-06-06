@@ -3,8 +3,8 @@
 #include <age/core/EngineState.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
+#include <age/graphics/DrawableComponent.h>
 #include <age/graphics/Window.h>
-#include <age/graphics/SpriteComponent.h>
 
 #include <SFML/Graphics.hpp>
 
@@ -72,8 +72,12 @@ void Window::frame(std::chrono::microseconds /*x*/)
 
 		for(const auto& entity : entities)
 		{
-			const auto sprite = entity->getChild<SpriteComponent>();
-			this->pimpl->window.draw(sprite->getSprite());
+			const auto drawables = entity->getChildren<DrawableComponent>();
+
+			for(const auto& drawable : drawables)
+			{
+				drawable->draw(this->pimpl->window);
+			}
 		}
 
 		this->pimpl->window.display();

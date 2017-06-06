@@ -23,7 +23,7 @@ namespace age
 			///	\param EngineState The new engine state.
 			///
 			EngineStateEvent(const EngineState& x);
-			virtual ~EngineStateEvent();
+			~EngineStateEvent() override;
 
 			const EngineState& getEngineState() const;
 
