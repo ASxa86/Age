@@ -6,6 +6,7 @@
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
 #include <age/core/RenderSystem.h>
+#include <age/core/VariableSystem.h>
 
 #include <thread>
 
@@ -39,13 +40,15 @@ Engine::~Engine()
 
 void Engine::frame()
 {
-	this->pimpl->accumulatedDelta += this->pimpl->timer.reset();
-	const auto fprocessors = this->getChildren<FixedSystem>();
-	const auto rprocessors = this->getChildren<RenderSystem>();
+	const auto elapsed = this->pimpl->timer.reset();
+	this->pimpl->accumulatedDelta += elapsed;
+	const auto fsystems = this->getChildren<FixedSystem>();
+	const auto rsystems = this->getChildren<RenderSystem>();
+	const auto vsystems = this->getChildren<VariableSystem>();
 
 	// Poll for events such as controller inputs so we can send the events
 	// to any systems that may require them to update the engine's state.
-	for(const auto& render : rprocessors)
+	for(const auto& render : rsystems)
 	{
 		render->pollEvents();
 	}
@@ -53,14 +56,22 @@ void Engine::frame()
 	// Once the events have been queued, send them on their way.
 	this->pimpl->eventQueue->processEvents();
 
+	// The engine's variable update frame(). This frame is called on every engine frame.
+	// This is good for handling non-physics movement, keyboard/joystick input, and any other
+	// non-physics related logic.
+	for(const auto& variable : vsystems)
+	{
+		variable->frame(elapsed);
+	}
+
 	decltype(this->pimpl->fixedFrameLimit) count{0};
 
-	// The engine's main update frame(). This will loop until the accumulated time has been consumed
+	// The engine's fixed update frame(). This will loop until the accumulated time has been consumed
 	// or the max frame limit has been reached. This guarantees a fixed time step and that we don't
 	// get stuck processing frames indefinitely.
 	while(this->pimpl->accumulatedDelta >= this->pimpl->fixedDelta && count < this->pimpl->fixedFrameLimit)
 	{
-		for(const auto& fixed : fprocessors)
+		for(const auto& fixed : fsystems)
 		{
 			fixed->frame(this->pimpl->fixedDelta);
 		}
@@ -69,7 +80,7 @@ void Engine::frame()
 		count++;
 	}
 
-	for(const auto& render : rprocessors)
+	for(const auto& render : rsystems)
 	{
 		// Render a graphics frame passing in the time between frames that can be used for extrapolating
 		// the engine's state.

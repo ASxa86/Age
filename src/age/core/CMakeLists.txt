@@ -18,6 +18,7 @@ set(TARGET_H
 	RenderSystem.h
 	System.h
 	Timer.h
+	VariableSystem.h
 )
 
 set(TARGET_SRC
@@ -33,6 +34,7 @@ set(TARGET_SRC
 	RenderSystem.cpp
 	System.cpp
 	Timer.cpp
+	VariableSystem.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})

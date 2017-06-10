@@ -2,7 +2,7 @@
 
 using namespace age::core;
 
-RenderSystem::RenderSystem()
+RenderSystem::RenderSystem() : System()
 {
 }
 

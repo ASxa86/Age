@@ -2,7 +2,7 @@
 
 using namespace age::core;
 
-FixedSystem::FixedSystem()
+FixedSystem::FixedSystem() : System()
 {
 }
 

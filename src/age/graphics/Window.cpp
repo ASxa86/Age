@@ -68,7 +68,7 @@ void Window::frame(std::chrono::microseconds /*x*/)
 		auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
 		this->pimpl->window.clear();
 
-		const auto entities = this->getParent<Engine>()->getChildren<Entity>();
+		const auto entities = this->getEntities();
 
 		for(const auto& entity : entities)
 		{

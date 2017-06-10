@@ -9,10 +9,12 @@ include_directories(${SFML_INCLUDE_DIR})
 
 set(TARGET_H
 	Pong.h
+	Paddle.h
 )
 
 set(TARGET_SRC
 	main.cpp
+	Paddle.cpp
 	Pong.cpp
 )
 

@@ -10,14 +10,20 @@ include_directories(${SFML_INCLUDE_DIR})
 add_definitions(-D${PROJECT_NAME}_Export)
 
 set(TARGET_H
-	Export.h
+	Command.h
 	DrawableComponent.h
+	Export.h
+	InputComponent.h
+	PlayerInputSystem.h
 	SpriteComponent.h
 	Window.h
 )
 
 set(TARGET_SRC
+	Command.cpp
 	DrawableComponent.cpp
+	InputComponent.cpp
+	PlayerInputSystem.cpp
 	SpriteComponent.cpp
 	Window.cpp
 )

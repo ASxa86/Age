@@ -7,6 +7,8 @@ namespace age
 {
 	namespace core
 	{
+		class Entity;
+
 		///
 		///	\class Processor
 		///
@@ -28,6 +30,12 @@ namespace age
 			///	\param x The elapsed/delta time in milliseconds.
 			///
 			virtual void frame(std::chrono::microseconds x) = 0;
+
+		protected:
+			///
+			///	Systems perform work on entities. This provides a convenient way to collect them.
+			///
+			std::vector<Entity*> getEntities() const;
 		};
 	}
 }
