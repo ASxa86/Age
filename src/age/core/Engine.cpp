@@ -30,7 +30,7 @@ public:
 	uint8_t fixedFrameLimit;
 };
 
-Engine::Engine() : Object{}, pimpl{}
+Engine::Engine() : Object(), pimpl()
 {
 }
 

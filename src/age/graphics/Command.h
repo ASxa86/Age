@@ -29,7 +29,7 @@ namespace age
 		{
 		public:
 			Command();
-			~Command();
+			virtual ~Command() override;
 
 			///
 			///	Set the key that will be used to execute this command.

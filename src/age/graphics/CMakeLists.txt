@@ -15,6 +15,7 @@ set(TARGET_H
 	Export.h
 	InputComponent.h
 	PlayerInputSystem.h
+	RectangleComponent.h
 	SpriteComponent.h
 	Window.h
 )
@@ -24,6 +25,7 @@ set(TARGET_SRC
 	DrawableComponent.cpp
 	InputComponent.cpp
 	PlayerInputSystem.cpp
+	RectangleComponent.cpp
 	SpriteComponent.cpp
 	Window.cpp
 )

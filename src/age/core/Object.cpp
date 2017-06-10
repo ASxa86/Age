@@ -17,7 +17,7 @@ public:
 	Object* parent;
 };
 
-Object::Object() : pimpl{}
+Object::Object() : pimpl()
 {
 }
 

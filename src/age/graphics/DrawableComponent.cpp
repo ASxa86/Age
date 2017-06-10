@@ -2,7 +2,7 @@
 
 using namespace age::graphics;
 
-DrawableComponent::DrawableComponent()
+DrawableComponent::DrawableComponent() : age::core::Object()
 {
 }
 

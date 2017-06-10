@@ -2,7 +2,7 @@
 
 using namespace age::graphics;
 
-InputComponent::InputComponent()
+InputComponent::InputComponent() : age::core::Object()
 {
 }
 

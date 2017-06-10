@@ -5,7 +5,7 @@
 
 namespace sf
 {
-	class RenderWindow;
+	class RenderTarget;
 }
 
 namespace age
@@ -30,7 +30,7 @@ namespace age
 			///
 			///	\brief Override to handle drawing the derived component's data.
 			///
-			virtual void draw(sf::RenderWindow& x) = 0;
+			virtual void draw(sf::RenderTarget& x) = 0;
 		};
 	}
 }

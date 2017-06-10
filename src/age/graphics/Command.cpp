@@ -9,7 +9,7 @@ public:
 	sf::Keyboard::Key mappedKey;
 };
 
-Command::Command()
+Command::Command() : age::core::Object()
 {
 }
 

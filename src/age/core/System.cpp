@@ -4,7 +4,7 @@
 
 using namespace age::core;
 
-System::System()
+System::System() : Object()
 {
 }
 

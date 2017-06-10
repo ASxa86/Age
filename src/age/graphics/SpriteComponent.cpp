@@ -29,7 +29,7 @@ sf::Sprite SpriteComponent::getSprite() const
 	return this->pimpl->sprite;
 }
 
-void SpriteComponent::draw(sf::RenderWindow& x)
+void SpriteComponent::draw(sf::RenderTarget& x)
 {
 	x.draw(this->pimpl->sprite);
 }

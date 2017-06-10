@@ -36,7 +36,7 @@ namespace age
 			///
 			///	\brief Handles rendering the sprite.
 			///
-			void draw(sf::RenderWindow& x) override;
+			void draw(sf::RenderTarget& x) override;
 
 		private:
 			class Impl;
