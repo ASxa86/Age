@@ -20,7 +20,7 @@ namespace age
 		{
 		public:
 			FixedSystem();
-			~FixedSystem() override;
+			virtual ~FixedSystem() override;
 		};
 	}
 }

@@ -34,7 +34,7 @@ namespace age
 			};
 
 			EngineState(State x = State::Unknown);
-			virtual ~EngineState();
+			~EngineState();
 
 			void setState(State x);
 			State getState() const;

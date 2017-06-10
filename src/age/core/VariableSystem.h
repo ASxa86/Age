@@ -19,7 +19,7 @@ namespace age
 		{
 		public:
 			VariableSystem();
-			~VariableSystem() override;
+			virtual ~VariableSystem() override;
 		};
 	}
 }

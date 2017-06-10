@@ -10,7 +10,7 @@ namespace age
 		{
 		public:
 			Paddle();
-			~Paddle();
+			~Paddle() override;
 		};
 	}
 }

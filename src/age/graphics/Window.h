@@ -22,11 +22,11 @@ namespace age
 		{
 		public:
 			Window(uint16_t width = 1280, uint16_t height = 720);
-			~Window();
+			~Window() override;
 
-			virtual void pollEvents() override;
+			void pollEvents() override;
 
-			virtual void frame(std::chrono::microseconds x) override;
+			void frame(std::chrono::microseconds x) override;
 
 		private:
 			class Impl;

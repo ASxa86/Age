@@ -20,7 +20,7 @@ namespace age
 		{
 		public:
 			RectangleComponent();
-			~RectangleComponent();
+			~RectangleComponent() override;
 
 			///
 			///	Set the size of the rectangle. (x, y).

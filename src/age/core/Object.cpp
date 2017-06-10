@@ -54,8 +54,6 @@ bool Object::addChild(std::unique_ptr<Object> x)
 		x->pimpl->parent = this;
 		this->pimpl->children.push_back(std::move(x));
 
-		auto child = this->pimpl->children.back().get();
-
 		return true;
 	}
 

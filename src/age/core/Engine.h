@@ -32,7 +32,7 @@ namespace age
 			///
 			///	Handles updating the engines state and forwarding any queued events.
 			///
-			virtual void frame();
+			void frame();
 
 			///
 			///	Set the engines state.
