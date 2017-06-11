@@ -3,6 +3,7 @@
 #include <age/core/PimplImpl.h>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <age/core/TransformComponent.h>
 
 using namespace age::core;
 using namespace age::graphics;
@@ -34,5 +35,10 @@ std::array<double, 2> RectangleComponent::getSize() const
 
 void RectangleComponent::draw(sf::RenderTarget& x)
 {
+	auto entity = this->getParent();
+	auto transform = entity->getChild<TransformComponent>();
+	auto pos = transform->getPosition();
+	this->pimpl->rectangle.setPosition(static_cast<float>(pos[0]), static_cast<float>(pos[1]));
+	this->pimpl->rectangle.setRotation(static_cast<float>(transform->getRotation()));
 	x.draw(this->pimpl->rectangle);
 }

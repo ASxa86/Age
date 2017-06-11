@@ -18,6 +18,7 @@ set(TARGET_H
 	RenderSystem.h
 	System.h
 	Timer.h
+	TransformComponent.h
 	VariableSystem.h
 )
 
@@ -34,6 +35,7 @@ set(TARGET_SRC
 	RenderSystem.cpp
 	System.cpp
 	Timer.cpp
+	TransformComponent.cpp
 	VariableSystem.cpp
 )
 
