@@ -20,4 +20,4 @@ set(TARGET_SRC
 
 add_executable(${PROJECT_NAME} ${TARGET_SRC} ${TARGET_H})
 
-target_link_libraries(${PROJECT_NAME} AgeGraphics ${SFML_AUDIO_LIBRARY})
+target_link_libraries(${PROJECT_NAME} AgeGraphics AgePhysics ${SFML_AUDIO_LIBRARY})

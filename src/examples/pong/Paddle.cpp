@@ -8,10 +8,10 @@ using namespace age::core;
 using namespace age::graphics;
 using namespace age::pong;
 
-class MoveUpCommand : public age::graphics::Command
+class MoveUp : public age::graphics::Command
 {
 public:
-	MoveUpCommand() : Command()
+	MoveUp() : Command()
 	{
 		this->setMappedKey(sf::Keyboard::Key::Up);
 	}
@@ -25,10 +25,10 @@ public:
 	}
 };
 
-class MoveDownCommand : public age::graphics::Command
+class MoveDown : public age::graphics::Command
 {
 public:
-	MoveDownCommand() : Command()
+	MoveDown() : Command()
 	{
 		this->setMappedKey(sf::Keyboard::Key::Down);
 	}
@@ -42,12 +42,46 @@ public:
 	}
 };
 
+class MoveRight : public age::graphics::Command
+{
+public:
+	MoveRight() : Command()
+	{
+		this->setMappedKey(sf::Keyboard::Key::Right);
+	}
+
+	void execute(age::core::Entity* x) override
+	{
+		auto component = x->getChild<age::core::TransformComponent>();
+		auto pos = component->getPosition();
+		pos[0]++;
+		component->setPosition(pos);
+	}
+};
+
+class MoveLeft : public age::graphics::Command
+{
+public:
+	MoveLeft() : Command()
+	{
+		this->setMappedKey(sf::Keyboard::Key::Left);
+	}
+
+	void execute(age::core::Entity* x) override
+	{
+		auto component = x->getChild<age::core::TransformComponent>();
+		auto pos = component->getPosition();
+		pos[0]--;
+		component->setPosition(pos);
+	}
+};
+
 class RotateRight : public age::graphics::Command
 {
 public:
 	RotateRight() : Command()
 	{
-		this->setMappedKey(sf::Keyboard::Key::Right);
+		this->setMappedKey(sf::Keyboard::Key::RShift);
 	}
 
 	void execute(age::core::Entity* x) override
@@ -64,7 +98,7 @@ class RotateLeft : public age::graphics::Command
 public:
 	RotateLeft() : Command()
 	{
-		this->setMappedKey(sf::Keyboard::Key::Left);
+		this->setMappedKey(sf::Keyboard::Key::LShift);
 	}
 
 	void execute(age::core::Entity* x) override
@@ -83,8 +117,10 @@ Paddle::Paddle() : Entity()
 	this->addChild(std::move(rectangle));
 
 	auto input = std::make_unique<age::graphics::InputComponent>();
-	input->addChild(std::make_unique<MoveUpCommand>());
-	input->addChild(std::make_unique<MoveDownCommand>());
+	input->addChild(std::make_unique<MoveUp>());
+	input->addChild(std::make_unique<MoveDown>());
+	input->addChild(std::make_unique<MoveLeft>());
+	input->addChild(std::make_unique<MoveRight>());
 	input->addChild(std::make_unique<RotateRight>());
 	input->addChild(std::make_unique<RotateLeft>());
 	this->addChild(std::move(input));

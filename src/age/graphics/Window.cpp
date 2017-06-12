@@ -18,10 +18,17 @@ public:
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
+
+		this->font.loadFromFile("C:/age/resources/sansation.ttf");
+		text.setFont(this->font);
 	}
 
 	sf::RenderWindow window;
 	Timer timer;
+
+	// Temporary until I find a generic way to handle GUI widgets.
+	sf::Text text;
+	sf::Font font;
 };
 
 Window::Window(uint16_t width, uint16_t height) : RenderSystem(), pimpl(width, height)
@@ -80,6 +87,8 @@ void Window::frame(std::chrono::microseconds /*x*/)
 			}
 		}
 
+		this->pimpl->text.setString("FPS: " + std::to_string(1.0 / delta.count()));
+		this->pimpl->window.draw(this->pimpl->text);
 		this->pimpl->window.display();
 	}
 }
