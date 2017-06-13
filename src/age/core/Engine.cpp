@@ -90,8 +90,28 @@ void Engine::frame()
 
 void Engine::setEngineState(const EngineState& x)
 {
+	const auto systems = this->getChildren<System>();
+
 	this->pimpl->engineState = x;
-	this->sendEvent(std::make_unique<EngineStateEvent>(this->pimpl->engineState));
+
+	switch(this->pimpl->engineState.getState())
+	{
+		case EngineState::State::Initialize:
+			for(const auto& system : systems)
+			{
+				system->initialize();
+			}
+			break;
+		case EngineState::State::Run:
+		case EngineState::State::Pause:
+		case EngineState::State::Exit:
+		case EngineState::State::Unknown:
+		default:
+			break;
+	}
+
+
+	// this->sendEvent(std::make_unique<EngineStateEvent>(this->pimpl->engineState));
 }
 
 EngineState Engine::getEngineState() const

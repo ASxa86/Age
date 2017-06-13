@@ -44,7 +44,7 @@ namespace age
 			///
 			///	Override this function to define a specific command to be performed on the given entity.
 			///
-			virtual void execute(age::core::Entity* x) = 0;
+			virtual void execute(age::core::Entity* x, bool keyPressed) = 0;
 
 		private:
 			class Impl;

@@ -13,6 +13,7 @@ set(TARGET_H
 	Command.h
 	DrawableComponent.h
 	Export.h
+	KeyEvent.h
 	InputComponent.h
 	PlayerInputSystem.h
 	RectangleComponent.h
@@ -24,6 +25,7 @@ set(TARGET_SRC
 	Command.cpp
 	DrawableComponent.cpp
 	InputComponent.cpp
+	KeyEvent.cpp
 	PlayerInputSystem.cpp
 	RectangleComponent.cpp
 	SpriteComponent.cpp

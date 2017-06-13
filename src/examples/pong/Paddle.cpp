@@ -3,8 +3,10 @@
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/Command.h>
 #include <age/core/TransformComponent.h>
+#include <age/physics/KinematicComponent.h>
 
 using namespace age::core;
+using namespace age::physics;
 using namespace age::graphics;
 using namespace age::pong;
 
@@ -16,12 +18,12 @@ public:
 		this->setMappedKey(sf::Keyboard::Key::Up);
 	}
 
-	void execute(age::core::Entity* x) override
+	void execute(age::core::Entity* x, bool keyPressed) override
 	{
-		auto component = x->getChild<age::core::TransformComponent>();
-		auto pos = component->getPosition();
-		pos[1]--;
-		component->setPosition(pos);
+		auto component = x->getChild<KinematicComponent>();
+		auto v = component->getVelocity();
+		v[1] = keyPressed == true ? -500.0 : 0.0;
+		component->setVelocity(v);
 	}
 };
 
@@ -33,12 +35,12 @@ public:
 		this->setMappedKey(sf::Keyboard::Key::Down);
 	}
 
-	void execute(age::core::Entity* x) override
+	void execute(age::core::Entity* x, bool keyPressed) override
 	{
-		auto component = x->getChild<age::core::TransformComponent>();
-		auto pos = component->getPosition();
-		pos[1]++;
-		component->setPosition(pos);
+		auto component = x->getChild<KinematicComponent>();
+		auto v = component->getVelocity();
+		v[1] = keyPressed == true ? 500.0 : 0.0;
+		component->setVelocity(v);
 	}
 };
 
@@ -50,12 +52,12 @@ public:
 		this->setMappedKey(sf::Keyboard::Key::Right);
 	}
 
-	void execute(age::core::Entity* x) override
+	void execute(age::core::Entity* x, bool keyPressed) override
 	{
-		auto component = x->getChild<age::core::TransformComponent>();
-		auto pos = component->getPosition();
-		pos[0]++;
-		component->setPosition(pos);
+		auto component = x->getChild<KinematicComponent>();
+		auto v = component->getVelocity();
+		v[0] = keyPressed == true ? 500.0 : 0.0;
+		component->setVelocity(v);
 	}
 };
 
@@ -67,12 +69,12 @@ public:
 		this->setMappedKey(sf::Keyboard::Key::Left);
 	}
 
-	void execute(age::core::Entity* x) override
+	void execute(age::core::Entity* x, bool keyPressed) override
 	{
-		auto component = x->getChild<age::core::TransformComponent>();
-		auto pos = component->getPosition();
-		pos[0]--;
-		component->setPosition(pos);
+		auto component = x->getChild<KinematicComponent>();
+		auto v = component->getVelocity();
+		v[0] = keyPressed == true ? -500.0 : 0.0;
+		component->setVelocity(v);
 	}
 };
 
@@ -84,12 +86,12 @@ public:
 		this->setMappedKey(sf::Keyboard::Key::RShift);
 	}
 
-	void execute(age::core::Entity* x) override
+	void execute(age::core::Entity* x, bool keyPressed) override
 	{
-		auto component = x->getChild<age::core::TransformComponent>();
-		auto rot = component->getRotation();
-		rot++;
-		component->setRotation(rot);
+		auto component = x->getChild<KinematicComponent>();
+		auto v = component->getAngularVelocity();
+		v = keyPressed == true ? 150.0 : 0.0;
+		component->setAngularVelocity(v);
 	}
 };
 
@@ -101,12 +103,12 @@ public:
 		this->setMappedKey(sf::Keyboard::Key::LShift);
 	}
 
-	void execute(age::core::Entity* x) override
+	void execute(age::core::Entity* x, bool keyPressed) override
 	{
-		auto component = x->getChild<age::core::TransformComponent>();
-		auto rot = component->getRotation();
-		rot--;
-		component->setRotation(rot);
+		auto component = x->getChild<KinematicComponent>();
+		auto v = component->getAngularVelocity();
+		v = keyPressed == true ? -150.0 : 0.0;
+		component->setAngularVelocity(v);
 	}
 };
 
@@ -127,6 +129,8 @@ Paddle::Paddle() : Entity()
 
 	auto transform = std::make_unique<age::core::TransformComponent>();
 	this->addChild(std::move(transform));
+
+	this->addChild(std::make_unique<KinematicComponent>());
 }
 
 Paddle::~Paddle()

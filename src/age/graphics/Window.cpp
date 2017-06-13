@@ -5,8 +5,13 @@
 #include <age/core/Timer.h>
 #include <age/graphics/DrawableComponent.h>
 #include <age/graphics/Window.h>
+#include <age/graphics/KeyEvent.h>
 
 #include <SFML/Graphics.hpp>
+
+#include <numeric>
+#include <sstream>
+#include <iomanip>
 
 using namespace age::core;
 using namespace age::graphics;
@@ -54,10 +59,10 @@ void Window::pollEvents()
 				engine->setEngineState(EngineState::State::Exit);
 				break;
 			case sf::Event::EventType::KeyPressed:
-				// engine->sendEvent(std::make_unique<KeyEvent>());
+				engine->sendEvent(std::make_unique<KeyEvent>(e.key.code, KeyEvent::Type::Pressed));
 				break;
 			case sf::Event::EventType::KeyReleased:
-				// engine->sendEvent(std::make_unique<KeyEvent>());
+				engine->sendEvent(std::make_unique<KeyEvent>(e.key.code, KeyEvent::Type::Released));
 				break;
 			case sf::Event::EventType::Resized:
 				// engine->sendEvent(std::make_unique<ResizeEvent>());
@@ -72,8 +77,10 @@ void Window::frame(std::chrono::microseconds /*x*/)
 {
 	if(this->pimpl->window.isOpen() == true)
 	{
+		static double elapsed = 0.0;
 		auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
 		this->pimpl->window.clear();
+		elapsed += delta.count();
 
 		const auto entities = this->getEntities();
 
@@ -87,7 +94,15 @@ void Window::frame(std::chrono::microseconds /*x*/)
 			}
 		}
 
-		this->pimpl->text.setString("FPS: " + std::to_string(1.0 / delta.count()));
+		if(elapsed >= 0.5)
+		{
+			std::stringstream ss;
+			ss << std::fixed << std::setprecision(1) << 1.0 / delta.count();
+			this->pimpl->text.setString("FPS: " + ss.str());
+			elapsed = 0.0;
+		}
+
+
 		this->pimpl->window.draw(this->pimpl->text);
 		this->pimpl->window.display();
 	}

@@ -15,7 +15,6 @@ KinematicSystem::~KinematicSystem()
 {
 }
 
-#include <iostream>
 void KinematicSystem::frame(std::chrono::microseconds x)
 {
 	const auto entities = this->getEntities();
@@ -34,7 +33,6 @@ void KinematicSystem::frame(std::chrono::microseconds x)
 			pos[0] += v[0] * dt;
 			pos[1] += v[1] * dt;
 			transform->setPosition(pos);
-			std::cerr << "V: " << v[0] << ", " << v[1] << "\n";
 
 			const auto av = kinematic->getAngularVelocity();
 			auto rot = transform->getRotation();

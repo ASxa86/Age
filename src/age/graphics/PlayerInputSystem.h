@@ -31,10 +31,18 @@ namespace age
 			~PlayerInputSystem() override;
 
 			///
+			///	Initialize input system to pick up keyboard events.
+			///
+			void initialize() override;
+
+			///
 			///	\brief Handles input events and forwards them on to InputComponents.
 			///
 			void event(age::core::Event* x);
 
+			///
+			///	Handle real time key down checking.
+			///
 			void frame(std::chrono::microseconds x) override;
 		};
 	}
