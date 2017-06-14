@@ -10,6 +10,7 @@ include_directories(${SFML_INCLUDE_DIR})
 add_definitions(-D${PROJECT_NAME}_Export)
 
 set(TARGET_H
+	CircleComponent.h
 	Command.h
 	DrawableComponent.h
 	Export.h
@@ -22,6 +23,7 @@ set(TARGET_H
 )
 
 set(TARGET_SRC
+	CircleComponent.cpp
 	Command.cpp
 	DrawableComponent.cpp
 	InputComponent.cpp

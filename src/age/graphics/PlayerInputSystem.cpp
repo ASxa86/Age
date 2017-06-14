@@ -66,7 +66,6 @@ void PlayerInputSystem::frame(std::chrono::microseconds)
 				if(sf::Keyboard::isKeyPressed(command->getMappedKey()) == true)
 				{
 					command->execute(entity, true);
-					break;
 				}
 			}
 		}

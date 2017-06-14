@@ -1,4 +1,5 @@
 #include <examples/pong/Pong.h>
+#include <examples/pong/Ball.h>
 #include <examples/pong/Paddle.h>
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
@@ -12,6 +13,7 @@ using namespace age::pong;
 Pong::Pong()
 {
 	this->engine.addChild(std::make_unique<Paddle>());
+	this->engine.addChild(std::make_unique<Ball>());
 	this->engine.addChild(std::make_unique<age::graphics::PlayerInputSystem>());
 	this->engine.addChild(std::make_unique<age::physics::KinematicSystem>());
 	this->engine.addChild(std::make_unique<age::graphics::Window>());
