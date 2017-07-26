@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/core/Entity.h>
+#include <age/math/Vector.h>
 
 namespace age
 {
@@ -11,6 +12,8 @@ namespace age
 		public:
 			Paddle();
 			~Paddle() override;
+
+			void setPosition(const age::math::Vector& x);
 		};
 	}
 }

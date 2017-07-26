@@ -37,7 +37,7 @@ set(TARGET_SRC
 add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})
 
 target_link_libraries(${PROJECT_NAME}
-	AgeCore
+	AgeMath
 	${SFML_GRAPHICS_LIBRARY}
 	${SFML_SYSTEM_LIBRARY}
 	${SFML_WINDOW_LIBRARY}

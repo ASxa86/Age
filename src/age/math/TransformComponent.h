@@ -1,11 +1,11 @@
 #pragma once
 
 #include <age/core/Object.h>
-#include <array>
+#include <age/math/Vector.h>
 
 namespace age
 {
-	namespace core
+	namespace math
 	{
 		///
 		///	\class TransformComponent
@@ -16,7 +16,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT TransformComponent : public Object
+		class AGE_MATH_EXPORT TransformComponent : public age::core::Object
 		{
 		public:
 			TransformComponent();
@@ -26,13 +26,13 @@ namespace age
 			///	Set the position for the component.
 			///	(x, y)
 			///
-			void setPosition(const std::array<double, 2>& x);
+			void setPosition(const Vector& x);
 			
 			///
 			///	Get the position for the component.
 			///	(x, y)
 			///
-			std::array<double, 2> getPosition() const;
+			Vector getPosition() const;
 
 			///
 			///	Set the rotation for the component.

@@ -1,7 +1,8 @@
-#include <age/core/TransformComponent.h>
+#include <age/math/TransformComponent.h>
 #include <age/core/PimplImpl.h>
 
 using namespace age::core;
+using namespace age::math;
 
 class TransformComponent::Impl
 {
@@ -12,7 +13,7 @@ public:
 	{
 	}
 
-	std::array<double, 2> position;
+	Vector position;
 	double rotation;
 };
 
@@ -24,12 +25,12 @@ TransformComponent::~TransformComponent()
 {
 }
 
-void TransformComponent::setPosition(const std::array<double, 2>& x)
+void TransformComponent::setPosition(const Vector& x)
 {
 	this->pimpl->position = x;
 }
 
-std::array<double, 2> TransformComponent::getPosition() const
+Vector TransformComponent::getPosition() const
 {
 	return this->pimpl->position;
 }

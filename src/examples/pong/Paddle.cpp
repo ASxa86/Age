@@ -2,12 +2,13 @@
 #include <age/graphics/RectangleComponent.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/Command.h>
-#include <age/core/TransformComponent.h>
+#include <age/math/TransformComponent.h>
 #include <age/physics/KinematicComponent.h>
 
 using namespace age::core;
-using namespace age::physics;
 using namespace age::graphics;
+using namespace age::math;
+using namespace age::physics;
 using namespace age::pong;
 
 class MoveUp : public age::graphics::Command
@@ -115,7 +116,7 @@ public:
 Paddle::Paddle() : Entity()
 {
 	auto rectangle = std::make_unique<age::graphics::RectangleComponent>();
-	rectangle->setSize({100, 100});
+	rectangle->setSize({25, 100});
 	this->addChild(std::move(rectangle));
 
 	auto input = std::make_unique<age::graphics::InputComponent>();
@@ -127,12 +128,15 @@ Paddle::Paddle() : Entity()
 	input->addChild(std::make_unique<RotateLeft>());
 	this->addChild(std::move(input));
 
-	auto transform = std::make_unique<age::core::TransformComponent>();
-	this->addChild(std::move(transform));
-
+	this->addChild(std::make_unique<TransformComponent>());
 	this->addChild(std::make_unique<KinematicComponent>());
 }
 
 Paddle::~Paddle()
 {
+}
+
+void Paddle::setPosition(const Vector& x)
+{
+	this->getChild<TransformComponent>()->setPosition(x);
 }

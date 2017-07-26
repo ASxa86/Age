@@ -19,7 +19,7 @@ using namespace age::graphics;
 class Window::Impl
 {
 public:
-	Impl(uint16_t width, uint16_t height) : window{sf::VideoMode{width, height}, "AGE"}
+	Impl(uint16_t width, uint16_t height) : settings{0, 0, 0}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
@@ -28,6 +28,7 @@ public:
 		text.setFont(this->font);
 	}
 
+	sf::ContextSettings settings;
 	sf::RenderWindow window;
 	Timer timer;
 
@@ -36,12 +37,22 @@ public:
 	sf::Font font;
 };
 
-Window::Window(uint16_t width, uint16_t height) : RenderSystem(), pimpl(width, height)
+Window::Window(unsigned int width, unsigned int height) : RenderSystem(), pimpl(width, height)
 {
 }
 
 Window::~Window()
 {
+}
+
+unsigned int Window::getWidth() const
+{
+	return this->pimpl->window.getSize().x;
+}
+
+unsigned int Window::getHeight() const
+{
+	return this->pimpl->window.getSize().y;
 }
 
 void Window::pollEvents()

@@ -6,6 +6,7 @@
 namespace sf
 {
 	class RenderTarget;
+	class Transformable;
 }
 
 namespace age
@@ -31,6 +32,12 @@ namespace age
 			///	\brief Override to handle drawing the derived component's data.
 			///
 			virtual void draw(sf::RenderTarget& x) = 0;
+
+		protected:
+			///
+			///	\brief Conveniences function for updating a drawable's transformation with its entity's transform component.
+			///
+			void updateTransform(sf::Transformable& x);
 		};
 	}
 }

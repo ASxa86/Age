@@ -21,8 +21,18 @@ namespace age
 		class AGE_GRAPHICS_EXPORT Window : public age::core::RenderSystem
 		{
 		public:
-			Window(uint16_t width = 1280, uint16_t height = 720);
+			Window(unsigned int width = 1280, unsigned int height = 720);
 			~Window() override;
+
+			///
+			///	Get the current width of the window.
+			///
+			unsigned int getWidth() const;
+
+			///
+			///	Get the current height of the window.
+			///
+			unsigned int getHeight() const;
 
 			void pollEvents() override;
 
