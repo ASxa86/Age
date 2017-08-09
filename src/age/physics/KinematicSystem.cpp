@@ -31,8 +31,7 @@ void KinematicSystem::frame(std::chrono::microseconds x)
 
 			const auto v = kinematic->getVelocity();
 			auto pos = transform->getPosition();
-			pos.x() += v[0] * dt;
-			pos.y() += v[1] * dt;
+			pos += v * dt;
 			transform->setPosition(pos);
 
 			const auto av = kinematic->getAngularVelocity();

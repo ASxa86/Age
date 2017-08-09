@@ -1,8 +1,8 @@
 #pragma once
 
 #include <age/core/Object.h>
+#include <age/math/Vector.h>
 #include <age/physics/Export.h>
-#include <array>
 
 namespace age
 {
@@ -27,13 +27,13 @@ namespace age
 			///	Set the velocity vector.
 			///	(m/s)
 			///
-			void setVelocity(const std::array<double, 2>& x);
+			void setVelocity(const age::math::Vector& x);
 
 			///
 			///	Get the velocity vector.
 			///	(m/s)
 			///
-			std::array<double, 2> getVelocity() const;
+			age::math::Vector getVelocity() const;
 
 			///
 			///	Set the angular velocity.

@@ -62,7 +62,7 @@ Vector& Vector::operator=(const Vector& x)
 	return *this;
 }
 
-Vector Vector::operator+(const Vector& x)
+Vector Vector::operator+(const Vector& x) const
 {
 	return Vector(this->x() + x.x(), this->y() + x.y());
 }
@@ -74,7 +74,7 @@ Vector& Vector::operator+=(const Vector& x)
 	return *this;
 }
 
-Vector Vector::operator-(const Vector& x)
+Vector Vector::operator-(const Vector& x) const
 {
 	return Vector(this->x() - x.x(), this->y() - x.y());
 }
@@ -111,7 +111,7 @@ bool Vector::operator>(const Vector& x) const
 	return (this->x() > x.x() || (this->y() > x.y()));
 }
 
-Vector Vector::operator*(double x)
+Vector Vector::operator*(double x) const
 {
 	return Vector(this->x() * x, this->y() * x);
 }
@@ -123,7 +123,7 @@ Vector& Vector::operator*=(double x)
 	return *this;
 }
 
-Vector Vector::operator/(double x)
+Vector Vector::operator/(double x) const
 {
 	return Vector(this->x() / x, this->y() / x);
 }

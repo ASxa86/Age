@@ -19,7 +19,7 @@ using namespace age::graphics;
 class Window::Impl
 {
 public:
-	Impl(uint16_t width, uint16_t height) : settings{0, 0, 0}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}
+	Impl(unsigned int width, unsigned int height) : settings{0, 0, 0}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);

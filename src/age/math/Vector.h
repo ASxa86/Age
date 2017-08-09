@@ -31,9 +31,9 @@ namespace age
 			double y() const;
 
 			Vector& operator=(const Vector& x);
-			Vector operator+(const Vector& x);
+			Vector operator+(const Vector& x) const;
 			Vector& operator+=(const Vector& x);
-			Vector operator-(const Vector& x);
+			Vector operator-(const Vector& x) const;
 			Vector& operator-=(const Vector& x);
 			double operator*(const Vector& x);
 
@@ -42,9 +42,9 @@ namespace age
 			bool operator<(const Vector& x) const;
 			bool operator>(const Vector& x) const;
 
-			Vector operator*(double x);
+			Vector operator*(double x) const;
 			Vector& operator*=(double x);
-			Vector operator/(double x);
+			Vector operator/(double x) const;
 			Vector& operator/=(double x);
 
 			double magnitude() const;

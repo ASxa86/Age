@@ -1,6 +1,7 @@
 #include <age/physics/KinematicComponent.h>
 #include <age/core/PimplImpl.h>
 
+using namespace age::math;
 using namespace age::physics;
 
 class KinematicComponent::Impl
@@ -12,7 +13,7 @@ public:
 	{
 	}
 
-	std::array<double, 2> velocity;
+	Vector velocity;
 	double angularVelocity;
 };
 
@@ -24,12 +25,12 @@ KinematicComponent::~KinematicComponent()
 {
 }
 
-void KinematicComponent::setVelocity(const std::array<double, 2>& x)
+void KinematicComponent::setVelocity(const Vector& x)
 {
 	this->pimpl->velocity = x;
 }
 
-std::array<double, 2> KinematicComponent::getVelocity() const
+Vector KinematicComponent::getVelocity() const
 {
 	return this->pimpl->velocity;
 }
