@@ -25,7 +25,8 @@ public:
 		this->window.setFramerateLimit(0);
 
 		this->font.loadFromFile("C:/age/resources/sansation.ttf");
-		text.setFont(this->font);
+		this->text.setFont(this->font);
+		this->text.setPosition({10.0, 30.0});
 	}
 
 	sf::ContextSettings settings;

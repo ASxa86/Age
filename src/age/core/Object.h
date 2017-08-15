@@ -38,6 +38,11 @@ namespace age
 			std::string getID() const;
 
 			///
+			///
+			///
+			virtual void initialize();
+
+			///
 			///	Set's the parent for this object.
 			///
 			virtual void setParent(Object* x);
@@ -50,10 +55,23 @@ namespace age
 			///
 			///	Return the parent as type T. Returns nullptr if the parent is not of type T.
 			///
+			///	\param recursive Recursively search for a parent of the given type T.
+			///
 			template<typename T>
-			T* getParent() const
+			T* getParent(bool recursive = false) const
 			{
-				return dynamic_cast<T*>(this->getParent());
+				const auto parent = this->getParent();
+				auto parentType = dynamic_cast<T*>(parent);
+
+				if(recursive == true)
+				{
+					if(parent != nullptr && parentType == nullptr)
+					{
+						parentType = parent->getParent<T>(recursive);
+					}
+				}
+
+				return parentType;
 			}
 
 			///
@@ -89,16 +107,20 @@ namespace age
 			///
 			///	Return all children of this object.
 			///
-			virtual std::vector<Object*> getChildren() const;
+			///	\param recursive If set to true, this will get all children and their children.
+			///
+			virtual std::vector<Object*> getChildren(bool recursive = false) const;
 
 			///
 			///	Return all children of the given type for this object.
 			///
+			///	\param recursive If set to true, this will get all children and their children.
+			///
 			template <typename T>
-			std::vector<T*> getChildren() const
+			std::vector<T*> getChildren(bool recursive = false) const
 			{
 				std::vector<T*> v;
-				const auto children = this->getChildren();
+				const auto children = this->getChildren(recursive);
 				v.reserve(children.size());
 
 				for(const auto& c : children)

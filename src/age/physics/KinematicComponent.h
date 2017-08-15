@@ -4,6 +4,8 @@
 #include <age/math/Vector.h>
 #include <age/physics/Export.h>
 
+class b2World;
+
 namespace age
 {
 	namespace physics
@@ -23,6 +25,20 @@ namespace age
 			KinematicComponent();
 			~KinematicComponent() override;
 
+			void initialize() override;
+
+			///
+			///	Set the position within the world.
+			///	(m)
+			///
+			void setPosition(const age::math::Vector& x);
+
+			///
+			///	Get the position within the world.
+			///	(m)
+			///
+			age::math::Vector getPosition() const;
+
 			///
 			///	Set the velocity vector.
 			///	(m/s)
@@ -34,6 +50,18 @@ namespace age
 			///	(m/s)
 			///
 			age::math::Vector getVelocity() const;
+
+			///
+			///	Set the rotation.
+			///	(deg)
+			///
+			void setRotation(double x);
+
+			///
+			///	Get the rotation.
+			///	(deg)
+			///
+			double getRotation() const;
 
 			///
 			///	Set the angular velocity.

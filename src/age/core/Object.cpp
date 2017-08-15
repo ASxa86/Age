@@ -35,6 +35,10 @@ std::string Object::getID() const
 	return this->pimpl->id;
 }
 
+void Object::initialize()
+{
+}
+
 void Object::setParent(Object* x)
 {
 	this->pimpl->parent = x;
@@ -70,7 +74,7 @@ Object* Object::getChild(size_t x)
 	return nullptr;
 }
 
-std::vector<Object*> Object::getChildren() const
+std::vector<Object*> Object::getChildren(bool recursive) const
 {
 	std::vector<Object*> v;
 	v.reserve(this->pimpl->children.size());
@@ -78,6 +82,12 @@ std::vector<Object*> Object::getChildren() const
 	for(const auto& child : this->pimpl->children)
 	{
 		v.push_back(child.get());
+
+		if(recursive == true)
+		{
+			const auto children = child->getChildren(recursive);
+			v.insert(std::end(v), std::begin(children), std::end(children));
+		}
 	}
 
 	return v;

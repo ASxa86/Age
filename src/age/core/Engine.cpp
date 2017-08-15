@@ -97,9 +97,9 @@ void Engine::setEngineState(const EngineState& x)
 	switch(this->pimpl->engineState.getState())
 	{
 		case EngineState::State::Initialize:
-			for(const auto& system : systems)
+			for(const auto& child : this->getChildren(true))
 			{
-				system->initialize();
+				child->initialize();
 			}
 			break;
 		case EngineState::State::Run:

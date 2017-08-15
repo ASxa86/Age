@@ -12,10 +12,6 @@ System::~System()
 {
 }
 
-void System::initialize()
-{
-}
-
 std::vector<Entity*> System::getEntities() const
 {
 	return this->getParent<Engine>()->getChildren<Entity>();

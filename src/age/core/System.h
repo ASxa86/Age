@@ -25,13 +25,6 @@ namespace age
 			virtual ~System() override;
 
 			///
-			///	Override to perform functionality during initialization state.
-			///
-			///	This function is called when the engine is initialized.
-			///
-			virtual void initialize();
-
-			///
 			///	Override for frame functionality.
 			///
 			///	\param x The elapsed/delta time in milliseconds.

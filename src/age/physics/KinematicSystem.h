@@ -3,6 +3,8 @@
 #include <age/core/FixedSystem.h>
 #include <age/physics/Export.h>
 
+class b2World;
+
 namespace age
 {
 	namespace physics
@@ -26,6 +28,12 @@ namespace age
 			///	Updates entity transformations using physics.
 			///
 			void frame(std::chrono::microseconds x) override;
+
+			b2World& getPhysicsEngine();
+
+		private:
+			class Impl;
+			Pimpl<Impl> pimpl;
 		};
 	}
 }
