@@ -25,8 +25,6 @@ namespace age
 			KinematicComponent();
 			~KinematicComponent() override;
 
-			void initialize() override;
-
 			///
 			///	Set the position within the world.
 			///	(m)

@@ -57,7 +57,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		v.x() = keyPressed == true ? 500.0*4.0 : 0.0;
+		v.x() = keyPressed == true ? 500.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -74,7 +74,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		v.x() = keyPressed == true ? -500.0*4.0 : 0.0;
+		v.x() = keyPressed == true ? -500.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -139,4 +139,5 @@ Paddle::~Paddle()
 void Paddle::setPosition(const Vector& x)
 {
 	this->getChild<TransformComponent>()->setPosition(x);
+	this->getChild<KinematicComponent>()->setPosition(x);
 }

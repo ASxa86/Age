@@ -9,7 +9,7 @@ set(TARGET_H
 	CollisionSystem.h
 	Export.h
 	KinematicComponent.h
-	KinematicSystem.h
+	PhysicsSystem.h
 )
 
 set(TARGET_H_BOX2D
@@ -79,7 +79,7 @@ set(TARGET_SRC
 	BoxCollisionTree.cpp
 	CollisionSystem.cpp
 	KinematicComponent.cpp
-	KinematicSystem.cpp
+	PhysicsSystem.cpp
 )
 
 set(TARGET_SRC_BOX2D_COLLISION

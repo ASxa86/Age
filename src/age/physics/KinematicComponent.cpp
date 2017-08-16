@@ -1,5 +1,5 @@
 #include <age/physics/KinematicComponent.h>
-#include <age/physics/KinematicSystem.h>
+#include <age/physics/PhysicsSystem.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Engine.h>
 #include <age/math/TransformComponent.h>
@@ -13,13 +13,20 @@ class KinematicComponent::Impl
 {
 public:
 	Impl() :
-		bodyDef{},
 		body{nullptr}
 	{
-		this->bodyDef.type = b2_kinematicBody;
+		b2BodyDef def;
+		def.type = b2_kinematicBody;
+		this->body = PhysicsSystem::Engine().CreateBody(&def);
 	}
 
-	b2BodyDef bodyDef;
+	~Impl()
+	{
+		PhysicsSystem::Engine().DestroyBody(this->body);
+	}
+
+	double scale = 1.0 / 32.0;
+
 	b2Body* body;
 };
 
@@ -31,147 +38,44 @@ KinematicComponent::~KinematicComponent()
 {
 }
 
-void KinematicComponent::initialize()
-{
-	const auto entity = this->getParent();
-
-	if(entity != nullptr)
-	{
-		const auto transform = entity->getChild<TransformComponent>();
-
-		if(transform != nullptr)
-		{
-			this->pimpl->bodyDef.position = Vector::To<b2Vec2, float32>(transform->getPosition());
-			this->pimpl->bodyDef.angle = static_cast<float32>(transform->getRotation());
-		}
-	}
-
-	const auto engine = this->getParent<age::core::Engine>(true);
-
-	if(engine != nullptr)
-	{
-		const auto kSystem = engine->getChild<KinematicSystem>();
-
-		if(kSystem != nullptr)
-		{
-			this->pimpl->body = kSystem->getPhysicsEngine().CreateBody(&this->pimpl->bodyDef);
-		}
-	}
-}
-
 void KinematicComponent::setPosition(const age::math::Vector& x)
 {
-	if(this->pimpl->body != nullptr)
-	{
-		this->pimpl->body->SetTransform(Vector::To<b2Vec2, float32>(x), this->pimpl->body->GetAngle());
-	}
-	else
-	{
-		this->pimpl->bodyDef.position = Vector::To<b2Vec2, float32>(x);
-	}
+	this->pimpl->body->SetTransform(Vector::To<b2Vec2, float32>(x * this->pimpl->scale), this->pimpl->body->GetAngle());
 }
 
 Vector KinematicComponent::getPosition() const
 {
-	Vector vec;
-	if(this->pimpl->body != nullptr)
-	{
-		const auto pos = this->pimpl->body->GetPosition();
-		vec = Vector{pos.x, pos.y};
-	}
-	else
-	{
-		const auto pos = this->pimpl->bodyDef.position;
-		vec = Vector{pos.x, pos.y};
-	}
-
-	return vec;
+	const auto pos = this->pimpl->body->GetPosition();
+	return Vector{pos.x, pos.y} / this->pimpl->scale;
 }
 
 void KinematicComponent::setVelocity(const Vector& x)
 {
-	const auto vel = Vector::To<b2Vec2, float32>(x);
-	if(this->pimpl->body != nullptr)
-	{
-		this->pimpl->body->SetLinearVelocity(vel);
-	}
-	else
-	{
-		this->pimpl->bodyDef.linearVelocity = vel;
-	}
+	this->pimpl->body->SetLinearVelocity(Vector::To<b2Vec2, float32>(x * this->pimpl->scale));
 }
 
 Vector KinematicComponent::getVelocity() const
 {
-	Vector vec;
-	if (this->pimpl->body != nullptr)
-	{
-		const auto pos = this->pimpl->body->GetLinearVelocity();
-		vec = Vector{pos.x, pos.y};
-	}
-	else
-	{
-		const auto pos = this->pimpl->bodyDef.linearVelocity;
-		vec = Vector{pos.x, pos.y};
-	}
-
-	return vec;
+	const auto pos = this->pimpl->body->GetLinearVelocity();
+	return Vector{pos.x, pos.y} / this->pimpl->scale;
 }
 
 void KinematicComponent::setRotation(double x)
 {
-	const auto pi = 3.14 / 180.0;
-	if(this->pimpl->body != nullptr)
-	{
-		this->pimpl->body->SetTransform(this->pimpl->body->GetPosition(), static_cast<float32>(x * pi));
-	}
-	else
-	{
-		this->pimpl->bodyDef.angle = static_cast<float32>(x * pi);
-	}
+	this->pimpl->body->SetTransform(this->pimpl->body->GetPosition(), static_cast<float32>(x * b2_pi / 180.0));
 }
 
 double KinematicComponent::getRotation() const
 {
-	auto rotation = 0.0;
-	const auto pi = 3.14 / 180.0;
-
-	if(this->pimpl->body != nullptr)
-	{
-		rotation = this->pimpl->body->GetAngle() / pi;
-	}
-	else
-	{
-		rotation =  this->pimpl->bodyDef.angle / pi;
-	}
-
-	return rotation;
+	return this->pimpl->body->GetAngle() / b2_pi * 180.0;
 }
 
 void KinematicComponent::setAngularVelocity(double x)
 {
-	if(this->pimpl->body != nullptr)
-	{
-		this->pimpl->body->SetAngularVelocity(static_cast<float32>(x));
-	}
-	else
-	{
-		this->pimpl->bodyDef.angularVelocity = static_cast<float32>(x);
-	}
+	this->pimpl->body->SetAngularVelocity(static_cast<float32>(x));
 }
 
 double KinematicComponent::getAngularVelocity() const
 {
-	auto velocity = 0.0;
-
-	if(this->pimpl->body != nullptr)
-	{
-		velocity = this->pimpl->body->GetAngularVelocity();
-	}
-	else
-	{
-		velocity = this->pimpl->bodyDef.angularVelocity;
-	}
-
-	return velocity;
+	return this->pimpl->body->GetAngularVelocity();
 }
