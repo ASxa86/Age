@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/core/Entity.h>
-#include <age/math/Vector.h>
+#include <boost/qvm/vec.hpp>
 
 namespace age
 {
@@ -13,7 +13,7 @@ namespace age
 			Paddle();
 			~Paddle() override;
 
-			void setPosition(const age::math::Vector& x);
+			void setPosition(const boost::qvm::vec<double, 2>& x);
 		};
 	}
 }

@@ -4,7 +4,9 @@
 #include <age/graphics/Command.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/KinematicComponent.h>
+#include <boost/qvm/vec_access.hpp>
 
+using namespace boost::qvm;
 using namespace age::core;
 using namespace age::graphics;
 using namespace age::math;
@@ -23,7 +25,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		v.y() = keyPressed == true ? -500.0 : 0.0;
+		Y(v) = keyPressed == true ? -500.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -40,7 +42,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		v.y() = keyPressed == true ? 500.0 : 0.0;
+		Y(v) = keyPressed == true ? 500.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -57,7 +59,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		v.x() = keyPressed == true ? 500.0 : 0.0;
+		X(v) = keyPressed == true ? 500.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -74,7 +76,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		v.x() = keyPressed == true ? -500.0 : 0.0;
+		X(v) = keyPressed == true ? -500.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -136,7 +138,7 @@ Paddle::~Paddle()
 {
 }
 
-void Paddle::setPosition(const Vector& x)
+void Paddle::setPosition(const vec<double, 2>& x)
 {
 	this->getChild<TransformComponent>()->setPosition(x);
 	this->getChild<KinematicComponent>()->setPosition(x);

@@ -1,10 +1,12 @@
 #include <age/graphics/DrawableComponent.h>
 #include <age/math/TransformComponent.h>
 #include <SFML/Graphics/Transformable.hpp>
+#include <boost/qvm/vec_access.hpp>
 
 using namespace age::core;
 using namespace age::graphics;
 using namespace age::math;
+using namespace boost::qvm;
 
 DrawableComponent::DrawableComponent() : age::core::Object()
 {
@@ -22,6 +24,6 @@ void DrawableComponent::updateTransform(sf::Transformable& x)
 	const auto pos = transform->getPosition();
 	const auto rotation = transform->getRotation();
 
-	x.setPosition(Vector::To<sf::Vector2f, float>(pos));
+	x.setPosition({static_cast<float>(X(pos)), static_cast<float>(Y(pos))});
 	x.setRotation(static_cast<float>(rotation));
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <age/core/Object.h>
-#include <age/math/Vector.h>
+#include <age/math/Export.h>
+#include <boost/qvm/vec.hpp>
 
 namespace age
 {
@@ -26,13 +27,13 @@ namespace age
 			///	Set the position for the component.
 			///	(x, y)
 			///
-			void setPosition(const Vector& x);
+			void setPosition(const boost::qvm::vec<double, 2>& x);
 			
 			///
 			///	Get the position for the component.
 			///	(x, y)
 			///
-			Vector getPosition() const;
+			boost::qvm::vec<double, 2> getPosition() const;
 
 			///
 			///	Set the rotation for the component.

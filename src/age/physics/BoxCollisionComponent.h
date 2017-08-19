@@ -1,7 +1,8 @@
 #pragma once
 
+#include <age/core/Pimpl.h>
 #include <age/physics/Export.h>
-#include <age/math/Vector.h>
+#include <boost/qvm/vec.hpp>
 
 namespace age
 {
@@ -25,14 +26,14 @@ namespace age
 			///
 			///	Set the center of this collision component. This is an offset to the entity it is attached to.
 			///
-			void setCenter(const age::math::Vector& x);
-			age::math::Vector getCenter() const;
+			void setCenter(const boost::qvm::vec<double, 2>& x);
+			boost::qvm::vec<double, 2> getCenter() const;
 
 			///
 			///	Set the size of the box (x:width, y:height).
 			///
-			void setSize(const age::math::Vector& x);
-			age::math::Vector getSize() const;
+			void setSize(const boost::qvm::vec<double, 2>& x);
+			boost::qvm::vec<double, 2> getSize() const;
 
 		private:
 			class Impl;
