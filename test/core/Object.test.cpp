@@ -28,71 +28,84 @@ public:
 
 class ObjectTwo : public Object
 {
+public:
+	ObjectTwo()
+	{
+		EXPECT_NO_THROW(this->addChild(std::make_shared<Object>()));
+	}
 };
 
 TEST(Object, Constructor)
 {
 	EXPECT_NO_THROW(Object());
-	EXPECT_NO_THROW(std::make_unique<Object>());
-	EXPECT_TRUE(std::make_unique<Object>() != nullptr);
+	EXPECT_NO_THROW(std::make_shared<Object>());
+	EXPECT_TRUE(std::make_shared<Object>() != nullptr);
 }
 
 TEST(Object, setID)
 {
-	const auto object = std::make_unique<Object>();
+	const auto object = std::make_shared<Object>();
 	const auto id = std::string("id");
 	object->setID(id);
 
 	EXPECT_EQ(id, object->getID());
 }
 
-TEST(Object, setParent)
+TEST(Object, getParent)
 {
-	const auto parent = std::make_unique<Object>();
-	auto child = std::make_unique<Object>();
-	const auto raw = child.get();
+	const auto parent = std::make_shared<Object>();
+	auto child = std::make_shared<Object>();
 
-	EXPECT_TRUE(parent->addChild(std::move(child)));
-	EXPECT_EQ(parent.get(), raw->getParent());
+	EXPECT_TRUE(parent->addChild(child));
+	EXPECT_EQ(parent.get(), child->getParent());
+}
+
+TEST(Object, getParent_Recursive)
+{
+	const auto parent = std::make_shared<ObjectTwo>();
+	const auto child = std::make_shared<Object>();
+	const auto subchild = std::make_shared<Object>();
+
+	EXPECT_TRUE(parent->addChild(child));
+	EXPECT_TRUE(child->addChild(subchild));
+	EXPECT_EQ(parent.get(), subchild->getParent<ObjectTwo>(true));
 }
 
 TEST(Object, addChild)
 {
-	const auto parent = std::make_unique<Object>();
-	auto child = std::make_unique<Object>();
-	const auto raw = child.get();
+	const auto parent = std::make_shared<Object>();
+	auto child = std::make_shared<Object>();
 
-	EXPECT_TRUE(parent->addChild(std::move(child)));
-	EXPECT_EQ(raw, parent->getChild());
+	EXPECT_TRUE(parent->addChild(child));
+	EXPECT_EQ(child, parent->getChild());
 }
 
 TEST(Object, removeChild)
 {
-	const auto parent = std::make_unique<Object>();
-	auto child = std::make_unique<Object>();
-	const auto raw = child.get();
+	const auto parent = std::make_shared<Object>();
+	auto child = std::make_shared<Object>();
 
-	EXPECT_TRUE(parent->addChild(std::move(child)));
-	EXPECT_TRUE(parent->removeChild(raw));
+	EXPECT_TRUE(parent->addChild(child));
+	EXPECT_TRUE(parent->removeChild(child));
 	EXPECT_TRUE(parent->getChildren().empty());
 }
 
 TEST(Object, getChild)
 {
-	const auto parent = std::make_unique<Object>();
+	const auto parent = std::make_shared<Object>();
 
-	EXPECT_TRUE(parent->addChild(std::make_unique<ObjectOne>()));
-	EXPECT_TRUE(parent->addChild(std::make_unique<ObjectTwo>()));
+	EXPECT_TRUE(parent->addChild(std::make_shared<ObjectOne>()));
+	EXPECT_TRUE(parent->addChild(std::make_shared<ObjectTwo>()));
 	EXPECT_TRUE(parent->getChild<ObjectOne>() != nullptr);
 	EXPECT_TRUE(parent->getChild<ObjectTwo>() != nullptr);
 }
 
 TEST(Object, getChildren)
 {
-	const auto parent = std::make_unique<Object>();
+	const auto parent = std::make_shared<Object>();
 
-	EXPECT_TRUE(parent->addChild(std::make_unique<ObjectOne>()));
-	EXPECT_TRUE(parent->addChild(std::make_unique<ObjectTwo>()));
+	EXPECT_TRUE(parent->addChild(std::make_shared<ObjectOne>()));
+	EXPECT_TRUE(parent->addChild(std::make_shared<ObjectTwo>()));
 
 	EXPECT_EQ(size_t{2}, parent->getChildren().size());
 	EXPECT_EQ(size_t{1}, parent->getChildren<ObjectOne>().size());
@@ -101,20 +114,20 @@ TEST(Object, getChildren)
 
 //TEST(Object, childAdded)
 //{
-//	const auto parent = std::make_unique<ObjectOne>();
+//	const auto parent = std::make_shared<ObjectOne>();
 //
-//	EXPECT_TRUE(parent->addChild(std::make_unique<Object>()));
-//	EXPECT_TRUE(parent->addChild(std::make_unique<Object>()));
+//	EXPECT_TRUE(parent->addChild(std::make_shared<Object>()));
+//	EXPECT_TRUE(parent->addChild(std::make_shared<Object>()));
 //	EXPECT_EQ(parent->getChildren().size(), parent->ChildAdded);
 //}
 //
 //TEST(Object, childRemoved)
 //{
-//	const auto parent = std::make_unique<ObjectOne>();
-//	auto child = std::make_unique<Object>();
-//	const auto raw = child.get();
+//	const auto parent = std::make_shared<ObjectOne>();
+//	auto child = std::make_shared<Object>();
+//	const auto child = child.get();
 //
-//	EXPECT_TRUE(parent->addChild(std::move(child)));
-//	EXPECT_TRUE(raw->remove());
+//	EXPECT_TRUE(parent->addChild(child));
+//	EXPECT_TRUE(child->remove());
 //	EXPECT_EQ(1, parent->ChildRemoved);
 //}

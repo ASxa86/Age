@@ -35,7 +35,7 @@ namespace age
 			///
 			///	Systems perform work on entities. This provides a convenient way to collect them.
 			///
-			std::vector<Entity*> getEntities() const;
+			std::vector<std::shared_ptr<Entity>> getEntities() const;
 		};
 	}
 }

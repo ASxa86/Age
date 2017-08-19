@@ -42,7 +42,7 @@ void PlayerInputSystem::event(age::core::Event* x)
 
 				if(it != std::end(commands))
 				{
-					(*it)->execute(entity, keyEvent->getType() == KeyEvent::Type::Pressed);
+					(*it)->execute(entity.get(), keyEvent->getType() == KeyEvent::Type::Pressed);
 				}
 			}
 		}
@@ -65,7 +65,7 @@ void PlayerInputSystem::frame(std::chrono::microseconds)
 			{
 				if(sf::Keyboard::isKeyPressed(command->getMappedKey()) == true)
 				{
-					command->execute(entity, true);
+					command->execute(entity.get(), true);
 				}
 			}
 		}

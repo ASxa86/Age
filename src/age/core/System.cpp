@@ -12,7 +12,7 @@ System::~System()
 {
 }
 
-std::vector<Entity*> System::getEntities() const
+std::vector<std::shared_ptr<Entity>> System::getEntities() const
 {
 	return this->getParent<Engine>()->getChildren<Entity>();
 }

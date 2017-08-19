@@ -21,7 +21,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT Object
+		class AGE_CORE_EXPORT Object : public std::enable_shared_from_this<Object>
 		{
 		public:
 			Object();
@@ -41,11 +41,6 @@ namespace age
 			///
 			///
 			virtual void initialize();
-
-			///
-			///	Set's the parent for this object.
-			///
-			virtual void setParent(Object* x);
 
 			///
 			///	Gets the parent for this object.
@@ -79,20 +74,20 @@ namespace age
 			///
 			///	Ownership of the object will be transfered to this object.
 			///
-			virtual bool addChild(std::unique_ptr<Object> x);
+			virtual bool addChild(std::shared_ptr<Object> x);
 
 			///
 			///	Return the child with the given index. Default 0.
 			///
-			virtual Object* getChild(size_t x = 0);
+			virtual std::shared_ptr<Object> getChild(size_t x = 0) const;
 
 			///
 			///	Return the child of type T with the given index. Default 0.
 			///
 			template <typename T>
-			T* getChild(size_t x = 0)
+			std::shared_ptr<T> getChild(size_t x = 0)
 			{
-				T* child{nullptr};
+				std::shared_ptr<T> child;
 
 				const auto children = this->getChildren<T>();
 
@@ -109,7 +104,7 @@ namespace age
 			///
 			///	\param recursive If set to true, this will get all children and their children.
 			///
-			virtual std::vector<Object*> getChildren(bool recursive = false) const;
+			virtual std::vector<std::shared_ptr<Object>> getChildren(bool recursive = false) const;
 
 			///
 			///	Return all children of the given type for this object.
@@ -117,15 +112,15 @@ namespace age
 			///	\param recursive If set to true, this will get all children and their children.
 			///
 			template <typename T>
-			std::vector<T*> getChildren(bool recursive = false) const
+			std::vector<std::shared_ptr<T>> getChildren(bool recursive = false) const
 			{
-				std::vector<T*> v;
+				std::vector<std::shared_ptr<T>> v;
 				const auto children = this->getChildren(recursive);
 				v.reserve(children.size());
 
 				for(const auto& c : children)
 				{
-					const auto child = dynamic_cast<T*>(c);
+					const auto child = std::dynamic_pointer_cast<T>(c);
 
 					if(child != nullptr)
 					{
@@ -141,7 +136,7 @@ namespace age
 			///
 			///	Returns false if the object doesn't exist.
 			///
-			virtual bool removeChild(Object* x);
+			virtual bool removeChild(const std::shared_ptr<Object>& x);
 
 			///
 			///	Remove this object from its parent if it has one.

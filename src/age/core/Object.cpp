@@ -8,11 +8,14 @@ using namespace age::core;
 class Object::Impl
 {
 public:
-	Impl() : children{}, id{}, parent{nullptr}
+	Impl() :
+		children{},
+		id{},
+		parent{nullptr}
 	{
 	}
 
-	std::vector<std::unique_ptr<Object>> children;
+	std::vector<std::shared_ptr<Object>> children;
 	std::string id;
 	Object* parent;
 };
@@ -39,24 +42,19 @@ void Object::initialize()
 {
 }
 
-void Object::setParent(Object* x)
-{
-	this->pimpl->parent = x;
-}
-
 Object* Object::getParent() const
 {
 	return this->pimpl->parent;
 }
 
-bool Object::addChild(std::unique_ptr<Object> x)
+bool Object::addChild(std::shared_ptr<Object> x)
 {
-	const auto foundIt = std::find_if(std::begin(this->pimpl->children), std::end(this->pimpl->children), [&x](const auto& up) { return x == up; });
+	const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
 
 	if(foundIt == std::end(this->pimpl->children))
 	{
 		x->pimpl->parent = this;
-		this->pimpl->children.push_back(std::move(x));
+		this->pimpl->children.push_back(x);
 
 		return true;
 	}
@@ -64,24 +62,24 @@ bool Object::addChild(std::unique_ptr<Object> x)
 	return false;
 }
 
-Object* Object::getChild(size_t x)
+std::shared_ptr<Object> Object::getChild(size_t x) const
 {
 	if(x < this->pimpl->children.size())
 	{
-		return this->pimpl->children[x].get();
+		return this->pimpl->children[x];
 	}
 
 	return nullptr;
 }
 
-std::vector<Object*> Object::getChildren(bool recursive) const
+std::vector<std::shared_ptr<Object>> Object::getChildren(bool recursive) const
 {
-	std::vector<Object*> v;
+	std::vector<std::shared_ptr<Object>> v;
 	v.reserve(this->pimpl->children.size());
 
 	for(const auto& child : this->pimpl->children)
 	{
-		v.push_back(child.get());
+		v.push_back(child);
 
 		if(recursive == true)
 		{
@@ -93,15 +91,15 @@ std::vector<Object*> Object::getChildren(bool recursive) const
 	return v;
 }
 
-bool Object::removeChild(Object* x)
+bool Object::removeChild(const std::shared_ptr<Object>& x)
 {
 	const auto removeIt =
-		std::remove_if(std::begin(this->pimpl->children), std::end(this->pimpl->children), [x](const auto& up) { return x == up.get(); });
+		std::remove(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
 
 	if(removeIt != std::end(this->pimpl->children))
 	{
-		const auto child = std::move(*removeIt);
 		this->pimpl->children.erase(removeIt, std::end(this->pimpl->children));
+		x->pimpl->parent = nullptr;
 		return true;
 	}
 
@@ -110,9 +108,11 @@ bool Object::removeChild(Object* x)
 
 bool Object::remove()
 {
-	if(this->pimpl->parent != nullptr)
+	const auto parent = this->getParent();
+
+	if(parent != nullptr)
 	{
-		return this->pimpl->parent->removeChild(this);
+		return parent->removeChild(this->shared_from_this());
 	}
 
 	return false;

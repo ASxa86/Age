@@ -12,19 +12,19 @@ using namespace age::pong;
 
 Ball::Ball()
 {
-	auto transform = std::make_unique<TransformComponent>();
+	auto transform = std::make_shared<TransformComponent>();
 	transform->setPosition({500.0, 500.0});
 
-	auto circle = std::make_unique<CircleComponent>();
+	auto circle = std::make_shared<CircleComponent>();
 	circle->setRadius(10);
 
-	auto kinematic = std::make_unique<KinematicComponent>();
+	auto kinematic = std::make_shared<KinematicComponent>();
 	kinematic->setPosition(transform->getPosition());
 	kinematic->setVelocity({50.0, 0.0});
 
-	this->addChild(std::move(circle));
-	this->addChild(std::move(transform));
-	this->addChild(std::move(kinematic));
+	this->addChild(circle);
+	this->addChild(transform);
+	this->addChild(kinematic);
 }
 
 Ball::~Ball()

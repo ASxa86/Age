@@ -15,7 +15,7 @@ namespace age
 			int run();
 
 		private:
-			age::core::Engine engine;
+			std::shared_ptr<age::core::Engine> engine;
 		};
 	}
 }

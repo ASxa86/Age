@@ -24,7 +24,7 @@ public:
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
 
-		this->font.loadFromFile("C:/age/resources/sansation.ttf");
+		this->font.loadFromFile("D:/age/resources/sansation.ttf");
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
 	}

@@ -115,21 +115,21 @@ public:
 
 Paddle::Paddle() : Entity()
 {
-	auto rectangle = std::make_unique<age::graphics::RectangleComponent>();
+	auto rectangle = std::make_shared<age::graphics::RectangleComponent>();
 	rectangle->setSize({25, 100});
-	this->addChild(std::move(rectangle));
+	this->addChild(rectangle);
 
-	auto input = std::make_unique<age::graphics::InputComponent>();
-	input->addChild(std::make_unique<MoveUp>());
-	input->addChild(std::make_unique<MoveDown>());
-	input->addChild(std::make_unique<MoveLeft>());
-	input->addChild(std::make_unique<MoveRight>());
-	input->addChild(std::make_unique<RotateRight>());
-	input->addChild(std::make_unique<RotateLeft>());
-	this->addChild(std::move(input));
+	auto input = std::make_shared<age::graphics::InputComponent>();
+	input->addChild(std::make_shared<MoveUp>());
+	input->addChild(std::make_shared<MoveDown>());
+	input->addChild(std::make_shared<MoveLeft>());
+	input->addChild(std::make_shared<MoveRight>());
+	input->addChild(std::make_shared<RotateRight>());
+	input->addChild(std::make_shared<RotateLeft>());
+	this->addChild(input);
 
-	this->addChild(std::make_unique<TransformComponent>());
-	this->addChild(std::make_unique<KinematicComponent>());
+	this->addChild(std::make_shared<TransformComponent>());
+	this->addChild(std::make_shared<KinematicComponent>());
 }
 
 Paddle::~Paddle()

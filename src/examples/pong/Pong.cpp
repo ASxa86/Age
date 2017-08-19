@@ -11,22 +11,23 @@ using namespace age::core;
 using namespace age::graphics;
 using namespace age::pong;
 
-Pong::Pong()
+Pong::Pong() :
+	engine{std::make_shared<Engine>()}
 {
-	auto window = std::make_unique<Window>();
-	auto player = std::make_unique<Paddle>();
+	auto window = std::make_shared<Window>();
+	auto player = std::make_shared<Paddle>();
 	player->setPosition({50.0, window->getHeight() / 2.0});
-	this->engine.addChild(std::move(player));
+	this->engine->addChild(player);
 
-	auto ai = std::make_unique<Paddle>();
+	auto ai = std::make_shared<Paddle>();
 	ai->setPosition({window->getWidth() - 75.0, window->getHeight() / 2.0});
-	this->engine.addChild(std::move(ai));
+	this->engine->addChild(std::move(ai));
 
-	this->engine.addChild(std::make_unique<Ball>());
-	this->engine.addChild(std::make_unique<age::graphics::PlayerInputSystem>());
-	this->engine.addChild(std::make_unique<age::physics::PhysicsSystem>());
-	this->engine.addChild(std::move(window));
-	this->engine.setEngineState(EngineState::State::Initialize);
+	this->engine->addChild(std::make_shared<Ball>());
+	this->engine->addChild(std::make_shared<age::graphics::PlayerInputSystem>());
+	this->engine->addChild(std::make_shared<age::physics::PhysicsSystem>());
+	this->engine->addChild(window);
+	this->engine->setEngineState(EngineState::State::Initialize);
 }
 
 Pong::~Pong()
@@ -35,9 +36,9 @@ Pong::~Pong()
 
 int Pong::run()
 {
-	while(this->engine.getEngineState().getState() < EngineState::State::Exit)
+	while(this->engine->getEngineState().getState() < EngineState::State::Exit)
 	{
-		this->engine.frame();
+		this->engine->frame();
 	}
 
 	return 0;
