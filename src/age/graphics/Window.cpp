@@ -4,6 +4,7 @@
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
 #include <age/graphics/DrawableComponent.h>
+#include <age/math/TransformComponent.h>
 #include <age/graphics/Window.h>
 #include <age/graphics/KeyEvent.h>
 
@@ -15,11 +16,15 @@
 
 using namespace age::core;
 using namespace age::graphics;
+using namespace age::math;
 
 class Window::Impl
 {
 public:
-	Impl(unsigned int width, unsigned int height) : settings{0, 0, 0}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}
+	Impl(unsigned int width, unsigned int height) :
+		settings{0, 0, 0},
+		window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings},
+		pixelsPerMeter{32}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
@@ -36,6 +41,7 @@ public:
 	// Temporary until I find a generic way to handle GUI widgets.
 	sf::Text text;
 	sf::Font font;
+	unsigned int pixelsPerMeter;
 };
 
 Window::Window(unsigned int width, unsigned int height) : RenderSystem(), pimpl(width, height)
@@ -54,6 +60,16 @@ unsigned int Window::getWidth() const
 unsigned int Window::getHeight() const
 {
 	return this->pimpl->window.getSize().y;
+}
+
+void Window::setPixelsPerMeter(unsigned int x)
+{
+	this->pimpl->pixelsPerMeter = x;
+}
+
+unsigned int Window::getPixelsPerMeter() const
+{
+	return this->pimpl->pixelsPerMeter;
 }
 
 void Window::pollEvents()
@@ -90,7 +106,7 @@ void Window::frame(std::chrono::microseconds /*x*/)
 	if(this->pimpl->window.isOpen() == true)
 	{
 		static double elapsed = 0.0;
-		auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
+		const auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
 		this->pimpl->window.clear();
 		elapsed += delta.count();
 
@@ -102,7 +118,7 @@ void Window::frame(std::chrono::microseconds /*x*/)
 
 			for(const auto& drawable : drawables)
 			{
-				drawable->draw(this->pimpl->window);
+				drawable->draw(this->pimpl->window, this->pimpl->pixelsPerMeter);
 			}
 		}
 

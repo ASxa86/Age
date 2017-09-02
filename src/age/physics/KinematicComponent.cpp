@@ -29,8 +29,6 @@ public:
 		PhysicsSystem::Engine().DestroyBody(this->body);
 	}
 
-	double scale = 1.0 / 32.0;
-
 	b2Body* body;
 };
 
@@ -44,28 +42,26 @@ KinematicComponent::~KinematicComponent()
 
 void KinematicComponent::setPosition(const vec<double, 2>& x)
 {
-	const auto pos = x * this->pimpl->scale;
-	const auto transform = b2Vec2{static_cast<float32>(X(pos)), static_cast<float32>(Y(pos))};
+	const auto transform = b2Vec2{static_cast<float32>(X(x)), static_cast<float32>(Y(x))};
 	this->pimpl->body->SetTransform(transform, this->pimpl->body->GetAngle());
 }
 
 vec<double, 2> KinematicComponent::getPosition() const
 {
 	const auto pos = this->pimpl->body->GetPosition();
-	return vec<double, 2>{pos.x, pos.y} / this->pimpl->scale;
+	return vec<double, 2>{pos.x, pos.y};
 }
 
 void KinematicComponent::setVelocity(const vec<double, 2>& x)
 {
-	const auto v = x * this->pimpl->scale;
-	const auto vel = b2Vec2{ static_cast<float32>(X(v)), static_cast<float32>(Y(v)) };
+	const auto vel = b2Vec2{ static_cast<float32>(X(x)), static_cast<float32>(Y(x)) };
 	this->pimpl->body->SetLinearVelocity(vel);
 }
 
 vec<double, 2> KinematicComponent::getVelocity() const
 {
 	const auto pos = this->pimpl->body->GetLinearVelocity();
-	return vec<double, 2>{pos.x, pos.y} / this->pimpl->scale;
+	return vec<double, 2>{pos.x, pos.y};
 }
 
 void KinematicComponent::setRotation(double x)

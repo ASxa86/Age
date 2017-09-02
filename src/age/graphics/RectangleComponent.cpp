@@ -31,8 +31,8 @@ std::array<double, 2> RectangleComponent::getSize() const
 	return{size.x, size.y};
 }
 
-void RectangleComponent::draw(sf::RenderTarget& x)
+void RectangleComponent::draw(sf::RenderTarget& x, unsigned int pixelsPerMeter)
 {
-	this->updateTransform(this->pimpl->rectangle);
+	this->updateTransform(this->pimpl->rectangle, pixelsPerMeter);
 	x.draw(this->pimpl->rectangle);
 }

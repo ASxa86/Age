@@ -29,8 +29,8 @@ double CircleComponent::getRadius() const
 	return this->pimpl->circle.getRadius();
 }
 
-void CircleComponent::draw(sf::RenderTarget& x)
+void CircleComponent::draw(sf::RenderTarget& x, unsigned int pixelsPerMeter)
 {
-	this->updateTransform(this->pimpl->circle);
+	this->updateTransform(this->pimpl->circle, pixelsPerMeter);
 	x.draw(this->pimpl->circle);
 }

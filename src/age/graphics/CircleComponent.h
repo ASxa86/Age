@@ -33,7 +33,10 @@ namespace age
 			///
 			double getRadius() const;
 
-			void draw(sf::RenderTarget& x) override;
+			///
+			///	Handle drawing this component's shape.
+			///
+			void draw(sf::RenderTarget& x, unsigned int pixelsPerMeter) override;
 
 		private:
 			class Impl;

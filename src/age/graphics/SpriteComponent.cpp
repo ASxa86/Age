@@ -29,7 +29,8 @@ sf::Sprite SpriteComponent::getSprite() const
 	return this->pimpl->sprite;
 }
 
-void SpriteComponent::draw(sf::RenderTarget& x)
+void SpriteComponent::draw(sf::RenderTarget& x, unsigned int pixelsPerMeter)
 {
+	this->updateTransform(this->pimpl->sprite, pixelsPerMeter);
 	x.draw(this->pimpl->sprite);
 }

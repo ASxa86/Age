@@ -32,7 +32,7 @@ namespace age
 			///
 			std::array<double, 2> getSize() const;
 
-			void draw(sf::RenderTarget& x) override;
+			void draw(sf::RenderTarget& x, unsigned int pixelsPerMeter) override;
 
 		private:
 			class Impl;

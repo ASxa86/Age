@@ -31,13 +31,13 @@ namespace age
 			///
 			///	\brief Override to handle drawing the derived component's data.
 			///
-			virtual void draw(sf::RenderTarget& x) = 0;
+			virtual void draw(sf::RenderTarget& x, unsigned int pixelsPerMeter) = 0;
 
 		protected:
 			///
 			///	\brief Conveniences function for updating a drawable's transformation with its entity's transform component.
 			///
-			void updateTransform(sf::Transformable& x);
+			void updateTransform(sf::Transformable& x, unsigned int pixelsPerMeter);
 		};
 	}
 }

@@ -25,7 +25,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		Y(v) = keyPressed == true ? -500.0 : 0.0;
+		Y(v) = keyPressed == true ? -10.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -42,7 +42,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		Y(v) = keyPressed == true ? 500.0 : 0.0;
+		Y(v) = keyPressed == true ? 10.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -59,7 +59,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		X(v) = keyPressed == true ? 500.0 : 0.0;
+		X(v) = keyPressed == true ? 10.0 : 0.0;
 		component->setVelocity(v);
 	}
 };
@@ -76,7 +76,7 @@ public:
 	{
 		auto component = x->getChild<KinematicComponent>();
 		auto v = component->getVelocity();
-		X(v) = keyPressed == true ? -500.0 : 0.0;
+		X(v) = keyPressed == true ? -10.0 : 0.0;
 		component->setVelocity(v);
 	}
 };

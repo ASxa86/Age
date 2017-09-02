@@ -34,8 +34,25 @@ namespace age
 			///
 			unsigned int getHeight() const;
 
+			///
+			///	Renders drawable components with the given pixel per meter ratio.
+			///	(32pixels/m)
+			///
+			void setPixelsPerMeter(unsigned int x);
+
+			///
+			///	Get the number of pixels per meter use to render drawable components.
+			///
+			unsigned int getPixelsPerMeter() const;
+
+			///
+			///	Polls for events using the internal windowing system.
+			///
 			void pollEvents() override;
 
+			///
+			///	Render one frame at the given time step.
+			///
 			void frame(std::chrono::microseconds x) override;
 
 		private:

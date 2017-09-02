@@ -16,11 +16,11 @@ Pong::Pong() :
 {
 	auto window = std::make_shared<Window>();
 	auto player = std::make_shared<Paddle>();
-	player->setPosition({50.0, window->getHeight() / 2.0});
+	player->setPosition({2.0, 10.0});
 	this->engine->addChild(player);
 
 	auto ai = std::make_shared<Paddle>();
-	ai->setPosition({window->getWidth() - 75.0, window->getHeight() / 2.0});
+	ai->setPosition({36.0, 10.0});
 	this->engine->addChild(std::move(ai));
 
 	this->engine->addChild(std::make_shared<Ball>());
