@@ -1,14 +1,18 @@
 #pragma once
 
 #include <age/core/Object.h>
+#include <age/entity/Export.h>
 #include <chrono>
+
+namespace entityx
+{
+	class EntityManager;
+}
 
 namespace age
 {
-	namespace core
+	namespace entity
 	{
-		class Entity;
-
 		///
 		///	\class Processor
 		///
@@ -18,7 +22,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT System : public Object
+		class AGE_ENTITY_EXPORT System : public age::core::Object
 		{
 		public:
 			System();
@@ -35,7 +39,7 @@ namespace age
 			///
 			///	Systems perform work on entities. This provides a convenient way to collect them.
 			///
-			std::vector<std::shared_ptr<Entity>> getEntities() const;
+			entityx::EntityManager* getEntities() const;
 		};
 	}
 }

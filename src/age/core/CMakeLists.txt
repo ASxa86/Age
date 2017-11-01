@@ -11,14 +11,11 @@ set(TARGET_H
 	Event.h
 	EventQueue.h
 	Export.h
-	FixedSystem.h
 	Object.h
 	Pimpl.h
 	PimplImpl.h
-	RenderSystem.h
-	System.h
+	Processor.h
 	Timer.h
-	VariableSystem.h
 )
 
 set(TARGET_SRC
@@ -29,12 +26,9 @@ set(TARGET_SRC
 	Entity.cpp
 	Event.cpp
 	EventQueue.cpp
-	FixedSystem.cpp
 	Object.cpp
-	RenderSystem.cpp
-	System.cpp
+	Processor.cpp
 	Timer.cpp
-	VariableSystem.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})

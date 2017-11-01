@@ -1,10 +1,10 @@
 #pragma once
 
-#include <age/core/System.h>
+#include <age/entity/System.h>
 
 namespace age
 {
-	namespace core
+	namespace entity
 	{
 		///
 		///	\class VariableSystem
@@ -15,7 +15,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT VariableSystem : public System
+		class AGE_ENTITY_EXPORT VariableSystem : public System
 		{
 		public:
 			VariableSystem();

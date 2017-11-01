@@ -1,6 +1,6 @@
-#include <age/core/FixedSystem.h>
+#include <age/entity/FixedSystem.h>
 
-using namespace age::core;
+using namespace age::entity;
 
 FixedSystem::FixedSystem() : System()
 {

@@ -1,6 +1,6 @@
-#include <age/core/VariableSystem.h>
+#include <age/entity/VariableSystem.h>
 
-using namespace age::core;
+using namespace age::entity;
 
 VariableSystem::VariableSystem() : System()
 {
