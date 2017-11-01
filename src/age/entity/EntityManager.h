@@ -12,7 +12,10 @@ namespace age
 		class AGE_ENTITY_EXPORT Entity
 		{
 		public:
+			int getID() const;
 			bool valid() const;
+			void destroy() const;
+
 
 			template <typename T>
 			void addComponent()
@@ -35,6 +38,7 @@ namespace age
 					pool->resize(this->id + 1);
 				}
 
+				pool->init(this->id);
 				this->manager->componentMasks[this->id].set(T::index());
 			}
 
@@ -66,6 +70,7 @@ namespace age
 
 			Entity create();
 			void destroy(Entity x);
+			bool valid(Entity x) const;
 
 			const std::vector<Entity>& getEntities() const;
 
@@ -74,6 +79,7 @@ namespace age
 			std::vector<Entity> entities;
 			std::vector<std::unique_ptr<BasePool>> pools;
 			std::vector<std::bitset<64>> componentMasks;
+			std::vector<bool> validEntities;
 			std::vector<int> indexList;
 		};
 	}
