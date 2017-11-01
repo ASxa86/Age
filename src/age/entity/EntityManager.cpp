@@ -21,7 +21,7 @@ EntityManager::~EntityManager()
 
 Entity EntityManager::create()
 {
-	Entity e;
+	Entity e{};
 	e.manager = this;
 
 	if(this->indexList.empty() == true)
@@ -58,4 +58,9 @@ void EntityManager::destroy(Entity x)
 		this->entities[x.id].manager = nullptr;
 		this->indexList.push_back(x.id);
 	}
+}
+
+const std::vector<Entity>& EntityManager::getEntities() const
+{
+	return this->entities;
 }

@@ -42,3 +42,18 @@ void Processor::render(std::chrono::microseconds x)
 		f(x);
 	}
 }
+
+void Processor::addFixedFunction(const std::function<void(std::chrono::microseconds)>& x)
+{
+	this->pimpl->fixedFunctions.push_back(x);
+}
+
+void Processor::addVariableFunction(const std::function<void(std::chrono::microseconds)>& x)
+{
+	this->pimpl->variableFunctions.push_back(x);
+}
+
+void Processor::addRenderFunction(const std::function<void(std::chrono::microseconds)>& x)
+{
+	this->pimpl->renderFunctions.push_back(x);
+}

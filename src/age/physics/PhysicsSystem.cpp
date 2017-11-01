@@ -1,6 +1,5 @@
 #include <age/physics/PhysicsSystem.h>
 #include <age/physics/KinematicComponent.h>
-#include <age/core/Entity.h>
 #include <age/core/PimplImpl.h>
 #include <age/math/TransformComponent.h>
 #include <age/core/Timer.h>

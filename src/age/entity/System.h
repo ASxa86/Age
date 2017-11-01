@@ -1,13 +1,8 @@
 #pragma once
 
 #include <age/core/Object.h>
-#include <age/entity/Export.h>
+#include <age/entity/EntityManager.h>
 #include <chrono>
-
-namespace entityx
-{
-	class EntityManager;
-}
 
 namespace age
 {
@@ -33,13 +28,13 @@ namespace age
 			///
 			///	\param x The elapsed/delta time in milliseconds.
 			///
-			virtual void frame(std::chrono::microseconds x) = 0;
+			virtual void frame(const std::vector<Entity>& entities, std::chrono::microseconds x) = 0;
 
 		protected:
 			///
 			///	Systems perform work on entities. This provides a convenient way to collect them.
 			///
-			entityx::EntityManager* getEntities() const;
+			EntityManager* getEntityManager() const;
 		};
 	}
 }

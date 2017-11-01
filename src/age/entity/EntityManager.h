@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/entity/ComponentPool.h>
+#include <age/entity/Export.h>
 #include <age/core/Object.h>
 #include <bitset>
 
@@ -8,7 +9,7 @@ namespace age
 {
 	namespace entity
 	{
-		class Entity
+		class AGE_ENTITY_EXPORT Entity
 		{
 		public:
 			bool valid() const;
@@ -57,7 +58,7 @@ namespace age
 			EntityManager* manager;
 		};
 
-		class EntityManager : public age::core::Object
+		class AGE_ENTITY_EXPORT EntityManager : public age::core::Object
 		{
 		public:
 			EntityManager();
@@ -65,6 +66,8 @@ namespace age
 
 			Entity create();
 			void destroy(Entity x);
+
+			const std::vector<Entity>& getEntities() const;
 
 		private:
 			friend class Entity;

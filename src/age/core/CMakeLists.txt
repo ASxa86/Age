@@ -7,7 +7,6 @@ set(TARGET_H
 	Engine.h
 	EngineState.h
 	EngineStateEvent.h
-	Entity.h
 	Event.h
 	EventQueue.h
 	Export.h
@@ -23,7 +22,6 @@ set(TARGET_SRC
 	Engine.cpp
 	EngineState.cpp
 	EngineStateEvent.cpp
-	Entity.cpp
 	Event.cpp
 	EventQueue.cpp
 	Object.cpp

@@ -1,5 +1,5 @@
 #include <age/entity/System.h>
-#include <age/entity/EntityProcessor.h>
+#include <age/entity/EntityManager.h>
 
 using namespace age::entity;
 
@@ -11,13 +11,13 @@ System::~System()
 {
 }
 
-entityx::EntityManager* System::getEntities() const
+EntityManager* System::getEntityManager() const
 {
-	const auto parent = this->getParent<EntityProcessor>();
+	const auto parent = this->getParent();
 
 	if(parent != nullptr)
 	{
-		return parent->getEntities();
+		return parent->getChild<EntityManager>().get();
 	}
 
 	return nullptr;
