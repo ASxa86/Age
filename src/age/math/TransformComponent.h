@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Object.h>
+#include <age/entity/Component.h>
 #include <age/math/Export.h>
 #include <boost/qvm/vec.hpp>
 
@@ -17,11 +17,11 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_MATH_EXPORT TransformComponent : public age::core::Object
+		class AGE_MATH_EXPORT TransformComponent : public age::entity::Component<TransformComponent>
 		{
 		public:
 			TransformComponent();
-			~TransformComponent() override;
+			~TransformComponent();
 
 			///
 			///	Set the position for the component.
@@ -48,8 +48,8 @@ namespace age
 			double getRotation() const;
 
 		private:
-			class Impl;
-			Pimpl<Impl> pimpl;
+			boost::qvm::vec<double, 2> position;
+			double rotation;
 		};
 	}
 }

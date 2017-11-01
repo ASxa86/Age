@@ -12,4 +12,4 @@ set(TARGET_SRC
 )
 
 add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})
-target_link_libraries(${PROJECT_NAME} AgeCore)
+target_link_libraries(${PROJECT_NAME} AgeEntity)

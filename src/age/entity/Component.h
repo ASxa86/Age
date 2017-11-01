@@ -1,11 +1,14 @@
 #pragma once
 
+#include <age/entity/Export.h>
+
 namespace age
 {
 	namespace entity
 	{
-		struct BaseComponent
+		struct AGE_ENTITY_EXPORT BaseComponent
 		{
+			BaseComponent();
 			BaseComponent(const BaseComponent&) = delete;
 			BaseComponent& operator=(const BaseComponent&) = delete;
 
