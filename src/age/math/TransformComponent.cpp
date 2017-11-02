@@ -1,11 +1,10 @@
 #include <age/math/TransformComponent.h>
 #include <cmath>
 
-using namespace age::entity;
 using namespace age::math;
 using namespace boost::qvm;
 
-TransformComponent::TransformComponent() : Component<TransformComponent>()
+TransformComponent::TransformComponent()
 {
 }
 

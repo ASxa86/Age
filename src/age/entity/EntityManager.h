@@ -22,15 +22,15 @@ namespace age
 			{
 				ComponentPool<T> pool{};
 
-				if(T::index() >= manager->pools.size())
+				if(Component<T>::index() >= this->manager->pools.size())
 				{
 					auto p = std::make_unique<ComponentPool<T>>();
 					pool = p.get();
-					manager->pools.push_back(std::move(p));
+					this->manager->pools.push_back(std::move(p));
 				}
 				else
 				{
-					pool = static_cast<ComponentPool<T>*>(manager->pools[this->id].get());
+					pool = static_cast<ComponentPool<T>*>(this->manager->pools[this->id].get());
 				}
 
 				if(this->id >= pool->size())
@@ -39,19 +39,28 @@ namespace age
 				}
 
 				pool->init(this->id);
-				this->manager->componentMasks[this->id].set(T::index());
+				this->manager->componentMasks[this->id].set(Component<T>::index());
+			}
+
+			template <typename T>
+			void removeComponent()
+			{
+				if(Component<T>::index() < this->manager->pools.size())
+				{
+					this->manager->componentMasks[this->id].reset(Component<T>::index());
+				}
 			}
 
 			template <typename T>
 			T& getComponent()
 			{
-				return static_cast<ComponentPool<T>*>(this->manager->pools[T::index()].get())->Components[this->id];
+				return static_cast<ComponentPool<T>*>(this->manager->pools[Component<T>::index()].get())->Components[this->id];
 			}
 
 			template <typename T>
 			bool hasComponent()
 			{
-				return static_cast<ComponentPool<T>*>(this->manager->componentMasks[this->id].test(T::index()));
+				return static_cast<ComponentPool<T>*>(this->manager->componentMasks[this->id].test(Component<T>::index()));
 			}
 
 		private:

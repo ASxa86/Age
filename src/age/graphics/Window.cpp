@@ -1,18 +1,15 @@
-#include <age/core/Entity.h>
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
-#include <age/graphics/DrawableComponent.h>
-#include <age/math/TransformComponent.h>
-#include <age/graphics/Window.h>
+#include <age/entity/EntityManager.h>
 #include <age/graphics/KeyEvent.h>
-
+#include <age/graphics/Window.h>
+#include <age/math/TransformComponent.h>
 #include <SFML/Graphics.hpp>
-
+#include <iomanip>
 #include <numeric>
 #include <sstream>
-#include <iomanip>
 
 using namespace age::core;
 using namespace age::graphics;
@@ -21,10 +18,8 @@ using namespace age::math;
 class Window::Impl
 {
 public:
-	Impl(unsigned int width, unsigned int height) :
-		settings{0, 0, 0},
-		window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings},
-		pixelsPerMeter{32}
+	Impl(unsigned int width, unsigned int height)
+		: settings{0, 0, 0}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}, pixelsPerMeter{32}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
@@ -129,7 +124,6 @@ void Window::frame(std::chrono::microseconds /*x*/)
 			this->pimpl->text.setString("FPS: " + ss.str());
 			elapsed = 0.0;
 		}
-
 
 		this->pimpl->window.draw(this->pimpl->text);
 		this->pimpl->window.display();

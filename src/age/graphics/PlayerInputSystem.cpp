@@ -1,8 +1,6 @@
 #include <age/graphics/PlayerInputSystem.h>
 #include <age/core/Engine.h>
-#include <age/core/Entity.h>
 #include <age/graphics/InputComponent.h>
-#include <age/graphics/Command.h>
 #include <age/graphics/KeyEvent.h>
 
 #include <SFML/Window.hpp>
@@ -29,43 +27,39 @@ void PlayerInputSystem::event(age::core::Event* x)
 	
 	if(keyEvent != nullptr)
 	{
-		const auto entities = this->getParent<Engine>()->getChildren<Entity>();
+		//const auto entities = this->getParent<Engine>()->getChildren<Entity>();
 	
-		for(const auto& entity : entities)
-		{
-			const auto inputComponent = entity->getChild<InputComponent>();
+		//for(const auto& entity : entities)
+		//{
+		//	const auto inputComponent = entity->getChild<InputComponent>();
 	
-			if(inputComponent != nullptr)
-			{
-				const auto commands = inputComponent->getChildren<Command>();
-				const auto it = std::find_if(std::begin(commands), std::end(commands), [keyEvent](auto c) { return keyEvent->getKey() == c->getMappedKey(); });
+		//	if(inputComponent != nullptr)
+		//	{
+		//		const auto commands = inputComponent->getChildren<Command>();
+		//		const auto it = std::find_if(std::begin(commands), std::end(commands), [keyEvent](auto c) { return keyEvent->getKey() == c->getMappedKey(); });
 
-				if(it != std::end(commands))
-				{
-					(*it)->execute(entity.get(), keyEvent->getType() == KeyEvent::Type::Pressed);
-				}
-			}
-		}
+		//		if(it != std::end(commands))
+		//		{
+		//			(*it)->execute(entity.get(), keyEvent->getType() == KeyEvent::Type::Pressed);
+		//		}
+		//	}
+		//}
 	}
 }
 
-void PlayerInputSystem::frame(std::chrono::microseconds)
+void PlayerInputSystem::frame(const std::vector<age::entity::Entity>& entities, std::chrono::microseconds)
 {
-	const auto entities = this->getEntities();
-
-	for(const auto& entity : entities)
+	for(auto entity : entities)
 	{
-		const auto inputComponent = entity->getChild<InputComponent>();
-
-		if(inputComponent != nullptr)
+		if(entity.valid() == true && entity.hasComponent<InputComponent>() == true)
 		{
-			const auto commands = inputComponent->getChildren<Command>();
+			const auto inputComponent = entity.getComponent<InputComponent>();
 
-			for(const auto& command : commands)
+			for(const auto& keyBinding : inputComponent.getKeyBindings())
 			{
-				if(sf::Keyboard::isKeyPressed(command->getMappedKey()) == true)
+				if(sf::Keyboard::isKeyPressed(keyBinding.first) == true)
 				{
-					command->execute(entity.get(), true);
+					keyBinding.second(entity, true);
 				}
 			}
 		}

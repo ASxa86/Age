@@ -1,6 +1,5 @@
 #pragma once
 
-#include <age/entity/Component.h>
 #include <age/math/Export.h>
 #include <boost/qvm/vec.hpp>
 
@@ -17,7 +16,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_MATH_EXPORT TransformComponent : public age::entity::Component<TransformComponent>
+		class AGE_MATH_EXPORT TransformComponent
 		{
 		public:
 			TransformComponent();

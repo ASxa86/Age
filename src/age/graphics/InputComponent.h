@@ -1,7 +1,10 @@
 #pragma once
 
-#include <age/core/Object.h>
+#include <age/entity/EntityManager.h>
 #include <age/graphics/Export.h>
+#include <functional>
+#include <vector>
+#include <SFML/Window/Keyboard.hpp>
 
 namespace age
 {
@@ -19,11 +22,18 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_GRAPHICS_EXPORT InputComponent : public age::core::Object
+		class AGE_GRAPHICS_EXPORT InputComponent
 		{
 		public:
 			InputComponent();
-			~InputComponent() override;
+			~InputComponent();
+
+			void addKeyBinding(sf::Keyboard::Key key, const std::function<void(age::entity::Entity, bool)>& x);
+
+			const std::vector<std::pair<sf::Keyboard::Key, std::function<void(age::entity::Entity, bool)>>>& getKeyBindings() const;
+
+		private:
+			std::vector<std::pair<sf::Keyboard::Key, std::function<void(age::entity::Entity, bool)>>> keyBindings;
 		};
 	}
 }

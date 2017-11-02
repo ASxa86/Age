@@ -10,27 +10,17 @@ include_directories(${SFML_INCLUDE_DIR})
 add_definitions(-D${PROJECT_NAME}_Export)
 
 set(TARGET_H
-	CircleComponent.h
-	Command.h
-	DrawableComponent.h
 	Export.h
 	KeyEvent.h
 	InputComponent.h
 	PlayerInputSystem.h
-	RectangleComponent.h
-	SpriteComponent.h
 	Window.h
 )
 
 set(TARGET_SRC
-	CircleComponent.cpp
-	Command.cpp
-	DrawableComponent.cpp
 	InputComponent.cpp
 	KeyEvent.cpp
 	PlayerInputSystem.cpp
-	RectangleComponent.cpp
-	SpriteComponent.cpp
 	Window.cpp
 )
 

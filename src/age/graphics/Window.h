@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/RenderSystem.h>
+#include <age/core/Processor.h>
 #include <age/graphics/Export.h>
 
 namespace age
@@ -18,7 +18,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_GRAPHICS_EXPORT Window : public age::core::RenderSystem
+		class AGE_GRAPHICS_EXPORT Window : public age::core::Processor
 		{
 		public:
 			Window(unsigned int width = 1280, unsigned int height = 720);
