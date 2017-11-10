@@ -8,15 +8,11 @@ find_package(SFML 2.4 COMPONENTS Audio)
 include_directories(${SFML_INCLUDE_DIR})
 
 set(TARGET_H
-	Ball.h
 	Pong.h
-	Paddle.h
 )
 
 set(TARGET_SRC
-	Ball.cpp
 	main.cpp
-	Paddle.cpp
 	Pong.cpp
 )
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/FixedSystem.h>
+#include <age/entity/FixedSystem.h>
 #include <age/physics/Export.h>
 
 class b2World;
@@ -18,7 +18,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_PHYSICS_EXPORT PhysicsSystem : public age::core::FixedSystem
+		class AGE_PHYSICS_EXPORT PhysicsSystem : public age::entity::FixedSystem
 		{
 		public:
 			PhysicsSystem();
@@ -32,7 +32,7 @@ namespace age
 			///
 			///	Updates entity transformations using physics.
 			///
-			void frame(std::chrono::microseconds x) override;
+			void frame(const std::vector<age::entity::Entity>&, std::chrono::microseconds x) override;
 		};
 	}
 }

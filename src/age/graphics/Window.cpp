@@ -12,6 +12,7 @@
 #include <sstream>
 
 using namespace age::core;
+using namespace age::entity;
 using namespace age::graphics;
 using namespace age::math;
 
@@ -24,7 +25,7 @@ public:
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
 
-		this->font.loadFromFile("D:/age/resources/sansation.ttf");
+		this->font.loadFromFile("C:/age/resources/sansation.ttf");
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
 	}
@@ -39,8 +40,10 @@ public:
 	unsigned int pixelsPerMeter;
 };
 
-Window::Window(unsigned int width, unsigned int height) : RenderSystem(), pimpl(width, height)
+Window::Window(unsigned int width, unsigned int height) : Processor(), pimpl(width, height)
 {
+	this->addVariableFunction([this](auto x) { this->variable(x); });
+	this->addRenderFunction([this](auto x) { this->render(x); });
 }
 
 Window::~Window()
@@ -67,7 +70,7 @@ unsigned int Window::getPixelsPerMeter() const
 	return this->pimpl->pixelsPerMeter;
 }
 
-void Window::pollEvents()
+void Window::variable(std::chrono::microseconds)
 {
 	sf::Event e;
 	const auto engine = this->getParent<Engine>();
@@ -96,7 +99,7 @@ void Window::pollEvents()
 	}
 }
 
-void Window::frame(std::chrono::microseconds /*x*/)
+void Window::render(std::chrono::microseconds /*x*/)
 {
 	if(this->pimpl->window.isOpen() == true)
 	{
@@ -105,15 +108,14 @@ void Window::frame(std::chrono::microseconds /*x*/)
 		this->pimpl->window.clear();
 		elapsed += delta.count();
 
-		const auto entities = this->getEntities();
+		auto parent = this->getParent();
+		auto entities = parent->getChild<EntityManager>()->getEntities();
 
-		for(const auto& entity : entities)
+		for(auto& entity : entities)
 		{
-			const auto drawables = entity->getChildren<DrawableComponent>();
-
-			for(const auto& drawable : drawables)
+			if(entity.valid() == true && entity.hasComponent<std::shared_ptr<sf::Drawable>>() == true)
 			{
-				drawable->draw(this->pimpl->window, this->pimpl->pixelsPerMeter);
+				this->pimpl->window.draw(*entity.getComponent<std::shared_ptr<sf::Drawable>>());
 			}
 		}
 

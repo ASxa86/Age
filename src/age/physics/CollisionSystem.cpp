@@ -1,7 +1,6 @@
 #include <age/physics/CollisionSystem.h>
 #include <age/physics/BoxCollisionComponent.h>
 #include <age/math/TransformComponent.h>
-#include <age/core/Entity.h>
 
 using namespace age::core;
 using namespace age::math;
@@ -15,6 +14,6 @@ CollisionSystem::~CollisionSystem()
 {
 }
 
-void CollisionSystem::frame(std::chrono::microseconds)
+void CollisionSystem::frame(const std::vector<age::entity::Entity>&, std::chrono::microseconds)
 {
 }

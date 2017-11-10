@@ -29,22 +29,20 @@ b2World& PhysicsSystem::Engine()
 	return engine;
 }
 
-void PhysicsSystem::frame(std::chrono::microseconds x)
+void PhysicsSystem::frame(const std::vector<age::entity::Entity>& entities, std::chrono::microseconds x)
 {
 	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 	PhysicsSystem::Engine().Step(static_cast<float32>(seconds.count()), 8, 3);
 
-	const auto entities = this->getEntities();
-
-	for(const auto& entity : entities)
+	for(auto entity : entities)
 	{
-		const auto kinematic = entity->getChild<KinematicComponent>();
-		const auto transform = entity->getChild<TransformComponent>();
-
-		if(kinematic != nullptr && transform != nullptr)
+		if(entity.valid() == true && entity.hasComponent<KinematicComponent>() == true && entity.hasComponent<TransformComponent>() == true)
 		{
-			transform->setPosition(kinematic->getPosition());
-			transform->setRotation(kinematic->getRotation());
+			auto& kinematic = entity.getComponent<KinematicComponent>();
+			auto& transform = entity.getComponent<TransformComponent>();
+
+			transform.setPosition(kinematic.getPosition());
+			transform.setRotation(kinematic.getRotation());
 		}
 	}
 }

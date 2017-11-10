@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <age/entity/ComponentPool.h>
 #include <age/entity/Export.h>
 #include <age/core/Object.h>
@@ -17,10 +18,10 @@ namespace age
 			void destroy() const;
 
 
-			template <typename T>
-			void addComponent()
+			template <typename T, typename... Args>
+			void addComponent(Args&& ...args)
 			{
-				ComponentPool<T> pool{};
+				ComponentPool<T>* pool{};
 
 				if(Component<T>::index() >= this->manager->pools.size())
 				{
@@ -30,7 +31,7 @@ namespace age
 				}
 				else
 				{
-					pool = static_cast<ComponentPool<T>*>(this->manager->pools[this->id].get());
+					pool = static_cast<ComponentPool<T>*>(this->manager->pools[Component<T>::index()].get());
 				}
 
 				if(this->id >= pool->size())
@@ -38,7 +39,7 @@ namespace age
 					pool->resize(this->id + 1);
 				}
 
-				pool->init(this->id);
+				pool->Components[this->id] = T(std::forward<Args>(args)...);
 				this->manager->componentMasks[this->id].set(Component<T>::index());
 			}
 
@@ -60,7 +61,7 @@ namespace age
 			template <typename T>
 			bool hasComponent()
 			{
-				return static_cast<ComponentPool<T>*>(this->manager->componentMasks[this->id].test(Component<T>::index()));
+				return this->manager->componentMasks[this->id].test(Component<T>::index());
 			}
 
 		private:

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <age/core/Object.h>
 #include <age/physics/Export.h>
 #include <boost/qvm/vec.hpp>
 
@@ -17,11 +16,11 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_PHYSICS_EXPORT KinematicComponent : public age::core::Object
+		class AGE_PHYSICS_EXPORT KinematicComponent
 		{
 		public:
 			KinematicComponent();
-			~KinematicComponent() override;
+			~KinematicComponent();
 
 			///
 			///	Set the position within the world.
@@ -72,8 +71,10 @@ namespace age
 			double getAngularVelocity() const;
 
 		private:
-			class Impl;
-			Pimpl<Impl> pimpl;
+			boost::qvm::vec<double, 2> position;
+			boost::qvm::vec<double, 2> velocity;
+			double rotation;
+			double angularVelocity;
 		};
 	}
 }

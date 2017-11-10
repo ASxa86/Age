@@ -3,8 +3,6 @@
 #include <age/core/PimplImpl.h>
 #include <age/core/Engine.h>
 #include <age/math/TransformComponent.h>
-#include <age/physics/Box2D/Dynamics/b2Body.h>
-#include <age/physics/Box2D/Dynamics/b2World.h>
 #include <boost/qvm/vec_access.hpp>
 #include <boost/qvm/vec_operations.hpp>
 #include <boost/math/constants/constants.hpp>
@@ -13,26 +11,7 @@ using namespace boost::qvm;
 using namespace age::math;
 using namespace age::physics;
 
-class KinematicComponent::Impl
-{
-public:
-	Impl() :
-		body{nullptr}
-	{
-		b2BodyDef def;
-		def.type = b2_kinematicBody;
-		this->body = PhysicsSystem::Engine().CreateBody(&def);
-	}
-
-	~Impl()
-	{
-		PhysicsSystem::Engine().DestroyBody(this->body);
-	}
-
-	b2Body* body;
-};
-
-KinematicComponent::KinematicComponent() : age::core::Object(), pimpl()
+KinematicComponent::KinematicComponent()
 {
 }
 
@@ -42,45 +21,40 @@ KinematicComponent::~KinematicComponent()
 
 void KinematicComponent::setPosition(const vec<double, 2>& x)
 {
-	const auto transform = b2Vec2{static_cast<float32>(X(x)), static_cast<float32>(Y(x))};
-	this->pimpl->body->SetTransform(transform, this->pimpl->body->GetAngle());
+	this->position = x;
 }
 
 vec<double, 2> KinematicComponent::getPosition() const
 {
-	const auto pos = this->pimpl->body->GetPosition();
-	return vec<double, 2>{pos.x, pos.y};
+	return this->position;
 }
 
 void KinematicComponent::setVelocity(const vec<double, 2>& x)
 {
-	const auto vel = b2Vec2{ static_cast<float32>(X(x)), static_cast<float32>(Y(x)) };
-	this->pimpl->body->SetLinearVelocity(vel);
+	this->velocity = x;
 }
 
 vec<double, 2> KinematicComponent::getVelocity() const
 {
-	const auto pos = this->pimpl->body->GetLinearVelocity();
-	return vec<double, 2>{pos.x, pos.y};
+	return this->velocity;
 }
 
 void KinematicComponent::setRotation(double x)
 {
-	const auto angle = static_cast<float32>(x * boost::math::constants::pi<double>() / 180.0);
-	this->pimpl->body->SetTransform(this->pimpl->body->GetPosition(), angle);
+	this->rotation = x;
 }
 
 double KinematicComponent::getRotation() const
 {
-	return this->pimpl->body->GetAngle() / boost::math::constants::pi<double>() * 180.0;
+	return this->rotation;
 }
 
 void KinematicComponent::setAngularVelocity(double x)
 {
-	this->pimpl->body->SetAngularVelocity(static_cast<float32>(x));
+	this->angularVelocity = x;
 }
 
 double KinematicComponent::getAngularVelocity() const
 {
-	return this->pimpl->body->GetAngularVelocity();
+	return this->angularVelocity;
 }

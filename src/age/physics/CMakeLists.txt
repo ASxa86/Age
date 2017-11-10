@@ -158,6 +158,7 @@ set(BOX2D_SRC
 add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${BOX2D_SRC} ${TARGET_H} ${BOX2D_H})
 
 target_link_libraries(${PROJECT_NAME}
+	AgeEntity
 	AgeMath
 )
 

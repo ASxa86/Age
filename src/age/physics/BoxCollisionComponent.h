@@ -1,6 +1,5 @@
 #pragma once
 
-#include <age/core/Pimpl.h>
 #include <age/physics/Export.h>
 #include <boost/qvm/vec.hpp>
 
@@ -36,8 +35,8 @@ namespace age
 			boost::qvm::vec<double, 2> getSize() const;
 
 		private:
-			class Impl;
-			Pimpl<Impl> pimpl;
+			boost::qvm::vec<double, 2> center;
+			boost::qvm::vec<double, 2> size;
 		};
 	}
 }
