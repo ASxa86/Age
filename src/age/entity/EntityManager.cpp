@@ -49,16 +49,11 @@ Entity EntityManager::create()
 		this->validEntities[e.id] = true;
 	}
 
-	if(e.id >= this->componentMasks.size())
+	for(const auto& pair : this->pools)
 	{
-		this->componentMasks.resize(e.id + 1);
-	}
-
-	for(const auto& pool : this->pools)
-	{
-		if(e.id >= pool->size())
+		if(e.id >= pair.second->size())
 		{
-			pool->resize(e.id + 1);
+			pair.second->resize(e.id + 1);
 		}
 	}
 
@@ -71,7 +66,6 @@ void EntityManager::destroy(Entity x)
 	{
 		this->indexList.push_back(x.id);
 		this->validEntities[x.id] = false;
-		this->componentMasks[x.id].reset();
 	}
 }
 

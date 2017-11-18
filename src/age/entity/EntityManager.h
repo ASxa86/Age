@@ -4,7 +4,9 @@
 #include <age/entity/ComponentPool.h>
 #include <age/entity/Export.h>
 #include <age/core/Object.h>
-#include <bitset>
+#include <map>
+#include <tuple>
+#include <typeindex>
 
 namespace age
 {
@@ -19,49 +21,39 @@ namespace age
 
 
 			template <typename T, typename... Args>
-			void addComponent(Args&& ...args)
+			T& addComponent(Args&& ...args)
 			{
-				ComponentPool<T>* pool{};
-
-				if(Component<T>::index() >= this->manager->pools.size())
-				{
-					auto p = std::make_unique<ComponentPool<T>>();
-					pool = p.get();
-					this->manager->pools.push_back(std::move(p));
-				}
-				else
-				{
-					pool = static_cast<ComponentPool<T>*>(this->manager->pools[Component<T>::index()].get());
-				}
+				const auto pool = this->manager->getPool<T>();
 
 				if(this->id >= pool->size())
 				{
 					pool->resize(this->id + 1);
 				}
 
-				pool->Components[this->id] = T(std::forward<Args>(args)...);
-				this->manager->componentMasks[this->id].set(Component<T>::index());
+				pool->get(this->id) = T(std::forward<Args>(args)...);
+				pool->setValid(this->id);
+				return pool->get(this->id);
 			}
 
 			template <typename T>
 			void removeComponent()
 			{
-				if(Component<T>::index() < this->manager->pools.size())
-				{
-					this->manager->componentMasks[this->id].reset(Component<T>::index());
-				}
+				const auto pool = this->manager->getPool<T>();
+				pool->setValid(this->id, false);
 			}
 
 			template <typename T>
 			T& getComponent()
 			{
-				return static_cast<ComponentPool<T>*>(this->manager->pools[Component<T>::index()].get())->Components[this->id];
+				const auto pool = this->manager->getPool<T>();
+				return pool->get(this->id);
 			}
 
 			template <typename T>
 			bool hasComponent()
 			{
-				return this->manager->componentMasks[this->id].test(Component<T>::index());
+				const auto pool = this->manager->getPool<T>();
+				return pool->getValid(this->id);
 			}
 
 		private:
@@ -84,11 +76,46 @@ namespace age
 
 			const std::vector<Entity>& getEntities() const;
 
+			template <typename ...Args>
+			void each(std::function<void(Entity, Args&...)> x)
+			{
+				const auto tuple = std::make_tuple(this->getPool<Args>()...);
+
+				std::apply([this, &x](auto... pool) {
+					for(auto e : this->entities)
+					{
+						const auto validList = { true, (pool != nullptr && pool->getValid(e.id))... };
+						const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
+
+						if(valid == true)
+						{
+							x(e, pool->get(e.id)...);
+						}
+
+					}
+				}, tuple);
+			}
+
+			template <typename T>
+			ComponentPool<T>* getPool()
+			{
+				auto pool = static_cast<ComponentPool<T>*>(this->pools[typeid(T)].get());
+
+				if(pool == nullptr)
+				{
+					auto p = std::make_unique<ComponentPool<T>>();
+					p->resize(this->entities.size());
+					pool = p.get();
+					this->pools[typeid(T)] = std::move(p);
+				}
+
+				return pool;
+			}
+
 		private:
 			friend class Entity;
+			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;
-			std::vector<std::unique_ptr<BasePool>> pools;
-			std::vector<std::bitset<64>> componentMasks;
 			std::vector<bool> validEntities;
 			std::vector<int> indexList;
 		};

@@ -1,35 +1,50 @@
 #pragma once
 
+#include <age/entity/Export.h>
 #include <vector>
 
 namespace age
 {
 	namespace entity
 	{
-		struct BasePool
+		class AGE_ENTITY_EXPORT BasePool
 		{
-			virtual ~BasePool()
-			{
-			}
+		public:
+			BasePool();
+			virtual ~BasePool();
 
 			virtual void resize(std::size_t x) = 0;
 			virtual std::size_t size() const = 0;
+
+			void setValid(std::size_t x, bool v = true);
+			bool getValid(std::size_t x) const;
+
+		protected:
+			std::vector<bool> valid;
 		};
 
 		template <typename T>
-		struct ComponentPool : public BasePool
+		class ComponentPool : public BasePool
 		{
+		public:
 			void resize(std::size_t x) override
 			{
-				this->Components.resize(x);
+				this->components.resize(x);
+				this->valid.resize(x);
 			}
 
 			std::size_t size() const
 			{
-				return this->Components.size();
+				return this->components.size();
 			}
 
-			std::vector<T> Components;
+			T& get(std::size_t x)
+			{
+				return this->components[x];
+			}
+
+		private:
+			std::vector<T> components;
 		};
 	}
 }

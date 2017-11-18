@@ -15,6 +15,7 @@ set(TARGET_H
 
 set(TARGET_SRC
 	Component.cpp
+	ComponentPool.cpp
 	EntityManager.cpp
 	FixedSystem.cpp
 	System.cpp
