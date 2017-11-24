@@ -16,22 +16,20 @@ SystemManager::~SystemManager()
 
 void SystemManager::updateFixedSystems(std::chrono::microseconds x)
 {
-	const auto& entities = this->getParent()->getChild<EntityManager>()->getEntities();
 	const auto systems = this->getChildren<FixedSystem>();
 
 	for(const auto& system : systems)
 	{
-		system->frame(entities, x);
+		system->frame(x);
 	}
 }
 
 void SystemManager::updateVariableSystems(std::chrono::microseconds x)
 {
-	const auto& entities = this->getParent()->getChild<EntityManager>()->getEntities();
 	const auto systems = this->getChildren<VariableSystem>();
 
 	for(const auto& system : systems)
 	{
-		system->frame(entities, x);
+		system->frame(x);
 	}
 }

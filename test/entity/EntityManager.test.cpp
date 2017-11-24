@@ -15,6 +15,11 @@ struct Velocity
 	double y{};
 };
 
+struct Drawable
+{
+	std::string draw{};
+};
+
 TEST(EntityManager, create)
 {
 	EntityManager manager;
@@ -63,6 +68,7 @@ TEST(EntityManager, hasComponent)
 	auto entity = manager.create();
 	EXPECT_FALSE(entity.hasComponent<Position>());
 	EXPECT_FALSE(entity.hasComponent<Velocity>());
+	EXPECT_FALSE(entity.hasComponent<Drawable>());
 }
 
 TEST(EntityManager, removeComponent)
@@ -115,4 +121,12 @@ TEST(EntityManager, each)
 	});
 
 	EXPECT_EQ(entityCount, maxEntity);
+
+	entityCount = 0;
+	manager.each<Position, Velocity, Drawable>([&entityCount](Entity, Position&, Velocity&, Drawable&) {
+		ADD_FAILURE() << "No entities should exist with Position, Velocity, and Drawable components.";
+		entityCount++;
+	});
+
+	EXPECT_EQ(entityCount, 0);
 }

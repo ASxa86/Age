@@ -1,9 +1,9 @@
 #pragma once
 
+#include <age/core/Object.h>
 #include <age/entity/Component.h>
 #include <age/entity/ComponentPool.h>
 #include <age/entity/Export.h>
-#include <age/core/Object.h>
 #include <map>
 #include <tuple>
 #include <typeindex>
@@ -19,9 +19,8 @@ namespace age
 			bool valid() const;
 			void destroy() const;
 
-
 			template <typename T, typename... Args>
-			T& addComponent(Args&& ...args)
+			T& addComponent(Args&&... args)
 			{
 				const auto pool = this->manager->getPool<T>();
 
@@ -76,24 +75,27 @@ namespace age
 
 			const std::vector<Entity>& getEntities() const;
 
-			template <typename ...Args>
-			void each(std::function<void(Entity, Args&...)> x)
+			template <typename T> struct identity { typedef T type; };
+
+			template <typename... Args>
+			void each(typename identity<std::function<void(Entity, Args&...)>>::type x)
 			{
 				const auto tuple = std::make_tuple(this->getPool<Args>()...);
 
-				std::apply([this, &x](auto... pool) {
-					for(auto e : this->entities)
-					{
-						const auto validList = { true, (pool != nullptr && pool->getValid(e.id))... };
-						const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
-
-						if(valid == true)
+				std::apply(
+					[this, &x](auto... pool) {
+						for(auto e : this->entities)
 						{
-							x(e, pool->get(e.id)...);
-						}
+							const auto validList = {true, (pool != nullptr && pool->getValid(e.id))...};
+							const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
 
-					}
-				}, tuple);
+							if(valid == true)
+							{
+								x(e, pool->get(e.id)...);
+							}
+						}
+					},
+					tuple);
 			}
 
 			template <typename T>

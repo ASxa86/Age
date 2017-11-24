@@ -13,7 +13,7 @@ namespace age
 			CollisionSystem();
 			~CollisionSystem() override;
 
-			void frame(const std::vector<age::entity::Entity>& entities, std::chrono::microseconds x) override;
+			void frame(std::chrono::microseconds x) override;
 		};
 	}
 }

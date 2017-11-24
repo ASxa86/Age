@@ -43,7 +43,7 @@ namespace age
 			///
 			///	Handle real time key down checking.
 			///
-			void frame(const std::vector<age::entity::Entity>& entities, std::chrono::microseconds x) override;
+			void frame(std::chrono::microseconds x) override;
 		};
 	}
 }

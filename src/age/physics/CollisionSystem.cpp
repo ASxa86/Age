@@ -14,6 +14,6 @@ CollisionSystem::~CollisionSystem()
 {
 }
 
-void CollisionSystem::frame(const std::vector<age::entity::Entity>&, std::chrono::microseconds)
+void CollisionSystem::frame(std::chrono::microseconds)
 {
 }

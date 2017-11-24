@@ -1,13 +1,15 @@
 #pragma once
 
 #include <age/core/Object.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/Export.h>
 #include <chrono>
 
 namespace age
 {
 	namespace entity
 	{
+		class EntityManager;
+
 		///
 		///	\class Processor
 		///
@@ -28,7 +30,7 @@ namespace age
 			///
 			///	\param x The elapsed/delta time in milliseconds.
 			///
-			virtual void frame(const std::vector<Entity>& entities, std::chrono::microseconds x) = 0;
+			virtual void frame(std::chrono::microseconds x) = 0;
 
 		protected:
 			///

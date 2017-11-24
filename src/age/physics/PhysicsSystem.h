@@ -32,7 +32,7 @@ namespace age
 			///
 			///	Updates entity transformations using physics.
 			///
-			void frame(const std::vector<age::entity::Entity>&, std::chrono::microseconds x) override;
+			void frame(std::chrono::microseconds x) override;
 		};
 	}
 }

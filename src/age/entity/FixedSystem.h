@@ -1,7 +1,6 @@
 #pragma once
 
 #include <age/entity/System.h>
-#include <chrono>
 
 namespace age
 {
@@ -20,7 +19,7 @@ namespace age
 		{
 		public:
 			FixedSystem();
-			virtual ~FixedSystem() override;
+			virtual ~FixedSystem() override = 0;
 		};
 	}
 }

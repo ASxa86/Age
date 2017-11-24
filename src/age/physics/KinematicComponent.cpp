@@ -3,9 +3,6 @@
 #include <age/core/PimplImpl.h>
 #include <age/core/Engine.h>
 #include <age/math/TransformComponent.h>
-#include <boost/qvm/vec_access.hpp>
-#include <boost/qvm/vec_operations.hpp>
-#include <boost/math/constants/constants.hpp>
 
 using namespace boost::qvm;
 using namespace age::math;
