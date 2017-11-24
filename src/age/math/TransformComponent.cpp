@@ -4,7 +4,7 @@
 using namespace age::math;
 using namespace boost::qvm;
 
-TransformComponent::TransformComponent()
+TransformComponent::TransformComponent() : position{}, rotation{}
 {
 }
 

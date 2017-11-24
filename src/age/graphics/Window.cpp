@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <numeric>
 #include <sstream>
+#include <boost/qvm/vec_access.hpp>
 
 using namespace age::core;
 using namespace age::entity;
@@ -109,15 +110,19 @@ void Window::render(std::chrono::microseconds /*x*/)
 		elapsed += delta.count();
 
 		auto parent = this->getParent();
-		auto entities = parent->getChild<EntityManager>()->getEntities();
+		auto manager = parent->getChild<EntityManager>();
 
-		for(auto& entity : entities)
-		{
-			if(entity.valid() == true && entity.hasComponent<std::shared_ptr<sf::Drawable>>() == true)
+		manager->each<TransformComponent, std::shared_ptr<sf::Drawable>>([this](Entity, TransformComponent& t, std::shared_ptr<sf::Drawable>& d) {
+			auto transform = dynamic_cast<sf::Transformable*>(d.get());
+
+			if(transform != nullptr)
 			{
-				this->pimpl->window.draw(*entity.getComponent<std::shared_ptr<sf::Drawable>>());
+				auto p = t.getPosition();
+				transform->setPosition(sf::Vector2f(static_cast<float>(boost::qvm::X(p)), static_cast<float>(boost::qvm::Y(p))));
 			}
-		}
+
+			this->pimpl->window.draw(*d);
+		});
 
 		if(elapsed >= 0.5)
 		{
