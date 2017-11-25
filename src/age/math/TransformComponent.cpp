@@ -2,7 +2,6 @@
 #include <cmath>
 
 using namespace age::math;
-using namespace boost::qvm;
 
 TransformComponent::TransformComponent() : position{}, rotation{}
 {
@@ -12,12 +11,12 @@ TransformComponent::~TransformComponent()
 {
 }
 
-void TransformComponent::setPosition(const vec<double, 2>& x)
+void TransformComponent::setPosition(const Vector& x)
 {
 	this->position = x;
 }
 
-vec<double, 2> TransformComponent::getPosition() const
+Vector TransformComponent::getPosition() const
 {
 	return this->position;
 }

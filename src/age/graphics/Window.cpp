@@ -10,7 +10,6 @@
 #include <iomanip>
 #include <numeric>
 #include <sstream>
-#include <boost/qvm/vec_access.hpp>
 
 using namespace age::core;
 using namespace age::entity;
@@ -118,7 +117,7 @@ void Window::render(std::chrono::microseconds /*x*/)
 			if(transform != nullptr)
 			{
 				auto p = t.getPosition();
-				transform->setPosition(sf::Vector2f(static_cast<float>(boost::qvm::X(p)), static_cast<float>(boost::qvm::Y(p))));
+				transform->setPosition(Vector::To<sf::Vector2f, float>(p));
 			}
 
 			this->pimpl->window.draw(*d);

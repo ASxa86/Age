@@ -1,7 +1,7 @@
 #include <age/physics/BoxCollisionComponent.h>
 
+using namespace age::math;
 using namespace age::physics;
-using namespace boost::qvm;
 
 BoxCollisionComponent::BoxCollisionComponent()
 {
@@ -11,22 +11,22 @@ BoxCollisionComponent::~BoxCollisionComponent()
 {
 }
 
-void BoxCollisionComponent::setCenter(const vec<double, 2>& x)
+void BoxCollisionComponent::setCenter(const Vector& x)
 {
 	this->center = x;
 }
 
-vec<double, 2> BoxCollisionComponent::getCenter() const
+Vector BoxCollisionComponent::getCenter() const
 {
 	return this->center;
 }
 
-void BoxCollisionComponent::setSize(const vec<double, 2>& x)
+void BoxCollisionComponent::setSize(const Vector& x)
 {
 	this->size = x;
 }
 
-vec<double, 2> BoxCollisionComponent::getSize() const
+Vector BoxCollisionComponent::getSize() const
 {
 	return this->size;
 }

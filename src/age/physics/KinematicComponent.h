@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/physics/Export.h>
-#include <boost/qvm/vec.hpp>
+#include <age/math/Vector.h>
 
 namespace age
 {
@@ -26,25 +26,25 @@ namespace age
 			///	Set the position within the world.
 			///	(m)
 			///
-			void setPosition(const boost::qvm::vec<double, 2>& x);
+			void setPosition(const age::math::Vector& x);
 
 			///
 			///	Get the position within the world.
 			///	(m)
 			///
-			boost::qvm::vec<double, 2> getPosition() const;
+			age::math::Vector getPosition() const;
 
 			///
 			///	Set the velocity vector.
 			///	(m/s)
 			///
-			void setVelocity(const boost::qvm::vec<double, 2>& x);
+			void setVelocity(const age::math::Vector& x);
 
 			///
 			///	Get the velocity vector.
 			///	(m/s)
 			///
-			boost::qvm::vec<double, 2> getVelocity() const;
+			age::math::Vector getVelocity() const;
 
 			///
 			///	Set the rotation.
@@ -71,8 +71,8 @@ namespace age
 			double getAngularVelocity() const;
 
 		private:
-			boost::qvm::vec<double, 2> position;
-			boost::qvm::vec<double, 2> velocity;
+			age::math::Vector position;
+			age::math::Vector velocity;
 			double rotation;
 			double angularVelocity;
 		};

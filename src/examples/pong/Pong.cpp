@@ -32,7 +32,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	rec->setFillColor(sf::Color::White);
 	paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
 	auto& t = paddle.addComponent<TransformComponent>();
-	t.setPosition({{10, 10}});
+	t.setPosition({10, 10});
 
 	auto& input = paddle.addComponent<InputComponent>();
 	input.addKeyBinding(sf::Keyboard::Key::Up, [](Entity e, bool isPressed) {
@@ -40,8 +40,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 		{
 			auto& t = e.getComponent<TransformComponent>();
 			auto p = t.getPosition();
-			auto& y = boost::qvm::Y(p);
-			y -= 10.0;
+			p.setY(p.getY() - 10);
 			t.setPosition(p);
 		}
 	});
@@ -51,8 +50,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 		{
 			auto& t = e.getComponent<TransformComponent>();
 			auto p = t.getPosition();
-			auto& y = boost::qvm::Y(p);
-			y += 10.0;
+			p.setY(p.getY() + 10);
 			t.setPosition(p);
 		}
 	});
@@ -62,8 +60,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 		{
 			auto& t = e.getComponent<TransformComponent>();
 			auto p = t.getPosition();
-			auto& x = boost::qvm::X(p);
-			x += 10.0;
+			p.setX(p.getX() + 10);
 			t.setPosition(p);
 		}
 	});
@@ -73,8 +70,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 		{
 			auto& t = e.getComponent<TransformComponent>();
 			auto p = t.getPosition();
-			auto& x = boost::qvm::X(p);
-			x -= 10.0;
+			p.setX(p.getX() - 10);
 			t.setPosition(p);
 		}
 	});
@@ -85,7 +81,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	rec2->setFillColor(sf::Color::White);
 	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
 	auto& t2 = paddle2.addComponent<TransformComponent>();
-	t2.setPosition({{200, 10}});
+	t2.setPosition({200, 10});
 
 	this->engine->setEngineState(EngineState::State::Initialize);
 }

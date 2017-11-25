@@ -4,7 +4,6 @@
 #include <age/core/Engine.h>
 #include <age/math/TransformComponent.h>
 
-using namespace boost::qvm;
 using namespace age::math;
 using namespace age::physics;
 
@@ -16,22 +15,22 @@ KinematicComponent::~KinematicComponent()
 {
 }
 
-void KinematicComponent::setPosition(const vec<double, 2>& x)
+void KinematicComponent::setPosition(const Vector& x)
 {
 	this->position = x;
 }
 
-vec<double, 2> KinematicComponent::getPosition() const
+Vector KinematicComponent::getPosition() const
 {
 	return this->position;
 }
 
-void KinematicComponent::setVelocity(const vec<double, 2>& x)
+void KinematicComponent::setVelocity(const Vector& x)
 {
 	this->velocity = x;
 }
 
-vec<double, 2> KinematicComponent::getVelocity() const
+Vector KinematicComponent::getVelocity() const
 {
 	return this->velocity;
 }
