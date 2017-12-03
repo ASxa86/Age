@@ -74,7 +74,7 @@ namespace age
 			{
 				const auto pool = this->manager->getPool<T>();
 				pool->setValid(this->id, false);
-				age::core::EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponenRemoved));
+				age::core::EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved));
 			}
 
 			///
