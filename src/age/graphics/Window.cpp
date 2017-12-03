@@ -1,5 +1,6 @@
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
+#include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
 #include <age/entity/EntityManager.h>
@@ -85,10 +86,10 @@ void Window::variable(std::chrono::microseconds)
 				engine->setEngineState(EngineState::State::Exit);
 				break;
 			case sf::Event::EventType::KeyPressed:
-				engine->sendEvent(std::make_unique<KeyEvent>(e.key.code, KeyEvent::Type::Pressed));
+				EventQueue::Instance().sendEvent(std::make_unique<KeyEvent>(e.key.code, KeyEvent::Type::Pressed));
 				break;
 			case sf::Event::EventType::KeyReleased:
-				engine->sendEvent(std::make_unique<KeyEvent>(e.key.code, KeyEvent::Type::Released));
+				EventQueue::Instance().sendEvent(std::make_unique<KeyEvent>(e.key.code, KeyEvent::Type::Released));
 				break;
 			case sf::Event::EventType::Resized:
 				// engine->sendEvent(std::make_unique<ResizeEvent>());

@@ -5,6 +5,8 @@ add_definitions(-D${PROJECT_NAME}_Export)
 set(TARGET_H
 	Component.h
 	ComponentPool.h
+	Entity.h
+	EntityEvent.h
 	EntityManager.h
 	Export.h
 	FixedSystem.h
@@ -16,6 +18,8 @@ set(TARGET_H
 set(TARGET_SRC
 	Component.cpp
 	ComponentPool.cpp
+	Entity.cpp
+	EntityEvent.cpp
 	EntityManager.cpp
 	FixedSystem.cpp
 	System.cpp

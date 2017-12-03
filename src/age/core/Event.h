@@ -1,7 +1,6 @@
 #pragma once
 
 #include <age/core/Export.h>
-#include <cstdint>
 
 namespace age
 {
@@ -21,6 +20,9 @@ namespace age
 		public:
 			Event();
 			virtual ~Event();
+
+			Event(const Event&) = delete;
+			Event& operator=(const Event&) = delete;
 		};
 	}
 }

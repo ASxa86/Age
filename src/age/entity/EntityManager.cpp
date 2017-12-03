@@ -1,27 +1,7 @@
 #include <age/entity/EntityManager.h>
 
+using namespace age::core;
 using namespace age::entity;
-
-Entity::Entity() : id{0}, manager{nullptr}
-{
-}
-int Entity::getID() const
-{
-	return this->id;
-}
-
-bool Entity::valid() const
-{
-	return (this->manager != nullptr) && (this->manager->valid(*this) == true);
-}
-
-void Entity::destroy() const
-{
-	if(this->manager != nullptr)
-	{
-		this->manager->destroy(*this);
-	}
-}
 
 EntityManager::EntityManager()
 {
@@ -33,7 +13,7 @@ EntityManager::~EntityManager()
 
 Entity EntityManager::create()
 {
-	Entity e{};
+	Entity e;
 	e.manager = this;
 
 	if(this->indexList.empty() == true)
@@ -57,6 +37,8 @@ Entity EntityManager::create()
 		}
 	}
 
+	EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(e, EntityEvent::Type::EntityAdded));
+
 	return e;
 }
 
@@ -66,6 +48,8 @@ void EntityManager::destroy(Entity x)
 	{
 		this->indexList.push_back(x.id);
 		this->validEntities[x.id] = false;
+
+		EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(x, EntityEvent::Type::EntityRemoved));
 	}
 }
 

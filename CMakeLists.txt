@@ -7,8 +7,8 @@ if(MSVC)
 	add_compile_options(/wd4251) # w4251 - 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
 	add_compile_options(/W4)
 	add_compile_options(/MP)
-
-	add_definitions("/WX")
+	add_compile_options(/WX)
+	add_compile_options(/D_SCL_SECURE_NO_WARNINGS)
 elseif(CMAKE_COMPILER_IS_GNUCXX) 
 	add_definitions("-Werror")
 elseif(CMAKE_COMPILER_IS_GNUCC)
@@ -29,6 +29,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+#############################################################
+#
+#	Find Boost
+#
+find_package(Boost 1.65)
+include_directories(${Boost_INCLUDE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(test)

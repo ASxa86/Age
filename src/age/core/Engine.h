@@ -63,22 +63,6 @@ namespace age
 			///
 			void setFixedFrameLimit(uint8_t x);
 
-			///
-			///	Send events synchronously or asynchronously to all registered handlers.
-			///
-			void sendEvent(std::unique_ptr<Event> x, bool async = false);
-
-			///
-			///	Add an event handler to handle sent events from this engine.
-			///
-			void addEventHandler(const std::function<void(Event*)>& x);
-
-			///
-			///	Set a new event queue which will replace the current queue.
-			///	Setting a new event queue will delete the current queue clearing any registered event handlers.
-			///
-			void setEventQueue(std::unique_ptr<EventQueue> x);
-
 		private:
 			class Impl;
 			Pimpl<Impl> pimpl;

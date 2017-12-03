@@ -1,9 +1,12 @@
 #pragma once
 
+#include <age/core/EventQueue.h>
 #include <age/core/Object.h>
 #include <age/entity/Component.h>
 #include <age/entity/ComponentPool.h>
+#include <age/entity/EntityEvent.h>
 #include <age/entity/Export.h>
+#include <age/entity/Entity.h>
 #include <map>
 #include <tuple>
 #include <typeindex>
@@ -12,57 +15,6 @@ namespace age
 {
 	namespace entity
 	{
-		class AGE_ENTITY_EXPORT Entity
-		{
-		public:
-			int getID() const;
-			bool valid() const;
-			void destroy() const;
-
-			template <typename T, typename... Args>
-			T& addComponent(Args&&... args)
-			{
-				const auto pool = this->manager->getPool<T>();
-
-				if(this->id >= pool->size())
-				{
-					pool->resize(this->id + 1);
-				}
-
-				pool->get(this->id) = T(std::forward<Args>(args)...);
-				pool->setValid(this->id);
-				return pool->get(this->id);
-			}
-
-			template <typename T>
-			void removeComponent()
-			{
-				const auto pool = this->manager->getPool<T>();
-				pool->setValid(this->id, false);
-			}
-
-			template <typename T>
-			T& getComponent()
-			{
-				const auto pool = this->manager->getPool<T>();
-				return pool->get(this->id);
-			}
-
-			template <typename T>
-			bool hasComponent()
-			{
-				const auto pool = this->manager->getPool<T>();
-				return pool->getValid(this->id);
-			}
-
-		private:
-			friend class EntityManager;
-			Entity();
-
-			int id;
-			EntityManager* manager;
-		};
-
 		class AGE_ENTITY_EXPORT EntityManager : public age::core::Object
 		{
 		public:
@@ -75,7 +27,11 @@ namespace age
 
 			const std::vector<Entity>& getEntities() const;
 
-			template <typename T> struct identity { typedef T type; };
+			template <typename T>
+			struct identity
+			{
+				typedef T type;
+			};
 
 			template <typename... Args>
 			void each(typename identity<std::function<void(Entity, Args&...)>>::type x)

@@ -10,8 +10,6 @@
 #include <examples/pong/Pong.h>
 #include <SFML/Graphics.hpp>
 
-#include <boost/qvm/vec_access.hpp>
-
 using namespace age::core;
 using namespace age::entity;
 using namespace age::math;
