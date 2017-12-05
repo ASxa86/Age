@@ -1,6 +1,7 @@
 project(TestAgeEntity)
 
 set(TARGET_SRC
+	EntityEvent.test.cpp
 	EntityManager.test.cpp
 )
 

@@ -3,6 +3,7 @@
 #include <age/core/Pimpl.h>
 #include <age/core/Event.h>
 #include <age/entity/Export.h>
+#include <any>
 
 namespace age
 {
@@ -27,7 +28,31 @@ namespace age
 			Entity EntityEvent::getEntity() const;
 			EntityEvent::Type EntityEvent::getType() const;
 
+			template <typename T>
+			void setComponent(T* x)
+			{
+				this->component = x;
+			}
+
+			template <typename T>
+			T* getComponent() const
+			{
+				T* c{};
+
+				try
+				{
+					c = std::any_cast<T*>(this->component);
+				}
+				catch(...)
+				{
+				}
+
+				return c;
+			}
+
 		private:
+			std::any component;
+
 			class Impl;
 			Pimpl<Impl> pimpl;
 		};

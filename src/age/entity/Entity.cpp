@@ -23,3 +23,8 @@ void Entity::destroy() const
 		this->manager->destroy(*this);
 	}
 }
+
+bool Entity::operator==(const Entity& x) const
+{
+	return this->id == x.id;
+}

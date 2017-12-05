@@ -46,6 +46,11 @@ namespace age
 			void destroy() const;
 
 			///
+			///	Operator overload for compairing two entity ids against each other.
+			///
+			bool operator==(const Entity& e) const;
+
+			///
 			///	Add a component to the entity.
 			///
 			template <typename T, typename... Args>
@@ -61,7 +66,9 @@ namespace age
 				pool->get(this->id) = T(std::forward<Args>(args)...);
 				pool->setValid(this->id);
 
-				age::core::EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded));
+				auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
+				event->setComponent(&pool->get(this->id));
+				age::core::EventQueue::Instance().sendEvent(std::move(event));
 
 				return pool->get(this->id);
 			}
@@ -74,7 +81,9 @@ namespace age
 			{
 				const auto pool = this->manager->getPool<T>();
 				pool->setValid(this->id, false);
-				age::core::EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved));
+				auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved);
+				event->setComponent(&pool->get(this->id));
+				age::core::EventQueue::Instance().sendEvent(std::move(event));
 			}
 
 			///
