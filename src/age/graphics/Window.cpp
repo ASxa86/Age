@@ -31,6 +31,11 @@ public:
 		this->text.setPosition({10.0, 30.0});
 	}
 
+	static sf::Vector2f FromVector(const age::math::Vector& x)
+	{
+		return {static_cast<float>(x.getX()), static_cast<float>(x.getY())};
+	}
+
 	sf::ContextSettings settings;
 	sf::RenderWindow window;
 	Timer timer;
@@ -118,7 +123,7 @@ void Window::render(std::chrono::microseconds /*x*/)
 			if(transform != nullptr)
 			{
 				auto p = t.getPosition();
-				transform->setPosition(Vector::To<sf::Vector2f, float>(p));
+				transform->setPosition(Impl::FromVector(p));
 			}
 
 			this->pimpl->window.draw(*d);

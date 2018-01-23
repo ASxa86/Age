@@ -48,8 +48,13 @@ TEST(EntityEvent, EntityRemoved)
 	});
 
 	e.destroy();
-
 	EXPECT_TRUE(eventReceived);
+
+	eventReceived = false;
+	
+	e.destroy();
+	EXPECT_FALSE(eventReceived);
+
 	connection.disconnect();
 }
 
@@ -70,8 +75,13 @@ TEST(EntityEvent, ComponentAdded)
 	});
 
 	e.addComponent<Value>();
-
 	EXPECT_TRUE(eventReceived);
+
+	eventReceived = false;
+
+	e.addComponent<Value>();
+	EXPECT_FALSE(eventReceived);
+
 	connection.disconnect();
 }
 
@@ -93,7 +103,12 @@ TEST(EntityEvent, ComponentRemoved)
 	});
 
 	e.removeComponent<Value>();
-
 	EXPECT_TRUE(eventReceived);
+	
+	eventReceived = false;
+
+	e.removeComponent<Value>();
+	EXPECT_FALSE(eventReceived);
+
 	connection.disconnect();
 }

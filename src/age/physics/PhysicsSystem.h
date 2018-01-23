@@ -3,8 +3,6 @@
 #include <age/entity/FixedSystem.h>
 #include <age/physics/Export.h>
 
-class b2World;
-
 namespace age
 {
 	namespace physics
@@ -24,15 +22,16 @@ namespace age
 			PhysicsSystem();
 			~PhysicsSystem() override;
 
-			///
-			/// Provide access the the global physics engine in order to contruct body objects within components.
-			///
-			static b2World& Engine();
+			void initialize() override;
 
 			///
 			///	Updates entity transformations using physics.
 			///
 			void frame(std::chrono::microseconds x) override;
+
+		private:
+			class Impl;
+			Pimpl<Impl> pimpl;
 		};
 	}
 }

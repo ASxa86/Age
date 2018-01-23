@@ -11,6 +11,15 @@ namespace age
 	{
 		class Entity;
 
+		///
+		///	\class EntityEvent
+		///
+		///	\brief An event that notifies any entity or componenet additions or removals.
+		///
+		///	\date Decemeber 5, 2017
+		///
+		///	\author Aaron Shelley
+		///
 		class AGE_ENTITY_EXPORT EntityEvent : public age::core::Event
 		{
 		public:
@@ -22,8 +31,8 @@ namespace age
 				ComponentRemoved
 			};
 
-			EntityEvent::EntityEvent(Entity e, Type t);
-			EntityEvent::~EntityEvent();
+			EntityEvent(Entity e, Type t);
+			~EntityEvent() override;
 
 			Entity EntityEvent::getEntity() const;
 			EntityEvent::Type EntityEvent::getType() const;

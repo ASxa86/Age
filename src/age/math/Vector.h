@@ -81,15 +81,6 @@ namespace age
 			double magnitude() const;
 			double normalize();
 
-			///
-			///	Convenience function to convert from a Vector to a 3rd party vector type.
-			///
-			template<typename T, typename ValueType = double>
-			static T To(const Vector& x)
-			{
-				return T{static_cast<ValueType>(x.v[0]), static_cast<ValueType>(x.v[1])};
-			}
-
 		private:
 			std::array<double, 2> v;
 		};

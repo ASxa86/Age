@@ -58,17 +58,20 @@ namespace age
 			{
 				const auto pool = this->manager->getPool<T>();
 
-				if(this->id >= pool->size())
+				if(pool->getValid(this->id) == false)
 				{
-					pool->resize(this->id + 1);
+					if(this->id >= pool->size())
+					{
+						pool->resize(this->id + 1);
+					}
+
+					pool->get(this->id) = T(std::forward<Args>(args)...);
+					pool->setValid(this->id);
+
+					auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
+					event->setComponent(&pool->get(this->id));
+					age::core::EventQueue::Instance().sendEvent(std::move(event));
 				}
-
-				pool->get(this->id) = T(std::forward<Args>(args)...);
-				pool->setValid(this->id);
-
-				auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
-				event->setComponent(&pool->get(this->id));
-				age::core::EventQueue::Instance().sendEvent(std::move(event));
 
 				return pool->get(this->id);
 			}
@@ -80,10 +83,14 @@ namespace age
 			void removeComponent()
 			{
 				const auto pool = this->manager->getPool<T>();
-				pool->setValid(this->id, false);
-				auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved);
-				event->setComponent(&pool->get(this->id));
-				age::core::EventQueue::Instance().sendEvent(std::move(event));
+
+				if(pool->getValid(this->id) == true)
+				{
+					pool->setValid(this->id, false);
+					auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved);
+					event->setComponent(&pool->get(this->id));
+					age::core::EventQueue::Instance().sendEvent(std::move(event));
+				}
 			}
 
 			///

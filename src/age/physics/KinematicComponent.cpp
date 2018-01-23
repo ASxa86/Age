@@ -15,16 +15,6 @@ KinematicComponent::~KinematicComponent()
 {
 }
 
-void KinematicComponent::setPosition(const Vector& x)
-{
-	this->position = x;
-}
-
-Vector KinematicComponent::getPosition() const
-{
-	return this->position;
-}
-
 void KinematicComponent::setVelocity(const Vector& x)
 {
 	this->velocity = x;
@@ -33,16 +23,6 @@ void KinematicComponent::setVelocity(const Vector& x)
 Vector KinematicComponent::getVelocity() const
 {
 	return this->velocity;
-}
-
-void KinematicComponent::setRotation(double x)
-{
-	this->rotation = x;
-}
-
-double KinematicComponent::getRotation() const
-{
-	return this->rotation;
 }
 
 void KinematicComponent::setAngularVelocity(double x)

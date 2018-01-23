@@ -39,16 +39,17 @@ namespace age
 				const auto tuple = std::make_tuple(this->getPool<Args>()...);
 
 				std::apply(
-					[this, &x](auto... pool) {
+					[this, &x](auto... /*pool*/) {
 						for(auto e : this->entities)
 						{
-							const auto validList = {true, (pool != nullptr && pool->getValid(e.id))...};
-							const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
-
-							if(valid == true)
-							{
-								x(e, pool->get(e.id)...);
-							}
+							// https://developercommunity.visualstudio.com/content/problem/160745/fold-expression-in-variable-template-fails-to-comp.html
+							// MSVC BUG // const auto validList = { true, (pool != nullptr && pool->getValid(e.id))... };
+							// MSVC BUG // const auto validList = (pool&& ...) && (pool->getValid(e.id)&& ...);
+							//const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
+							//if(valid == true)
+							//{
+							//	x(e, pool->get(e.id)...);
+							//}
 						}
 					},
 					tuple);
