@@ -123,7 +123,8 @@ void Window::render(std::chrono::microseconds /*x*/)
 			if(transform != nullptr)
 			{
 				auto p = t.getPosition();
-				transform->setPosition(Impl::FromVector(p));
+				transform->setPosition(Impl::FromVector(p * this->pimpl->pixelsPerMeter));
+				transform->setScale(transform->getScale() * static_cast<float>(this->pimpl->pixelsPerMeter));
 			}
 
 			this->pimpl->window.draw(*d);
