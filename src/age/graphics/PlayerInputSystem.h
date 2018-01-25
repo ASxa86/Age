@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/graphics/Export.h>
-#include <age/entity/VariableSystem.h>
+#include <age/entity/System.h>
 
 namespace age
 {
@@ -24,7 +24,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_GRAPHICS_EXPORT PlayerInputSystem : public age::entity::VariableSystem
+		class AGE_GRAPHICS_EXPORT PlayerInputSystem : public age::entity::System
 		{
 		public:
 			PlayerInputSystem();
@@ -43,7 +43,7 @@ namespace age
 			///
 			///	Handle real time key down checking.
 			///
-			void frame(std::chrono::microseconds x) override;
+			void frame(std::chrono::microseconds x);
 		};
 	}
 }

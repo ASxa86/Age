@@ -3,7 +3,7 @@
 
 using namespace age::entity;
 
-System::System() : age::core::Object()
+System::System() : age::core::Processor()
 {
 }
 

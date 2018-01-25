@@ -5,6 +5,8 @@
 
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2World.h>
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <Box2D/Dynamics/b2Fixture.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
@@ -40,8 +42,9 @@ public:
 	b2World world;
 };
 
-PhysicsSystem::PhysicsSystem() : FixedSystem()
+PhysicsSystem::PhysicsSystem() : System()
 {
+	this->addFixedFunction([this](auto x) { this->frame(x); });
 }
 
 PhysicsSystem::~PhysicsSystem()
@@ -59,9 +62,9 @@ void PhysicsSystem::initialize()
 		def.angle = static_cast<float32>(t.getRotation());
 		def.linearVelocity = Impl::FromVector(k.getVelocity());
 		def.angularVelocity = static_cast<float32>(k.getAngularVelocity());
-
-		auto body = this->pimpl->world.CreateBody(&def);
-		body->SetUserData(reinterpret_cast<void*>(e.getID()));
+		def.active = true;
+		def.userData = reinterpret_cast<void*>(e.getID());
+		this->pimpl->world.CreateBody(&def);
 	};
 
 	// Process any entities that are already configured to work with this system.
@@ -72,36 +75,58 @@ void PhysicsSystem::initialize()
 		[this, addBody](auto x) {
 			auto evt = dynamic_cast<EntityEvent*>(x);
 
-			switch(evt->getType())
+			if(evt != nullptr)
 			{
-				case EntityEvent::Type::ComponentAdded:
+				switch(evt->getType())
 				{
-					auto entity = evt->getEntity();
-
-					const auto t = evt->getComponent<TransformComponent>();
-					const auto k = evt->getComponent<KinematicComponent>();
-					const auto physicsComponentAdded = t != nullptr || k != nullptr;
-
-					// Only construct a b2body if a physics component was added AND all required components exist.
-					// i.e. TransformComponent gets added but no KinematicComponent means nothing happens.
-					// i.e. KinematicComponent gets added but no TransformComponent means nothing happens.
-					// i.e. TransformComponent gets added and KinematicComponent exists means new b2body.
-					// i.e. KinematicComponent gets added and TransformComponent exists means new b2body.
-					if(physicsComponentAdded == true && entity.hasComponent<TransformComponent>() == true
-					   && entity.hasComponent<KinematicComponent>() == true)
+					case EntityEvent::Type::ComponentAdded:
 					{
-						const auto transform = entity.getComponent<TransformComponent>();
-						const auto kinematic = entity.getComponent<KinematicComponent>();
-						addBody(entity, transform, kinematic);
+						auto entity = evt->getEntity();
+
+						const auto t = evt->getComponent<TransformComponent>();
+						const auto k = evt->getComponent<KinematicComponent>();
+						const auto physicsComponentAdded = t != nullptr || k != nullptr;
+
+						// Only construct a b2body if a physics component was added AND all required components exist.
+						// i.e. TransformComponent gets added but no KinematicComponent means nothing happens.
+						// i.e. KinematicComponent gets added but no TransformComponent means nothing happens.
+						// i.e. TransformComponent gets added and KinematicComponent exists means new b2body.
+						// i.e. KinematicComponent gets added and TransformComponent exists means new b2body.
+						if(physicsComponentAdded == true && entity.hasComponent<TransformComponent>() == true
+						   && entity.hasComponent<KinematicComponent>() == true)
+						{
+							const auto transform = entity.getComponent<TransformComponent>();
+							const auto kinematic = entity.getComponent<KinematicComponent>();
+							addBody(entity, transform, kinematic);
+						}
 					}
-				}
-				break;
+					break;
 
-				case EntityEvent::Type::ComponentRemoved:
-				{
-					const auto kinematic = evt->getComponent<KinematicComponent>();
+					case EntityEvent::Type::ComponentRemoved:
+					{
+						const auto kinematic = evt->getComponent<KinematicComponent>();
 
-					if(kinematic != nullptr)
+						if(kinematic != nullptr)
+						{
+							const auto id = evt->getEntity().getID();
+
+							auto body = this->pimpl->world.GetBodyList();
+
+							while(body != nullptr)
+							{
+								if(id == reinterpret_cast<int>(body->GetUserData()))
+								{
+									this->pimpl->world.DestroyBody(body);
+									break;
+								}
+
+								body = body->GetNext();
+							}
+						}
+					}
+					break;
+
+					case EntityEvent::Type::EntityRemoved:
 					{
 						const auto id = evt->getEntity().getID();
 
@@ -117,25 +142,6 @@ void PhysicsSystem::initialize()
 
 							body = body->GetNext();
 						}
-					}
-				}
-				break;
-
-				case EntityEvent::Type::EntityRemoved:
-				{
-					const auto id = evt->getEntity().getID();
-
-					auto body = this->pimpl->world.GetBodyList();
-
-					while(body != nullptr)
-					{
-						if(id == reinterpret_cast<int>(body->GetUserData()))
-						{
-							this->pimpl->world.DestroyBody(body);
-							break;
-						}
-
-						body = body->GetNext();
 					}
 				}
 			}
@@ -155,14 +161,13 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 	while(body != nullptr)
 	{
-		const auto pos = body->GetPosition();
 		const auto id = reinterpret_cast<int>(body->GetUserData());
 		auto entity = entities[id];
 
-		auto transform = entity.getComponent<TransformComponent>();
+		auto& transform = entity.getComponent<TransformComponent>();
 		body->SetTransform(Impl::FromVector(transform.getPosition()), static_cast<float32>(transform.getRotation()));
 
-		auto kinematic = entity.getComponent<KinematicComponent>();
+		auto& kinematic = entity.getComponent<KinematicComponent>();
 		body->SetLinearVelocity(Impl::FromVector(kinematic.getVelocity()));
 		body->SetAngularVelocity(static_cast<float32>(kinematic.getAngularVelocity()));
 
@@ -176,15 +181,14 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 	while(body != nullptr)
 	{
-		const auto pos = body->GetPosition();
 		const auto id = reinterpret_cast<int>(body->GetUserData());
 		auto entity = entities[id];
 
-		auto transform = entity.getComponent<TransformComponent>();
+		auto& transform = entity.getComponent<TransformComponent>();
 		transform.setPosition(Impl::ToVector(body->GetPosition()));
 		transform.setRotation(body->GetAngle());
 
-		auto kinematic = entity.getComponent<KinematicComponent>();
+		auto& kinematic = entity.getComponent<KinematicComponent>();
 		kinematic.setVelocity(Impl::ToVector(body->GetLinearVelocity()));
 		kinematic.setAngularVelocity(body->GetAngularVelocity());
 

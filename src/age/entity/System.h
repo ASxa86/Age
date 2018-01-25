@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Object.h>
+#include <age/core/Processor.h>
 #include <age/entity/Export.h>
 #include <chrono>
 
@@ -19,18 +19,11 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_ENTITY_EXPORT System : public age::core::Object
+		class AGE_ENTITY_EXPORT System : public age::core::Processor
 		{
 		public:
 			System();
 			virtual ~System() override;
-
-			///
-			///	Override for frame functionality.
-			///
-			///	\param x The elapsed/delta time in milliseconds.
-			///
-			virtual void frame(std::chrono::microseconds x) = 0;
 
 		protected:
 			///

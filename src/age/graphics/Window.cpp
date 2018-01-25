@@ -26,9 +26,12 @@ public:
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
 
-		this->font.loadFromFile("C:/age/resources/sansation.ttf");
+		this->font.loadFromFile("D:/age/resources/sansation.ttf");
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
+
+		const auto factor = static_cast<float>(this->pixelsPerMeter);
+		this->renderState.transform.scale(factor, factor);
 	}
 
 	static sf::Vector2f FromVector(const age::math::Vector& x)
@@ -43,6 +46,7 @@ public:
 	// Temporary until I find a generic way to handle GUI widgets.
 	sf::Text text;
 	sf::Font font;
+	sf::RenderStates renderState;
 	unsigned int pixelsPerMeter;
 };
 
@@ -69,6 +73,9 @@ unsigned int Window::getHeight() const
 void Window::setPixelsPerMeter(unsigned int x)
 {
 	this->pimpl->pixelsPerMeter = x;
+
+	const auto factor = static_cast<float>(this->pimpl->pixelsPerMeter);
+	this->pimpl->renderState.transform.scale(factor, factor);
 }
 
 unsigned int Window::getPixelsPerMeter() const
@@ -123,11 +130,10 @@ void Window::render(std::chrono::microseconds /*x*/)
 			if(transform != nullptr)
 			{
 				auto p = t.getPosition();
-				transform->setPosition(Impl::FromVector(p * this->pimpl->pixelsPerMeter));
-				transform->setScale(transform->getScale() * static_cast<float>(this->pimpl->pixelsPerMeter));
+				transform->setPosition(Impl::FromVector(p));
 			}
 
-			this->pimpl->window.draw(*d);
+			this->pimpl->window.draw(*d, this->pimpl->renderState);
 		});
 
 		if(elapsed >= 0.5)

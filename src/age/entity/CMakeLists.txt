@@ -9,10 +9,7 @@ set(TARGET_H
 	EntityEvent.h
 	EntityManager.h
 	Export.h
-	FixedSystem.h
 	System.h
-	SystemManager.h
-	VariableSystem.h
 )
 
 set(TARGET_SRC
@@ -21,10 +18,7 @@ set(TARGET_SRC
 	Entity.cpp
 	EntityEvent.cpp
 	EntityManager.cpp
-	FixedSystem.cpp
 	System.cpp
-	SystemManager.cpp
-	VariableSystem.cpp	
 )
 
 add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})

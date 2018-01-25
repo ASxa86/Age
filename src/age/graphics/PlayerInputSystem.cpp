@@ -10,8 +10,9 @@ using namespace age::core;
 using namespace age::entity;
 using namespace age::graphics;
 
-PlayerInputSystem::PlayerInputSystem() : VariableSystem()
+PlayerInputSystem::PlayerInputSystem() : System()
 {
+	this->addVariableFunction([this](auto x) {this->frame(x); });
 }
 
 PlayerInputSystem::~PlayerInputSystem()

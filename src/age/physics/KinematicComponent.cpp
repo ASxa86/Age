@@ -7,7 +7,7 @@
 using namespace age::math;
 using namespace age::physics;
 
-KinematicComponent::KinematicComponent()
+KinematicComponent::KinematicComponent() : velocity{}, angularVelocity{}
 {
 }
 

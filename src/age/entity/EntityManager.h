@@ -4,9 +4,9 @@
 #include <age/core/Object.h>
 #include <age/entity/Component.h>
 #include <age/entity/ComponentPool.h>
+#include <age/entity/Entity.h>
 #include <age/entity/EntityEvent.h>
 #include <age/entity/Export.h>
-#include <age/entity/Entity.h>
 #include <map>
 #include <tuple>
 #include <typeindex>
@@ -39,17 +39,19 @@ namespace age
 				const auto tuple = std::make_tuple(this->getPool<Args>()...);
 
 				std::apply(
-					[this, &x](auto... /*pool*/) {
-						for(auto e : this->entities)
+					[this, &x](auto... pool) {
+						// MSVC BUG // for(auto e : this->entities)
+						for(auto i = 0; i < this->entities.size(); i++)
 						{
-							// https://developercommunity.visualstudio.com/content/problem/160745/fold-expression-in-variable-template-fails-to-comp.html
-							// MSVC BUG // const auto validList = { true, (pool != nullptr && pool->getValid(e.id))... };
-							// MSVC BUG // const auto validList = (pool&& ...) && (pool->getValid(e.id)&& ...);
-							//const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
-							//if(valid == true)
-							//{
-							//	x(e, pool->get(e.id)...);
-							//}
+							const auto& e = this->entities[i];
+
+							const auto validList = {true, (pool != nullptr && pool->getValid(e.id))...};
+							const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
+
+							if(valid == true)
+							{
+								x(e, pool->get(e.id)...);
+							}
 						}
 					},
 					tuple);

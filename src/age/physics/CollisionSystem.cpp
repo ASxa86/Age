@@ -6,8 +6,9 @@ using namespace age::core;
 using namespace age::math;
 using namespace age::physics;
 
-CollisionSystem::CollisionSystem() : FixedSystem()
+CollisionSystem::CollisionSystem() : age::entity::System()
 {
+	this->addFixedFunction([this](auto x) { this->frame(x); });
 }
 
 CollisionSystem::~CollisionSystem()
