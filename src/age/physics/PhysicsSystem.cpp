@@ -3,10 +3,10 @@
 #pragma warning(disable : 4311 4312 4302)
 #endif
 
-#include <Box2D/Dynamics/b2Body.h>
-#include <Box2D/Dynamics/b2World.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2Fixture.h>
+#include <Box2D/Dynamics/b2World.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
@@ -57,14 +57,45 @@ void PhysicsSystem::initialize()
 
 	const auto addBody = [this](Entity e, const TransformComponent& t, const KinematicComponent& k) {
 		b2BodyDef def;
-		def.type = b2BodyType::b2_dynamicBody;
+
+		switch(k.getBodyType())
+		{
+			case KinematicComponent::BodyType::Kinematic:
+				def.type = b2BodyType::b2_kinematicBody;
+				break;
+
+			case KinematicComponent::BodyType::Dynamic:
+				def.type = b2BodyType::b2_dynamicBody;
+				break;
+
+			case KinematicComponent::BodyType::Static:
+			default:
+				def.type = b2BodyType::b2_staticBody;
+				break;
+		}
+
 		def.position = Impl::FromVector(t.getPosition());
 		def.angle = static_cast<float32>(t.getRotation());
 		def.linearVelocity = Impl::FromVector(k.getVelocity());
 		def.angularVelocity = static_cast<float32>(k.getAngularVelocity());
 		def.active = true;
 		def.userData = reinterpret_cast<void*>(e.getID());
-		this->pimpl->world.CreateBody(&def);
+		auto body = this->pimpl->world.CreateBody(&def);
+
+		if(e.hasComponent<BoxCollisionComponent>() == true)
+		{
+			auto& b = e.getComponent<BoxCollisionComponent>();
+
+			b2PolygonShape shape;
+			shape.SetAsBox(static_cast<float32>(b.getSize().getX()), static_cast<float32>(b.getSize().getY()));
+
+			b2FixtureDef fdef;
+			fdef.shape = &shape;
+			fdef.density = 1.0;
+		
+			body->CreateFixture(&fdef);
+			body->ResetMassData();
+		}
 	};
 
 	// Process any entities that are already configured to work with this system.

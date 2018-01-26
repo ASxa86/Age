@@ -5,8 +5,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(TARGET_H
 	BoxCollisionComponent.h
-	BoxCollisionTree.h
-	CollisionSystem.h
 	Export.h
 	KinematicComponent.h
 	PhysicsSystem.h
@@ -76,8 +74,6 @@ set(TARGET_H_BOX2D_ROPE
 
 set(TARGET_SRC
 	BoxCollisionComponent.cpp
-	BoxCollisionTree.cpp
-	CollisionSystem.cpp
 	KinematicComponent.cpp
 	PhysicsSystem.cpp
 )

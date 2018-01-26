@@ -34,8 +34,8 @@ namespace age
 			EntityEvent(Entity e, Type t);
 			~EntityEvent() override;
 
-			Entity EntityEvent::getEntity() const;
-			EntityEvent::Type EntityEvent::getType() const;
+			Entity getEntity() const;
+			EntityEvent::Type getType() const;
 
 			template <typename T>
 			void setComponent(T* x)

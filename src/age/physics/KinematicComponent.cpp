@@ -7,12 +7,22 @@
 using namespace age::math;
 using namespace age::physics;
 
-KinematicComponent::KinematicComponent() : velocity{}, angularVelocity{}
+KinematicComponent::KinematicComponent() : velocity{}, angularVelocity{}, bodyType{BodyType::Static}
 {
 }
 
 KinematicComponent::~KinematicComponent()
 {
+}
+
+void KinematicComponent::setBodyType(KinematicComponent::BodyType x)
+{
+	this->bodyType = x;
+}
+
+KinematicComponent::BodyType KinematicComponent::getBodyType() const
+{
+	return this->bodyType;
 }
 
 void KinematicComponent::setVelocity(const Vector& x)

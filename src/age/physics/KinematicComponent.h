@@ -19,8 +19,27 @@ namespace age
 		class AGE_PHYSICS_EXPORT KinematicComponent
 		{
 		public:
+			enum class BodyType : uint8_t
+			{
+				/// No physics simulation is applied.
+				Static,
+
+				/// Physics simulation and only collides with dynamic types.
+				Kinematic,
+
+				/// All physics simulations and collision.
+				Dynamic
+			};
+
 			KinematicComponent();
 			~KinematicComponent();
+
+			///
+			///	Set the body type for physics simulation. 
+			///	Default Static.
+			///
+			void setBodyType(BodyType x);
+			BodyType getBodyType() const;
 
 			///
 			///	Set the velocity vector.
@@ -49,6 +68,7 @@ namespace age
 		private:
 			age::math::Vector velocity;
 			double angularVelocity;
+			BodyType bodyType;
 		};
 	}
 }
