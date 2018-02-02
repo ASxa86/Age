@@ -46,9 +46,14 @@ namespace age
 			void destroy() const;
 
 			///
-			///	Operator overload for compairing two entity ids against each other.
+			///	Operator overload for comparing two entity ids as equal.
 			///
 			bool operator==(const Entity& e) const;
+
+			///
+			///	Operator overload for comparing two entity ids as not equal.
+			///
+			bool operator!=(const Entity& e) const;
 
 			///
 			///	Add a component to the entity.

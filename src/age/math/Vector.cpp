@@ -66,7 +66,7 @@ double Vector::operator*(const Vector& x)
 
 bool Vector::operator==(const Vector& x) const
 {
-	return (this->v[0] == x.v[0] && this->v[1] == x.v[1]);
+	return this->v == x.v;
 }
 
 bool Vector::operator!=(const Vector& x) const

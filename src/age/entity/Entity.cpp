@@ -28,3 +28,8 @@ bool Entity::operator==(const Entity& x) const
 {
 	return this->id == x.id;
 }
+
+bool Entity::operator!=(const Entity& x) const
+{
+	return !(*this == x);
+}
