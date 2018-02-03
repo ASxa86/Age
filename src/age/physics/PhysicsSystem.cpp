@@ -36,20 +36,20 @@ void PhysicsSystem::initialize()
 void PhysicsSystem::frame(std::chrono::microseconds x)
 {
 	const auto manager = this->getEntityManager();
-	const auto entities = manager->getEntities();
 	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 
-	manager->each<TransformComponent, KinematicComponent>([s = seconds.count(), &entities, manager](Entity e, TransformComponent& t, KinematicComponent& k) {
+	manager->each<TransformComponent, KinematicComponent>([s = seconds.count(), manager](Entity e, TransformComponent& t, KinematicComponent& k) {
 
 		auto pos = t.getPosition();
-		pos += k.getVelocity() * s;
-
 		auto rot = t.getRotation();
-		rot += k.getAngularVelocity() * s;
+
+		t.setPosition(pos + k.getVelocity() * s);
+		t.setRotation(rot + k.getAngularVelocity() * s);
+
+		auto hasCollision = false;
 
 		if(e.hasComponent<BoxCollisionComponent>() == true)
 		{
-			auto hasCollision = false;
 			manager->each<TransformComponent, BoxCollisionComponent>([&hasCollision, &e, &t](Entity ex, TransformComponent& tx, BoxCollisionComponent& bx) {
 				if(e != ex)
 				{
@@ -64,14 +64,47 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 					// Calculate collision.
 
+					const auto left = p.getX() - (s.getX() * 0.5);
+					const auto right = p.getX() + (s.getX() * 0.5);
+					const auto top = p.getY() - (s.getY() * 0.5);
+					const auto bottom = p.getY() + (s.getY() * 0.5);
+
+					const auto xleft = px.getX() - (sx.getX() * 0.5);
+					const auto xright = px.getX() + (sx.getX() * 0.5);
+					const auto xtop = px.getY() - (sx.getY() * 0.5);
+					const auto xbottom = px.getY() + (sx.getY() * 0.5);
+
+					// Test left and top
+					if(left >= xleft && left <= xright && top >= xtop && top <= xbottom)
+					{
+						hasCollision = true;
+					}
+
+					// Test left and bottom
+					else if(left >= xleft && left <= xright && bottom <= xbottom && bottom >= top)
+					{
+						hasCollision = true;
+					}
+
+					// Test right and top
+					else if(right <= xright && right >= xleft && top >= xtop && top <= xbottom)
+					{
+						hasCollision = true;
+					}
+
+					// Test right and bottom
+					else if(right <= xright && right >= xleft && bottom <= xbottom && bottom >= top)
+					{
+						hasCollision = true;
+					}
 				}
 			});
-
-			// Collision detection occured.
-			// Update position accordingly.
 		}
 
-		t.setPosition(pos);
-		t.setRotation(rot);
+		if(hasCollision == true)
+		{
+			t.setPosition(t.getPosition() - k.getVelocity() * s);
+			t.setRotation(t.getRotation() - k.getAngularVelocity() * s);
+		}
 	});
 }

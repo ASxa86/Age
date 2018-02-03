@@ -7,6 +7,7 @@
 #include <age/graphics/KeyEvent.h>
 #include <age/graphics/Window.h>
 #include <age/math/TransformComponent.h>
+#include <age/physics/BoxCollisionComponent.h>
 #include <SFML/Graphics.hpp>
 #include <iomanip>
 #include <numeric>
@@ -16,12 +17,13 @@ using namespace age::core;
 using namespace age::entity;
 using namespace age::graphics;
 using namespace age::math;
+using namespace age::physics;
 
 class Window::Impl
 {
 public:
 	Impl(unsigned int width, unsigned int height)
-		: settings{0, 0, 0}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}, pixelsPerMeter{32}
+		: settings{0, 0, 8}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}, pixelsPerMeter{32}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
@@ -135,6 +137,15 @@ void Window::render(std::chrono::microseconds /*x*/)
 
 			this->pimpl->window.draw(*d, this->pimpl->renderState);
 		});
+
+		//manager->each<TransformComponent, BoxCollisionComponent>([this](Entity, TransformComponent& t, BoxCollisionComponent& b) {
+		//	sf::RectangleShape shape;
+		//	shape.setPosition(Impl::FromVector(t.getPosition()));
+		//	shape.setSize(Impl::FromVector(b.getSize()));
+		//	shape.setOrigin(shape.getSize().x / 2.0f, shape.getSize().y / 2.0f);
+		//	shape.setFillColor(sf::Color::Green);
+		//	this->pimpl->window.draw(shape, this->pimpl->renderState);
+		//});
 
 		if(elapsed >= 0.5)
 		{

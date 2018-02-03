@@ -30,6 +30,7 @@ target_link_libraries(${PROJECT_NAME}
 	AgeCore
 	AgeEntity
 	AgeMath
+	AgePhysics
 	${SFML_GRAPHICS_LIBRARY}
 	${SFML_SYSTEM_LIBRARY}
 	${SFML_WINDOW_LIBRARY}

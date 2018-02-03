@@ -32,6 +32,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	auto rec = std::make_shared<sf::RectangleShape>();
 	rec->setSize({1.0, 3.0});
 	rec->setFillColor(sf::Color::White);
+	rec->setOrigin(rec->getSize().x / 2.0f, rec->getSize().y / 2.0f);
 	paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
 	auto& k = paddle.addComponent<KinematicComponent>();
 	k.setBodyType(KinematicComponent::BodyType::Kinematic);
@@ -58,6 +59,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	auto rec2 = std::make_shared<sf::RectangleShape>();
 	rec2->setSize({1.0, 3.0});
 	rec2->setFillColor(sf::Color::White);
+	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
 	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
 	paddle2.addComponent<KinematicComponent>();
 	auto& t2 = paddle2.addComponent<TransformComponent>();
@@ -70,6 +72,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	auto circle = std::make_shared<sf::CircleShape>();
 	circle->setRadius(0.5f);
 	circle->setFillColor(sf::Color::White);
+	circle->setOrigin(circle->getRadius(), circle->getRadius());
 	ball.addComponent<std::shared_ptr<sf::Drawable>>(circle);
 	auto& kb = ball.addComponent<KinematicComponent>();
 	kb.setVelocity({1.0, 0.0});
@@ -77,7 +80,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	auto& p = ball.addComponent<TransformComponent>();
 	p.setPosition({10, 10});
 	auto& cb = ball.addComponent<BoxCollisionComponent>();
-	cb.setSize({circle->getRadius(), circle->getRadius()});
+	cb.setSize({circle->getRadius()*2.0f, circle->getRadius()*2.0f});
 
 
 	this->engine->setEngineState(EngineState::State::Initialize);
