@@ -1,13 +1,15 @@
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
+#include <age/core/EventQueue.h>
 #include <age/entity/EntityManager.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
 #include <age/graphics/Window.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/PhysicsSystem.h>
+#include <age/physics/CollisionEvent.h>
 #include <age/physics/KinematicComponent.h>
+#include <age/physics/PhysicsSystem.h>
 #include <examples/pong/Pong.h>
 #include <SFML/Graphics.hpp>
 
@@ -38,6 +40,8 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	k.setBodyType(KinematicComponent::BodyType::Kinematic);
 	auto& t = paddle.addComponent<TransformComponent>();
 	t.setPosition({5, 10});
+	auto& pc = paddle.addComponent<BoxCollisionComponent>();
+	pc.setSize({rec->getSize().x, rec->getSize().y});
 
 	auto& input = paddle.addComponent<InputComponent>();
 	input.addKeyBinding(sf::Keyboard::Key::Up, [](Entity e, bool isPressed) {
@@ -75,13 +79,32 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	circle->setOrigin(circle->getRadius(), circle->getRadius());
 	ball.addComponent<std::shared_ptr<sf::Drawable>>(circle);
 	auto& kb = ball.addComponent<KinematicComponent>();
-	kb.setVelocity({1.0, 0.0});
+	kb.setVelocity({5.0, 0.0});
 	kb.setBodyType(KinematicComponent::BodyType::Dynamic);
 	auto& p = ball.addComponent<TransformComponent>();
 	p.setPosition({10, 10});
 	auto& cb = ball.addComponent<BoxCollisionComponent>();
-	cb.setSize({circle->getRadius()*2.0f, circle->getRadius()*2.0f});
+	cb.setSize({circle->getRadius() * 2.0f, circle->getRadius() * 2.0f});
 
+
+	EventQueue::Instance().addEventHandler([paddle, paddle2, ball, &kb](Event* e) {
+		auto evt = dynamic_cast<CollisionEvent*>(e);
+
+		if(evt != nullptr)
+		{
+			const auto& entities = evt->getEntities();
+
+			for(const auto& entity : entities)
+			{
+				if(entity == ball)
+				{
+					auto v = kb.getVelocity();
+					v.setX(-v.getX());
+					kb.setVelocity(v);
+				}
+			}
+		}
+	});
 
 	this->engine->setEngineState(EngineState::State::Initialize);
 }

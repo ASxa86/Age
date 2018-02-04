@@ -28,7 +28,8 @@ public:
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
 
-		this->font.loadFromFile("C:/age/resources/sansation.ttf");
+		//this->font.loadFromFile("C:/age/resources/sansation.ttf");
+		this->font.loadFromFile("arial.ttf");
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
 
@@ -138,14 +139,14 @@ void Window::render(std::chrono::microseconds /*x*/)
 			this->pimpl->window.draw(*d, this->pimpl->renderState);
 		});
 
-		//manager->each<TransformComponent, BoxCollisionComponent>([this](Entity, TransformComponent& t, BoxCollisionComponent& b) {
-		//	sf::RectangleShape shape;
-		//	shape.setPosition(Impl::FromVector(t.getPosition()));
-		//	shape.setSize(Impl::FromVector(b.getSize()));
-		//	shape.setOrigin(shape.getSize().x / 2.0f, shape.getSize().y / 2.0f);
-		//	shape.setFillColor(sf::Color::Green);
-		//	this->pimpl->window.draw(shape, this->pimpl->renderState);
-		//});
+		manager->each<TransformComponent, BoxCollisionComponent>([this](Entity, TransformComponent& t, BoxCollisionComponent& b) {
+			sf::RectangleShape shape;
+			shape.setPosition(Impl::FromVector(t.getPosition()));
+			shape.setSize(Impl::FromVector(b.getSize()));
+			shape.setOrigin(shape.getSize().x / 2.0f, shape.getSize().y / 2.0f);
+			shape.setFillColor(sf::Color::Green);
+			this->pimpl->window.draw(shape, this->pimpl->renderState);
+		});
 
 		if(elapsed >= 0.5)
 		{

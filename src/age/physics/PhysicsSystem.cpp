@@ -1,11 +1,13 @@
+#include <age/physics/PhysicsSystem.h>
+
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
 #include <age/entity/EntityManager.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
+#include <age/physics/CollisionEvent.h>
 #include <age/physics/KinematicComponent.h>
-#include <age/physics/PhysicsSystem.h>
 
 using namespace age::core;
 using namespace age::entity;
@@ -39,7 +41,6 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 
 	manager->each<TransformComponent, KinematicComponent>([s = seconds.count(), manager](Entity e, TransformComponent& t, KinematicComponent& k) {
-
 		auto pos = t.getPosition();
 		auto rot = t.getRotation();
 
@@ -50,61 +51,76 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 		if(e.hasComponent<BoxCollisionComponent>() == true)
 		{
-			manager->each<TransformComponent, BoxCollisionComponent>([&hasCollision, &e, &t](Entity ex, TransformComponent& tx, BoxCollisionComponent& bx) {
-				if(e != ex)
-				{
-					const auto& b = e.getComponent<BoxCollisionComponent>();
-					const auto p = t.getPosition();
-					const auto s = b.getSize();
-					const auto c = b.getCenter();
+			auto evt = std::make_unique<CollisionEvent>();
+			evt->addEntity(e);
 
-					const auto px = tx.getPosition();
-					const auto sx = bx.getSize();
-					const auto cx = bx.getCenter();
-
-					// Calculate collision.
-
-					const auto left = p.getX() - (s.getX() * 0.5);
-					const auto right = p.getX() + (s.getX() * 0.5);
-					const auto top = p.getY() - (s.getY() * 0.5);
-					const auto bottom = p.getY() + (s.getY() * 0.5);
-
-					const auto xleft = px.getX() - (sx.getX() * 0.5);
-					const auto xright = px.getX() + (sx.getX() * 0.5);
-					const auto xtop = px.getY() - (sx.getY() * 0.5);
-					const auto xbottom = px.getY() + (sx.getY() * 0.5);
-
-					// Test left and top
-					if(left >= xleft && left <= xright && top >= xtop && top <= xbottom)
+			manager->each<TransformComponent, BoxCollisionComponent>(
+				[&hasCollision, &e, &t, &evt](Entity ex, TransformComponent& tx, BoxCollisionComponent& bx) {
+					if(e != ex)
 					{
-						hasCollision = true;
-					}
+						const auto& b = e.getComponent<BoxCollisionComponent>();
+						const auto p = t.getPosition();
+						const auto s = b.getSize();
+						const auto c = b.getCenter();
 
-					// Test left and bottom
-					else if(left >= xleft && left <= xright && bottom <= xbottom && bottom >= top)
-					{
-						hasCollision = true;
-					}
+						const auto px = tx.getPosition();
+						const auto sx = bx.getSize();
+						const auto cx = bx.getCenter();
 
-					// Test right and top
-					else if(right <= xright && right >= xleft && top >= xtop && top <= xbottom)
-					{
-						hasCollision = true;
-					}
+						// Calculate collision.
 
-					// Test right and bottom
-					else if(right <= xright && right >= xleft && bottom <= xbottom && bottom >= top)
-					{
-						hasCollision = true;
-					}
-				}
-			});
-		}
+						const auto left = p.getX() - (s.getX() * 0.5);
+						const auto right = p.getX() + (s.getX() * 0.5);
+						const auto top = p.getY() - (s.getY() * 0.5);
+						const auto bottom = p.getY() + (s.getY() * 0.5);
 
-		if(hasCollision == true)
-		{
-			t.setPosition(t.getPosition() - k.getVelocity() * s);
-			t.setRotation(t.getRotation() - k.getAngularVelocity() * s);
+						const auto xleft = px.getX() - (sx.getX() * 0.5);
+						const auto xright = px.getX() + (sx.getX() * 0.5);
+						const auto xtop = px.getY() - (sx.getY() * 0.5);
+						const auto xbottom = px.getY() + (sx.getY() * 0.5);
+
+						const auto leftIsBetweenLeftAndRight = left >= xleft && left <= xright;
+						const auto rightIsBetweenLeftAndRight = right <= xright && right >= xleft;
+						const auto topIsBetweenTopAndBottom = top >= xtop && top <= xbottom;
+						const auto bottomIsBetweenTopAndBotton = bottom <= xbottom && bottom >= xtop;
+
+						// Test left and top
+						if(leftIsBetweenLeftAndRight == true && topIsBetweenTopAndBottom == true)
+						{
+							hasCollision = true;
+						}
+
+						// Test left and bottom
+						else if(leftIsBetweenLeftAndRight == true && bottomIsBetweenTopAndBotton == true)
+						{
+							hasCollision = true;
+						}
+
+						// Test right and top
+						else if(rightIsBetweenLeftAndRight == true && topIsBetweenTopAndBottom == true)
+						{
+							hasCollision = true;
+						}
+
+						// Test right and bottom
+						else if(rightIsBetweenLeftAndRight == true && bottomIsBetweenTopAndBotton == true)
+						{
+							hasCollision = true;
+						}
+
+						if(hasCollision == true)
+						{
+							evt->addEntity(ex);
+						}
+					}
+				});
+
+			if(hasCollision == true)
+			{
+				t.setPosition(t.getPosition() - k.getVelocity() * s);
+				t.setRotation(t.getRotation() - k.getAngularVelocity() * s);
+				EventQueue::Instance().sendEvent(std::move(evt));
+			}
 		}
 	});
 }
