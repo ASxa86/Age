@@ -1,6 +1,8 @@
 project(TestAgeMath)
 
 set(TARGET_SRC
+	BoundingBox.test.cpp
+	Intersect.test.cpp
 	Vector.test.cpp
 )
 

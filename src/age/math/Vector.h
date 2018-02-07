@@ -84,5 +84,7 @@ namespace age
 		private:
 			std::array<double, 2> v;
 		};
+
+		AGE_MATH_EXPORT double distance(const Vector& a, const Vector& b);
 	}
 }

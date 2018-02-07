@@ -124,3 +124,8 @@ double Vector::normalize()
 
 	return mag;
 }
+
+double age::math::distance(const Vector& a, const Vector& b)
+{
+	return std::sqrt(std::pow(b.getX() - a.getX(), 2.0) + std::pow(b.getY() - a.getY(), 2.0));
+}
