@@ -36,13 +36,8 @@ bool age::math::intersect(const BoundingCircle& a, const BoundingCircle& b)
 
 bool age::math::intersect(const BoundingBox& a, const BoundingCircle& b)
 {
-	const auto xradius = a.getSize().getX() * 0.5;
-	const auto yradius = a.getSize().getY() * 0.5;
-	const auto outsideRadius = std::sqrt(std::pow(xradius, 2.0) + std::pow(yradius, 2.0));
-
-	const auto outsideCircle = BoundingCircle(a.getPosition(), outsideRadius);
-	const auto xcircle = BoundingCircle(a.getPosition(), xradius);
-	const auto ycircle = BoundingCircle(a.getPosition(), yradius);
-
-	return age::math::intersect(outsideCircle, b) && (age::math::intersect(xcircle, b) || age::math::intersect(ycircle, b));
+	// https://yal.cc/rectangle-circle-intersection-test/
+	const auto deltaX = b.getPosition().getX() - std::max(a.getLeft(), std::min(b.getPosition().getX(), a.getRight()));
+	const auto deltaY = b.getPosition().getY() - std::max(a.getTop(), std::min(b.getPosition().getY(), a.getBottom()));
+	return (std::pow(deltaX, 2.0) + std::pow(deltaY, 2.0)) <= (std::pow(b.getRadius(), 2.0));
 }

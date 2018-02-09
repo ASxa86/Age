@@ -7,6 +7,7 @@
 #include <age/graphics/Window.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
+#include <age/physics/CircleCollisionComponent.h>
 #include <age/physics/CollisionEvent.h>
 #include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsSystem.h>
@@ -83,8 +84,8 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	kb.setBodyType(KinematicComponent::BodyType::Dynamic);
 	auto& p = ball.addComponent<TransformComponent>();
 	p.setPosition({10, 10});
-	auto& cb = ball.addComponent<BoxCollisionComponent>();
-	cb.setSize({circle->getRadius() * 2.0f, circle->getRadius() * 2.0f});
+	auto& cb = ball.addComponent<CircleCollisionComponent>();
+	cb.setRadius(circle->getRadius());
 
 
 	EventQueue::Instance().addEventHandler([paddle, paddle2, ball, &kb](Event* e) {

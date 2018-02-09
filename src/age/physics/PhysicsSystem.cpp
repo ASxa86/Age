@@ -5,9 +5,11 @@
 #include <age/core/Timer.h>
 #include <age/entity/EntityManager.h>
 #include <age/math/BoundingBox.h>
+#include <age/math/BoundingCircle.h>
 #include <age/math/Intersect.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
+#include <age/physics/CircleCollisionComponent.h>
 #include <age/physics/CollisionEvent.h>
 #include <age/physics/KinematicComponent.h>
 
@@ -40,9 +42,10 @@ void PhysicsSystem::initialize()
 void PhysicsSystem::frame(std::chrono::microseconds x)
 {
 	const auto manager = this->getEntityManager();
+	const auto entities = manager->getEntities();
 	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 
-	manager->each<TransformComponent, KinematicComponent>([s = seconds.count(), manager](Entity e, TransformComponent& t, KinematicComponent& k) {
+	manager->each<TransformComponent, KinematicComponent>([s = seconds.count(), &entities](Entity e, TransformComponent& t, KinematicComponent& k) {
 		auto pos = t.getPosition();
 		auto rot = t.getRotation();
 
@@ -56,11 +59,15 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 			auto evt = std::make_unique<CollisionEvent>();
 			evt->addEntity(e);
 
-			manager->each<TransformComponent, BoxCollisionComponent>(
-				[&hasCollision, &e, &t, &evt](Entity ex, TransformComponent& tx, BoxCollisionComponent& bx) {
-					if(e != ex)
+			for(auto ex : entities)
+			{
+				if(ex != e)
+				{
+					if(ex.hasComponent<BoxCollisionComponent>() == true)
 					{
 						const auto& b = e.getComponent<BoxCollisionComponent>();
+						const auto& bx = ex.getComponent<BoxCollisionComponent>();
+						const auto& tx = ex.getComponent<TransformComponent>();
 
 						const BoundingBox bbA{t.getPosition() + b.getCenter(), b.getSize()};
 						const BoundingBox bbB{tx.getPosition() + bx.getCenter(), bx.getSize()};
@@ -71,7 +78,24 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 							evt->addEntity(ex);
 						}
 					}
-				});
+
+					if(ex.hasComponent<CircleCollisionComponent>() == true)
+					{
+						const auto& b = e.getComponent<BoxCollisionComponent>();
+						const auto& cx = ex.getComponent<CircleCollisionComponent>();
+						const auto& tx = ex.getComponent<TransformComponent>();
+
+						const BoundingBox bbA{t.getPosition() + b.getCenter(), b.getSize()};
+						const BoundingCircle bcB{tx.getPosition() + cx.getCenter(), cx.getRadius()};
+
+						if(age::math::intersect(bbA, bcB) == true)
+						{
+							hasCollision = true;
+							evt->addEntity(ex);
+						}
+					}
+				}
+			}
 
 			if(hasCollision == true)
 			{
