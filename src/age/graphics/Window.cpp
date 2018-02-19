@@ -5,6 +5,7 @@
 #include <age/core/Timer.h>
 #include <age/entity/EntityManager.h>
 #include <age/graphics/KeyEvent.h>
+#include <age/graphics/RenderSystem.h>
 #include <age/graphics/Window.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
@@ -37,10 +38,7 @@ public:
 		this->renderState.transform.scale(factor, factor);
 	}
 
-	static sf::Vector2f FromVector(const age::math::Vector& x)
-	{
-		return {static_cast<float>(x.getX()), static_cast<float>(x.getY())};
-	}
+
 
 	sf::ContextSettings settings;
 	sf::RenderWindow window;
@@ -115,38 +113,23 @@ void Window::variable(std::chrono::microseconds)
 	}
 }
 
-void Window::render(std::chrono::microseconds /*x*/)
+void Window::render(std::chrono::microseconds x)
 {
 	if(this->pimpl->window.isOpen() == true)
 	{
+		this->pimpl->window.clear();
+
+		const auto renderSystems = this->getChildren<RenderSystem>();
+
+		for(const auto& system : renderSystems)
+		{
+			system->render(this->pimpl->window, this->pimpl->renderState, x);
+		}
+
+		// FPS
 		static double elapsed = 0.0;
 		const auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
-		this->pimpl->window.clear();
 		elapsed += delta.count();
-
-		auto parent = this->getParent();
-		auto manager = parent->getChild<EntityManager>();
-
-		manager->each<TransformComponent, std::shared_ptr<sf::Drawable>>([this](Entity, TransformComponent& t, std::shared_ptr<sf::Drawable>& d) {
-			auto transform = dynamic_cast<sf::Transformable*>(d.get());
-
-			if(transform != nullptr)
-			{
-				auto p = t.getPosition();
-				transform->setPosition(Impl::FromVector(p));
-			}
-
-			this->pimpl->window.draw(*d, this->pimpl->renderState);
-		});
-
-		manager->each<TransformComponent, BoxCollisionComponent>([this](Entity, TransformComponent& t, BoxCollisionComponent& b) {
-			sf::RectangleShape shape;
-			shape.setPosition(Impl::FromVector(t.getPosition()));
-			shape.setSize(Impl::FromVector(b.getSize()));
-			shape.setOrigin(shape.getSize().x / 2.0f, shape.getSize().y / 2.0f);
-			shape.setFillColor(sf::Color::Green);
-			this->pimpl->window.draw(shape, this->pimpl->renderState);
-		});
 
 		if(elapsed >= 0.5)
 		{

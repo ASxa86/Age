@@ -2,6 +2,7 @@
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
 #include <age/entity/EntityManager.h>
+#include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
 #include <age/graphics/Window.h>
@@ -24,6 +25,7 @@ using namespace age::pong;
 Pong::Pong() : engine{std::make_shared<Engine>()}
 {
 	auto window = std::make_shared<Window>();
+	window->addChild(std::make_shared<DrawableSystem>());
 	this->engine->addChild(window);
 	auto manager = std::make_shared<EntityManager>();
 	this->engine->addChild(manager);

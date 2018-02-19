@@ -10,17 +10,21 @@ include_directories(${SFML_INCLUDE_DIR})
 add_definitions(-D${PROJECT_NAME}_Export)
 
 set(TARGET_H
+	DrawableSystem.h
 	Export.h
 	KeyEvent.h
 	InputComponent.h
 	PlayerInputSystem.h
+	RenderSystem.h
 	Window.h
 )
 
 set(TARGET_SRC
+	DrawableSystem.cpp
 	InputComponent.cpp
 	KeyEvent.cpp
 	PlayerInputSystem.cpp
+	RenderSystem.cpp
 	Window.cpp
 )
 
