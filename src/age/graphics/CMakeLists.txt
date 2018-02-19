@@ -16,6 +16,9 @@ set(TARGET_H
 	InputComponent.h
 	PlayerInputSystem.h
 	RenderSystem.h
+	SpriteAnimation.h
+	SpriteAnimationComponent.h
+	SpriteAnimationSystem.h
 	Window.h
 )
 
@@ -25,6 +28,9 @@ set(TARGET_SRC
 	KeyEvent.cpp
 	PlayerInputSystem.cpp
 	RenderSystem.cpp
+	SpriteAnimation.cpp
+	SpriteAnimationComponent.cpp
+	SpriteAnimationSystem.cpp	
 	Window.cpp
 )
 
