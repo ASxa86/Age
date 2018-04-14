@@ -15,16 +15,46 @@ namespace age
 {
 	namespace entity
 	{
+		///
+		///	\class EntityManager
+		///
+		///	\brief This class manages all entities for a given instance.
+		///
+		///	This class is what makes Entities possible in an Entity Component System.
+		///	The complexity of this class falls under keeping entities allocated to an object along with their components.
+		///	By using sequential memory for the object pool, processing large numbers of entities becomes easy for a cpu to handle.
+		///
+		///	\author Aaron Shelley
+		///
+		///	\date April 14, 2018
+		///
 		class AGE_ENTITY_EXPORT EntityManager : public age::core::Object
 		{
 		public:
 			EntityManager();
 			~EntityManager() override;
 
+			///
+			///	Return a free entity in the object pool.
+			///	If there are no more free entities left in the object pool, than the object pool will be expanded.
+			///
 			Entity create();
+
+			///
+			///	Free up an entity in the object pool.
+			///
 			void destroy(Entity x);
+
+			///
+			///	Return if the entity is a valid entity that holds a spot within an object pool.
+			///	The entity is invalid if it has been destroyed.
+			///
 			bool valid(Entity x) const;
 
+			///
+			///	Get a read-only list of all entities within the entity manager.
+			///	This list contains all allocated entities, valid or not.
+			///
 			const std::vector<Entity>& getEntities() const;
 
 			template <typename T>
@@ -33,6 +63,11 @@ namespace age
 				typedef T type;
 			};
 
+			///
+			///	Loop through each entity that contains the given components and invoke the given function on them.
+			///
+			///	This function will efficiently call the given function on only the entities with the given components.
+			///
 			template <typename... Args>
 			void each(typename identity<std::function<void(Entity, Args&...)>>::type x)
 			{
@@ -43,10 +78,9 @@ namespace age
 						// MSVC BUG // for(auto e : this->entities)
 						for(auto i = 0; i < this->entities.size(); i++)
 						{
-							const auto& e = this->entities[i];
+							auto e = this->entities[i];
 
-							const auto validList = {true, (pool != nullptr && pool->getValid(e.id))...};
-							const auto valid = std::all_of(std::begin(validList), std::end(validList), [](auto x) { return x; });
+							const auto valid = ((pool != nullptr) && ...) && ((pool->getValid(e.id) == true) && ...);
 
 							if(valid == true)
 							{
