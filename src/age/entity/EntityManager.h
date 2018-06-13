@@ -7,6 +7,7 @@
 #include <age/entity/Entity.h>
 #include <age/entity/EntityEvent.h>
 #include <age/entity/Export.h>
+#include <deque>
 #include <map>
 #include <tuple>
 #include <typeindex>
@@ -111,7 +112,7 @@ namespace age
 			friend class Entity;
 			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;
-			std::vector<bool> validEntities;
+			std::deque<bool> validEntities;
 			std::vector<int> indexList;
 		};
 	}

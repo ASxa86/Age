@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/entity/Export.h>
+#include <deque>
 #include <vector>
 
 namespace age
@@ -20,7 +21,7 @@ namespace age
 			bool getValid(std::size_t x) const;
 
 		protected:
-			std::vector<bool> valid;
+			std::deque<bool> valid;
 		};
 
 		template <typename T>
