@@ -61,7 +61,7 @@ namespace age
 			template <typename T, typename... Args>
 			T& addComponent(Args&&... args)
 			{
-				const auto pool = this->manager->getPool<T>();
+				const auto pool = this->manager->template getPool<T>();
 
 				if(pool->getValid(this->id) == false)
 				{
@@ -87,7 +87,7 @@ namespace age
 			template <typename T>
 			void removeComponent()
 			{
-				const auto pool = this->manager->getPool<T>();
+				const auto pool = this->manager->template getPool<T>();
 
 				if(pool->getValid(this->id) == true)
 				{
@@ -104,7 +104,7 @@ namespace age
 			template <typename T>
 			T& getComponent()
 			{
-				const auto pool = this->manager->getPool<T>();
+				const auto pool = this->manager->template getPool<T>();
 				return pool->get(this->id);
 			}
 
@@ -114,7 +114,7 @@ namespace age
 			template <typename T>
 			bool hasComponent()
 			{
-				const auto pool = this->manager->getPool<T>();
+				const auto pool = this->manager->template getPool<T>();
 				return pool->getValid(this->id);
 			}
 

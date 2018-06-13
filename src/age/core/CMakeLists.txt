@@ -1,8 +1,9 @@
 project(AgeCore)
 
-add_definitions(-D${PROJECT_NAME}_Export)
+add_library(${PROJECT_NAME} SHARED "")
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
-set(TARGET_H
+target_sources(${PROJECT_NAME} PRIVATE
 	ChildEvent.h
 	Engine.h
 	EngineState.h
@@ -17,7 +18,7 @@ set(TARGET_H
 	Timer.h
 )
 
-set(TARGET_SRC
+target_sources(${PROJECT_NAME} PRIVATE
 	ChildEvent.cpp
 	Engine.cpp
 	EngineState.cpp
@@ -28,5 +29,3 @@ set(TARGET_SRC
 	Processor.cpp
 	Timer.cpp
 )
-
-add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})

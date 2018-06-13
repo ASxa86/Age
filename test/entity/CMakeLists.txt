@@ -8,5 +8,6 @@ set(TARGET_SRC
 add_executable(${PROJECT_NAME} ${TARGET_SRC})
 target_link_libraries(${PROJECT_NAME}
 	AgeEntity
-	${GTEST_LIBRARY}
+	GTest::GTest
+	GTest::Main
 )

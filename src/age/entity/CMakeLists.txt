@@ -1,8 +1,9 @@
 project(AgeEntity)
 
-add_definitions(-D${PROJECT_NAME}_Export)
+add_library(${PROJECT_NAME} SHARED "")
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
-set(TARGET_H
+target_sources(${PROJECT_NAME} PRIVATE
 	Component.h
 	ComponentPool.h
 	Entity.h
@@ -12,7 +13,7 @@ set(TARGET_H
 	System.h
 )
 
-set(TARGET_SRC
+target_sources(${PROJECT_NAME} PRIVATE
 	Component.cpp
 	ComponentPool.cpp
 	Entity.cpp
@@ -21,5 +22,4 @@ set(TARGET_SRC
 	System.cpp
 )
 
-add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})
 target_link_libraries(${PROJECT_NAME} AgeCore)

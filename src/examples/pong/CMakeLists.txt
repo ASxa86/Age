@@ -4,18 +4,18 @@ project(AgePong)
 #
 #	Find SFML
 #
-find_package(SFML 2.4 COMPONENTS Audio)
-include_directories(${SFML_INCLUDE_DIR})
+find_package(SFML 2 COMPONENTS audio)
 
-set(TARGET_H
+add_executable(${PROJECT_NAME} "")
+target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIR})
+
+target_sources(${PROJECT_NAME} PRIVATE
 	Pong.h
 )
 
-set(TARGET_SRC
+target_sources(${PROJECT_NAME} PRIVATE
 	main.cpp
 	Pong.cpp
 )
 
-add_executable(${PROJECT_NAME} ${TARGET_SRC} ${TARGET_H})
-
-target_link_libraries(${PROJECT_NAME} AgeGraphics AgePhysics ${SFML_AUDIO_LIBRARY})
+target_link_libraries(${PROJECT_NAME} AgeGraphics AgePhysics sfml-audio)

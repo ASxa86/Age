@@ -89,7 +89,6 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	auto& cb = ball.addComponent<CircleCollisionComponent>();
 	cb.setRadius(circle->getRadius());
 
-
 	EventQueue::Instance().addEventHandler([paddle, paddle2, ball, &kb](Event* e) {
 		auto evt = dynamic_cast<CollisionEvent*>(e);
 

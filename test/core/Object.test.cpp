@@ -9,13 +9,13 @@ class ObjectOne : public Object
 public:
 	ObjectOne() : ChildAdded{0}, ChildRemoved{0}
 	{
-		//this->addChildAddedHandler([this](ChildEvent* x) {
+		// this->addChildAddedHandler([this](ChildEvent* x) {
 		//	ASSERT_TRUE(x != nullptr);
 		//	EXPECT_EQ(this->getChild(), x->getChild());
 		//	ChildAdded++;
 		//});
 
-		//this->addChildRemovedHandler([this](ChildEvent* x) {
+		// this->addChildRemovedHandler([this](ChildEvent* x) {
 		//	ASSERT_TRUE(x != nullptr);
 		//	EXPECT_TRUE(x->getChild() != nullptr);
 		//	ChildRemoved++;
@@ -38,7 +38,7 @@ public:
 TEST(Object, Constructor)
 {
 	EXPECT_NO_THROW(Object());
-	EXPECT_NO_THROW(std::make_shared<Object>());
+	EXPECT_NO_THROW(auto m = std::make_shared<Object>());
 	EXPECT_TRUE(std::make_shared<Object>() != nullptr);
 }
 
@@ -112,7 +112,7 @@ TEST(Object, getChildren)
 	EXPECT_EQ(size_t{1}, parent->getChildren<ObjectTwo>().size());
 }
 
-//TEST(Object, childAdded)
+// TEST(Object, childAdded)
 //{
 //	const auto parent = std::make_shared<ObjectOne>();
 //
@@ -121,7 +121,7 @@ TEST(Object, getChildren)
 //	EXPECT_EQ(parent->getChildren().size(), parent->ChildAdded);
 //}
 //
-//TEST(Object, childRemoved)
+// TEST(Object, childRemoved)
 //{
 //	const auto parent = std::make_shared<ObjectOne>();
 //	auto child = std::make_shared<Object>();

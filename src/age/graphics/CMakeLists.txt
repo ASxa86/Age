@@ -4,12 +4,13 @@ project(AgeGraphics)
 #
 #	Find SFML
 #
-find_package(SFML 2.4 COMPONENTS System Graphics Window)
-include_directories(${SFML_INCLUDE_DIR})
+find_package(SFML 2 COMPONENTS system graphics window)
 
-add_definitions(-D${PROJECT_NAME}_Export)
+add_library(${PROJECT_NAME} SHARED "")
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
+target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIR})
 
-set(TARGET_H
+target_sources(${PROJECT_NAME} PRIVATE
 	DrawableSystem.h
 	Export.h
 	KeyEvent.h
@@ -22,7 +23,7 @@ set(TARGET_H
 	Window.h
 )
 
-set(TARGET_SRC
+target_sources(${PROJECT_NAME} PRIVATE
 	DrawableSystem.cpp
 	InputComponent.cpp
 	KeyEvent.cpp
@@ -34,14 +35,12 @@ set(TARGET_SRC
 	Window.cpp
 )
 
-add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})
-
 target_link_libraries(${PROJECT_NAME}
 	AgeCore
 	AgeEntity
 	AgeMath
 	AgePhysics
-	${SFML_GRAPHICS_LIBRARY}
-	${SFML_SYSTEM_LIBRARY}
-	${SFML_WINDOW_LIBRARY}
+	sfml-system
+	sfml-graphics
+	sfml-window
 )

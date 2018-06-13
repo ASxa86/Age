@@ -1,8 +1,9 @@
 project(AgeMath)
 
-add_definitions(-D${PROJECT_NAME}_Export)
+add_library(${PROJECT_NAME} SHARED "")
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
-set(TARGET_H
+target_sources(${PROJECT_NAME} PRIVATE
 	BoundingBox.h
 	BoundingCircle.h
 	Export.h
@@ -11,12 +12,10 @@ set(TARGET_H
 	Vector.h
 )
 
-set(TARGET_SRC
+target_sources(${PROJECT_NAME} PRIVATE
 	BoundingBox.cpp
 	BoundingCircle.cpp
 	Intersect.cpp
 	TransformComponent.cpp
 	Vector.cpp
 )
-
-add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})

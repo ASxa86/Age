@@ -1,9 +1,9 @@
 project(AgePhysics)
 
-add_definitions(-D${PROJECT_NAME}_Export)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+add_library(${PROJECT_NAME} SHARED "")
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
-set(TARGET_H
+target_sources(${PROJECT_NAME} PRIVATE
 	BoxCollisionComponent.h
 	CircleCollisionComponent.h
 	CollisionEvent.h
@@ -12,15 +12,13 @@ set(TARGET_H
 	PhysicsSystem.h
 )
 
-set(TARGET_SRC
+target_sources(${PROJECT_NAME} PRIVATE
 	BoxCollisionComponent.cpp
 	CircleCollisionComponent.cpp
 	CollisionEvent.cpp
 	KinematicComponent.cpp
 	PhysicsSystem.cpp
 )
-
-add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})
 
 target_link_libraries(${PROJECT_NAME}
 	AgeEntity
