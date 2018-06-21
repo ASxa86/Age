@@ -33,6 +33,7 @@ namespace age
 		{
 		public:
 			EntityManager();
+			EntityManager(size_t reserve);
 			~EntityManager() override;
 
 			///
@@ -112,8 +113,8 @@ namespace age
 			friend class Entity;
 			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;
-			std::deque<bool> validEntities;
 			std::vector<int> indexList;
+			std::deque<bool> validEntities;
 		};
 	}
 }

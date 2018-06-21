@@ -7,6 +7,18 @@ EntityManager::EntityManager()
 {
 }
 
+EntityManager::EntityManager(size_t reserve)
+{
+	this->entities.reserve(reserve);
+	for(auto i = 0; i < reserve; ++i)
+	{
+		Entity e;
+		e.manager = this;
+		e.id = static_cast<int>(this->entities.size());
+		this->entities.push_back(Entity());
+	}
+}
+
 EntityManager::~EntityManager()
 {
 }
