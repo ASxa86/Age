@@ -41,9 +41,23 @@ namespace age
 				return nullptr;
 			}
 
-			const std::vector<std::unique_ptr<Object>>& getChildren() const
+			void removeChild(Object* x)
 			{
-				return this->children;
+				this->children.erase(std::remove_if(std::begin(this->children), std::end(this->children), [x](auto& u) { return u.get() == x; }),
+									 std::end(this->children));
+			}
+
+			std::vector<Object*> getChildren() const
+			{
+				std::vector<Object*> v;
+				v.reserve(this->children.size());
+
+				for(const auto& child : children)
+				{
+					v.push_back(child.get());
+				}
+
+				return v;
 			}
 
 		private:
