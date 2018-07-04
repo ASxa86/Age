@@ -5,6 +5,7 @@ project(Age)
 
 if(MSVC) 
 	add_compile_options(/wd4251) # w4251 - 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
+	add_compile_options(/wd4275) # w4275 - non dll-interface class 'std::runtime_error' used as base for dll-interface class
 	add_compile_options(/W4)
 	add_compile_options(/MP)
 	add_compile_options(/WX)

@@ -1,6 +1,6 @@
 #include <age/core/Timer.h>
-#include<gtest/gtest.h>
 
+#include<gtest/gtest.h>
 #include <thread>
 
 using namespace age::core;
