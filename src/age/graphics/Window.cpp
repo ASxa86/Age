@@ -1,3 +1,6 @@
+#include <age/graphics/Window.h>
+
+#include <age/core/Configuration.h>
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
@@ -6,7 +9,6 @@
 #include <age/entity/EntityManager.h>
 #include <age/graphics/KeyEvent.h>
 #include <age/graphics/RenderSystem.h>
-#include <age/graphics/Window.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
 #include <SFML/Graphics.hpp>
@@ -29,15 +31,13 @@ public:
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
 
-		this->font.loadFromFile("D:/age/resources/sansation.ttf");
+		this->font.loadFromFile((Configuration::Instance().getDataPath() / "fonts/sansation.ttf").string());
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
 
 		const auto factor = static_cast<float>(this->pixelsPerMeter);
 		this->renderState.transform.scale(factor, factor);
 	}
-
-
 
 	sf::ContextSettings settings;
 	sf::RenderWindow window;

@@ -2,6 +2,7 @@
 
 #include <age/audio/AudioEvent.h>
 #include <age/audio/AudioSystem.h>
+#include <age/core/Configuration.h>
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
@@ -41,6 +42,7 @@ struct Pong::Impl
 
 Pong::Pong()
 {
+	auto& config = Configuration::Instance();
 	auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<DrawableSystem>());
 	this->pimpl->engine->addChild(window);
@@ -107,7 +109,7 @@ Pong::Pong()
 	auto& cb = ball.addComponent<CircleCollisionComponent>();
 	cb.setRadius(circle->getRadius());
 
-	this->pimpl->soundBuffer.loadFromFile("C:/age/data/audio/ball.wav");
+	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());
 	ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);
 
 	EventQueue::Instance().addEventHandler([this, ball, &kb](Event* e) {

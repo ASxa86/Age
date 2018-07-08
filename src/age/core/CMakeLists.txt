@@ -5,6 +5,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
 target_sources(${PROJECT_NAME} PRIVATE
 	ChildEvent.h
+	Configuration.h
 	Engine.h
 	EngineState.h
 	EngineStateEvent.h
@@ -20,6 +21,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_sources(${PROJECT_NAME} PRIVATE
 	ChildEvent.cpp
+	Configuration.cpp
 	Engine.cpp
 	EngineState.cpp
 	EngineStateEvent.cpp
