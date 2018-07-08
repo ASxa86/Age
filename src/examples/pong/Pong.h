@@ -15,7 +15,8 @@ namespace age
 			int run();
 
 		private:
-			std::shared_ptr<age::core::Engine> engine;
+			struct Impl;
+			Pimpl<Impl> pimpl;
 		};
 	}
 }

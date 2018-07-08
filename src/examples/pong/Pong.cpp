@@ -1,6 +1,11 @@
+#include <examples/pong/Pong.h>
+
+#include <age/audio/AudioEvent.h>
+#include <age/audio/AudioSystem.h>
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
+#include <age/core/PimplImpl.h>
 #include <age/entity/EntityManager.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
@@ -12,9 +17,10 @@
 #include <age/physics/CollisionEvent.h>
 #include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsSystem.h>
-#include <examples/pong/Pong.h>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+using namespace age::audio;
 using namespace age::core;
 using namespace age::entity;
 using namespace age::math;
@@ -22,15 +28,27 @@ using namespace age::graphics;
 using namespace age::physics;
 using namespace age::pong;
 
-Pong::Pong() : engine{std::make_shared<Engine>()}
+struct Pong::Impl
+{
+	Impl()
+	{
+	}
+
+	std::shared_ptr<Engine> engine{std::make_shared<Engine>()};
+	sf::SoundBuffer soundBuffer;
+	sf::Sound sound{soundBuffer};
+};
+
+Pong::Pong()
 {
 	auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<DrawableSystem>());
-	this->engine->addChild(window);
+	this->pimpl->engine->addChild(window);
 	auto manager = std::make_shared<EntityManager>();
-	this->engine->addChild(manager);
-	this->engine->addChild(std::make_shared<PlayerInputSystem>());
-	this->engine->addChild(std::make_shared<PhysicsSystem>());
+	this->pimpl->engine->addChild(manager);
+	this->pimpl->engine->addChild(std::make_shared<PlayerInputSystem>());
+	this->pimpl->engine->addChild(std::make_shared<PhysicsSystem>());
+	this->pimpl->engine->addChild(std::make_shared<AudioSystem>());
 
 	// Player 1
 	auto paddle = manager->create();
@@ -89,7 +107,10 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 	auto& cb = ball.addComponent<CircleCollisionComponent>();
 	cb.setRadius(circle->getRadius());
 
-	EventQueue::Instance().addEventHandler([paddle, paddle2, ball, &kb](Event* e) {
+	this->pimpl->soundBuffer.loadFromFile("C:/age/data/audio/ball.wav");
+	ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);
+
+	EventQueue::Instance().addEventHandler([this, ball, &kb](Event* e) {
 		auto evt = dynamic_cast<CollisionEvent*>(e);
 
 		if(evt != nullptr)
@@ -100,6 +121,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 			{
 				if(entity == ball)
 				{
+					EventQueue::Instance().sendEvent(std::make_unique<AudioEvent>(this->pimpl->soundBuffer));
 					auto v = kb.getVelocity();
 					v.setX(-v.getX());
 					kb.setVelocity(v);
@@ -108,7 +130,7 @@ Pong::Pong() : engine{std::make_shared<Engine>()}
 		}
 	});
 
-	this->engine->setEngineState(EngineState::State::Initialize);
+	this->pimpl->engine->setEngineState(EngineState::State::Initialize);
 }
 
 Pong::~Pong()
@@ -117,9 +139,9 @@ Pong::~Pong()
 
 int Pong::run()
 {
-	while(this->engine->getEngineState().getState() < EngineState::State::Exit)
+	while(this->pimpl->engine->getEngineState().getState() < EngineState::State::Exit)
 	{
-		this->engine->frame();
+		this->pimpl->engine->frame();
 	}
 
 	return 0;

@@ -52,7 +52,7 @@ namespace age
 			///
 			///	\param recursive Recursively search for a parent of the given type T.
 			///
-			template<typename T>
+			template <typename T>
 			T* getParent(bool recursive = false) const
 			{
 				const auto parent = this->getParent();
@@ -74,7 +74,7 @@ namespace age
 			///
 			///	Ownership of the object will be transfered to this object.
 			///
-			virtual bool addChild(std::shared_ptr<Object> x);
+			virtual bool addChild(const std::shared_ptr<Object>& x);
 
 			///
 			///	Return the child with the given index. Default 0.

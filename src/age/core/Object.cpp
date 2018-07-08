@@ -8,10 +8,7 @@ using namespace age::core;
 class Object::Impl
 {
 public:
-	Impl() :
-		children{},
-		id{},
-		parent{nullptr}
+	Impl() : children{}, id{}, parent{nullptr}
 	{
 	}
 
@@ -47,7 +44,7 @@ Object* Object::getParent() const
 	return this->pimpl->parent;
 }
 
-bool Object::addChild(std::shared_ptr<Object> x)
+bool Object::addChild(const std::shared_ptr<Object>& x)
 {
 	const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
 
@@ -93,8 +90,7 @@ std::vector<std::shared_ptr<Object>> Object::getChildren(bool recursive) const
 
 bool Object::removeChild(const std::shared_ptr<Object>& x)
 {
-	const auto removeIt =
-		std::remove(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
+	const auto removeIt = std::remove(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
 
 	if(removeIt != std::end(this->pimpl->children))
 	{
