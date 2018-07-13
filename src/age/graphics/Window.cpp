@@ -26,7 +26,7 @@ class Window::Impl
 {
 public:
 	Impl(unsigned int width, unsigned int height)
-		: settings{0, 0, 8}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}, pixelsPerMeter{32}
+		: settings{0, 0, 8}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
@@ -34,9 +34,6 @@ public:
 		this->font.loadFromFile((Configuration::Instance().getDataPath() / "fonts/sansation.ttf").string());
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
-
-		const auto factor = static_cast<float>(this->pixelsPerMeter);
-		this->renderState.transform.scale(factor, factor);
 	}
 
 	sf::ContextSettings settings;
@@ -46,8 +43,6 @@ public:
 	// Temporary until I find a generic way to handle GUI widgets.
 	sf::Text text;
 	sf::Font font;
-	sf::RenderStates renderState;
-	unsigned int pixelsPerMeter;
 };
 
 Window::Window(unsigned int width, unsigned int height) : Processor(), pimpl(width, height)
@@ -68,19 +63,6 @@ unsigned int Window::getWidth() const
 unsigned int Window::getHeight() const
 {
 	return this->pimpl->window.getSize().y;
-}
-
-void Window::setPixelsPerMeter(unsigned int x)
-{
-	this->pimpl->pixelsPerMeter = x;
-
-	const auto factor = static_cast<float>(this->pimpl->pixelsPerMeter);
-	this->pimpl->renderState.transform.scale(factor, factor);
-}
-
-unsigned int Window::getPixelsPerMeter() const
-{
-	return this->pimpl->pixelsPerMeter;
 }
 
 void Window::variable(std::chrono::microseconds)
@@ -122,7 +104,7 @@ void Window::render(std::chrono::microseconds x)
 
 		for(const auto& system : renderSystems)
 		{
-			system->render(this->pimpl->window, this->pimpl->renderState, x);
+			system->render(this->pimpl->window, x);
 		}
 
 		// FPS

@@ -11,6 +11,7 @@
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
+#include <age/graphics/TextSystem.h>
 #include <age/graphics/Window.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
@@ -33,11 +34,13 @@ struct Pong::Impl
 {
 	Impl()
 	{
+		this->font.loadFromFile((Configuration::Instance().getDataPath() / "fonts/sansation.ttf").string());
 	}
 
 	std::shared_ptr<Engine> engine{std::make_shared<Engine>()};
 	sf::SoundBuffer soundBuffer;
 	sf::Sound sound{soundBuffer};
+	sf::Font font;
 };
 
 Pong::Pong()
@@ -45,6 +48,7 @@ Pong::Pong()
 	auto& config = Configuration::Instance();
 	auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<DrawableSystem>());
+	window->addChild(std::make_shared<TextSystem>());
 	this->pimpl->engine->addChild(window);
 	auto manager = std::make_shared<EntityManager>();
 	this->pimpl->engine->addChild(manager);
@@ -108,6 +112,30 @@ Pong::Pong()
 	p.setPosition({10, 10});
 	auto& cb = ball.addComponent<CircleCollisionComponent>();
 	cb.setRadius(circle->getRadius());
+
+	// Score 1
+	auto score1 = manager->create();
+	auto text1 = std::make_shared<sf::Text>();
+	text1->setString("0");
+	text1->setFont(this->pimpl->font);
+	text1->setCharacterSize(60);
+	auto tb1 = text1->getLocalBounds();
+	text1->setOrigin(tb1.width / 2.0f, tb1.height / 2.0f);
+	score1.addComponent<std::shared_ptr<sf::Text>>(text1);
+	auto& st1 = score1.addComponent<TransformComponent>();
+	st1.setPosition({window->getWidth() / 4.0, 100});
+
+	// Score 2
+	auto score2 = manager->create();
+	auto text2 = std::make_shared<sf::Text>();
+	text2->setString("0");
+	text2->setFont(this->pimpl->font);
+	text2->setCharacterSize(60);
+	auto tb2 = text2->getLocalBounds();
+	text2->setOrigin(tb2.width / 2.0f, tb2.height / 2.0f);
+	score2.addComponent<std::shared_ptr<sf::Text>>(text2);
+	auto& st2 = score2.addComponent<TransformComponent>();
+	st2.setPosition({window->getWidth() - st1.getPosition().getX(), 100});
 
 	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());
 	ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);

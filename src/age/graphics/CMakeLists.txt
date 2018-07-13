@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	SpriteAnimation.h
 	SpriteAnimationComponent.h
 	SpriteAnimationSystem.h
+	TextSystem.h
 	Window.h
 )
 
@@ -32,6 +33,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	SpriteAnimation.cpp
 	SpriteAnimationComponent.cpp
 	SpriteAnimationSystem.cpp	
+	TextSystem.cpp
 	Window.cpp
 )
 

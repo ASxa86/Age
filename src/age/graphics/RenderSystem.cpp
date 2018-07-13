@@ -10,6 +10,6 @@ RenderSystem::~RenderSystem()
 {
 }
 
-void RenderSystem::render(sf::RenderTarget&, sf::RenderStates&, std::chrono::microseconds)
+void RenderSystem::render(sf::RenderTarget&, std::chrono::microseconds)
 {
 }
