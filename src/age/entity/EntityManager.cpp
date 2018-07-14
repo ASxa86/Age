@@ -43,10 +43,7 @@ Entity EntityManager::create()
 
 	for(const auto& pair : this->pools)
 	{
-		if(e.id >= pair.second->size())
-		{
-			pair.second->resize(e.id + 1);
-		}
+		pair.second->allocate();
 	}
 
 	EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(e, EntityEvent::Type::EntityAdded));

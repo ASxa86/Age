@@ -135,6 +135,7 @@ Pong::Pong()
 	text2->setOrigin(tb2.width / 2.0f, tb2.height / 2.0f);
 	score2.addComponent<std::shared_ptr<sf::Text>>(text2);
 	auto& st2 = score2.addComponent<TransformComponent>();
+
 	st2.setPosition({window->getWidth() - st1.getPosition().getX(), 100});
 
 	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());

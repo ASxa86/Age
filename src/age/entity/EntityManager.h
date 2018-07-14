@@ -99,8 +99,7 @@ namespace age
 
 				if(pool == nullptr)
 				{
-					auto p = std::make_unique<ComponentPool<T>>();
-					p->resize(this->entities.size());
+					auto p = std::make_unique<ComponentPool<T>>(this->entities.size());
 					pool = p.get();
 					this->pools[typeid(T)] = std::move(p);
 				}

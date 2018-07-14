@@ -67,7 +67,7 @@ namespace age
 				{
 					if(this->id >= pool->size())
 					{
-						pool->resize(this->id + 1);
+						pool->allocate();
 					}
 
 					pool->get(this->id) = T(std::forward<Args>(args)...);
