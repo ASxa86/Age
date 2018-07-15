@@ -92,7 +92,8 @@ Pong::Pong()
 	rec2->setFillColor(sf::Color::White);
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
 	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
-	paddle2.addComponent<KinematicComponent>();
+	auto& kp2 = paddle2.addComponent<KinematicComponent>();
+	kp2.setBodyType(KinematicComponent::BodyType::Kinematic);
 	auto& t2 = paddle2.addComponent<TransformComponent>();
 	t2.setPosition({35, 10});
 	auto& c = paddle2.addComponent<BoxCollisionComponent>();

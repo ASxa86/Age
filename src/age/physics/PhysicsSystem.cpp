@@ -1,17 +1,19 @@
-#include <age/physics/PhysicsSystem.h>
+#ifdef WIN32
+// Setting an int as void* for UserData within b2body
+#pragma warning(disable : 4311 4312 4302)
+#endif
 
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2World.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
+#include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
-#include <age/math/BoundingBox.h>
-#include <age/math/BoundingCircle.h>
-#include <age/math/Intersect.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/CircleCollisionComponent.h>
-#include <age/physics/CollisionEvent.h>
 #include <age/physics/KinematicComponent.h>
+#include <age/physics/PhysicsSystem.h>
 
 using namespace age::core;
 using namespace age::entity;
@@ -21,9 +23,21 @@ using namespace age::physics;
 class PhysicsSystem::Impl
 {
 public:
-	Impl()
+	Impl() : world{{0.0f, 0.0f}}
 	{
 	}
+
+	static age::math::Vector ToVector(const b2Vec2& x)
+	{
+		return {x.x, x.y};
+	}
+
+	static b2Vec2 FromVector(const age::math::Vector& x)
+	{
+		return {static_cast<float32>(x.getX()), static_cast<float32>(x.getY())};
+	}
+
+	b2World world;
 };
 
 PhysicsSystem::PhysicsSystem() : System()
@@ -37,72 +51,175 @@ PhysicsSystem::~PhysicsSystem()
 
 void PhysicsSystem::initialize()
 {
-}
-
-void PhysicsSystem::frame(std::chrono::microseconds x)
-{
 	const auto manager = this->getEntityManager();
-	const auto entities = manager->getEntities();
-	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 
-	manager->each<TransformComponent, KinematicComponent>([s = seconds.count(), &entities](Entity e, TransformComponent& t, KinematicComponent& k) {
-		auto pos = t.getPosition();
-		auto rot = t.getRotation();
+	const auto addBody = [this](Entity e, const TransformComponent& t, const KinematicComponent& k) {
+		b2BodyDef def;
 
-		t.setPosition(pos + k.getVelocity() * s);
-		t.setRotation(rot + k.getAngularVelocity() * s);
-
-		auto hasCollision = false;
-
-		if(e.hasComponent<BoxCollisionComponent>() == true)
+		switch(k.getBodyType())
 		{
-			auto evt = std::make_unique<CollisionEvent>();
-			evt->addEntity(e);
+			case KinematicComponent::BodyType::Static:
+				def.type = b2BodyType::b2_staticBody;
+				break;
+			case KinematicComponent::BodyType::Kinematic:
+				def.type = b2BodyType::b2_kinematicBody;
+				break;
+			case KinematicComponent::BodyType::Dynamic:
+				def.type = b2BodyType::b2_dynamicBody;
+				break;
+			default:
+				break;
+		}
 
-			for(auto ex : entities)
+		def.position = Impl::FromVector(t.getPosition());
+		def.angle = static_cast<float32>(t.getRotation());
+		def.linearVelocity = Impl::FromVector(k.getVelocity());
+		def.angularVelocity = static_cast<float32>(k.getAngularVelocity());
+
+		auto body = this->pimpl->world.CreateBody(&def);
+		body->SetUserData(reinterpret_cast<void*>(e.getID()));
+	};
+
+	// Process any entities that are already configured to work with this system.
+	manager->each<TransformComponent, KinematicComponent>(addBody);
+
+	// Handle any entities that become valid for this system.
+	EventQueue::Instance().addEventHandler(
+		[this, addBody](auto x) {
+			auto evt = dynamic_cast<EntityEvent*>(x);
+
+			if(evt != nullptr)
 			{
-				if(ex != e)
+				switch(evt->getType())
 				{
-					if(ex.hasComponent<BoxCollisionComponent>() == true)
+					case EntityEvent::Type::ComponentAdded:
 					{
-						const auto& b = e.getComponent<BoxCollisionComponent>();
-						const auto& bx = ex.getComponent<BoxCollisionComponent>();
-						const auto& tx = ex.getComponent<TransformComponent>();
+						auto entity = evt->getEntity();
 
-						const BoundingBox bbA{t.getPosition() + b.getCenter(), b.getSize()};
-						const BoundingBox bbB{tx.getPosition() + bx.getCenter(), bx.getSize()};
+						const auto t = evt->getComponent<TransformComponent>();
+						const auto k = evt->getComponent<KinematicComponent>();
+						const auto physicsComponentAdded = t != nullptr || k != nullptr;
 
-						if(age::math::intersect(bbA, bbB) == true)
+						// Only construct a b2body if a physics component was added AND all required components exist.
+						// i.e. TransformComponent gets added but no KinematicComponent means nothing happens.
+						// i.e. KinematicComponent gets added but no TransformComponent means nothing happens.
+						// i.e. TransformComponent gets added and KinematicComponent exists means new b2body.
+						// i.e. KinematicComponent gets added and TransformComponent exists means new b2body.
+						if(physicsComponentAdded == true && entity.hasComponent<TransformComponent>() == true
+						   && entity.hasComponent<KinematicComponent>() == true)
 						{
-							hasCollision = true;
-							evt->addEntity(ex);
+							const auto& transform = entity.getComponent<TransformComponent>();
+							const auto& kinematic = entity.getComponent<KinematicComponent>();
+							addBody(entity, transform, kinematic);
 						}
 					}
+					break;
 
-					if(ex.hasComponent<CircleCollisionComponent>() == true)
+					case EntityEvent::Type::ComponentRemoved:
 					{
-						const auto& b = e.getComponent<BoxCollisionComponent>();
-						const auto& cx = ex.getComponent<CircleCollisionComponent>();
-						const auto& tx = ex.getComponent<TransformComponent>();
+						const auto kinematic = evt->getComponent<KinematicComponent>();
 
-						const BoundingBox bbA{t.getPosition() + b.getCenter(), b.getSize()};
-						const BoundingCircle bcB{tx.getPosition() + cx.getCenter(), cx.getRadius()};
-
-						if(age::math::intersect(bbA, bcB) == true)
+						if(kinematic != nullptr)
 						{
-							hasCollision = true;
-							evt->addEntity(ex);
+							const auto id = evt->getEntity().getID();
+
+							auto body = this->pimpl->world.GetBodyList();
+
+							while(body != nullptr)
+							{
+								if(id == reinterpret_cast<int>(body->GetUserData()))
+								{
+									this->pimpl->world.DestroyBody(body);
+									break;
+								}
+
+								body = body->GetNext();
+							}
+						}
+					}
+					break;
+
+					case EntityEvent::Type::EntityRemoved:
+					{
+						const auto id = evt->getEntity().getID();
+
+						auto body = this->pimpl->world.GetBodyList();
+
+						while(body != nullptr)
+						{
+							if(id == reinterpret_cast<int>(body->GetUserData()))
+							{
+								this->pimpl->world.DestroyBody(body);
+								break;
+							}
+
+							body = body->GetNext();
 						}
 					}
 				}
 			}
+		},
+		this);
+}
 
-			if(hasCollision == true)
-			{
-				t.setPosition(t.getPosition() - k.getVelocity() * s);
-				t.setRotation(t.getRotation() - k.getAngularVelocity() * s);
-				EventQueue::Instance().sendEvent(std::move(evt));
-			}
+void PhysicsSystem::frame(std::chrono::microseconds x)
+{
+	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
+
+	const auto manager = this->getEntityManager();
+	const auto& entities = manager->getEntities();
+
+	// Update box2d bodies with latest state.
+	auto body = this->pimpl->world.GetBodyList();
+
+	while(body != nullptr)
+	{
+		const auto pos = body->GetPosition();
+		const auto id = reinterpret_cast<int>(body->GetUserData());
+		auto entity = entities[id];
+
+		const auto& transform = entity.getComponent<TransformComponent>();
+		body->SetTransform(Impl::FromVector(transform.getPosition()), static_cast<float32>(transform.getRotation()));
+
+		const auto& kinematic = entity.getComponent<KinematicComponent>();
+		body->SetLinearVelocity(Impl::FromVector(kinematic.getVelocity()));
+		body->SetAngularVelocity(static_cast<float32>(kinematic.getAngularVelocity()));
+
+		switch(kinematic.getBodyType())
+		{
+			case KinematicComponent::BodyType::Static:
+				body->SetType(b2BodyType::b2_staticBody);
+				break;
+			case KinematicComponent::BodyType::Kinematic:
+				body->SetType(b2BodyType::b2_kinematicBody);
+				break;
+			case KinematicComponent::BodyType::Dynamic:
+				body->SetType(b2BodyType::b2_dynamicBody);
+				break;
 		}
-	});
+
+		body = body->GetNext();
+	}
+
+	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
+
+	// Update components with processed physics state.
+	body = this->pimpl->world.GetBodyList();
+
+	while(body != nullptr)
+	{
+		const auto pos = body->GetPosition();
+		const auto id = reinterpret_cast<int>(body->GetUserData());
+		auto entity = entities[id];
+
+		auto& transform = entity.getComponent<TransformComponent>();
+		transform.setPosition(Impl::ToVector(body->GetPosition()));
+		transform.setRotation(body->GetAngle());
+
+		auto& kinematic = entity.getComponent<KinematicComponent>();
+		kinematic.setVelocity(Impl::ToVector(body->GetLinearVelocity()));
+		kinematic.setAngularVelocity(body->GetAngularVelocity());
+
+		body = body->GetNext();
+	}
 }

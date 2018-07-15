@@ -1,7 +1,7 @@
 #pragma once
 
-#include <age/physics/Export.h>
 #include <age/math/Vector.h>
+#include <age/physics/Export.h>
 
 namespace age
 {
@@ -35,7 +35,7 @@ namespace age
 			~KinematicComponent();
 
 			///
-			///	Set the body type for physics simulation. 
+			///	Set the body type for physics simulation.
 			///	Default Static.
 			///
 			void setBodyType(BodyType x);

@@ -1,5 +1,11 @@
 project(AgePhysics)
 
+###############################################
+#
+#	Find Box2D
+#
+find_package(unofficial-box2d CONFIG REQUIRED)
+
 add_library(${PROJECT_NAME} SHARED "")
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
@@ -23,4 +29,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME}
 	AgeEntity
 	AgeMath
+	unofficial::box2d::Box2D
 )
