@@ -3,7 +3,7 @@
 
 using namespace age::entity;
 
-Entity::Entity() : id{0}, manager{nullptr}
+Entity::Entity() : id{-1}, manager{nullptr}
 {
 }
 int Entity::getID() const

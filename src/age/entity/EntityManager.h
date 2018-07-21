@@ -31,8 +31,13 @@ namespace age
 		class AGE_ENTITY_EXPORT EntityManager : public age::core::Object
 		{
 		public:
-			EntityManager();
-			EntityManager(size_t reserve);
+			///
+			///	For increased performance the entity manager provides creation and destruction of entities
+			/// within a fixed pool.
+			///
+			///	\param count The max number of entities that this entity manager can produce.
+			///
+			EntityManager(std::size_t count = 2048);
 			~EntityManager() override;
 
 			///
@@ -79,13 +84,16 @@ namespace age
 						// MSVC BUG // for(auto e : this->entities)
 						for(auto i = 0; i < this->entities.size(); i++)
 						{
-							auto e = this->entities[i];
+							const auto e = this->entities[i];
 
-							const auto valid = ((pool != nullptr) && ...) && ((pool->getValid(e.id) == true) && ...);
-
-							if(valid == true)
+							if(this->validEntities[e.id] == true)
 							{
-								x(e, pool->get(e.id)...);
+								const auto valid = ((pool->test(e.id)) && ...);
+
+								if(valid == true)
+								{
+									x(e, (*pool)[e.id]...);
+								}
 							}
 						}
 					},
@@ -99,7 +107,7 @@ namespace age
 
 				if(pool == nullptr)
 				{
-					auto p = std::make_unique<ComponentPool<T>>(this->entities.size());
+					auto p = std::make_unique<ComponentPool<T>>(this->count);
 					pool = p.get();
 					this->pools[typeid(T)] = std::move(p);
 				}
@@ -108,11 +116,11 @@ namespace age
 			}
 
 		private:
-			friend class Entity;
 			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;
 			std::vector<int> indexList;
-			std::deque<bool> validEntities;
+			bool* validEntities;
+			std::size_t count;
 		};
 	}
 }

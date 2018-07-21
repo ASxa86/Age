@@ -63,22 +63,16 @@ namespace age
 			{
 				const auto pool = this->manager->template getPool<T>();
 
-				if(pool->getValid(this->id) == false)
+				if(pool->test(this->id) == false)
 				{
-					if(this->id >= pool->size())
-					{
-						pool->allocate();
-					}
-
-					pool->get(this->id) = T(std::forward<Args>(args)...);
-					pool->setValid(this->id);
+					pool->construct(this->id, std::forward<Args>(args)...);
 
 					auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
-					event->setComponent(&pool->get(this->id));
+					event->setComponent(&(*pool)[this->id]);
 					age::core::EventQueue::Instance().sendEvent(std::move(event));
 				}
 
-				return pool->get(this->id);
+				return (*pool)[this->id];
 			}
 
 			///
@@ -89,12 +83,12 @@ namespace age
 			{
 				const auto pool = this->manager->template getPool<T>();
 
-				if(pool->getValid(this->id) == true)
+				if(pool->test(this->id) == true)
 				{
-					pool->setValid(this->id, false);
 					auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved);
-					event->setComponent(&pool->get(this->id));
+					event->setComponent(&(*pool)[this->id]);
 					age::core::EventQueue::Instance().sendEvent(std::move(event));
+					pool->destroy(this->id);
 				}
 			}
 
@@ -105,7 +99,7 @@ namespace age
 			T& getComponent()
 			{
 				const auto pool = this->manager->template getPool<T>();
-				return pool->get(this->id);
+				return (*pool)[this->id];
 			}
 
 			///
@@ -115,7 +109,7 @@ namespace age
 			bool hasComponent()
 			{
 				const auto pool = this->manager->template getPool<T>();
-				return pool->getValid(this->id);
+				return pool->test(this->id);
 			}
 
 		private:

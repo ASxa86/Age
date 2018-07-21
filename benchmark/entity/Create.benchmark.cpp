@@ -66,7 +66,7 @@ namespace
 		virtual void setUp(int64_t) override
 		{
 			// Clear the previous entities
-			this->em = std::make_unique<age::entity::EntityManager>((size_t)IterationCount);
+			this->em = std::make_unique<age::entity::EntityManager>(IterationCount);
 		}
 
 		std::unique_ptr<age::entity::EntityManager> em;

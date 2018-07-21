@@ -84,7 +84,7 @@ namespace
 		virtual void setUp(int64_t experimentValue) override
 		{
 			// Clear the previous entities
-			em = std::make_unique<age::entity::EntityManager>();
+			em = std::make_unique<age::entity::EntityManager>(experimentValue);
 
 			for(auto i = 0; i < experimentValue; ++i)
 			{

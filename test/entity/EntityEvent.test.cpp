@@ -51,7 +51,7 @@ TEST(EntityEvent, EntityRemoved)
 	EXPECT_TRUE(eventReceived);
 
 	eventReceived = false;
-	
+
 	e.destroy();
 	EXPECT_FALSE(eventReceived);
 
@@ -98,17 +98,19 @@ TEST(EntityEvent, ComponentRemoved)
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::ComponentRemoved);
 		EXPECT_TRUE(entityEvent->getComponent<Value>() != nullptr);
-		EXPECT_FALSE(entityEvent->getEntity().hasComponent<Value>());
+		EXPECT_TRUE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
 
 	e.removeComponent<Value>();
 	EXPECT_TRUE(eventReceived);
-	
+	EXPECT_FALSE(e.hasComponent<Value>());
+
 	eventReceived = false;
 
 	e.removeComponent<Value>();
 	EXPECT_FALSE(eventReceived);
+	EXPECT_FALSE(e.hasComponent<Value>());
 
 	connection.disconnect();
 }

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <age/entity/Export.h>
-#include <deque>
-#include <optional>
+#include <memory>
+#include <vector>
 
 namespace age
 {
@@ -25,47 +25,60 @@ namespace age
 			BasePool();
 			virtual ~BasePool();
 
-			virtual std::size_t size() const = 0;
-			virtual void allocate() = 0;
-
-			void setValid(std::size_t x, bool v = true);
-			bool getValid(std::size_t x) const;
-
-		protected:
-			std::deque<bool> valid;
+			virtual bool test(std::size_t) const = 0;
+			virtual void destroy(std::size_t) = 0;
 		};
 
 		template <typename T>
-		class ComponentPool : public BasePool
+		class ComponentPool final : public BasePool
 		{
 		public:
-			ComponentPool(std::size_t x) : BasePool()
+			ComponentPool(std::size_t x = 2048) : BasePool(), pool{(T*)std::malloc(x * sizeof(T))}, poolsize{x}
 			{
-				for(std::size_t i = 0; i < x; ++i)
+				this->valid = new bool[this->poolsize];
+				std::memset(this->valid, false, this->poolsize);
+			}
+
+			~ComponentPool()
+			{
+				for(auto i = 0; i < this->poolsize; ++i)
 				{
-					this->allocate();
+					if(this->valid[i] == true)
+					{
+						this->destroy(i);
+					}
 				}
+
+				delete[] this->valid;
+				std::free(this->pool);
 			}
 
-			std::size_t size() const
+			std::size_t capacity() const
 			{
-				return this->components.size();
+				return this->poolsize;
 			}
 
-			T& get(std::size_t x)
+			T& operator[](std::size_t x)
 			{
-				return this->components[x];
+				return this->pool[x];
 			}
 
-			///
-			///	Allocate a new chunk of memory for components.
-			///
-			void allocate() override
+			bool test(std::size_t x) const override
 			{
-				// Simply let the stl container handle allocating extra memory
-				// when necessary.
-				this->components.push_back({});
-				this->valid.push_back({});
+				return this->valid[x];
+			}
+
+			template <typename... Args>
+			void construct(std::size_t x, Args&&... args)
+			{
+				new(this->pool + x) T{std::forward<Args>(args)...};
+				this->valid[x] = true;
+			}
+
+			void destroy(std::size_t x) override
+			{
+				(this->pool + x)->~T();
+				this->valid[x] = false;
 			}
 
 		private:
@@ -75,7 +88,9 @@ namespace age
 			/// get resized which would invalidate previous references causing all kinds of
 			/// undefined behaviours.
 			///
-			std::deque<T> components;
+			T* pool{};
+			bool* valid{};
+			std::size_t poolsize;
 		};
 	}
 }
