@@ -63,8 +63,6 @@ void EntityManager::destroy(Entity x)
 
 bool EntityManager::valid(Entity x) const
 {
-	// return this->validEntities[x.id] == true;
-	// return std::find(std::begin(this->entities), std::end(this->entities), x) != std::end(this->entities);
 	return this->validEntities[x.id];
 }
 

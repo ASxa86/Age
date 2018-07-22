@@ -119,6 +119,9 @@ namespace age
 			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;
 			std::vector<int> indexList;
+
+			/// Avoiding the use of vector<bool> so opting for another form
+			/// of contiguous memory.
 			bool* validEntities;
 			std::size_t count;
 		};
