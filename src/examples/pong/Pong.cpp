@@ -15,10 +15,8 @@
 #include <age/graphics/TextSystem.h>
 #include <age/graphics/Window.h>
 #include <age/math/TransformComponent.h>
-#include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/CircleCollisionComponent.h>
+#include <age/physics/BodyComponent.h>
 #include <age/physics/CollisionEvent.h>
-#include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsSystem.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -58,7 +56,6 @@ Pong::Pong()
 
 	auto physics = std::make_shared<PhysicsSystem>();
 	this->pimpl->engine->addChild(physics);
-	auto& world = physics->getWorld();
 
 	// Player 1
 	auto paddle = manager->create();
@@ -68,31 +65,30 @@ Pong::Pong()
 	rec->setOrigin(rec->getSize().x / 2.0f, rec->getSize().y / 2.0f);
 	paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
 
-	b2BodyDef def;
-	def.type = b2BodyType::b2_kinematicBody;
-	auto bodyP1 = paddle.addComponent<b2Body*>(world.CreateBody(&def));
+	auto& bodyP1 = paddle.addComponent<BodyComponent>(*physics);
+	bodyP1.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape;
 	rectShape.SetAsBox(rec->getSize().x, rec->getSize().y);
 	b2FixtureDef p1fdef;
 	p1fdef.shape = &rectShape;
-	bodyP1->CreateFixture(&p1fdef);
+	bodyP1.body->CreateFixture(&p1fdef);
 
 	auto& t = paddle.addComponent<TransformComponent>();
 	t.setPosition({5, 10});
 
 	auto& input = paddle.addComponent<InputComponent>();
 	input.addKeyBinding(sf::Keyboard::Key::Up, [](Entity e, bool isPressed) {
-		auto& t = e.getComponent<b2Body*>();
-		auto v = t->GetLinearVelocity();
+		auto& t = e.getComponent<BodyComponent>();
+		auto v = t.body->GetLinearVelocity();
 		v.y = isPressed == true ? -20.0f : 0.0f;
-		t->SetLinearVelocity(v);
+		t.body->SetLinearVelocity(v);
 	});
 
 	input.addKeyBinding(sf::Keyboard::Key::Down, [](Entity e, bool isPressed) {
-		auto& t = e.getComponent<b2Body*>();
-		auto v = t->GetLinearVelocity();
+		auto& t = e.getComponent<BodyComponent>();
+		auto v = t.body->GetLinearVelocity();
 		v.y = isPressed == true ? 20.0f : 0.0f;
-		t->SetLinearVelocity(v);
+		t.body->SetLinearVelocity(v);
 	});
 
 	// Player 2
@@ -102,12 +98,13 @@ Pong::Pong()
 	rec2->setFillColor(sf::Color::White);
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
 	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
-	auto& bodyP2 = paddle2.addComponent<b2Body*>(world.CreateBody(&def));
+	auto& bodyP2 = paddle2.addComponent<BodyComponent>(*physics);
+	bodyP2.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape2;
 	rectShape2.SetAsBox(rec2->getSize().x, rec2->getSize().y);
 	b2FixtureDef p2fdef;
 	p2fdef.shape = &rectShape2;
-	bodyP2->CreateFixture(&p2fdef);
+	bodyP2.body->CreateFixture(&p2fdef);
 
 	auto& t2 = paddle2.addComponent<TransformComponent>();
 	t2.setPosition({35, 10});
@@ -120,16 +117,16 @@ Pong::Pong()
 	circle->setOrigin(circle->getRadius(), circle->getRadius());
 	ball.addComponent<std::shared_ptr<sf::Drawable>>(circle);
 
-	def.linearVelocity.x = 5.0f;
-	def.type = b2BodyType::b2_dynamicBody;
-	auto& bodyBall = ball.addComponent<b2Body*>(world.CreateBody(&def));
+	auto& bodyBall = ball.addComponent<BodyComponent>(*physics);
+	bodyBall.body->SetType(b2BodyType::b2_dynamicBody);
+	bodyBall.body->SetLinearVelocity({5.0f, 0.0f});
 
 	b2FixtureDef fdef;
 	b2CircleShape shapeCircle;
 	shapeCircle.m_radius = circle->getRadius();
 	fdef.shape = &shapeCircle;
 	fdef.restitution = 1.0;
-	bodyBall->CreateFixture(&fdef);
+	bodyBall.body->CreateFixture(&fdef);
 
 	auto& p = ball.addComponent<TransformComponent>();
 	p.setPosition({10, 10});
@@ -161,26 +158,6 @@ Pong::Pong()
 
 	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());
 	ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);
-
-	// EventQueue::Instance().addEventHandler([this, ball, &kb](Event* e) {
-	//	auto evt = dynamic_cast<CollisionEvent*>(e);
-
-	//	if(evt != nullptr)
-	//	{
-	//		const auto& entities = evt->getEntities();
-
-	//		for(const auto& entity : entities)
-	//		{
-	//			if(entity == ball)
-	//			{
-	//				EventQueue::Instance().sendEvent(std::make_unique<AudioEvent>(this->pimpl->soundBuffer));
-	//				auto v = kb.getVelocity();
-	//				v.setX(-v.getX());
-	//				kb.setVelocity(v);
-	//			}
-	//		}
-	//	}
-	//});
 
 	this->pimpl->engine->setEngineState(EngineState::State::Initialize);
 }

@@ -11,8 +11,7 @@
 #include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
 #include <age/math/TransformComponent.h>
-#include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/KinematicComponent.h>
+#include <age/physics/BodyComponent.h>
 #include <age/physics/PhysicsSystem.h>
 
 using namespace age::core;
@@ -55,14 +54,15 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 	const auto manager = this->getEntityManager();
 
-	manager->each<b2Body*, TransformComponent>(
-		[](auto, b2Body*& b, TransformComponent& t) { b->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation())); });
+	manager->each<BodyComponent, TransformComponent>([](auto, BodyComponent& b, TransformComponent& t) {
+		b.body->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
+	});
 
 	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
 
-	manager->each<b2Body*, TransformComponent>([](auto, b2Body*& b, TransformComponent& t) {
-		t.setPosition(Impl::ToVector(b->GetPosition()));
-		t.setRotation(b->GetAngle());
+	manager->each<BodyComponent, TransformComponent>([](auto, BodyComponent& b, TransformComponent& t) {
+		t.setPosition(Impl::ToVector(b.body->GetPosition()));
+		t.setRotation(b.body->GetAngle());
 	});
 }
 

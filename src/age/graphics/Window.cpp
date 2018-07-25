@@ -10,7 +10,6 @@
 #include <age/graphics/KeyEvent.h>
 #include <age/graphics/RenderSystem.h>
 #include <age/math/TransformComponent.h>
-#include <age/physics/BoxCollisionComponent.h>
 #include <SFML/Graphics.hpp>
 #include <iomanip>
 #include <numeric>
@@ -20,7 +19,6 @@ using namespace age::core;
 using namespace age::entity;
 using namespace age::graphics;
 using namespace age::math;
-using namespace age::physics;
 
 class Window::Impl
 {

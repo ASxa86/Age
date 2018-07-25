@@ -29,6 +29,9 @@ namespace age
 			///
 			void frame(std::chrono::microseconds x);
 
+			///
+			///	Get the internal Box2D world that is used to drive this physics system.
+			///
 			b2World& getWorld();
 
 		private:
