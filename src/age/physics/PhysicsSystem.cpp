@@ -23,7 +23,7 @@ using namespace age::physics;
 class PhysicsSystem::Impl
 {
 public:
-	Impl() : world{{0.0f, 0.0f}}
+	Impl() : world{{0.0, 0.0}}
 	{
 	}
 
@@ -49,177 +49,24 @@ PhysicsSystem::~PhysicsSystem()
 {
 }
 
-void PhysicsSystem::initialize()
-{
-	const auto manager = this->getEntityManager();
-
-	const auto addBody = [this](Entity e, const TransformComponent& t, const KinematicComponent& k) {
-		b2BodyDef def;
-
-		switch(k.getBodyType())
-		{
-			case KinematicComponent::BodyType::Static:
-				def.type = b2BodyType::b2_staticBody;
-				break;
-			case KinematicComponent::BodyType::Kinematic:
-				def.type = b2BodyType::b2_kinematicBody;
-				break;
-			case KinematicComponent::BodyType::Dynamic:
-				def.type = b2BodyType::b2_dynamicBody;
-				break;
-			default:
-				break;
-		}
-
-		def.position = Impl::FromVector(t.getPosition());
-		def.angle = static_cast<float32>(t.getRotation());
-		def.linearVelocity = Impl::FromVector(k.getVelocity());
-		def.angularVelocity = static_cast<float32>(k.getAngularVelocity());
-
-		auto body = this->pimpl->world.CreateBody(&def);
-		body->SetUserData(reinterpret_cast<void*>(e.getID()));
-	};
-
-	// Process any entities that are already configured to work with this system.
-	manager->each<TransformComponent, KinematicComponent>(addBody);
-
-	// Handle any entities that become valid for this system.
-	EventQueue::Instance().addEventHandler(
-		[this, addBody](auto x) {
-			auto evt = dynamic_cast<EntityEvent*>(x);
-
-			if(evt != nullptr)
-			{
-				switch(evt->getType())
-				{
-					case EntityEvent::Type::ComponentAdded:
-					{
-						auto entity = evt->getEntity();
-
-						const auto t = evt->getComponent<TransformComponent>();
-						const auto k = evt->getComponent<KinematicComponent>();
-						const auto physicsComponentAdded = t != nullptr || k != nullptr;
-
-						// Only construct a b2body if a physics component was added AND all required components exist.
-						// i.e. TransformComponent gets added but no KinematicComponent means nothing happens.
-						// i.e. KinematicComponent gets added but no TransformComponent means nothing happens.
-						// i.e. TransformComponent gets added and KinematicComponent exists means new b2body.
-						// i.e. KinematicComponent gets added and TransformComponent exists means new b2body.
-						if(physicsComponentAdded == true && entity.hasComponent<TransformComponent>() == true
-						   && entity.hasComponent<KinematicComponent>() == true)
-						{
-							const auto& transform = entity.getComponent<TransformComponent>();
-							const auto& kinematic = entity.getComponent<KinematicComponent>();
-							addBody(entity, transform, kinematic);
-						}
-					}
-					break;
-
-					case EntityEvent::Type::ComponentRemoved:
-					{
-						const auto kinematic = evt->getComponent<KinematicComponent>();
-
-						if(kinematic != nullptr)
-						{
-							const auto id = evt->getEntity().getID();
-
-							auto body = this->pimpl->world.GetBodyList();
-
-							while(body != nullptr)
-							{
-								if(id == reinterpret_cast<int>(body->GetUserData()))
-								{
-									this->pimpl->world.DestroyBody(body);
-									break;
-								}
-
-								body = body->GetNext();
-							}
-						}
-					}
-					break;
-
-					case EntityEvent::Type::EntityRemoved:
-					{
-						const auto id = evt->getEntity().getID();
-
-						auto body = this->pimpl->world.GetBodyList();
-
-						while(body != nullptr)
-						{
-							if(id == reinterpret_cast<int>(body->GetUserData()))
-							{
-								this->pimpl->world.DestroyBody(body);
-								break;
-							}
-
-							body = body->GetNext();
-						}
-					}
-				}
-			}
-		},
-		this);
-}
-
 void PhysicsSystem::frame(std::chrono::microseconds x)
 {
 	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 
 	const auto manager = this->getEntityManager();
-	const auto& entities = manager->getEntities();
 
-	// Update box2d bodies with latest state.
-	auto body = this->pimpl->world.GetBodyList();
-
-	while(body != nullptr)
-	{
-		const auto pos = body->GetPosition();
-		const auto id = reinterpret_cast<int>(body->GetUserData());
-		auto entity = entities[id];
-
-		const auto& transform = entity.getComponent<TransformComponent>();
-		body->SetTransform(Impl::FromVector(transform.getPosition()), static_cast<float32>(transform.getRotation()));
-
-		const auto& kinematic = entity.getComponent<KinematicComponent>();
-		body->SetLinearVelocity(Impl::FromVector(kinematic.getVelocity()));
-		body->SetAngularVelocity(static_cast<float32>(kinematic.getAngularVelocity()));
-
-		switch(kinematic.getBodyType())
-		{
-			case KinematicComponent::BodyType::Static:
-				body->SetType(b2BodyType::b2_staticBody);
-				break;
-			case KinematicComponent::BodyType::Kinematic:
-				body->SetType(b2BodyType::b2_kinematicBody);
-				break;
-			case KinematicComponent::BodyType::Dynamic:
-				body->SetType(b2BodyType::b2_dynamicBody);
-				break;
-		}
-
-		body = body->GetNext();
-	}
+	manager->each<b2Body*, TransformComponent>(
+		[](auto, b2Body*& b, TransformComponent& t) { b->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation())); });
 
 	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
 
-	// Update components with processed physics state.
-	body = this->pimpl->world.GetBodyList();
+	manager->each<b2Body*, TransformComponent>([](auto, b2Body*& b, TransformComponent& t) {
+		t.setPosition(Impl::ToVector(b->GetPosition()));
+		t.setRotation(b->GetAngle());
+	});
+}
 
-	while(body != nullptr)
-	{
-		const auto pos = body->GetPosition();
-		const auto id = reinterpret_cast<int>(body->GetUserData());
-		auto entity = entities[id];
-
-		auto& transform = entity.getComponent<TransformComponent>();
-		transform.setPosition(Impl::ToVector(body->GetPosition()));
-		transform.setRotation(body->GetAngle());
-
-		auto& kinematic = entity.getComponent<KinematicComponent>();
-		kinematic.setVelocity(Impl::ToVector(body->GetLinearVelocity()));
-		kinematic.setAngularVelocity(body->GetAngularVelocity());
-
-		body = body->GetNext();
-	}
+b2World& PhysicsSystem::getWorld()
+{
+	return this->pimpl->world;
 }

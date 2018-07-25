@@ -39,6 +39,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 #
 find_package(Boost 1.65)
 include_directories(${Boost_INCLUDE_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/src/age/physics)
 
 add_subdirectory(benchmark)
 add_subdirectory(src)

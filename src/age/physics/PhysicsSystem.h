@@ -3,6 +3,8 @@
 #include <age/entity/System.h>
 #include <age/physics/Export.h>
 
+class b2World;
+
 namespace age
 {
 	namespace physics
@@ -22,12 +24,12 @@ namespace age
 			PhysicsSystem();
 			~PhysicsSystem() override;
 
-			void initialize() override;
-
 			///
 			///	Updates entity transformations using physics.
 			///
 			void frame(std::chrono::microseconds x);
+
+			b2World& getWorld();
 
 		private:
 			class Impl;
