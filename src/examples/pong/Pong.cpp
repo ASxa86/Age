@@ -65,7 +65,7 @@ Pong::Pong()
 	rec->setOrigin(rec->getSize().x / 2.0f, rec->getSize().y / 2.0f);
 	paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
 
-	auto& bodyP1 = paddle.addComponent<BodyComponent>(*physics);
+	auto& bodyP1 = paddle.addComponent<BodyComponent>(*physics, paddle);
 	bodyP1.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape;
 	rectShape.SetAsBox(rec->getSize().x, rec->getSize().y);
@@ -98,7 +98,7 @@ Pong::Pong()
 	rec2->setFillColor(sf::Color::White);
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
 	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
-	auto& bodyP2 = paddle2.addComponent<BodyComponent>(*physics);
+	auto& bodyP2 = paddle2.addComponent<BodyComponent>(*physics, paddle2);
 	bodyP2.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape2;
 	rectShape2.SetAsBox(rec2->getSize().x, rec2->getSize().y);
@@ -117,7 +117,7 @@ Pong::Pong()
 	circle->setOrigin(circle->getRadius(), circle->getRadius());
 	ball.addComponent<std::shared_ptr<sf::Drawable>>(circle);
 
-	auto& bodyBall = ball.addComponent<BodyComponent>(*physics);
+	auto& bodyBall = ball.addComponent<BodyComponent>(*physics, ball);
 	bodyBall.body->SetType(b2BodyType::b2_dynamicBody);
 	bodyBall.body->SetLinearVelocity({5.0f, 0.0f});
 
@@ -158,6 +158,16 @@ Pong::Pong()
 
 	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());
 	ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);
+	ball.getComponent<sf::Sound>().play();
+
+	EventQueue::Instance().addEventHandler([ball](auto evt) mutable {
+		auto evtCollision = dynamic_cast<CollisionEvent*>(evt);
+
+		if(evtCollision != nullptr)
+		{
+			ball.getComponent<sf::Sound>().play();
+		}
+	});
 
 	this->pimpl->engine->setEngineState(EngineState::State::Initialize);
 }

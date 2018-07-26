@@ -161,7 +161,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME}
 	AgeEntity
 	AgeMath
-	# unofficial::box2d::Box2D
 )
 
 if(MSVC)

@@ -6,6 +6,11 @@ class b2Body;
 
 namespace age
 {
+	namespace entity
+	{
+		class Entity;
+	}
+
 	namespace physics
 	{
 		class PhysicsSystem;
@@ -22,7 +27,7 @@ namespace age
 		class AGE_PHYSICS_EXPORT BodyComponent
 		{
 		public:
-			BodyComponent(PhysicsSystem& x);
+			BodyComponent(PhysicsSystem& x, const age::entity::Entity& e);
 			~BodyComponent();
 			b2Body* body;
 		};

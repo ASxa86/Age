@@ -1,8 +1,6 @@
-#ifdef WIN32
-// Setting an int as void* for UserData within b2body
-#pragma warning(disable : 4311 4312 4302)
-#endif
+#include <age/physics/PhysicsSystem.h>
 
+#include <Box2D/Dynamics/Contacts/b2Contact.h>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2World.h>
 #include <age/core/EventQueue.h>
@@ -12,7 +10,12 @@
 #include <age/entity/EntityManager.h>
 #include <age/math/TransformComponent.h>
 #include <age/physics/BodyComponent.h>
-#include <age/physics/PhysicsSystem.h>
+#include <age/physics/CollisionEvent.h>
+
+#ifdef WIN32
+// Setting an int as void* for UserData within b2body
+#pragma warning(disable : 4311 4312 4302)
+#endif
 
 using namespace age::core;
 using namespace age::entity;
@@ -22,6 +25,42 @@ using namespace age::physics;
 class PhysicsSystem::Impl
 {
 public:
+	struct ContactHandler : public b2ContactListener
+	{
+		ContactHandler(PhysicsSystem& x) : physics{x}
+		{
+		}
+
+		void BeginContact(b2Contact* contact) override
+		{ /* handle begin event */
+
+			const auto manager = this->physics.getEntityManager();
+
+			if(manager != nullptr)
+			{
+				const auto& entities = manager->getEntities();
+				auto eidA = reinterpret_cast<int>(contact->GetFixtureA()->GetBody()->GetUserData());
+				auto eidB = reinterpret_cast<int>(contact->GetFixtureB()->GetBody()->GetUserData());
+
+				auto evt = std::make_unique<CollisionEvent>();
+				evt->addEntity(entities[eidA]);
+				evt->addEntity(entities[eidB]);
+				EventQueue::Instance().sendEvent(std::move(evt));
+			}
+		}
+		void EndContact(b2Contact*) override
+		{ /* handle end event */
+		}
+		void PreSolve(b2Contact*, const b2Manifold*) override
+		{ /* handle pre-solve event */
+		}
+		void PostSolve(b2Contact*, const b2ContactImpulse*) override
+		{ /* handle post-solve event */
+		}
+
+		PhysicsSystem& physics;
+	};
+
 	Impl() : world{{0.0, 0.0}}
 	{
 	}
@@ -37,10 +76,13 @@ public:
 	}
 
 	b2World world;
+	std::unique_ptr<ContactHandler> contactHandler;
 };
 
 PhysicsSystem::PhysicsSystem() : System()
 {
+	this->pimpl->contactHandler = std::make_unique<Impl::ContactHandler>(*this);
+	this->pimpl->world.SetContactListener(this->pimpl->contactHandler.get());
 	this->addFixedFunction([this](auto x) { this->frame(x); });
 }
 
