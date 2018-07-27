@@ -150,12 +150,14 @@ target_sources(${PROJECT_NAME} PRIVATE
 	CollisionEvent.h
 	Export.h
 	PhysicsSystem.h
+	PhysicsRenderSystem.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
 	BodyComponent.cpp
 	CollisionEvent.cpp
 	PhysicsSystem.cpp
+	PhysicsRenderSystem.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -17,6 +17,7 @@
 #include <age/math/TransformComponent.h>
 #include <age/physics/BodyComponent.h>
 #include <age/physics/CollisionEvent.h>
+#include <age/physics/PhysicsRenderSystem.h>
 #include <age/physics/PhysicsSystem.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -48,6 +49,7 @@ Pong::Pong()
 	auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<DrawableSystem>());
 	window->addChild(std::make_shared<TextSystem>());
+	window->addChild(std::make_shared<PhysicsRenderSystem>());
 	this->pimpl->engine->addChild(window);
 	auto manager = std::make_shared<EntityManager>();
 	this->pimpl->engine->addChild(manager);
@@ -68,7 +70,7 @@ Pong::Pong()
 	auto& bodyP1 = paddle->addComponent<BodyComponent>(*physics, paddle);
 	bodyP1.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape;
-	rectShape.SetAsBox(rec->getSize().x, rec->getSize().y);
+	rectShape.SetAsBox(rec->getSize().x / 2.0f, rec->getSize().y / 2.0f);
 	b2FixtureDef p1fdef;
 	p1fdef.shape = &rectShape;
 	bodyP1.body->CreateFixture(&p1fdef);
@@ -101,7 +103,7 @@ Pong::Pong()
 	auto& bodyP2 = paddle2->addComponent<BodyComponent>(*physics, paddle2);
 	bodyP2.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape2;
-	rectShape2.SetAsBox(rec2->getSize().x, rec2->getSize().y);
+	rectShape2.SetAsBox(rec2->getSize().x / 2.0f, rec2->getSize().y / 2.0f);
 	b2FixtureDef p2fdef;
 	p2fdef.shape = &rectShape2;
 	bodyP2.body->CreateFixture(&p2fdef);

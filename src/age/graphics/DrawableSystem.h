@@ -21,17 +21,6 @@ namespace age
 			DrawableSystem();
 			~DrawableSystem() override;
 
-			///
-			///	Set the pixels per meter unit scaling for drawable objects.
-			///	(32 pixels per meter)
-			///
-			void setPixelsPerMeter(unsigned int x);
-
-			///
-			///	Get the pixels per meter unit scaling.
-			///
-			unsigned int getPixelsPerMeter() const;
-
 			void render(sf::RenderTarget& target, std::chrono::microseconds x) override;
 
 		private:

@@ -1,10 +1,12 @@
 #include <age/graphics/DrawableSystem.h>
 
+#include <age/core/Configuration.h>
 #include <age/core/PimplImpl.h>
 #include <age/entity/EntityManager.h>
 #include <age/math/TransformComponent.h>
 #include <SFML/Graphics.hpp>
 
+using namespace age::core;
 using namespace age::entity;
 using namespace age::graphics;
 using namespace age::math;
@@ -20,28 +22,16 @@ namespace
 struct DrawableSystem::Impl
 {
 	sf::RenderStates state;
-	unsigned int pixelsPerMeter{32};
 };
 
 DrawableSystem::DrawableSystem()
 {
-	this->setPixelsPerMeter(this->pimpl->pixelsPerMeter);
+	const auto factor = static_cast<float>(Configuration::Instance().getPixelsPerMeter());
+	this->pimpl->state.transform.scale(factor, factor);
 }
 
 DrawableSystem::~DrawableSystem()
 {
-}
-
-void DrawableSystem::setPixelsPerMeter(unsigned int x)
-{
-	this->pimpl->pixelsPerMeter = x;
-	const auto factor = static_cast<float>(x);
-	this->pimpl->state.transform.scale(factor, factor);
-}
-
-unsigned int DrawableSystem::getPixelsPerMeter() const
-{
-	return this->pimpl->pixelsPerMeter;
 }
 
 void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds /*x*/)

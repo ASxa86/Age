@@ -34,6 +34,17 @@ namespace age
 			///
 			std::filesystem::path getDataPath() const;
 
+			///
+			///	Set the pixels per meter unit scaling for drawable objects.
+			///	(32 pixels per meter)
+			///
+			void setPixelsPerMeter(unsigned int x);
+
+			///
+			///	Get the pixels per meter unit scaling.
+			///
+			unsigned int getPixelsPerMeter() const;
+
 		private:
 			Configuration();
 
