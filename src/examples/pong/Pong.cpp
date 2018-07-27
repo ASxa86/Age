@@ -63,9 +63,9 @@ Pong::Pong()
 	rec->setSize({1.0, 3.0});
 	rec->setFillColor(sf::Color::White);
 	rec->setOrigin(rec->getSize().x / 2.0f, rec->getSize().y / 2.0f);
-	paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
+	paddle->addComponent<std::shared_ptr<sf::Drawable>>(rec);
 
-	auto& bodyP1 = paddle.addComponent<BodyComponent>(*physics, paddle);
+	auto& bodyP1 = paddle->addComponent<BodyComponent>(*physics, paddle);
 	bodyP1.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape;
 	rectShape.SetAsBox(rec->getSize().x, rec->getSize().y);
@@ -73,18 +73,18 @@ Pong::Pong()
 	p1fdef.shape = &rectShape;
 	bodyP1.body->CreateFixture(&p1fdef);
 
-	auto& t = paddle.addComponent<TransformComponent>();
+	auto& t = paddle->addComponent<TransformComponent>();
 	t.setPosition({5, 10});
 
-	auto& input = paddle.addComponent<InputComponent>();
-	input.addKeyBinding(sf::Keyboard::Key::Up, [](Entity e, bool isPressed) {
+	auto& input = paddle->addComponent<InputComponent>();
+	input.addKeyBinding(sf::Keyboard::Key::Up, [](Entity& e, bool isPressed) {
 		auto& t = e.getComponent<BodyComponent>();
 		auto v = t.body->GetLinearVelocity();
 		v.y = isPressed == true ? -20.0f : 0.0f;
 		t.body->SetLinearVelocity(v);
 	});
 
-	input.addKeyBinding(sf::Keyboard::Key::Down, [](Entity e, bool isPressed) {
+	input.addKeyBinding(sf::Keyboard::Key::Down, [](Entity& e, bool isPressed) {
 		auto& t = e.getComponent<BodyComponent>();
 		auto v = t.body->GetLinearVelocity();
 		v.y = isPressed == true ? 20.0f : 0.0f;
@@ -97,8 +97,8 @@ Pong::Pong()
 	rec2->setSize({1.0, 3.0});
 	rec2->setFillColor(sf::Color::White);
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
-	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
-	auto& bodyP2 = paddle2.addComponent<BodyComponent>(*physics, paddle2);
+	paddle2->addComponent<std::shared_ptr<sf::Drawable>>(rec2);
+	auto& bodyP2 = paddle2->addComponent<BodyComponent>(*physics, paddle2);
 	bodyP2.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape2;
 	rectShape2.SetAsBox(rec2->getSize().x, rec2->getSize().y);
@@ -106,7 +106,7 @@ Pong::Pong()
 	p2fdef.shape = &rectShape2;
 	bodyP2.body->CreateFixture(&p2fdef);
 
-	auto& t2 = paddle2.addComponent<TransformComponent>();
+	auto& t2 = paddle2->addComponent<TransformComponent>();
 	t2.setPosition({35, 10});
 
 	// Ball
@@ -115,9 +115,9 @@ Pong::Pong()
 	circle->setRadius(0.5f);
 	circle->setFillColor(sf::Color::White);
 	circle->setOrigin(circle->getRadius(), circle->getRadius());
-	ball.addComponent<std::shared_ptr<sf::Drawable>>(circle);
+	ball->addComponent<std::shared_ptr<sf::Drawable>>(circle);
 
-	auto& bodyBall = ball.addComponent<BodyComponent>(*physics, ball);
+	auto& bodyBall = ball->addComponent<BodyComponent>(*physics, ball);
 	bodyBall.body->SetType(b2BodyType::b2_dynamicBody);
 	bodyBall.body->SetLinearVelocity({5.0f, 0.0f});
 
@@ -128,7 +128,7 @@ Pong::Pong()
 	fdef.restitution = 1.0;
 	bodyBall.body->CreateFixture(&fdef);
 
-	auto& p = ball.addComponent<TransformComponent>();
+	auto& p = ball->addComponent<TransformComponent>();
 	p.setPosition({10, 10});
 
 	// Score 1
@@ -139,8 +139,8 @@ Pong::Pong()
 	text1->setCharacterSize(60);
 	auto tb1 = text1->getLocalBounds();
 	text1->setOrigin(tb1.width / 2.0f, tb1.height / 2.0f);
-	score1.addComponent<std::shared_ptr<sf::Text>>(text1);
-	auto& st1 = score1.addComponent<TransformComponent>();
+	score1->addComponent<std::shared_ptr<sf::Text>>(text1);
+	auto& st1 = score1->addComponent<TransformComponent>();
 	st1.setPosition({window->getWidth() / 4.0, 100});
 
 	// Score 2
@@ -151,21 +151,21 @@ Pong::Pong()
 	text2->setCharacterSize(60);
 	auto tb2 = text2->getLocalBounds();
 	text2->setOrigin(tb2.width / 2.0f, tb2.height / 2.0f);
-	score2.addComponent<std::shared_ptr<sf::Text>>(text2);
-	auto& st2 = score2.addComponent<TransformComponent>();
+	score2->addComponent<std::shared_ptr<sf::Text>>(text2);
+	auto& st2 = score2->addComponent<TransformComponent>();
 
 	st2.setPosition({window->getWidth() - st1.getPosition().getX(), 100});
 
 	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());
-	ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);
-	ball.getComponent<sf::Sound>().play();
+	ball->addComponent<sf::Sound>(this->pimpl->soundBuffer);
+	ball->getComponent<sf::Sound>().play();
 
 	EventQueue::Instance().addEventHandler([ball](auto evt) mutable {
 		auto evtCollision = dynamic_cast<CollisionEvent*>(evt);
 
 		if(evtCollision != nullptr)
 		{
-			ball.getComponent<sf::Sound>().play();
+			ball->getComponent<sf::Sound>().play();
 		}
 	});
 

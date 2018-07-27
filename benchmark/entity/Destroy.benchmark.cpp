@@ -146,7 +146,7 @@ BENCHMARK_F(Destroy, AgeEntity, AgeEntityF, 10, 100)
 {
 	const auto& entities = this->em->getEntities();
 
-	for(auto e : entities)
+	for(auto& e : entities)
 	{
 		e.destroy();
 	}

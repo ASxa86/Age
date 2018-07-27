@@ -44,18 +44,18 @@ namespace age
 			///	Return a free entity in the object pool.
 			///	If there are no more free entities left in the object pool, than the object pool will be expanded.
 			///
-			Entity create();
+			Entity* create();
 
 			///
 			///	Free up an entity in the object pool.
 			///
-			void destroy(Entity x);
+			void destroy(const Entity* x);
 
 			///
 			///	Return if the entity is a valid entity that holds a spot within an object pool.
 			///	The entity is invalid if it has been destroyed.
 			///
-			bool valid(Entity x) const;
+			bool valid(const Entity* x) const;
 
 			///
 			///	Get a read-only list of all entities within the entity manager.
@@ -75,7 +75,7 @@ namespace age
 			///	This function will efficiently call the given function on only the entities with the given components.
 			///
 			template <typename... Args>
-			void each(typename identity<std::function<void(Entity, Args&...)>>::type x)
+			void each(typename identity<std::function<void(Entity&, Args&...)>>::type x)
 			{
 				const auto tuple = std::make_tuple(this->getPool<Args>()...);
 
@@ -84,7 +84,7 @@ namespace age
 						// MSVC BUG // for(auto e : this->entities)
 						for(auto i = 0; i < this->entities.size(); i++)
 						{
-							const auto e = this->entities[i];
+							auto& e = this->entities[i];
 
 							if(this->validEntities[e.id] == true)
 							{

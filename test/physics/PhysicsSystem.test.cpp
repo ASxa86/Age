@@ -32,22 +32,16 @@ TEST(PhysicsSystem, EntityManager)
 
 	b2World world{{0.0, 0.0}};
 
-	{
-		b2BodyDef def;
-		auto entity = manager.create();
-		entity.addComponent<b2Body*>(world.CreateBody(&def));
-	}
+	b2BodyDef def1;
+	auto entity1 = manager.create();
+	entity1->addComponent<b2Body*>(world.CreateBody(&def1));
 
-	{
-		b2BodyDef def;
-		auto entity = manager.create();
-		entity.addComponent<b2Body*>(world.CreateBody(&def));
-	}
+	b2BodyDef def2;
+	auto entity2 = manager.create();
+	entity2->addComponent<b2Body*>(world.CreateBody(&def2));
 
-	auto entities = manager.getEntities();
-
-	EXPECT_TRUE(entities[0].getComponent<b2Body*>()->GetWorld() != nullptr);
-	EXPECT_TRUE(entities[1].getComponent<b2Body*>()->GetWorld() != nullptr);
+	EXPECT_TRUE(entity1->getComponent<b2Body*>()->GetWorld() != nullptr);
+	EXPECT_TRUE(entity2->getComponent<b2Body*>()->GetWorld() != nullptr);
 }
 
 TEST(PhysicsSystem, Box2D)
@@ -69,20 +63,20 @@ TEST(PhysicsSystem, Box2D)
 
 	{
 		auto entity = entityManager->create();
-		EXPECT_TRUE(entity.valid());
+		EXPECT_TRUE(entity->valid());
 
 		b2BodyDef def;
 		auto body = world.CreateBody(&def);
-		EXPECT_TRUE(body == entity.addComponent<b2Body*>(body));
+		EXPECT_TRUE(body == entity->addComponent<b2Body*>(body));
 	}
 
 	{
 		auto entity = entityManager->create();
-		EXPECT_TRUE(entity.valid());
+		EXPECT_TRUE(entity->valid());
 
 		b2BodyDef def;
 		auto body = world.CreateBody(&def);
-		EXPECT_TRUE(body == entity.addComponent<b2Body*>(body));
+		EXPECT_TRUE(body == entity->addComponent<b2Body*>(body));
 	}
 
 	engine->setEngineState(age::core::EngineState::State::Initialize);

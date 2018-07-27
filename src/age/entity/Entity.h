@@ -25,6 +25,10 @@ namespace age
 		class AGE_ENTITY_EXPORT Entity
 		{
 		public:
+			Entity(const Entity&) = delete;
+			Entity& operator=(const Entity&) = delete;
+			Entity(const Entity&& x) noexcept;
+
 			///
 			///	Get the ID of this entity.
 			///
@@ -67,7 +71,7 @@ namespace age
 				{
 					pool->construct(this->id, std::forward<Args>(args)...);
 
-					auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
+					auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
 					event->setComponent(&(*pool)[this->id]);
 					age::core::EventQueue::Instance().sendEvent(std::move(event));
 				}
@@ -85,7 +89,7 @@ namespace age
 
 				if(pool->test(this->id) == true)
 				{
-					auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved);
+					auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentRemoved);
 					event->setComponent(&(*pool)[this->id]);
 					age::core::EventQueue::Instance().sendEvent(std::move(event));
 					pool->destroy(this->id);

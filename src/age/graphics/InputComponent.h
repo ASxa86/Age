@@ -2,9 +2,9 @@
 
 #include <age/entity/EntityManager.h>
 #include <age/graphics/Export.h>
+#include <SFML/Window/Keyboard.hpp>
 #include <functional>
 #include <vector>
-#include <SFML/Window/Keyboard.hpp>
 
 namespace age
 {
@@ -28,12 +28,12 @@ namespace age
 			InputComponent();
 			~InputComponent();
 
-			void addKeyBinding(sf::Keyboard::Key key, const std::function<void(age::entity::Entity, bool)>& x);
+			void addKeyBinding(sf::Keyboard::Key key, const std::function<void(age::entity::Entity&, bool)>& x);
 
-			const std::vector<std::pair<sf::Keyboard::Key, std::function<void(age::entity::Entity, bool)>>>& getKeyBindings() const;
+			const std::vector<std::pair<sf::Keyboard::Key, std::function<void(age::entity::Entity&, bool)>>>& getKeyBindings() const;
 
 		private:
-			std::vector<std::pair<sf::Keyboard::Key, std::function<void(age::entity::Entity, bool)>>> keyBindings;
+			std::vector<std::pair<sf::Keyboard::Key, std::function<void(age::entity::Entity&, bool)>>> keyBindings;
 		};
 	}
 }

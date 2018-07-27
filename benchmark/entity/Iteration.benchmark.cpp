@@ -89,8 +89,8 @@ namespace
 			for(auto i = 0; i < experimentValue; ++i)
 			{
 				auto e = em->create();
-				e.addComponent<Pos>();
-				e.addComponent<Vel>();
+				e->addComponent<Pos>();
+				e->addComponent<Vel>();
 			}
 		}
 
@@ -176,7 +176,7 @@ BASELINE_F(Iteration, Baseline, EntityArrayF, 10, 1)
 
 BENCHMARK_F(Iteration, AgeEntity, AgeEntityF, 10, 1)
 {
-	this->em->each<Pos, Vel>([this](age::entity::Entity, Pos& p, Vel& v) {
+	this->em->each<Pos, Vel>([this](age::entity::Entity&, Pos& p, Vel& v) {
 		p.x += v.x * Time;
 		p.y += v.y * Time;
 	});

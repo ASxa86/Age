@@ -1,28 +1,29 @@
 #include <age/entity/EntityEvent.h>
-#include <age/entity/Entity.h>
+
 #include <age/core/PimplImpl.h>
+#include <age/entity/Entity.h>
 
 using namespace age::entity;
 
 class EntityEvent::Impl
 {
 public:
-	Impl(Entity e, Type t) : entity{e}, type{t}
+	Impl(Entity* e, Type t) : entity{e}, type{t}
 	{
 	}
 
-	Entity entity;
+	Entity* entity;
 	Type type;
 };
 
-EntityEvent::EntityEvent(Entity e, Type t) : Event(), pimpl(e, t)
+EntityEvent::EntityEvent(Entity* e, Type t) : Event(), pimpl(e, t)
 {
 }
 EntityEvent::~EntityEvent()
 {
 }
 
-Entity EntityEvent::getEntity() const
+Entity* EntityEvent::getEntity() const
 {
 	return this->pimpl->entity;
 }

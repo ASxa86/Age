@@ -29,7 +29,7 @@ void TextSystem::render(sf::RenderTarget& target, std::chrono::microseconds /*x*
 {
 	const auto manager = this->getEntityManager();
 
-	manager->each<TransformComponent, std::shared_ptr<sf::Text>>([&target, this](Entity, TransformComponent& t, std::shared_ptr<sf::Text>& d) {
+	manager->each<TransformComponent, std::shared_ptr<sf::Text>>([&target, this](Entity&, TransformComponent& t, std::shared_ptr<sf::Text>& d) {
 		auto transform = dynamic_cast<sf::Transformable*>(d.get());
 
 		if(transform != nullptr)

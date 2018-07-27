@@ -9,10 +9,15 @@ using namespace age::physics;
 class CollisionEvent::Impl
 {
 public:
-	std::vector<Entity> entities;
+	Impl(Entity* a, Entity* b) : entityA{a}, entityB{b}
+	{
+	}
+
+	Entity* entityA{};
+	Entity* entityB{};
 };
 
-CollisionEvent::CollisionEvent() : age::core::Event()
+CollisionEvent::CollisionEvent(Entity* a, Entity* b) : age::core::Event(), pimpl{a, b}
 {
 }
 
@@ -20,12 +25,12 @@ CollisionEvent::~CollisionEvent()
 {
 }
 
-void CollisionEvent::addEntity(Entity x)
+age::entity::Entity* CollisionEvent::getEntityA()
 {
-	this->pimpl->entities.push_back(x);
+	return this->pimpl->entityA;
 }
 
-const std::vector<Entity>& CollisionEvent::getEntities() const
+age::entity::Entity* CollisionEvent::getEntityB()
 {
-	return this->pimpl->entities;
+	return this->pimpl->entityB;
 }

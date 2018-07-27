@@ -49,7 +49,7 @@ void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds 
 	const auto manager = this->getEntityManager();
 
 	manager->each<TransformComponent, std::shared_ptr<sf::Drawable>>(
-		[&target, this](Entity, TransformComponent& t, std::shared_ptr<sf::Drawable>& d) {
+		[&target, this](Entity&, TransformComponent& t, std::shared_ptr<sf::Drawable>& d) {
 			auto transform = dynamic_cast<sf::Transformable*>(d.get());
 
 			if(transform != nullptr)

@@ -31,8 +31,7 @@ void SpriteAnimationSystem::render(sf::RenderTarget& target, sf::RenderStates& s
 {
 	const auto manager = this->getEntityManager();
 
-	manager->each<TransformComponent, SpriteAnimationComponent>([&target, &state, x](Entity, TransformComponent& t, SpriteAnimationComponent& a) {
-
+	manager->each<TransformComponent, SpriteAnimationComponent>([&target, &state, x](Entity&, TransformComponent& t, SpriteAnimationComponent& a) {
 		auto& animation = a.getCurrentAnimation();
 		const auto elapsed = animation.getElapsedTime() + x;
 		animation.setElapsedTime(elapsed);

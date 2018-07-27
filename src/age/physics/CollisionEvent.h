@@ -29,18 +29,11 @@ namespace age
 			///
 			///	\param x The entity that collided.
 			///
-			CollisionEvent();
+			CollisionEvent(age::entity::Entity* a, age::entity::Entity* b);
 			~CollisionEvent() override;
 
-			///
-			///	Add an entity that has made contact with another entity.
-			///
-			void addEntity(age::entity::Entity e);
-
-			///
-			///	Get a list of entities that have made contact with other entities.
-			///
-			const std::vector<age::entity::Entity>& getEntities() const;
+			age::entity::Entity* getEntityA();
+			age::entity::Entity* getEntityB();
 
 		private:
 			class Impl;

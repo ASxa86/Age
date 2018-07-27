@@ -12,11 +12,6 @@
 #include <age/physics/BodyComponent.h>
 #include <age/physics/CollisionEvent.h>
 
-#ifdef WIN32
-// Setting an int as void* for UserData within b2body
-#pragma warning(disable : 4311 4312 4302)
-#endif
-
 using namespace age::core;
 using namespace age::entity;
 using namespace age::math;
@@ -34,19 +29,11 @@ public:
 		void BeginContact(b2Contact* contact) override
 		{ /* handle begin event */
 
-			const auto manager = this->physics.getEntityManager();
+			auto eidA = reinterpret_cast<Entity*>(contact->GetFixtureA()->GetBody()->GetUserData());
+			auto eidB = reinterpret_cast<Entity*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
-			if(manager != nullptr)
-			{
-				const auto& entities = manager->getEntities();
-				auto eidA = reinterpret_cast<int>(contact->GetFixtureA()->GetBody()->GetUserData());
-				auto eidB = reinterpret_cast<int>(contact->GetFixtureB()->GetBody()->GetUserData());
-
-				auto evt = std::make_unique<CollisionEvent>();
-				evt->addEntity(entities[eidA]);
-				evt->addEntity(entities[eidB]);
-				EventQueue::Instance().sendEvent(std::move(evt));
-			}
+			auto evt = std::make_unique<CollisionEvent>(eidA, eidB);
+			EventQueue::Instance().sendEvent(std::move(evt));
 		}
 		void EndContact(b2Contact*) override
 		{ /* handle end event */
@@ -96,13 +83,13 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 	const auto manager = this->getEntityManager();
 
-	manager->each<BodyComponent, TransformComponent>([](auto, BodyComponent& b, TransformComponent& t) {
+	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
 		b.body->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
 	});
 
 	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
 
-	manager->each<BodyComponent, TransformComponent>([](auto, BodyComponent& b, TransformComponent& t) {
+	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
 		t.setPosition(Impl::ToVector(b.body->GetPosition()));
 		t.setRotation(b.body->GetAngle());
 	});

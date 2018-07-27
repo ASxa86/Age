@@ -6,6 +6,11 @@ using namespace age::entity;
 Entity::Entity() : id{-1}, manager{nullptr}
 {
 }
+
+Entity::Entity(const Entity&& x) noexcept : id{x.id}, manager{x.manager}
+{
+}
+
 int Entity::getID() const
 {
 	return this->id;
@@ -13,14 +18,14 @@ int Entity::getID() const
 
 bool Entity::valid() const
 {
-	return (this->manager != nullptr) && (this->manager->valid(*this) == true);
+	return (this->manager != nullptr) && (this->manager->valid(this) == true);
 }
 
 void Entity::destroy() const
 {
 	if(this->manager != nullptr)
 	{
-		this->manager->destroy(*this);
+		this->manager->destroy(this);
 	}
 }
 

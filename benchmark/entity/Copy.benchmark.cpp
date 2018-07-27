@@ -36,9 +36,9 @@ namespace
 	struct AgeEntityF : public celero::TestFixture
 	{
 		age::entity::EntityManager em;
-		age::entity::Entity value{em.create()};
-		age::entity::Entity copy{em.create()};
-		age::entity::Entity& ref{value};
+		age::entity::Entity* value{em.create()};
+		age::entity::Entity* copy{em.create()};
+		age::entity::Entity* ref{value};
 	};
 
 	struct EntityXF : public celero::TestFixture

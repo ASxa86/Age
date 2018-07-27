@@ -1,7 +1,7 @@
 #pragma once
 
-#include <age/core/Pimpl.h>
 #include <age/core/Event.h>
+#include <age/core/Pimpl.h>
 #include <age/entity/Export.h>
 #include <any>
 
@@ -31,10 +31,10 @@ namespace age
 				ComponentRemoved
 			};
 
-			EntityEvent(Entity e, Type t);
+			EntityEvent(Entity* e, Type t);
 			~EntityEvent() override;
 
-			Entity getEntity() const;
+			Entity* getEntity() const;
 			EntityEvent::Type getType() const;
 
 			template <typename T>

@@ -27,7 +27,7 @@ namespace age
 		class AGE_PHYSICS_EXPORT BodyComponent
 		{
 		public:
-			BodyComponent(PhysicsSystem& x, const age::entity::Entity& e);
+			BodyComponent(PhysicsSystem& x, age::entity::Entity* e);
 			~BodyComponent();
 			b2Body* body;
 		};
