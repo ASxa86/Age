@@ -8,6 +8,7 @@
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
+#include <age/core/Utilities.h>
 #include <age/entity/EntityManager.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
@@ -21,6 +22,7 @@
 #include <age/physics/PhysicsSystem.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 using namespace age::audio;
 using namespace age::core;
@@ -58,6 +60,9 @@ Pong::Pong()
 
 	auto physics = std::make_shared<PhysicsSystem>();
 	this->pimpl->engine->addChild(physics);
+
+	const auto metersW = static_cast<float>(PixelsToMeters(window->getWidth()));
+	const auto metersH = static_cast<float>(PixelsToMeters(window->getHeight()));
 
 	// Player 1
 	auto paddle = manager->create();
@@ -101,7 +106,7 @@ Pong::Pong()
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
 	paddle2->addComponent<std::shared_ptr<sf::Drawable>>(rec2);
 	auto& bodyP2 = paddle2->addComponent<BodyComponent>(*physics, paddle2);
-	bodyP2.body->SetType(b2BodyType::b2_kinematicBody);
+	bodyP2.body->SetType(b2BodyType::b2_staticBody);
 	b2PolygonShape rectShape2;
 	rectShape2.SetAsBox(rec2->getSize().x / 2.0f, rec2->getSize().y / 2.0f);
 	b2FixtureDef p2fdef;
@@ -118,6 +123,7 @@ Pong::Pong()
 	circle->setFillColor(sf::Color::White);
 	circle->setOrigin(circle->getRadius(), circle->getRadius());
 	ball->addComponent<std::shared_ptr<sf::Drawable>>(circle);
+	ball->addComponent<int>();
 
 	auto& bodyBall = ball->addComponent<BodyComponent>(*physics, ball);
 	bodyBall.body->SetType(b2BodyType::b2_dynamicBody);
@@ -128,10 +134,57 @@ Pong::Pong()
 	shapeCircle.m_radius = circle->getRadius();
 	fdef.shape = &shapeCircle;
 	fdef.restitution = 1.0;
+	fdef.friction = 0.0;
 	bodyBall.body->CreateFixture(&fdef);
 
 	auto& p = ball->addComponent<TransformComponent>();
 	p.setPosition({10, 10});
+
+	// Top wall
+	auto topWall = manager->create();
+	auto& twBody = topWall->addComponent<BodyComponent>(*physics, topWall);
+	twBody.body->SetType(b2BodyType::b2_staticBody);
+
+	b2EdgeShape twEdge;
+	twEdge.Set({0.0f, 0.0f}, {static_cast<float32>(PixelsToMeters(window->getWidth())), 0.0f});
+	b2FixtureDef twfdef;
+	twfdef.shape = &twEdge;
+	twBody.body->CreateFixture(&twfdef);
+
+	// Bottom wall
+	auto bottomWall = manager->create();
+	auto& bwBody = bottomWall->addComponent<BodyComponent>(*physics, bottomWall);
+	bwBody.body->SetType(b2BodyType::b2_staticBody);
+
+	b2EdgeShape bwEdge;
+	bwEdge.Set({0.0f, metersH}, {metersW, metersH});
+	b2FixtureDef bwfdef;
+	bwfdef.shape = &bwEdge;
+	bwBody.body->CreateFixture(&bwfdef);
+
+	// Left Wall
+	auto leftWall = manager->create();
+	auto& lwBody = leftWall->addComponent<BodyComponent>(*physics, leftWall);
+	lwBody.body->SetType(b2BodyType::b2_staticBody);
+
+	b2EdgeShape lwEdge;
+	lwEdge.Set({1.0f, 0.0f}, {1.0f, metersH});
+	b2FixtureDef lwfdef;
+	lwfdef.shape = &lwEdge;
+	auto lf = lwBody.body->CreateFixture(&lwfdef);
+	lf->SetSensor(true);
+
+	// Right Wall
+	auto rightWall = manager->create();
+	auto& rwBody = rightWall->addComponent<BodyComponent>(*physics, rightWall);
+	rwBody.body->SetType(b2BodyType::b2_staticBody);
+
+	b2EdgeShape rwEdge;
+	rwEdge.Set({metersW - 1.0f, 0.0f}, {metersW - 1.0f, metersH});
+	b2FixtureDef rwfdef;
+	rwfdef.shape = &rwEdge;
+	auto rf = rwBody.body->CreateFixture(&rwfdef);
+	rf->SetSensor(true);
 
 	// Score 1
 	auto score1 = manager->create();
@@ -160,14 +213,38 @@ Pong::Pong()
 
 	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());
 	ball->addComponent<sf::Sound>(this->pimpl->soundBuffer);
-	ball->getComponent<sf::Sound>().play();
 
-	EventQueue::Instance().addEventHandler([ball](auto evt) mutable {
+	EventQueue::Instance().addEventHandler([=](auto evt) mutable {
 		auto evtCollision = dynamic_cast<CollisionEvent*>(evt);
 
 		if(evtCollision != nullptr)
 		{
-			ball->getComponent<sf::Sound>().play();
+			if(evtCollision->getEntityA() == leftWall || evtCollision->getEntityA() == rightWall)
+			{
+				auto& t = ball->getComponent<TransformComponent>();
+				t.setPosition({metersW / 2, metersH / 2});
+
+				auto& b = ball->getComponent<BodyComponent>();
+				b.body->SetLinearVelocity({5.0f, 0.0f});
+
+				if(evtCollision->getEntityA() == leftWall)
+				{
+					auto& text = score2->getComponent<std::shared_ptr<sf::Text>>();
+					auto score = std::stoi(text->getString().toAnsiString());
+					text->setString(std::to_string(++score));
+				}
+
+				if(evtCollision->getEntityA() == rightWall)
+				{
+					auto& text = score1->getComponent<std::shared_ptr<sf::Text>>();
+					auto score = std::stoi(text->getString().toAnsiString());
+					text->setString(std::to_string(++score));
+				}
+			}
+			else
+			{
+				ball->getComponent<sf::Sound>().play();
+			}
 		}
 	});
 

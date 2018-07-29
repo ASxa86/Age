@@ -32,8 +32,9 @@ public:
 			auto eidA = reinterpret_cast<Entity*>(contact->GetFixtureA()->GetBody()->GetUserData());
 			auto eidB = reinterpret_cast<Entity*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
-			auto evt = std::make_unique<CollisionEvent>(eidA, eidB);
-			EventQueue::Instance().sendEvent(std::move(evt));
+			// Queue the event in order for the collision to be registered outside of the b2World Step();
+			// This will allow for b2 components to be modified/removed on a collision event.
+			EventQueue::Instance().queueEvent(std::make_unique<CollisionEvent>(eidA, eidB));
 		}
 		void EndContact(b2Contact*) override
 		{ /* handle end event */
@@ -83,7 +84,7 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 	const auto manager = this->getEntityManager();
 
-	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
+	manager->each<BodyComponent, TransformComponent>([](auto& e, BodyComponent& b, TransformComponent& t) {
 		b.body->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
 	});
 

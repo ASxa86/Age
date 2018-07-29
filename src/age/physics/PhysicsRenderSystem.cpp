@@ -49,7 +49,18 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 					break;
 				}
 				case b2Shape::Type::e_edge:
+				{
+					sf::VertexArray array;
+					array.setPrimitiveType(sf::PrimitiveType::Lines);
+
+					const auto pos = b.body->GetPosition();
+					const auto b2Edge = static_cast<b2EdgeShape*>(f->GetShape());
+					array.append(sf::Vertex({b2Edge->m_vertex1.x, b2Edge->m_vertex1.y}, sf::Color::Green));
+					array.append(sf::Vertex({b2Edge->m_vertex2.x, b2Edge->m_vertex2.y}, sf::Color::Green));
+					target.draw(array, this->pimpl->state);
 					break;
+				}
+
 				case b2Shape::Type::e_polygon:
 				{
 					sf::VertexArray array;

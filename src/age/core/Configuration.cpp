@@ -30,8 +30,8 @@ const Configuration& age::core::Configuration::Instance()
 		filename.resize(MAX_PATH);
 		GetModuleFileNameA(nullptr, filename.data(), static_cast<DWORD>(filename.size()));
 #else
-	filename.resize(PATH_MAX);
-	readlink("/proc/self/exe", filename.data(), filename.size());
+		filename.resize(PATH_MAX);
+		readlink("/proc/self/exe", filename.data(), filename.size());
 #endif
 
 		auto currentPath = std::filesystem::path(filename).parent_path();
