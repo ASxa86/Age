@@ -84,7 +84,7 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 	const auto manager = this->getEntityManager();
 
-	manager->each<BodyComponent, TransformComponent>([](auto& e, BodyComponent& b, TransformComponent& t) {
+	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
 		b.body->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
 	});
 

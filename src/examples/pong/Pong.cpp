@@ -20,6 +20,8 @@
 #include <age/physics/CollisionEvent.h>
 #include <age/physics/PhysicsRenderSystem.h>
 #include <age/physics/PhysicsSystem.h>
+#include <examples/pong/PaddleAIComponent.h>
+#include <examples/pong/PaddleAISystem.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -57,6 +59,7 @@ Pong::Pong()
 	this->pimpl->engine->addChild(manager);
 	this->pimpl->engine->addChild(std::make_shared<PlayerInputSystem>());
 	this->pimpl->engine->addChild(std::make_shared<AudioSystem>());
+	this->pimpl->engine->addChild(std::make_shared<PaddleAISystem>());
 
 	auto physics = std::make_shared<PhysicsSystem>();
 	this->pimpl->engine->addChild(physics);
@@ -100,13 +103,14 @@ Pong::Pong()
 
 	// Player 2
 	auto paddle2 = manager->create();
+	auto& ai = paddle2->addComponent<PaddleAIComponent>();
 	auto rec2 = std::make_shared<sf::RectangleShape>();
 	rec2->setSize({1.0, 3.0});
 	rec2->setFillColor(sf::Color::White);
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
 	paddle2->addComponent<std::shared_ptr<sf::Drawable>>(rec2);
 	auto& bodyP2 = paddle2->addComponent<BodyComponent>(*physics, paddle2);
-	bodyP2.body->SetType(b2BodyType::b2_staticBody);
+	bodyP2.body->SetType(b2BodyType::b2_kinematicBody);
 	b2PolygonShape rectShape2;
 	rectShape2.SetAsBox(rec2->getSize().x / 2.0f, rec2->getSize().y / 2.0f);
 	b2FixtureDef p2fdef;
@@ -118,6 +122,7 @@ Pong::Pong()
 
 	// Ball
 	auto ball = manager->create();
+	ai.setBall(ball);
 	auto circle = std::make_shared<sf::CircleShape>();
 	circle->setRadius(0.5f);
 	circle->setFillColor(sf::Color::White);
@@ -225,7 +230,7 @@ Pong::Pong()
 				t.setPosition({metersW / 2, metersH / 2});
 
 				auto& b = ball->getComponent<BodyComponent>();
-				b.body->SetLinearVelocity({5.0f, 0.0f});
+				b.body->SetLinearVelocity({10.0f, 2.0f});
 
 				if(evtCollision->getEntityA() == leftWall)
 				{
@@ -244,6 +249,8 @@ Pong::Pong()
 			else
 			{
 				ball->getComponent<sf::Sound>().play();
+				auto v = ball->getComponent<BodyComponent>().body->GetLinearVelocity();
+				ball->getComponent<BodyComponent>().body->SetLinearVelocity({v.x * 1.1f, v.y * 1.1f});
 			}
 		}
 	});
