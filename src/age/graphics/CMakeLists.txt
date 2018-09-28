@@ -17,9 +17,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	InputComponent.h
 	PlayerInputSystem.h
 	RenderSystem.h
-	SpriteAnimation.h
-	SpriteAnimationComponent.h
-	SpriteAnimationSystem.h
+	SpriteComponent.h
 	TextSystem.h
 	Window.h
 )
@@ -30,9 +28,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	KeyEvent.cpp
 	PlayerInputSystem.cpp
 	RenderSystem.cpp
-	SpriteAnimation.cpp
-	SpriteAnimationComponent.cpp
-	SpriteAnimationSystem.cpp	
+	SpriteComponent.cpp
 	TextSystem.cpp
 	Window.cpp
 )

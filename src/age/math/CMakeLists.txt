@@ -8,7 +8,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	BoundingCircle.h
 	Export.h
 	Intersect.h
-	TransformComponent.h
 	Vector.h
 )
 
@@ -16,6 +15,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 	BoundingBox.cpp
 	BoundingCircle.cpp
 	Intersect.cpp
-	TransformComponent.cpp
 	Vector.cpp
 )

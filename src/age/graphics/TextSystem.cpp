@@ -2,7 +2,7 @@
 
 #include <age/core/PimplImpl.h>
 #include <age/entity/EntityManager.h>
-#include <age/math/TransformComponent.h>
+#include <age/entity/TransformComponent.h>
 #include <SFML/Graphics.hpp>
 
 using namespace age::entity;

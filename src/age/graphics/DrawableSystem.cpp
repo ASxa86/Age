@@ -3,7 +3,8 @@
 #include <age/core/Configuration.h>
 #include <age/core/PimplImpl.h>
 #include <age/entity/EntityManager.h>
-#include <age/math/TransformComponent.h>
+#include <age/entity/TransformComponent.h>
+#include <age/graphics/SpriteComponent.h>
 #include <SFML/Graphics.hpp>
 
 using namespace age::core;
@@ -38,16 +39,17 @@ void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds 
 {
 	const auto manager = this->getEntityManager();
 
-	manager->each<TransformComponent, std::shared_ptr<sf::Drawable>>(
-		[&target, this](Entity&, TransformComponent& t, std::shared_ptr<sf::Drawable>& d) {
-			auto transform = dynamic_cast<sf::Transformable*>(d.get());
+	manager->each<SpriteComponent>([&target, this](Entity& e, SpriteComponent& s) {
+		auto& sprite = s.getSprite();
 
-			if(transform != nullptr)
-			{
-				auto p = t.getPosition();
-				transform->setPosition(FromVector(p));
-			}
+		if(e.hasComponent<TransformComponent>() == true)
+		{
+			const auto& t = e.getComponent<TransformComponent>();
+			const auto p = t.getPosition();
+			sprite.setPosition(FromVector(p));
+		}
 
-			target.draw(*d, this->pimpl->state);
-		});
+		target.draw(sprite);
+		// target.draw(sprite, this->pimpl->state);
+	});
 }

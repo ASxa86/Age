@@ -8,7 +8,7 @@
 #include <age/core/Timer.h>
 #include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
-#include <age/math/TransformComponent.h>
+#include <age/entity/TransformComponent.h>
 #include <age/physics/BodyComponent.h>
 #include <age/physics/CollisionEvent.h>
 

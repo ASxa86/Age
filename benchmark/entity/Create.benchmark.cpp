@@ -44,7 +44,7 @@ namespace
 		}
 
 		/// Before each run, build a vector of random integers.
-		virtual void setUp(int64_t) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue&) override
 		{
 			pos.clear();
 			vel.clear();
@@ -63,7 +63,7 @@ namespace
 		}
 
 		/// Before each run, build a vector of random integers.
-		virtual void setUp(int64_t) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue&) override
 		{
 			// Clear the previous entities
 			this->em = std::make_unique<age::entity::EntityManager>(IterationCount);
@@ -78,7 +78,7 @@ namespace
 		{
 		}
 
-		virtual void setUp(int64_t) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue&) override
 		{
 			// Clear the previous entities
 			this->em = std::make_unique<entityx::EntityManager>(this->evtManager);
@@ -102,7 +102,7 @@ namespace
 		{
 		}
 
-		virtual void setUp(int64_t) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue&) override
 		{
 			// Clear the previous entities
 			this->em = std::make_unique<age::benchmark::Object>();

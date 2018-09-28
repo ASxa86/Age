@@ -10,12 +10,12 @@
 #include <age/core/PimplImpl.h>
 #include <age/core/Utilities.h>
 #include <age/entity/EntityManager.h>
+#include <age/entity/TransformComponent.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
 #include <age/graphics/TextSystem.h>
 #include <age/graphics/Window.h>
-#include <age/math/TransformComponent.h>
 #include <age/physics/BodyComponent.h>
 #include <age/physics/CollisionEvent.h>
 #include <age/physics/PhysicsRenderSystem.h>

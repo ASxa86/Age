@@ -1,10 +1,11 @@
 #pragma once
 
+#include <age/entity/Export.h>
 #include <age/math/Vector.h>
 
 namespace age
 {
-	namespace math
+	namespace entity
 	{
 		///
 		///	\class TransformComponent
@@ -15,7 +16,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_MATH_EXPORT TransformComponent
+		class AGE_ENTITY_EXPORT TransformComponent
 		{
 		public:
 			TransformComponent();
@@ -25,13 +26,13 @@ namespace age
 			///	Set the position for the component.
 			///	(x, y)
 			///
-			void setPosition(const Vector& x);
-			
+			void setPosition(const age::math::Vector& x);
+
 			///
 			///	Get the position for the component.
 			///	(x, y)
 			///
-			Vector getPosition() const;
+			age::math::Vector getPosition() const;
 
 			///
 			///	Set the rotation for the component.
@@ -46,7 +47,7 @@ namespace age
 			double getRotation() const;
 
 		private:
-			Vector position;
+			age::math::Vector position;
 			double rotation;
 		};
 	}

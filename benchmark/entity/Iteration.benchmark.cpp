@@ -23,7 +23,7 @@
 
 namespace
 {
-	const std::vector<std::pair<int64_t, uint64_t>> ProblemSpace{
+	const std::vector<celero::TestFixture::ExperimentValue> ProblemSpace{
 		{{10, 1'000'000}, {100, 100'000}, {1'000, 10'000}, {10'000, 1'000}, {100'000, 100}, {1'000'000, 10}}};
 	constexpr double Time{0.01};
 
@@ -45,20 +45,20 @@ namespace
 		{
 		}
 
-		virtual std::vector<std::pair<int64_t, uint64_t>> getExperimentValues() const override
+		virtual std::vector<celero::TestFixture::ExperimentValue> getExperimentValues() const
 		{
 			return ProblemSpace;
 		}
 
 		/// Before each run, build a vector of random integers.
-		virtual void setUp(int64_t experimentValue) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
 		{
 			pos.clear();
 			vel.clear();
-			pos.reserve(experimentValue);
-			vel.reserve(experimentValue);
+			pos.reserve(x.Value);
+			vel.reserve(x.Value);
 
-			for(auto i = 0; i < experimentValue; i++)
+			for(auto i = 0; i < x.Value; i++)
 			{
 				pos.push_back({});
 				vel.push_back({});
@@ -75,18 +75,18 @@ namespace
 		{
 		}
 
-		virtual std::vector<std::pair<int64_t, uint64_t>> getExperimentValues() const override
+		virtual std::vector<celero::TestFixture::ExperimentValue> getExperimentValues() const
 		{
 			return ProblemSpace;
 		}
 
 		/// Before each run, build a vector of random integers.
-		virtual void setUp(int64_t experimentValue) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
 		{
 			// Clear the previous entities
-			em = std::make_unique<age::entity::EntityManager>(experimentValue);
+			em = std::make_unique<age::entity::EntityManager>(x.Value);
 
-			for(auto i = 0; i < experimentValue; ++i)
+			for(auto i = 0; i < x.Value; ++i)
 			{
 				auto e = em->create();
 				e->addComponent<Pos>();
@@ -103,17 +103,17 @@ namespace
 		{
 		}
 
-		virtual std::vector<std::pair<int64_t, uint64_t>> getExperimentValues() const override
+		virtual std::vector<celero::TestFixture::ExperimentValue> getExperimentValues() const
 		{
 			return ProblemSpace;
 		}
 
-		virtual void setUp(int64_t experimentValue) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
 		{
 			// Clear the previous entities
 			em = std::make_unique<entityx::EntityManager>(this->evtManager);
 
-			for(auto i = 0; i < experimentValue; ++i)
+			for(auto i = 0; i < x.Value; ++i)
 			{
 				auto e = em->create();
 				e.assign<Pos>();
@@ -139,17 +139,17 @@ namespace
 		{
 		}
 
-		virtual std::vector<std::pair<int64_t, uint64_t>> getExperimentValues() const override
+		virtual std::vector<celero::TestFixture::ExperimentValue> getExperimentValues() const
 		{
 			return ProblemSpace;
 		}
 
-		virtual void setUp(int64_t experimentValue) override
+		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
 		{
 			// Clear the previous entities
 			em = std::make_unique<age::benchmark::Object>();
 
-			for(auto i = 0; i < experimentValue; ++i)
+			for(auto i = 0; i < x.Value; ++i)
 			{
 				auto e = std::make_unique<age::benchmark::Object>();
 				e->addChild(std::make_unique<PosF>());

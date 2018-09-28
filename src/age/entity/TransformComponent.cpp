@@ -1,7 +1,7 @@
-#include <age/math/TransformComponent.h>
+#include <age/entity/TransformComponent.h>
 #include <cmath>
 
-using namespace age::math;
+using namespace age::entity;
 
 TransformComponent::TransformComponent() : position{}, rotation{}
 {
@@ -11,12 +11,12 @@ TransformComponent::~TransformComponent()
 {
 }
 
-void TransformComponent::setPosition(const Vector& x)
+void TransformComponent::setPosition(const age::math::Vector& x)
 {
 	this->position = x;
 }
 
-Vector TransformComponent::getPosition() const
+age::math::Vector TransformComponent::getPosition() const
 {
 	return this->position;
 }
@@ -24,7 +24,8 @@ Vector TransformComponent::getPosition() const
 void TransformComponent::setRotation(double x)
 {
 	x = std::fmod(x, 360.0);
-	if (x < 0.0) x += 360.0;
+	if(x < 0.0)
+		x += 360.0;
 	this->rotation = x;
 }
 
