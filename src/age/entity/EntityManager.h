@@ -3,8 +3,6 @@
 #include <age/core/EventQueue.h>
 #include <age/core/Object.h>
 #include <age/entity/ComponentPool.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityEvent.h>
 #include <age/entity/Export.h>
 #include <deque>
 #include <map>
@@ -15,6 +13,7 @@ namespace age
 {
 	namespace entity
 	{
+		class Entity;
 		///
 		///	\class EntityManager
 		///
@@ -75,30 +74,7 @@ namespace age
 			///	This function will efficiently call the given function on only the entities with the given components.
 			///
 			template <typename... Args>
-			void each(typename identity<std::function<void(Entity&, Args&...)>>::type x)
-			{
-				const auto tuple = std::make_tuple(this->getPool<Args>()...);
-
-				std::apply(
-					[this, &x](auto... pool) {
-						// MSVC BUG // for(auto e : this->entities)
-						for(auto i = 0; i < this->entities.size(); i++)
-						{
-							auto& e = this->entities[i];
-
-							if(this->validEntities[e.id] == true)
-							{
-								const auto valid = ((pool->test(e.id)) && ...);
-
-								if(valid == true)
-								{
-									x(e, (*pool)[e.id]...);
-								}
-							}
-						}
-					},
-					tuple);
-			}
+			void each(typename identity<std::function<void(Entity&, Args&...)>>::type x);
 
 			template <typename T>
 			ComponentPool<T>* getPool()
@@ -126,4 +102,32 @@ namespace age
 			std::size_t count;
 		};
 	}
+}
+
+#include <age/entity/Entity.h>
+
+template <typename... Args>
+void age::entity::EntityManager::each(typename age::entity::EntityManager::identity<std::function<void(age::entity::Entity&, Args&...)>>::type x)
+{
+	const auto tuple = std::make_tuple(this->template getPool<Args>()...);
+
+	std::apply(
+		[this, &x](auto... pool) {
+			// MSVC BUG // for(auto e : this->entities)
+			for(auto i = 0; i < this->entities.size(); i++)
+			{
+				auto& e = this->entities[i];
+
+				if(this->validEntities[e.id] == true)
+				{
+					const auto valid = ((pool->test(e.id)) && ...);
+
+					if(valid == true)
+					{
+						x(e, (*pool)[e.id]...);
+					}
+				}
+			}
+		},
+		tuple);
 }

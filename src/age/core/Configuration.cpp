@@ -7,7 +7,7 @@
 #include <Windows.h>
 #else
 #include <limits.h>
-#include <unitstd.h>
+#include <unistd.h>
 #endif
 
 using namespace age::core;
@@ -31,7 +31,8 @@ const Configuration& age::core::Configuration::Instance()
 		GetModuleFileNameA(nullptr, filename.data(), static_cast<DWORD>(filename.size()));
 #else
 		filename.resize(PATH_MAX);
-		readlink("/proc/self/exe", filename.data(), filename.size());
+		const auto result = readlink("/proc/self/exe", filename.data(), filename.size());
+		(void)result;
 #endif
 
 		auto currentPath = std::filesystem::path(filename).parent_path();

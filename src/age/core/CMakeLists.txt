@@ -3,6 +3,10 @@ project(AgeCore)
 add_library(${PROJECT_NAME} SHARED "")
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
+if(UNIX)
+	target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
+endif()
+
 target_sources(${PROJECT_NAME} PRIVATE
 	ChildEvent.h
 	Configuration.h

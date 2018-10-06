@@ -29,7 +29,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
@@ -41,6 +41,11 @@ find_package(Boost 1.65)
 include_directories(${Boost_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/src/age/physics)
 
-add_subdirectory(benchmark)
+option(AGE_ENABLE_BENCHMARKS "Enable building the AGE benchmark suite." OFF)
+
+if(${AGE_ENABLE_BENCHMARKS})
+	add_subdirectory(benchmark)
+endif()
+
 add_subdirectory(src)
 add_subdirectory(test)

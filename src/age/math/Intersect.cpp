@@ -2,6 +2,7 @@
 
 #include <age/math/BoundingBox.h>
 #include <age/math/BoundingCircle.h>
+#include <cmath>
 
 using namespace age::math;
 

@@ -63,58 +63,25 @@ namespace age
 			///	Add a component to the entity.
 			///
 			template <typename T, typename... Args>
-			T& addComponent(Args&&... args)
-			{
-				const auto pool = this->manager->template getPool<T>();
-
-				if(pool->test(this->id) == false)
-				{
-					pool->construct(this->id, std::forward<Args>(args)...);
-
-					auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
-					event->setComponent(&(*pool)[this->id]);
-					age::core::EventQueue::Instance().sendEvent(std::move(event));
-				}
-
-				return (*pool)[this->id];
-			}
+			T& addComponent(Args&&... args);
 
 			///
 			///	Remove a component to the entity.
 			///
 			template <typename T>
-			void removeComponent()
-			{
-				const auto pool = this->manager->template getPool<T>();
-
-				if(pool->test(this->id) == true)
-				{
-					auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentRemoved);
-					event->setComponent(&(*pool)[this->id]);
-					age::core::EventQueue::Instance().sendEvent(std::move(event));
-					pool->destroy(this->id);
-				}
-			}
+			void removeComponent();
 
 			///
 			///	Get a component to the entity.
 			///
 			template <typename T>
-			T& getComponent()
-			{
-				const auto pool = this->manager->template getPool<T>();
-				return (*pool)[this->id];
-			}
+			T& getComponent();
 
 			///
 			///	Check if this entity has a component.
 			///
 			template <typename T>
-			bool hasComponent()
-			{
-				const auto pool = this->manager->template getPool<T>();
-				return pool->test(this->id);
-			}
+			bool hasComponent();
 
 		private:
 			friend class EntityManager;
@@ -124,4 +91,51 @@ namespace age
 			EntityManager* manager;
 		};
 	}
+}
+
+#include <age/entity/EntityManager.h>
+
+template <typename T, typename... Args>
+T& age::entity::Entity::addComponent(Args&&... args)
+{
+	const auto pool = this->manager->template getPool<T>();
+
+	if(pool->test(this->id) == false)
+	{
+		pool->construct(this->id, std::forward<Args>(args)...);
+
+		auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
+		event->setComponent(&(*pool)[this->id]);
+		age::core::EventQueue::Instance().sendEvent(std::move(event));
+	}
+
+	return (*pool)[this->id];
+}
+
+template <typename T>
+void age::entity::Entity::removeComponent()
+{
+	const auto pool = this->manager->template getPool<T>();
+
+	if(pool->test(this->id) == true)
+	{
+		auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentRemoved);
+		event->setComponent(&(*pool)[this->id]);
+		age::core::EventQueue::Instance().sendEvent(std::move(event));
+		pool->destroy(this->id);
+	}
+}
+
+template <typename T>
+T& age::entity::Entity::getComponent()
+{
+	const auto pool = this->manager->template getPool<T>();
+	return (*pool)[this->id];
+}
+
+template <typename T>
+bool age::entity::Entity::hasComponent()
+{
+	const auto pool = this->manager->template getPool<T>();
+	return pool->test(this->id);
 }

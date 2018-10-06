@@ -7,5 +7,5 @@
 		#define AGE_CORE_EXPORT __declspec(dllimport)
 	#endif
 #else
-	#define AGE_GRAPHICS_EXPORT
+	#define AGE_CORE_EXPORT
 #endif

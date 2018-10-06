@@ -1,5 +1,6 @@
 #include <age/math/Vector.h>
 #include <array>
+#include <cmath>
 
 using namespace age::math;
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/entity/Export.h>
+#include <cstring>
 #include <memory>
 #include <vector>
 
