@@ -2,6 +2,7 @@
 
 #include <age/entity/AnimationChannel.h>
 #include <age/entity/Export.h>
+#include <memory>
 
 namespace age
 {

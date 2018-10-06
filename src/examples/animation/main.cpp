@@ -115,7 +115,7 @@ int main()
 	});
 
 	controller.addKeyBinding(sf::Keyboard::Key::Down, [down](Entity& entity, auto isPressed) {
-		auto& a = entity.getComponent<AnimationComponent>();
+		auto& a = entity.template getComponent<AnimationComponent>();
 		if(isPressed == true)
 		{
 			a.setCurrentAnimation(down);
@@ -129,7 +129,7 @@ int main()
 	});
 
 	controller.addKeyBinding(sf::Keyboard::Key::Left, [left](auto& entity, auto isPressed) {
-		auto& a = entity.getComponent<AnimationComponent>();
+		auto& a = entity.template getComponent<AnimationComponent>();
 		if(isPressed == true)
 		{
 			a.setCurrentAnimation(left);
@@ -143,7 +143,7 @@ int main()
 	});
 
 	controller.addKeyBinding(sf::Keyboard::Key::Right, [right](auto& entity, auto isPressed) {
-		auto& a = entity.getComponent<AnimationComponent>();
+		auto& a = entity.template getComponent<AnimationComponent>();
 		if(isPressed == true)
 		{
 			a.setCurrentAnimation(right);
