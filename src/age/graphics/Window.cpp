@@ -29,7 +29,7 @@ public:
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
 
-		this->font.loadFromFile((Configuration::Instance().getDataPath() / "fonts/sansation.ttf").string());
+		this->font.loadFromFile((Configuration::Instance().getPathData() / "fonts/sansation.ttf").string());
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
 	}

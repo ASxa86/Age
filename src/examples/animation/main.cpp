@@ -35,7 +35,7 @@ int main()
 
 	// Animation Sprite for the entity.
 	auto& sprite = entity->addComponent<SpriteComponent>();
-	sprite.loadFile(Configuration::Instance().getDataPath() / "characters/Filga_1.png");
+	sprite.loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");
 	sprite.setHFrames(4);
 	sprite.setVFrames(4);
 	sprite.setFrame(0);

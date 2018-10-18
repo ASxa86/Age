@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="kenny_roguelike_scaled.tsx"/>
+ <layer name="Tile Layer 1" width="10" height="10">
+  <data encoding="csv">
+6,6,6,6,6,6,6,6,6,6,
+6,6,6,6,6,6,6,6,6,6,
+6,6,6,6,6,6,6,6,6,6,
+6,6,6,3,4,4,5,6,6,6,
+6,6,6,60,1,1,62,6,6,6,
+6,6,6,60,1,1,62,6,6,6,
+6,6,6,117,118,118,119,6,6,6,
+6,6,6,6,6,6,6,6,6,6,
+6,6,6,6,6,6,6,6,6,6,
+6,6,6,6,6,6,6,6,6,6
+</data>
+ </layer>
+</map>

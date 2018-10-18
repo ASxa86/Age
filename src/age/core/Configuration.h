@@ -20,6 +20,7 @@ namespace age
 		class AGE_CORE_EXPORT Configuration
 		{
 		public:
+			~Configuration();
 			Configuration(const Configuration&) = delete;
 			Configuration& operator=(const Configuration&) = delete;
 
@@ -32,7 +33,17 @@ namespace age
 			///
 			///	Get the full path to AGE's data directory.
 			///
-			std::filesystem::path getDataPath() const;
+			std::filesystem::path getPathData() const;
+
+			///
+			///	Get the full path to AGE's bin directory.
+			///
+			std::filesystem::path getPathBin() const;
+
+			///
+			///	Get the full path to AGE's plugin directory.
+			///
+			std::filesystem::path getPathPlugins() const;
 
 			///
 			///	Set the pixels per meter unit scaling for drawable objects.

@@ -14,7 +14,9 @@ using namespace age::core;
 
 struct Configuration::Impl
 {
-	std::filesystem::path dataPath;
+	std::filesystem::path pathData;
+	std::filesystem::path pathBin;
+	std::filesystem::path pathPlugins;
 	std::once_flag onceFlag;
 	unsigned int pixelsPerMeter{32};
 };
@@ -36,13 +38,15 @@ const Configuration& age::core::Configuration::Instance()
 #endif
 
 		auto currentPath = std::filesystem::path(filename).parent_path();
+		singleton.pimpl->pathBin = currentPath;
+		singleton.pimpl->pathPlugins = currentPath / "plugins";
 
 		while(std::filesystem::exists(currentPath / "data") == false && currentPath.has_parent_path() == true)
 		{
 			currentPath = currentPath.parent_path();
 		}
 
-		singleton.pimpl->dataPath = currentPath / "data";
+		singleton.pimpl->pathData = currentPath / "data";
 	});
 
 	return singleton;
@@ -52,9 +56,23 @@ Configuration::Configuration() : pimpl{}
 {
 }
 
-std::filesystem::path Configuration::getDataPath() const
+Configuration::~Configuration()
 {
-	return this->pimpl->dataPath;
+}
+
+std::filesystem::path Configuration::getPathData() const
+{
+	return this->pimpl->pathData;
+}
+
+std::filesystem::path Configuration::getPathBin() const
+{
+	return this->pimpl->pathBin;
+}
+
+std::filesystem::path Configuration::getPathPlugins() const
+{
+	return this->pimpl->pathPlugins;
 }
 
 void Configuration::setPixelsPerMeter(unsigned int x)

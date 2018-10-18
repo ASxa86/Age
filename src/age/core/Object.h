@@ -10,8 +10,6 @@ namespace age
 {
 	namespace core
 	{
-		class ChildEvent;
-
 		///
 		///	\class Object
 		///

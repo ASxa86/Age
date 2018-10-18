@@ -7,6 +7,10 @@ if(UNIX)
 	target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
 endif()
 
+target_link_libraries(${PROJECT_NAME} PUBLIC
+	${Boost_LIBRARIES}
+)
+
 target_sources(${PROJECT_NAME} PRIVATE
 	ChildEvent.h
 	Configuration.h
@@ -16,7 +20,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Event.h
 	EventQueue.h
 	Export.h
+	Factory.h
 	Object.h
+	Parser.h
 	Pimpl.h
 	PimplImpl.h
 	Processor.h
@@ -32,7 +38,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 	EngineStateEvent.cpp
 	Event.cpp
 	EventQueue.cpp
+	Factory.cpp
 	Object.cpp
+	Parser.cpp
 	Processor.cpp
 	Timer.cpp
 	Utilities.cpp

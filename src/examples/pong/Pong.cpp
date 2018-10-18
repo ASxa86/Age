@@ -38,7 +38,7 @@ struct Pong::Impl
 {
 	Impl()
 	{
-		this->font.loadFromFile((Configuration::Instance().getDataPath() / "fonts/sansation.ttf").string());
+		this->font.loadFromFile((Configuration::Instance().getPathData() / "fonts/sansation.ttf").string());
 	}
 
 	std::shared_ptr<Engine> engine{std::make_shared<Engine>()};
@@ -216,7 +216,7 @@ Pong::Pong()
 
 	st2.setPosition({window->getWidth() - st1.getPosition().getX(), 100});
 
-	this->pimpl->soundBuffer.loadFromFile((config.getDataPath() / "audio/ball.wav").string());
+	this->pimpl->soundBuffer.loadFromFile((config.getPathData() / "audio/ball.wav").string());
 	ball->addComponent<sf::Sound>(this->pimpl->soundBuffer);
 
 	EventQueue::Instance().addEventHandler([=](auto evt) mutable {
