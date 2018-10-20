@@ -1,6 +1,7 @@
 #pragma once
 
-#include <age/graphics/TileMap.h>
+#include <age/terrain/TileMap.h>
+#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 namespace age
@@ -18,7 +19,7 @@ namespace age
 			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 		private:
-			TileMap tileMap;
+			age::terrain::TileMap tileMap;
 			sf::Texture texture;
 		};
 	}

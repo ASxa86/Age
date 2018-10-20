@@ -2,6 +2,7 @@ project(Age_TMX)
 
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_Export)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	FOLDER plugins
 	ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/Debug/plugins"
@@ -26,4 +27,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	AgeCore
+	AgeEntity
 )

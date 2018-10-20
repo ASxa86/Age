@@ -1,6 +1,6 @@
-#include <age/graphics/TileMap.h>
+#include <age/terrain/TileMap.h>
 
-using namespace age::graphics;
+using namespace age::terrain;
 
 TileMap::TileMap() : layers{}, width{}, height{}, tileWidth{}, tileHeight{}
 {
@@ -10,12 +10,12 @@ TileMap::~TileMap()
 {
 }
 
-void TileMap::addLayer(const Layer& x)
+void TileMap::addLayer(const TileMapLayer& x)
 {
 	this->layers.push_back(x);
 }
 
-const std::vector<TileMap::Layer>& TileMap::getLayers() const
+const std::vector<TileMapLayer>& TileMap::getLayers() const
 {
 	return this->layers;
 }

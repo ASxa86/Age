@@ -25,7 +25,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	RenderSystem.h
 	SpriteComponent.h
 	TextSystem.h
-	TileMap.h
 	TileMapComponent.h
 	TileMapSystem.h
 	Window.h
@@ -39,7 +38,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	RenderSystem.cpp
 	SpriteComponent.cpp
 	TextSystem.cpp
-	TileMap.cpp
 	TileMapComponent.cpp
 	TileMapSystem.cpp
 	Window.cpp
