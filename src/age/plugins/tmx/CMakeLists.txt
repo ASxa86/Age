@@ -1,5 +1,11 @@
 project(Age_TMX)
 
+############################################
+#
+#	FindPugi
+#
+find_package(PugiXML)
+
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_Export)
 
@@ -28,4 +34,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	AgeCore
 	AgeEntity
+	pugixml
 )

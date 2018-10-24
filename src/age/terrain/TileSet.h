@@ -30,6 +30,12 @@ namespace age
 			const std::string& getName() const;
 
 			///
+			///	\brief Defines a tile id offset for tile indexing.
+			///
+			void setTileOffset(int x);
+			int getTileOffset() const;
+
+			///
 			///	\brief The width of a single tile found within this tile set in pixels.
 			///
 			void setTileWidth(int x);
@@ -56,6 +62,7 @@ namespace age
 		private:
 			TileSource source;
 			std::string name;
+			int tileOffset;
 			int tileCount;
 			int columns;
 			int tileWidth;

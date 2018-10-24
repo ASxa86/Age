@@ -20,6 +20,16 @@ const std::vector<TileMapLayer>& TileMap::getLayers() const
 	return this->layers;
 }
 
+void TileMap::addTileSet(const TileSet& x)
+{
+	this->tileSets.push_back(x);
+}
+
+const std::vector<TileSet>& TileMap::getTileSet() const
+{
+	return this->tileSets;
+}
+
 void TileMap::setWidth(int x)
 {
 	this->width = x;

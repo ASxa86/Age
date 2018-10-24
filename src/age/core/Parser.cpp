@@ -18,19 +18,19 @@ Parser::~Parser()
 {
 }
 
-std::shared_ptr<Object> Parser::readFile(const std::filesystem::path&)
+bool Parser::readFile(const std::filesystem::path&, std::shared_ptr<Object>)
 {
-	return nullptr;
+	return false;
 }
 
-std::shared_ptr<Object> age::core::ReadFile(const std::filesystem::path& x)
+bool age::core::ReadFile(const std::filesystem::path& x, std::shared_ptr<Object> obj)
 {
 	const auto parser = Factory::Instance().create<Parser>(x.extension().string());
 
 	if(parser != nullptr)
 	{
-		return parser->readFile(x);
+		return parser->readFile(x, obj);
 	}
 
-	return nullptr;
+	return false;
 }

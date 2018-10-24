@@ -3,6 +3,7 @@
 #include <age/terrain/TileMap.h>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 namespace age
 {
@@ -11,16 +12,20 @@ namespace age
 		class TileMapComponent : public sf::Drawable
 		{
 		public:
+			struct Layer
+			{
+				std::vector<sf::VertexArray> arrays{};
+				sf::Texture Texture{};
+			};
+
 			TileMapComponent();
 			~TileMapComponent();
 
-			void loadFile(const std::filesystem::path& x);
-
-			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+			void loadTileMap(const age::terrain::TileMap& x);
 
 		private:
-			age::terrain::TileMap tileMap;
-			sf::Texture texture;
+			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+			std::vector<Layer> layers;
 		};
 	}
 }

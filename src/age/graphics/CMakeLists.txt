@@ -6,13 +6,7 @@ project(AgeGraphics)
 #
 find_package(SFML 2 COMPONENTS system graphics window)
 
-############################################
-#
-#	FindPugi
-#
-find_package(PugiXML)
-
-add_library(${PROJECT_NAME} SHARED "")
+add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIR})
 
@@ -47,8 +41,8 @@ target_link_libraries(${PROJECT_NAME}
 	AgeCore
 	AgeEntity
 	AgeMath
+	AgeTerrain
 	sfml-system
 	sfml-graphics
 	sfml-window
-	pugixml
 )

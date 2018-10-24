@@ -11,7 +11,7 @@ ParserTMX::~ParserTMX()
 {
 }
 
-std::shared_ptr<Object> ParserTMX::readFile(const std::filesystem::path&)
+bool ParserTMX::readFile(const std::filesystem::path&, std::shared_ptr<Object> obj)
 {
-	return nullptr;
+	return false;
 }

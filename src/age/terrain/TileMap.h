@@ -2,6 +2,7 @@
 
 #include <age/terrain/Export.h>
 #include <age/terrain/TileMapLayer.h>
+#include <age/terrain/TileSet.h>
 #include <filesystem>
 
 namespace age
@@ -21,7 +22,7 @@ namespace age
 		{
 		public:
 			TileMap();
-			~TileMap();
+			virtual ~TileMap();
 
 			///
 			///	\brief Add a layer to the tile map.
@@ -29,6 +30,12 @@ namespace age
 			///
 			void addLayer(const TileMapLayer& x);
 			const std::vector<TileMapLayer>& getLayers() const;
+
+			///
+			///	\brief Add a tile set for this map to refrence tile indices from.
+			///
+			void addTileSet(const TileSet& x);
+			const std::vector<TileSet>& getTileSet() const;
 
 			///
 			///	\brief Defines the overall tile map grid width with the number of tiles.
@@ -43,19 +50,20 @@ namespace age
 			int getHeight() const;
 
 			///
-			///	\brief The width of a single tile in pixels.
+			///	\brief The height of a single tile in pixels.
 			///
 			void setTileHeight(int x);
 			int getTileHeight() const;
 
 			///
-			///	\brief The height of a single tile in pixels.
+			///	\brief The width of a single tile in pixels.
 			///
 			void setTileWidth(int x);
 			int getTileWidth() const;
 
 		private:
 			std::vector<TileMapLayer> layers;
+			std::vector<TileSet> tileSets;
 			int width;
 			int height;
 			int tileWidth;

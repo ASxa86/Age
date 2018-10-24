@@ -52,8 +52,12 @@ Factory& Factory::Instance()
 				if(std::filesystem::is_regular_file(it) == true && it.path().extension() == ".dll")
 				{
 					boost::dll::shared_library library(it.path().string());
-					auto factoryRegister = library.get<void()>("FactoryRegister");
-					factoryRegister();
+					const auto factoryRegister = library.get<void()>("FactoryRegister");
+
+					if(factoryRegister != nullptr)
+					{
+						factoryRegister();
+					}
 
 					// Keep track of loaded libraries in order to keep them loaded in memory.
 					singleton.pimpl->loadedLibraries.push_back(library);

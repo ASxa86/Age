@@ -13,7 +13,7 @@ namespace age
 			ParserTMX();
 			~ParserTMX();
 
-			std::shared_ptr<Object> readFile(const std::filesystem::path& x) override;
+			bool readFile(const std::filesystem::path& x, std::shared_ptr<Object> obj) override;
 		};
 	}
 }

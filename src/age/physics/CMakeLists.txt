@@ -163,6 +163,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME}
 	AgeEntity
 	AgeMath
+	AgeTerrain
 	AgeGraphics
 )
 

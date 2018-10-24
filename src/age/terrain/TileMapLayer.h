@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/terrain/Export.h>
 #include <vector>
 
 namespace age
@@ -15,7 +16,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class TileMapLayer
+		class AGE_TERRAIN_EXPORT TileMapLayer
 		{
 		public:
 			TileMapLayer();

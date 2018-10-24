@@ -1,8 +1,5 @@
 #include <age/graphics/TileMapComponent.h>
-
-#include <boost/algorithm/string.hpp>
-#include <charconv>
-#include <pugixml.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 using namespace age::graphics;
 
@@ -14,59 +11,74 @@ TileMapComponent::~TileMapComponent()
 {
 }
 
-void TileMapComponent::loadFile(const std::filesystem::path& x)
+void TileMapComponent::loadTileMap(const age::terrain::TileMap& x)
 {
-	if(std::filesystem::exists(x) == true)
+	for(const auto& tileset : x.getTileSet())
 	{
-		pugi::xml_document doc;
-		doc.load_file(x.c_str());
+		Layer layer;
 
-		const auto node = doc.child("map");
+		layer.Texture.loadFromFile(tileset.getSource().getFileName().string());
 
-		if(node.empty() == false)
+		this->layers.push_back(layer);
+	}
+
+	for(const auto& layer : x.getLayers())
+	{
+		Layer mapLayer;
+		mapLayer.Texture.loadFromFile(x.getTileSet()[0].getSource().getFileName().string());
+		sf::VertexArray m_vertices;
+		const auto& indices = layer.getIndices();
+		m_vertices.resize(indices.size() * 4);
+
+		// Render order right-down
+		for(auto i = 0; i < layer.getHeight(); i++)
 		{
-			this->tileMap.setHeight(node.attribute("height").as_int());
-			this->tileMap.setWidth(node.attribute("width").as_int());
-			this->tileMap.setTileHeight(node.attribute("tileheight").as_int());
-			this->tileMap.setTileWidth(node.attribute("tilewidth").as_int());
-
-			for(const auto& layer : node.children("layer"))
+			for(auto j = 0; j < layer.getWidth(); j++)
 			{
-				const auto data = layer.child("data");
+				// Two dimensional index into one dimensional array.
+				const auto index = j + i * layer.getWidth();
 
-				if(data.empty() == false)
-				{
-					// TileMap::Layer layer;
-					// const auto csv = std::string(data.text().as_string());
-					// std::vector<std::string> tiles;
-					// boost::split(tiles, csv, boost::is_any_of(","), boost::algorithm::token_compress_on);
+				// Use index to find tileset reference?
+				// If index is greater than max tiles, load next tileset
+				// and build another layer.
+				// https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php
+				const auto tile = indices[index];
 
-					// for(auto i = 0; i < this->tileMap.getHeight(); i++)
-					//{
-					//	std::vector<int> row;
-					//	row.reserve(this->tileMap.getWidth());
-					//	for(auto j = 0; j < this->tileMap.getWidth(); j++)
-					//	{
-					//		const auto& indexStr = tiles[i + j * this->tileMap.getHeight()];
-					//		int index{};
-					//		std::from_chars(indexStr.data(), indexStr.data() + indexStr.size(), index);
-					//		row.push_back(index);
-					//	}
-					//}
+				sf::Vector2u tileSize{static_cast<unsigned int>(x.getTileWidth()), static_cast<unsigned int>(x.getTileHeight())};
 
-					// std::vector<int> row;
+				int tu = tile % (mapLayer.Texture.getSize().x / tileSize.x);
+				int tv = tile / (mapLayer.Texture.getSize().x / tileSize.x);
 
-					// for(auto i = 0;)
+				// get a pointer to the current tile's quad
+				sf::Vertex* quad = &m_vertices[index * 4];
 
-					//	int index{};
-					// std::from_chars(tile.data(), tile.data() + tile.size(), index);
-					// v.push_back(index);
-				}
+				// define its 4 corners
+				quad[0].position = sf::Vector2f(static_cast<float>(i * tileSize.x), static_cast<float>(j * tileSize.y));
+				quad[1].position = sf::Vector2f(static_cast<float>((i + 1) * tileSize.x), static_cast<float>(j * tileSize.y));
+				quad[2].position = sf::Vector2f(static_cast<float>((i + 1) * tileSize.x), static_cast<float>((j + 1) * tileSize.y));
+				quad[3].position = sf::Vector2f(static_cast<float>(i * tileSize.x), static_cast<float>((j + 1) * tileSize.y));
+
+				// define its 4 texture coordinates
+				quad[0].texCoords = sf::Vector2f(static_cast<float>(tu * tileSize.x), static_cast<float>(tv * tileSize.y));
+				quad[1].texCoords = sf::Vector2f(static_cast<float>((tu + 1) * tileSize.x), static_cast<float>(tv * tileSize.y));
+				quad[2].texCoords = sf::Vector2f(static_cast<float>((tu + 1) * tileSize.x), static_cast<float>((tv + 1) * tileSize.y));
+				quad[3].texCoords = sf::Vector2f(static_cast<float>(tu * tileSize.x), static_cast<float>((tv + 1) * tileSize.y));
 			}
 		}
+
+		mapLayer.arrays.push_back(m_vertices);
+		this->layers.push_back(mapLayer);
 	}
 }
 
-void TileMapComponent::draw(sf::RenderTarget& /*target*/, sf::RenderStates /*states*/) const
+void TileMapComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	for(const auto& layer : this->layers)
+	{
+		for(const auto& vertices : layer.arrays)
+		{
+			states.texture = &layer.Texture;
+			target.draw(vertices, states);
+		}
+	}
 }

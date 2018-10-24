@@ -20,6 +20,16 @@ const std::string& TileSet::getName() const
 	return this->name;
 }
 
+void TileSet::setTileOffset(int x)
+{
+	this->tileOffset = x;
+}
+
+int TileSet::getTileOffset() const
+{
+	return this->tileOffset;
+}
+
 void TileSet::setTileWidth(int x)
 {
 	this->tileWidth = x;
