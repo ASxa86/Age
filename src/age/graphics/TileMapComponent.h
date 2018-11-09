@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/graphics/Export.h>
 #include <age/terrain/TileMap.h>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -9,7 +10,7 @@ namespace age
 {
 	namespace graphics
 	{
-		class TileMapComponent : public sf::Drawable
+		class AGE_GRAPHICS_EXPORT TileMapComponent : public sf::Drawable
 		{
 		public:
 			struct Layer
@@ -25,7 +26,9 @@ namespace age
 
 		private:
 			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-			std::vector<Layer> layers;
+			// std::vector<Layer> layers;
+			sf::VertexArray vertices;
+			sf::Texture texture;
 		};
 	}
 }

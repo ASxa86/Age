@@ -54,6 +54,18 @@ namespace age
 			int getSpacing() const;
 
 			///
+			///	\brief The total number of tiles this tile set is made up of.
+			///
+			void setTileCount(int x);
+			int getTileCount() const;
+
+			///
+			///	\brief The number of columns this tile set is made up of.
+			///
+			void setColumns(int x);
+			int getColumns() const;
+
+			///
 			///	\brief The source data for this tile set.
 			///
 			void setSource(const TileSource& x);

@@ -4,6 +4,7 @@
 #include <age/core/PimplImpl.h>
 #include <atomic>
 #include <boost/dll/import.hpp>
+#include <iostream>
 #include <map>
 
 using namespace age::core;
@@ -48,19 +49,33 @@ Factory& Factory::Instance()
 		{
 			for(const auto& it : std::filesystem::directory_iterator(plugins))
 			{
-				const auto ext = it.path().extension();
 				if(std::filesystem::is_regular_file(it) == true && it.path().extension() == ".dll")
 				{
-					boost::dll::shared_library library(it.path().string());
-					const auto factoryRegister = library.get<void()>("FactoryRegister");
-
-					if(factoryRegister != nullptr)
+					const auto filepath = it.path();
+					const auto filename = filepath.filename().string();
+					const std::string agePlugin = "Age_";
+					if(filename.compare(0, agePlugin.size(), agePlugin) == 0)
 					{
-						factoryRegister();
-					}
+						boost::system::error_code ec;
+						boost::dll::shared_library library(filepath.string(), ec);
 
-					// Keep track of loaded libraries in order to keep them loaded in memory.
-					singleton.pimpl->loadedLibraries.push_back(library);
+						if(!ec)
+						{
+							const auto factoryRegister = library.get<void()>("FactoryRegister");
+
+							if(factoryRegister != nullptr)
+							{
+								factoryRegister();
+							}
+
+							// Keep track of loaded libraries in order to keep them loaded in memory.
+							singleton.pimpl->loadedLibraries.push_back(library);
+						}
+						else
+						{
+							std::cerr << "Failed to load: " << filepath << " error code: " << ec.message() << "\n";
+						}
+					}
 				}
 			}
 		}

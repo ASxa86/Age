@@ -36,6 +36,11 @@ namespace age
 			std::filesystem::path getPathData() const;
 
 			///
+			///	Get the full path to AGE's maps directory.
+			///
+			std::filesystem::path getPathMaps() const;
+
+			///
 			///	Get the full path to AGE's bin directory.
 			///
 			std::filesystem::path getPathBin() const;

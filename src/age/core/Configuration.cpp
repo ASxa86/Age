@@ -15,6 +15,7 @@ using namespace age::core;
 struct Configuration::Impl
 {
 	std::filesystem::path pathData;
+	std::filesystem::path pathMaps;
 	std::filesystem::path pathBin;
 	std::filesystem::path pathPlugins;
 	std::once_flag onceFlag;
@@ -47,6 +48,7 @@ const Configuration& age::core::Configuration::Instance()
 		}
 
 		singleton.pimpl->pathData = currentPath / "data";
+		singleton.pimpl->pathMaps = currentPath / "data" / "maps";
 	});
 
 	return singleton;
@@ -63,6 +65,11 @@ Configuration::~Configuration()
 std::filesystem::path Configuration::getPathData() const
 {
 	return this->pimpl->pathData;
+}
+
+std::filesystem::path Configuration::getPathMaps() const
+{
+	return this->pimpl->pathMaps;
 }
 
 std::filesystem::path Configuration::getPathBin() const

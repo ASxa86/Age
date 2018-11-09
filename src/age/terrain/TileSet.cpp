@@ -60,6 +60,26 @@ int TileSet::getSpacing() const
 	return this->spacing;
 }
 
+void TileSet::setTileCount(int x)
+{
+	this->tileCount = x;
+}
+
+int TileSet::getTileCount() const
+{
+	return this->tileCount;
+}
+
+void TileSet::setColumns(int x)
+{
+	this->columns = x;
+}
+
+int TileSet::getColumns() const
+{
+	return this->columns;
+}
+
 void TileSet::setSource(const TileSource& x)
 {
 	this->source = x;

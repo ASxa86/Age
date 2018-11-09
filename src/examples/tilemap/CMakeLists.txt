@@ -1,4 +1,4 @@
-project(AgeAnimation)
+project(AgeTileMap)
 
 add_executable(${PROJECT_NAME})
 
