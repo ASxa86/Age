@@ -31,6 +31,11 @@ namespace age
 			static const Configuration& Instance();
 
 			///
+			///	Get the root install path of the age engine.
+			///
+			std::filesystem::path getPathRoot() const;
+
+			///
 			///	Get the full path to AGE's data directory.
 			///
 			std::filesystem::path getPathData() const;

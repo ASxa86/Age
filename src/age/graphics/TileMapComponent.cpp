@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <iostream>
 
 using namespace age::graphics;
 
@@ -18,14 +17,15 @@ void TileMapComponent::loadTileMap(const age::terrain::TileMap& x)
 {
 	for(const auto& layer : x.getLayers())
 	{
+		sf::Texture texture;
+		sf::VertexArray vertices;
 		const auto filename = x.getTileSet()[0].getSource().getFileName().string();
 
-		if(this->texture.loadFromFile(filename) == true)
+		if(texture.loadFromFile(filename) == true)
 		{
-			sf::VertexArray& m_vertices = vertices;
 			const auto& indices = layer.getIndices();
-			m_vertices.resize(indices.size() * 4);
-			m_vertices.setPrimitiveType(sf::Quads);
+			vertices.resize(indices.size() * 4);
+			vertices.setPrimitiveType(sf::Quads);
 
 			// Render order right-down
 			for(auto i = 0; i < layer.getHeight(); i++)
@@ -38,7 +38,7 @@ void TileMapComponent::loadTileMap(const age::terrain::TileMap& x)
 					// https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php
 					sf::Vector2u tileSize{static_cast<unsigned int>(x.getTileWidth()), static_cast<unsigned int>(x.getTileHeight())};
 
-					const auto quad = &m_vertices[index * 4];
+					const auto quad = &vertices[index * 4];
 
 					// Define the size and shape on screen to draw the texture at.
 					quad[0].position = sf::Vector2f(static_cast<float>(j * tileSize.x), static_cast<float>(i * tileSize.y));
@@ -60,12 +60,17 @@ void TileMapComponent::loadTileMap(const age::terrain::TileMap& x)
 					quad[3].texCoords = sf::Vector2f(static_cast<float>(su + tu * tileSize.x), static_cast<float>(sv + (tv + 1) * tileSize.y));
 				}
 			}
+
+			this->layers.push_back({texture, vertices});
 		}
 	}
 }
 
 void TileMapComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	states.texture = &texture;
-	target.draw(vertices, states);
+	for(const auto& layer : this->layers)
+	{
+		states.texture = &layer.first;
+		target.draw(layer.second, states);
+	}
 }

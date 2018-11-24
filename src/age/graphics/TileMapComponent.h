@@ -13,12 +13,6 @@ namespace age
 		class AGE_GRAPHICS_EXPORT TileMapComponent : public sf::Drawable
 		{
 		public:
-			struct Layer
-			{
-				std::vector<sf::VertexArray> arrays{};
-				sf::Texture Texture{};
-			};
-
 			TileMapComponent();
 			~TileMapComponent();
 
@@ -26,9 +20,7 @@ namespace age
 
 		private:
 			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-			// std::vector<Layer> layers;
-			sf::VertexArray vertices;
-			sf::Texture texture;
+			std::vector<std::pair<sf::Texture, sf::VertexArray>> layers;
 		};
 	}
 }
