@@ -23,7 +23,7 @@ namespace age
 			///	Constructor.
 			///
 			Vector();
-			
+
 			///
 			///	Constructor
 			///
@@ -60,7 +60,7 @@ namespace age
 			///
 			///	Dot product.
 			///
-			double operator*(const Vector& x);
+			double operator*(const Vector& x) const;
 
 			///
 			///	Comparator operator overloads
@@ -79,7 +79,7 @@ namespace age
 			Vector& operator/=(double x);
 
 			double magnitude() const;
-			double normalize();
+			Vector normalize() const;
 
 		private:
 			std::array<double, 2> v;

@@ -60,7 +60,7 @@ Vector& Vector::operator-=(const Vector& x)
 	return *this;
 }
 
-double Vector::operator*(const Vector& x)
+double Vector::operator*(const Vector& x) const
 {
 	return this->v[0] * x.v[0] + this->v[1] * x.v[1];
 }
@@ -114,16 +114,16 @@ double Vector::magnitude() const
 	return std::sqrt(this->v[0] * this->v[0] + this->v[1] * this->v[1]);
 }
 
-double Vector::normalize()
+Vector Vector::normalize() const
 {
 	const auto mag = this->magnitude();
 
 	if(mag > 0.0)
 	{
-		*this /= mag;
+		return Vector(*this) / mag;
 	}
 
-	return mag;
+	return Vector(*this);
 }
 
 double age::math::distance(const Vector& a, const Vector& b)

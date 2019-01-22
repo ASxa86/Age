@@ -3,6 +3,10 @@ project(BenchmarkAgeEntity)
 add_executable(${PROJECT_NAME} "")
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DCELERO_STATIC)
 
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER benchmarks
+)
+
 find_package(EntityX)
 
 target_sources(${PROJECT_NAME} PRIVATE

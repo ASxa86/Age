@@ -1,12 +1,15 @@
 project(TestAgeMath)
 
-set(TARGET_SRC
-	BoundingBox.test.cpp
-	Intersect.test.cpp
+add_executable(${PROJECT_NAME})
+
+target_sources(${PROJECT_NAME} PRIVATE
 	Vector.test.cpp
 )
 
-add_executable(${PROJECT_NAME} ${TARGET_SRC})
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER tests
+)
+
 target_link_libraries(${PROJECT_NAME}
 	AgeMath
 	GTest::GTest

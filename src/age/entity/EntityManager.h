@@ -113,11 +113,8 @@ void age::entity::EntityManager::each(typename age::entity::EntityManager::ident
 
 	std::apply(
 		[this, &x](auto... pool) {
-			// MSVC BUG // for(auto e : this->entities)
-			for(auto i = 0; i < this->entities.size(); i++)
+			for(auto& e : this->entities)
 			{
-				auto& e = this->entities[i];
-
 				if(this->validEntities[e.id] == true)
 				{
 					const auto valid = ((pool->test(e.id)) && ...);
