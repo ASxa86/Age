@@ -14,9 +14,6 @@ using namespace age::physics;
 
 struct WaypointSystem::Impl
 {
-	// Keep track of an active waypoint in order to only process
-	// velocities and the next waypoint when necessary.
-	int activeWaypoint{-1};
 };
 
 WaypointSystem::WaypointSystem() : System(), pimpl()
@@ -38,7 +35,7 @@ void WaypointSystem::frame(std::chrono::microseconds)
 			auto& currentWaypoint = w.Waypoints[w.CurrentWaypoint];
 			const auto currentPosition = t.getPosition();
 
-			if(this->pimpl->activeWaypoint == w.CurrentWaypoint)
+			if(currentWaypoint.Active == true)
 			{
 				// We've reached the waypoint when the line created by
 				// the player's starting position and current position
@@ -57,21 +54,21 @@ void WaypointSystem::frame(std::chrono::microseconds)
 					if(w.CurrentWaypoint + 1 < w.Waypoints.size())
 					{
 						++w.CurrentWaypoint;
-						this->pimpl->activeWaypoint = -1;
+						currentWaypoint.Active = false;
 					}
 					else if(w.CurrentWaypoint + 1 >= w.Waypoints.size() && w.Loop == true)
 					{
 						w.CurrentWaypoint = 0;
-						this->pimpl->activeWaypoint = -1;
+						currentWaypoint.Active = false;
 					}
 
 					currentWaypoint = w.Waypoints[w.CurrentWaypoint];
 				}
 			}
 
-			if(this->pimpl->activeWaypoint != w.CurrentWaypoint)
+			if(currentWaypoint.Active == false)
 			{
-				this->pimpl->activeWaypoint = w.CurrentWaypoint;
+				currentWaypoint.Active = true;
 
 				const auto& velocity = b.body->GetLinearVelocity();
 				const auto totalVelocity = velocity.Length();

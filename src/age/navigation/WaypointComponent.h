@@ -30,6 +30,11 @@ namespace age
 				///	The position to drive the entity toward.
 				///
 				age::math::Vector Position{};
+
+				///
+				///	Mark this waypoint as being processed by the WaypointSystem.
+				///
+				bool Active{false};
 			};
 
 			///
