@@ -79,7 +79,7 @@ namespace age
 			Vector& operator/=(double x);
 
 			double magnitude() const;
-			Vector normalize() const;
+			double normalize();
 
 		private:
 			std::array<double, 2> v;

@@ -4,7 +4,6 @@ using namespace age::entity;
 
 AnimationComponent::AnimationComponent() : currentAnimation{nullptr}, elapsed{0}, length{0}, speed{1.0}, isPlaying{false}
 {
-	// this->animations.reserve(5);
 }
 
 AnimationComponent::~AnimationComponent()
@@ -24,11 +23,6 @@ void AnimationComponent::stop()
 void AnimationComponent::reset()
 {
 	this->setElapsed(std::chrono::microseconds::zero());
-
-	for(const auto& animation : this->animations)
-	{
-		animation.process(this->getElapsed());
-	}
 
 	if(this->currentAnimation != nullptr)
 	{

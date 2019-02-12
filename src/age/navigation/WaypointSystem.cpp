@@ -70,12 +70,13 @@ void WaypointSystem::frame(std::chrono::microseconds)
 			{
 				currentWaypoint.Active = true;
 
-				const auto& velocity = b.body->GetLinearVelocity();
+				const auto& velocity = b.Body->GetLinearVelocity();
 				const auto totalVelocity = velocity.Length();
 
-				const auto direction = (currentWaypoint.Position - currentPosition).normalize();
+				auto direction = (currentWaypoint.Position - currentPosition);
+				direction.normalize();
 				const auto newVelocity = direction * totalVelocity;
-				b.body->SetLinearVelocity({static_cast<float32>(newVelocity.getX()), static_cast<float32>(newVelocity.getY())});
+				b.Body->SetLinearVelocity({static_cast<float32>(newVelocity.getX()), static_cast<float32>(newVelocity.getY())});
 			}
 		}
 	});

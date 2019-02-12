@@ -9,6 +9,8 @@
 #include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
 #include <age/entity/TransformComponent.h>
+#include <age/math/Convert.h>
+#include <age/math/Functions.h>
 #include <age/physics/BodyComponent.h>
 #include <age/physics/CollisionEvent.h>
 
@@ -80,19 +82,25 @@ PhysicsSystem::~PhysicsSystem()
 
 void PhysicsSystem::frame(std::chrono::microseconds x)
 {
-	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
-
 	const auto manager = this->getEntityManager();
 
 	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
-		b.body->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
+		b.Body->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
 	});
 
+	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
 
 	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
-		t.setPosition(Impl::ToVector(b.body->GetPosition()));
-		t.setRotation(b.body->GetAngle());
+		t.setPosition(Impl::ToVector(b.Body->GetPosition()));
+		t.setRotation(Rad2Deg(b.Body->GetAngle()));
+
+		if(b.CalculateHeading == true)
+		{
+			auto velocity = b.Body->GetLinearVelocity();
+			velocity.Normalize();
+			t.setRotation(VectorAngle({velocity.x, -velocity.y}));
+		}
 	});
 }
 

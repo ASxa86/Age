@@ -13,6 +13,7 @@
 #include <age/physics/BodyComponent.h>
 #include <age/physics/Box2D/Box2D.h>
 #include <age/physics/PhysicsSystem.h>
+#include <iostream>
 
 using namespace age::core;
 using namespace age::entity;
@@ -23,7 +24,7 @@ using namespace age::physics;
 int main()
 {
 	const auto engine = std::make_shared<Engine>();
-	const auto manager = std::make_shared<EntityManager>(64);
+	const auto manager = std::make_shared<EntityManager>(4096);
 	const auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<TileMapSystem>());
 	window->addChild(std::make_shared<DrawableSystem>());
@@ -34,14 +35,20 @@ int main()
 	auto physics = std::make_shared<PhysicsSystem>();
 	engine->addChild(physics);
 
+	if(ReadFile(Configuration::Instance().getPathMaps() / "defense_level1.tmx", manager) == false)
+	{
+		return EXIT_FAILURE;
+	}
+
 	// Enemy
 	auto enemy = manager->create();
 	auto& transform = enemy->addComponent<TransformComponent>();
-	transform.setPosition({0, 200});
+	transform.setPosition({0, 275});
 
 	auto& body = enemy->addComponent<BodyComponent>(*physics, enemy);
-	body.body->SetType(b2BodyType::b2_kinematicBody);
-	body.body->SetLinearVelocity({100.0f, 0.0f});
+	body.Body->SetType(b2BodyType::b2_kinematicBody);
+	body.Body->SetLinearVelocity({100.0f, 0.0f});
+	body.CalculateHeading = true;
 
 	auto& sprite = enemy->addComponent<SpriteComponent>();
 	sprite.loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");
@@ -50,18 +57,13 @@ int main()
 	sprite.setFrame(0);
 
 	auto& waypoint = enemy->addComponent<WaypointComponent>();
-	waypoint.Waypoints.push_back({{250, 200}});
-	waypoint.Waypoints.push_back({{250, 25}});
-	waypoint.Waypoints.push_back({{450, 25}});
-	waypoint.Waypoints.push_back({{450, 450}});
-	waypoint.Waypoints.push_back({{700, 450}});
-	waypoint.Waypoints.push_back({{700, 225}});
-	waypoint.Waypoints.push_back({{750, 225}});
-
-	if(ReadFile(Configuration::Instance().getPathMaps() / "defense_level1.tmx", manager) == false)
-	{
-		return EXIT_FAILURE;
-	}
+	waypoint.Waypoints.push_back({{300, 275}});
+	waypoint.Waypoints.push_back({{300, 75}});
+	waypoint.Waypoints.push_back({{500, 75}});
+	waypoint.Waypoints.push_back({{500, 525}});
+	waypoint.Waypoints.push_back({{775, 525}});
+	waypoint.Waypoints.push_back({{775, 275}});
+	waypoint.Waypoints.push_back({{850, 275}});
 
 	while(engine->getEngineState().getState() < EngineState::State::Exit)
 	{

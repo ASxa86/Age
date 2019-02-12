@@ -28,19 +28,19 @@ void PaddleAISystem::frame(std::chrono::microseconds)
 		if(ball != nullptr)
 		{
 			auto& bc = ball->getComponent<BodyComponent>();
-			const auto posBall = bc.body->GetPosition();
-			const auto posPaddle = b.body->GetPosition();
-			auto aabb = b.body->GetFixtureList()->GetAABB(0);
+			const auto posBall = bc.Body->GetPosition();
+			const auto posPaddle = b.Body->GetPosition();
+			auto aabb = b.Body->GetFixtureList()->GetAABB(0);
 
-			b.body->SetLinearVelocity({0.0f, 0.0f});
+			b.Body->SetLinearVelocity({0.0f, 0.0f});
 
 			if(posBall.y > aabb.upperBound.y)
 			{
-				b.body->SetLinearVelocity({0.0f, 30.0f});
+				b.Body->SetLinearVelocity({0.0f, 30.0f});
 			}
 			else if(posBall.y < aabb.lowerBound.y)
 			{
-				b.body->SetLinearVelocity({0.0f, -30.0f});
+				b.Body->SetLinearVelocity({0.0f, -30.0f});
 			}
 		}
 	});

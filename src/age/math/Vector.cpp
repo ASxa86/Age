@@ -114,16 +114,16 @@ double Vector::magnitude() const
 	return std::sqrt(this->v[0] * this->v[0] + this->v[1] * this->v[1]);
 }
 
-Vector Vector::normalize() const
+double Vector::normalize()
 {
 	const auto mag = this->magnitude();
 
 	if(mag > 0.0)
 	{
-		return Vector(*this) / mag;
+		*this /= mag;
 	}
 
-	return Vector(*this);
+	return mag;
 }
 
 double age::math::distance(const Vector& a, const Vector& b)

@@ -32,7 +32,7 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 	const auto manager = this->getEntityManager();
 
 	manager->each<BodyComponent>([&target, this](Entity&, BodyComponent& b) {
-		for(auto f = b.body->GetFixtureList(); f != nullptr; f = f->GetNext())
+		for(auto f = b.Body->GetFixtureList(); f != nullptr; f = f->GetNext())
 		{
 			switch(f->GetType())
 			{
@@ -43,7 +43,7 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 					circle.setOutlineColor(sf::Color::Green);
 					circle.setFillColor(sf::Color::Transparent);
 					circle.setOutlineThickness(0.1f);
-					circle.setPosition(b.body->GetPosition().x, b.body->GetPosition().y);
+					circle.setPosition(b.Body->GetPosition().x, b.Body->GetPosition().y);
 					circle.setOrigin(circle.getRadius(), circle.getRadius());
 					target.draw(circle, this->pimpl->state);
 					break;
@@ -53,7 +53,7 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 					sf::VertexArray array;
 					array.setPrimitiveType(sf::PrimitiveType::Lines);
 
-					const auto pos = b.body->GetPosition();
+					const auto pos = b.Body->GetPosition();
 					const auto b2Edge = static_cast<b2EdgeShape*>(f->GetShape());
 					array.append(sf::Vertex({b2Edge->m_vertex1.x, b2Edge->m_vertex1.y}, sf::Color::Green));
 					array.append(sf::Vertex({b2Edge->m_vertex2.x, b2Edge->m_vertex2.y}, sf::Color::Green));
@@ -66,7 +66,7 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 					sf::VertexArray array;
 					array.setPrimitiveType(sf::PrimitiveType::LineStrip);
 
-					const auto pos = b.body->GetPosition();
+					const auto pos = b.Body->GetPosition();
 					const auto b2Rect = static_cast<b2PolygonShape*>(f->GetShape());
 					for(auto i = 0; i < b2Rect->m_count; ++i)
 					{

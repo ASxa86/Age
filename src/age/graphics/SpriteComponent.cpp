@@ -71,4 +71,5 @@ void SpriteComponent::updateTextureRect()
 
 	const auto framePos = sf::Vector2i{px, py};
 	this->sprite.setTextureRect(sf::IntRect(framePos, frameSize));
+	this->sprite.setOrigin(frameSize.x / 2.0f, frameSize.y / 2.0f);
 }

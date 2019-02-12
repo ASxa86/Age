@@ -47,6 +47,7 @@ void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds 
 			const auto& t = e.getComponent<TransformComponent>();
 			const auto p = t.getPosition();
 			sprite.setPosition(FromVector(p));
+			sprite.setRotation(static_cast<float>(t.getRotation()));
 		}
 
 		target.draw(sprite);

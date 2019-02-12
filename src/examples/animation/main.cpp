@@ -5,6 +5,7 @@
 #include <age/entity/AnimationSystem.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityManager.h>
+#include <age/entity/TransformComponent.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
@@ -32,6 +33,10 @@ int main()
 	EngineState state;
 	state.setState(EngineState::State::Initialize);
 	engine.setEngineState(state);
+
+	// Position the entity.
+	auto& transform = entity->addComponent<TransformComponent>();
+	transform.setPosition({64, 64});
 
 	// Animation Sprite for the entity.
 	auto& sprite = entity->addComponent<SpriteComponent>();

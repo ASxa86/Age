@@ -10,11 +10,11 @@ using namespace age::physics;
 BodyComponent::BodyComponent(PhysicsSystem& x, age::entity::Entity* e)
 {
 	b2BodyDef def;
-	this->body = x.getWorld().CreateBody(&def);
-	this->body->SetUserData(reinterpret_cast<void*>(e));
+	this->Body = x.getWorld().CreateBody(&def);
+	this->Body->SetUserData(reinterpret_cast<void*>(e));
 }
 
 BodyComponent::~BodyComponent()
 {
-	this->body->GetWorld()->DestroyBody(this->body);
+	this->Body->GetWorld()->DestroyBody(this->Body);
 }
