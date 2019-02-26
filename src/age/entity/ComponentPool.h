@@ -1,8 +1,7 @@
 #pragma once
 
 #include <age/entity/Export.h>
-#include <cstring>
-#include <memory>
+#include <bitset>
 #include <vector>
 
 namespace age
@@ -34,64 +33,49 @@ namespace age
 		class ComponentPool final : public BasePool
 		{
 		public:
-			ComponentPool(std::size_t x = 2048) : BasePool(), pool{(T*)std::malloc(x * sizeof(T))}, poolsize{x}
+			ComponentPool() : BasePool()
 			{
-				this->valid = new bool[this->poolsize];
-				std::memset(this->valid, false, this->poolsize);
 			}
 
 			~ComponentPool()
 			{
-				for(auto i = 0; i < this->poolsize; ++i)
-				{
-					if(this->valid[i] == true)
-					{
-						this->destroy(i);
-					}
-				}
-
-				delete[] this->valid;
-				std::free(this->pool);
-			}
-
-			std::size_t capacity() const
-			{
-				return this->poolsize;
 			}
 
 			T& operator[](std::size_t x)
 			{
-				return this->pool[x];
+				return this->pool[this->indices[x]];
 			}
 
 			bool test(std::size_t x) const override
 			{
-				return this->valid[x];
+				return x < this->indices.size() && this->indices[x] != -1;
 			}
 
 			template <typename... Args>
 			void construct(std::size_t x, Args&&... args)
 			{
-				new(this->pool + x) T{std::forward<Args>(args)...};
-				this->valid[x] = true;
+				if(x >= this->indices.size())
+				{
+					this->indices.resize(x + 1, -1);
+				}
+
+				this->pool.emplace_back(T{std::forward<Args>(args)...});
+				this->indices[x] = static_cast<int>(this->pool.size());
 			}
 
 			void destroy(std::size_t x) override
 			{
-				(this->pool + x)->~T();
-				this->valid[x] = false;
+				// For a more efficient removal. Let's move the last element into place of the element
+				// we are removing and then pop the last element off as it has been invalidated.
+				auto tmp = std::move(this->pool.back());
+				this->pool[this->indices[x]] = std::move(tmp);
+				this->pool.pop_back();
+				this->indices[x] = -1;
 			}
 
 		private:
-			///
-			///	Using a deque in order for references to remain valid upon resizing.
-			/// What would happen was when creating a new entity, the component pools would
-			/// get resized which would invalidate previous references causing all kinds of
-			/// undefined behaviours.
-			///
-			T* pool{};
-			bool* valid{};
-			std::size_t poolsize;
+			std::vector<T> pool{};
+			std::vector<int> indices{};
 		};
 	}
 }

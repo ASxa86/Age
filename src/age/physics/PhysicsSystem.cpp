@@ -1,8 +1,6 @@
 #include <age/physics/PhysicsSystem.h>
 
-#include <Box2D/Dynamics/Contacts/b2Contact.h>
-#include <Box2D/Dynamics/b2Body.h>
-#include <Box2D/Dynamics/b2World.h>
+#include <Box2D/Box2D.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
@@ -11,8 +9,9 @@
 #include <age/entity/TransformComponent.h>
 #include <age/math/Convert.h>
 #include <age/math/Functions.h>
-#include <age/physics/BodyComponent.h>
+#include <age/physics/BoxCollisionComponent.h>
 #include <age/physics/CollisionEvent.h>
+#include <age/physics/KinematicComponent.h>
 
 using namespace age::core;
 using namespace age::entity;
@@ -65,6 +64,102 @@ public:
 		return {static_cast<float32>(x.getX()), static_cast<float32>(x.getY())};
 	}
 
+	b2Body* getOrCreateBody(const Entity& x)
+	{
+		for(auto body = this->world.GetBodyList(); body != nullptr; body = body->GetNext())
+		{
+			if(&x == body->GetUserData())
+			{
+				return body;
+			}
+		}
+
+		b2BodyDef bdef{};
+		auto body = this->world.CreateBody(&bdef);
+		body->SetUserData(const_cast<void*>(reinterpret_cast<const void*>(&x)));
+		return body;
+	}
+
+	void configureBody2D(b2Body* b, KinematicComponent& k)
+	{
+		b->SetLinearVelocity(Impl::FromVector(k.LinearVelocity));
+		switch(k.BodyType)
+		{
+			case KinematicComponent::BodyType::Static:
+				b->SetType(b2BodyType::b2_staticBody);
+				break;
+
+			case KinematicComponent::BodyType::Kinematic:
+				b->SetType(b2BodyType::b2_kinematicBody);
+				break;
+
+			case KinematicComponent::BodyType::Dynamic:
+				b->SetType(b2BodyType::b2_dynamicBody);
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	void configureBody2D(b2Body* b, TransformComponent& t)
+	{
+		b->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
+	}
+
+	void configureBodyAge(b2Body* b, KinematicComponent& k)
+	{
+		k.LinearVelocity = Impl::ToVector(b->GetLinearVelocity());
+	}
+
+	void configureBodyAge(b2Body* b, TransformComponent& t)
+	{
+		t.setPosition(Impl::ToVector(b->GetPosition()));
+		t.setRotation(b->GetAngle());
+	}
+
+	void addBody(const Entity& x)
+	{
+		auto& kinematic = x.getComponent<KinematicComponent>();
+
+		auto body = this->getOrCreateBody(x);
+		this->configureBody2D(body, kinematic);
+	}
+
+	void removeBody(const Entity& e)
+	{
+		auto body = this->getOrCreateBody(e);
+		this->world.DestroyBody(body);
+	}
+
+	void configureBox2D(b2Fixture* f, BoxCollisionComponent& b)
+	{
+		auto shape = static_cast<b2PolygonShape*>(f->GetShape());
+		shape->SetAsBox(static_cast<float32>(b.Width), static_cast<float32>(b.Height));
+		f->SetDensity(static_cast<float32>(b.Density));
+		f->SetRestitution(static_cast<float32>(b.Restitution));
+		f->SetFriction(static_cast<float32>(b.Friction));
+	}
+
+	void addBox(const Entity& x)
+	{
+		auto& box = x.getComponent<BoxCollisionComponent>();
+
+		b2FixtureDef fdef{};
+		b2PolygonShape shape{};
+		fdef.shape = &shape;
+		auto body = this->getOrCreateBody(x);
+		auto fixture = body->CreateFixture(&fdef);
+
+		this->configureBox2D(fixture, box);
+	}
+
+	void removeBox(const Entity& x)
+	{
+		auto body = this->getOrCreateBody(x);
+		body->DestroyFixture(body->GetFixtureList());
+	}
+
 	b2World world;
 	std::unique_ptr<ContactHandler> contactHandler;
 };
@@ -80,31 +175,107 @@ PhysicsSystem::~PhysicsSystem()
 {
 }
 
-void PhysicsSystem::frame(std::chrono::microseconds x)
+void PhysicsSystem::initialize()
 {
+	EventQueue::Instance().addEventHandler([this](auto evt) {
+		const auto entityEvt = dynamic_cast<EntityEvent*>(evt);
+
+		if(entityEvt != nullptr)
+		{
+			switch(entityEvt->getType())
+			{
+				case EntityEvent::Type::EntityRemoved:
+				{
+					this->pimpl->removeBody(entityEvt->getEntity());
+				}
+				break;
+
+				case EntityEvent::Type::ComponentAdded:
+				{
+					if(entityEvt->getComponent<KinematicComponent>() != nullptr)
+					{
+						this->pimpl->addBody(entityEvt->getEntity());
+					}
+					else if(entityEvt->getComponent<BoxCollisionComponent>() != nullptr)
+					{
+						this->pimpl->addBox(entityEvt->getEntity());
+					}
+				}
+				break;
+
+				case EntityEvent::Type::ComponentRemoved:
+				{
+					if(entityEvt->getComponent<KinematicComponent>() != nullptr)
+					{
+						this->pimpl->removeBody(entityEvt->getEntity());
+					}
+					else if(entityEvt->getComponent<BoxCollisionComponent>() != nullptr)
+					{
+						this->pimpl->removeBox(entityEvt->getEntity());
+					}
+				}
+				break;
+			}
+		}
+	});
+
+	// Initialize all entities that have been configured before running the engine.
+	// Any entities or components added/removed will be handled by the event handler beyond this point.
 	const auto manager = this->getEntityManager();
 
-	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
-		b.Body->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
-	});
+	if(manager != nullptr)
+	{
+		manager->each([this](auto& e) {
+			if(e.hasComponent<KinematicComponent>() == true)
+			{
+				this->pimpl->addBody(e);
+			}
+
+			if(e.hasComponent<BoxCollisionComponent>() == true)
+			{
+				this->pimpl->addBox(e);
+			}
+		});
+	}
+}
+
+void PhysicsSystem::frame(std::chrono::microseconds x)
+{
+	for(auto body = this->pimpl->world.GetBodyList(); body != nullptr; body = body->GetNext())
+	{
+		auto entity = reinterpret_cast<Entity*>(body->GetUserData());
+
+		if(entity->hasComponent<KinematicComponent>() == true)
+		{
+			this->pimpl->configureBody2D(body, entity->getComponent<KinematicComponent>());
+		}
+
+		if(entity->hasComponent<BoxCollisionComponent>() == true)
+		{
+			this->pimpl->configureBox2D(body->GetFixtureList(), entity->getComponent<BoxCollisionComponent>());
+		}
+
+		if(entity->hasComponent<TransformComponent>() == true)
+		{
+			this->pimpl->configureBody2D(body, entity->getComponent<TransformComponent>());
+		}
+	}
 
 	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
 	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
 
-	manager->each<BodyComponent, TransformComponent>([](auto&, BodyComponent& b, TransformComponent& t) {
-		t.setPosition(Impl::ToVector(b.Body->GetPosition()));
-		t.setRotation(Rad2Deg(b.Body->GetAngle()));
+	for(auto body = this->pimpl->world.GetBodyList(); body != nullptr; body = body->GetNext())
+	{
+		auto entity = reinterpret_cast<Entity*>(body->GetUserData());
 
-		if(b.CalculateHeading == true)
+		if(entity->hasComponent<KinematicComponent>() == true)
 		{
-			auto velocity = b.Body->GetLinearVelocity();
-			velocity.Normalize();
-			t.setRotation(VectorAngle({velocity.x, -velocity.y}));
+			this->pimpl->configureBodyAge(body, entity->getComponent<KinematicComponent>());
 		}
-	});
-}
 
-b2World& PhysicsSystem::getWorld()
-{
-	return this->pimpl->world;
+		if(entity->hasComponent<TransformComponent>() == true)
+		{
+			this->pimpl->configureBodyAge(body, entity->getComponent<TransformComponent>());
+		}
+	}
 }

@@ -8,22 +8,22 @@ using namespace age::entity;
 class EntityEvent::Impl
 {
 public:
-	Impl(Entity* e, Type t) : entity{e}, type{t}
+	Impl(const Entity& e, Type t) : entity{e}, type{t}
 	{
 	}
 
-	Entity* entity;
+	Entity entity;
 	Type type;
 };
 
-EntityEvent::EntityEvent(Entity* e, Type t) : Event(), pimpl(e, t)
+EntityEvent::EntityEvent(const Entity& e, Type t) : Event(), pimpl(e, t)
 {
 }
 EntityEvent::~EntityEvent()
 {
 }
 
-Entity* EntityEvent::getEntity() const
+Entity EntityEvent::getEntity() const
 {
 	return this->pimpl->entity;
 }

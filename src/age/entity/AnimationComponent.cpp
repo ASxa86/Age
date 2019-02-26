@@ -6,10 +6,6 @@ AnimationComponent::AnimationComponent() : currentAnimation{nullptr}, elapsed{0}
 {
 }
 
-AnimationComponent::~AnimationComponent()
-{
-}
-
 void AnimationComponent::play()
 {
 	this->isPlaying = true;

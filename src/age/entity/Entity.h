@@ -25,9 +25,7 @@ namespace age
 		class AGE_ENTITY_EXPORT Entity
 		{
 		public:
-			Entity(const Entity&) = delete;
-			Entity& operator=(const Entity&) = delete;
-			Entity(const Entity&& x) noexcept;
+			Entity();
 
 			///
 			///	Get the ID of this entity.
@@ -75,17 +73,16 @@ namespace age
 			///	Get a component to the entity.
 			///
 			template <typename T>
-			T& getComponent();
+			T& getComponent() const;
 
 			///
 			///	Check if this entity has a component.
 			///
 			template <typename T>
-			bool hasComponent();
+			bool hasComponent() const;
 
 		private:
 			friend class EntityManager;
-			Entity();
 
 			int id;
 			EntityManager* manager;
@@ -104,7 +101,7 @@ T& age::entity::Entity::addComponent(Args&&... args)
 	{
 		pool->construct(this->id, std::forward<Args>(args)...);
 
-		auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
+		auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
 		event->setComponent(&(*pool)[this->id]);
 		age::core::EventQueue::Instance().sendEvent(std::move(event));
 	}
@@ -119,7 +116,7 @@ void age::entity::Entity::removeComponent()
 
 	if(pool->test(this->id) == true)
 	{
-		auto event = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentRemoved);
+		auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved);
 		event->setComponent(&(*pool)[this->id]);
 		age::core::EventQueue::Instance().sendEvent(std::move(event));
 		pool->destroy(this->id);
@@ -127,14 +124,14 @@ void age::entity::Entity::removeComponent()
 }
 
 template <typename T>
-T& age::entity::Entity::getComponent()
+T& age::entity::Entity::getComponent() const
 {
 	const auto pool = this->manager->template getPool<T>();
 	return (*pool)[this->id];
 }
 
 template <typename T>
-bool age::entity::Entity::hasComponent()
+bool age::entity::Entity::hasComponent() const
 {
 	const auto pool = this->manager->template getPool<T>();
 	return pool->test(this->id);

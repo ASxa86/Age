@@ -21,13 +21,13 @@ TEST(EntityEvent, EntityAdded)
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::EntityAdded);
 		EXPECT_TRUE(entityEvent->getComponent<Value>() == nullptr);
-		EXPECT_FALSE(entityEvent->getEntity()->hasComponent<Value>());
+		EXPECT_FALSE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
 
 	EntityManager manager;
 	const auto e = manager.create();
-	ASSERT_TRUE(e != nullptr);
+	ASSERT_TRUE(e.valid());
 
 	EXPECT_TRUE(eventReceived);
 	connection.disconnect();
@@ -45,16 +45,16 @@ TEST(EntityEvent, EntityRemoved)
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::EntityRemoved);
 		EXPECT_TRUE(entityEvent->getComponent<Value>() == nullptr);
-		EXPECT_FALSE(entityEvent->getEntity()->hasComponent<Value>());
+		EXPECT_FALSE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
 
-	e->destroy();
+	e.destroy();
 	EXPECT_TRUE(eventReceived);
 
 	eventReceived = false;
 
-	e->destroy();
+	e.destroy();
 	EXPECT_FALSE(eventReceived);
 
 	connection.disconnect();
@@ -72,16 +72,16 @@ TEST(EntityEvent, ComponentAdded)
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::ComponentAdded);
 		EXPECT_TRUE(entityEvent->getComponent<Value>() != nullptr);
-		EXPECT_TRUE(entityEvent->getEntity()->hasComponent<Value>());
+		EXPECT_TRUE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
 
-	e->addComponent<Value>();
+	e.addComponent<Value>();
 	EXPECT_TRUE(eventReceived);
 
 	eventReceived = false;
 
-	e->addComponent<Value>();
+	e.addComponent<Value>();
 	EXPECT_FALSE(eventReceived);
 
 	connection.disconnect();
@@ -91,7 +91,7 @@ TEST(EntityEvent, ComponentRemoved)
 {
 	EntityManager manager;
 	auto e = manager.create();
-	e->addComponent<Value>();
+	e.addComponent<Value>();
 
 	auto eventReceived = false;
 	auto connection = EventQueue::Instance().addEventHandler([&eventReceived](auto event) {
@@ -100,19 +100,19 @@ TEST(EntityEvent, ComponentRemoved)
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::ComponentRemoved);
 		EXPECT_TRUE(entityEvent->getComponent<Value>() != nullptr);
-		EXPECT_TRUE(entityEvent->getEntity()->hasComponent<Value>());
+		EXPECT_TRUE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
 
-	e->removeComponent<Value>();
+	e.removeComponent<Value>();
 	EXPECT_TRUE(eventReceived);
-	EXPECT_FALSE(e->hasComponent<Value>());
+	EXPECT_FALSE(e.hasComponent<Value>());
 
 	eventReceived = false;
 
-	e->removeComponent<Value>();
+	e.removeComponent<Value>();
 	EXPECT_FALSE(eventReceived);
-	EXPECT_FALSE(e->hasComponent<Value>());
+	EXPECT_FALSE(e.hasComponent<Value>());
 
 	connection.disconnect();
 }

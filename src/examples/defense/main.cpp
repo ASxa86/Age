@@ -10,8 +10,7 @@
 #include <age/graphics/Window.h>
 #include <age/navigation/WaypointComponent.h>
 #include <age/navigation/WaypointSystem.h>
-#include <age/physics/BodyComponent.h>
-#include <age/physics/Box2D/Box2D.h>
+#include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsSystem.h>
 #include <iostream>
 
@@ -24,7 +23,7 @@ using namespace age::physics;
 int main()
 {
 	const auto engine = std::make_shared<Engine>();
-	const auto manager = std::make_shared<EntityManager>(4096);
+	const auto manager = std::make_shared<EntityManager>();
 	const auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<TileMapSystem>());
 	window->addChild(std::make_shared<DrawableSystem>());
@@ -42,21 +41,21 @@ int main()
 
 	// Enemy
 	auto enemy = manager->create();
-	auto& transform = enemy->addComponent<TransformComponent>();
+	auto& transform = enemy.addComponent<TransformComponent>();
 	transform.setPosition({0, 275});
 
-	auto& body = enemy->addComponent<BodyComponent>(*physics, enemy);
-	body.Body->SetType(b2BodyType::b2_kinematicBody);
-	body.Body->SetLinearVelocity({100.0f, 0.0f});
-	body.CalculateHeading = true;
+	auto& body = enemy.addComponent<KinematicComponent>();
+	body.BodyType = KinematicComponent::BodyType::Kinematic;
+	body.LinearVelocity = {100.0, 0.0};
+	// body.CalculateHeading = true;
 
-	auto& sprite = enemy->addComponent<SpriteComponent>();
+	auto& sprite = enemy.addComponent<SpriteComponent>();
 	sprite.loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");
 	sprite.setHFrames(4);
 	sprite.setVFrames(4);
 	sprite.setFrame(0);
 
-	auto& waypoint = enemy->addComponent<WaypointComponent>();
+	auto& waypoint = enemy.addComponent<WaypointComponent>();
 	waypoint.Waypoints.push_back({{300, 275}});
 	waypoint.Waypoints.push_back({{300, 75}});
 	waypoint.Waypoints.push_back({{500, 75}});

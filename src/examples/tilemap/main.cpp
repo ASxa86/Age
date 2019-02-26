@@ -15,7 +15,7 @@ using namespace age::graphics;
 int main()
 {
 	Engine engine;
-	engine.addChild(std::make_shared<EntityManager>(1));
+	engine.addChild(std::make_shared<EntityManager>());
 	engine.addChild(std::make_shared<Window>());
 
 	auto window = engine.getChild<Window>();

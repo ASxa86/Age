@@ -102,7 +102,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, std::shared_ptr<Object>
 					tileMap.addLayer(mapLayer);
 				}
 
-				auto& tileMapComponent = entity->addComponent<TileMapComponent>();
+				auto& tileMapComponent = entity.addComponent<TileMapComponent>();
 				tileMapComponent.loadTileMap(tileMap);
 			}
 

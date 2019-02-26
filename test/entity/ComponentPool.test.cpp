@@ -6,12 +6,30 @@ using namespace age::entity;
 
 namespace
 {
+	bool reference{false};
 	struct Value
 	{
+		Value() : value{reference}
+		{
+		}
+
 		Value(bool& x) : value{x}
 		{
 			this->value = true;
 		}
+
+		Value(Value&& x) : value{x.value}
+		{
+		}
+
+		Value& operator=(Value&& x)
+		{
+			this->value = x.value;
+			return *this;
+		}
+
+		Value(const Value&) = delete;
+		Value& operator=(const Value&) = delete;
 
 		~Value()
 		{
@@ -25,36 +43,6 @@ namespace
 TEST(ComponentPool, Construction)
 {
 	EXPECT_NO_THROW(ComponentPool<int> pool);
-	EXPECT_NO_THROW(ComponentPool<int> pool(0));
-	EXPECT_NO_THROW(ComponentPool<int> pool(2048));
-	EXPECT_NO_THROW(ComponentPool<int> pool(1000000));
-}
-
-TEST(ComponetPool, Capacity)
-{
-	{
-		constexpr auto capacity = 0;
-		ComponentPool<int> pool(capacity);
-		EXPECT_EQ(pool.capacity(), capacity);
-	}
-
-	{
-		constexpr auto capacity = 1;
-		ComponentPool<int> pool(capacity);
-		EXPECT_EQ(pool.capacity(), capacity);
-	}
-
-	{
-		constexpr auto capacity = 2;
-		ComponentPool<int> pool(capacity);
-		EXPECT_EQ(pool.capacity(), capacity);
-	}
-
-	{
-		constexpr auto capacity = 1000000;
-		ComponentPool<int> pool(capacity);
-		EXPECT_EQ(pool.capacity(), capacity);
-	}
 }
 
 TEST(ComponentPool, Construct)
@@ -88,7 +76,6 @@ TEST(ComponentPool, Test)
 	EXPECT_TRUE(pool.test(1));
 	EXPECT_TRUE(pool.test(2));
 	EXPECT_FALSE(pool.test(3));
-	EXPECT_FALSE(pool.test(pool.capacity() - 1));
 }
 
 TEST(ComponentPool, Value)
@@ -113,15 +100,5 @@ TEST(ComponentPool, Value)
 		pool.destroy(2);
 		EXPECT_FALSE(valueTest);
 		EXPECT_FALSE(pool.test(2));
-	}
-
-	{
-		bool valueTest{false};
-		pool.construct(pool.capacity() - 1, valueTest);
-		EXPECT_TRUE(valueTest);
-		EXPECT_TRUE(pool.test(pool.capacity() - 1));
-		pool.destroy(pool.capacity() - 1);
-		EXPECT_FALSE(valueTest);
-		EXPECT_FALSE(pool.test(pool.capacity() - 1));
 	}
 }
