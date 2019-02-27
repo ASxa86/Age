@@ -34,9 +34,9 @@ namespace age
 			///	For increased performance the entity manager provides creation and destruction of entities
 			/// within a fixed pool.
 			///
-			///	\param count The max number of entities that this entity manager can produce.
+			///	\param reserve Reserve a number of entities before allocations need to be resized.
 			///
-			EntityManager();
+			EntityManager(std::size_t reserve = 1024);
 			~EntityManager() override;
 
 			///
@@ -83,7 +83,7 @@ namespace age
 
 				if(pool == nullptr)
 				{
-					auto p = std::make_unique<ComponentPool<T>>();
+					auto p = std::make_unique<ComponentPool<T>>(this->reserve);
 					pool = p.get();
 					this->pools[typeid(T)] = std::move(p);
 				}
@@ -95,6 +95,7 @@ namespace age
 			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;
 			std::vector<Entity> destroyed;
+			std::size_t reserve;
 		};
 	}
 }

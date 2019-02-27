@@ -23,7 +23,7 @@ using namespace age::physics;
 int main()
 {
 	const auto engine = std::make_shared<Engine>();
-	const auto manager = std::make_shared<EntityManager>();
+	const auto manager = std::make_shared<EntityManager>(10);
 	const auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<TileMapSystem>());
 	window->addChild(std::make_shared<DrawableSystem>());
@@ -63,6 +63,8 @@ int main()
 	waypoint.Waypoints.push_back({{775, 525}});
 	waypoint.Waypoints.push_back({{775, 275}});
 	waypoint.Waypoints.push_back({{850, 275}});
+
+	engine->setEngineState(age::core::EngineState::State::Initialize);
 
 	while(engine->getEngineState().getState() < EngineState::State::Exit)
 	{

@@ -5,8 +5,9 @@
 using namespace age::core;
 using namespace age::entity;
 
-EntityManager::EntityManager()
+EntityManager::EntityManager(std::size_t reserve) : reserve{reserve}
 {
+	this->entities.reserve(this->reserve);
 }
 
 EntityManager::~EntityManager()

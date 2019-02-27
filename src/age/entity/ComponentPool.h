@@ -33,8 +33,10 @@ namespace age
 		class ComponentPool final : public BasePool
 		{
 		public:
-			ComponentPool() : BasePool(), pool(), indices()
+			ComponentPool(std::size_t reserve = 1024) : BasePool(), pool(), indices()
 			{
+				this->pool.reserve(reserve);
+				this->indices.reserve(reserve);
 			}
 
 			~ComponentPool()
