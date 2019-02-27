@@ -13,7 +13,7 @@ namespace
 {
 	sf::Vector2f FromVector(const age::math::Vector& x)
 	{
-		return {static_cast<float>(x.getX()), static_cast<float>(x.getY())};
+		return {static_cast<float>(x.X), static_cast<float>(x.Y)};
 	}
 }
 
@@ -34,8 +34,7 @@ void TextSystem::render(sf::RenderTarget& target, std::chrono::microseconds /*x*
 
 		if(transform != nullptr)
 		{
-			auto p = t.getPosition();
-			transform->setPosition(FromVector(p));
+			transform->setPosition(FromVector(t.Position));
 		}
 
 		target.draw(*d);

@@ -72,7 +72,7 @@ namespace
 		virtual void setUp(const celero::TestFixture::ExperimentValue&) override
 		{
 			// Clear the previous entities
-			this->em = std::make_unique<age::entity::EntityManager>(IterationCount);
+			this->em = std::make_unique<age::entity::EntityManager>();
 
 			for(auto i = 0; i < IterationCount; ++i)
 			{

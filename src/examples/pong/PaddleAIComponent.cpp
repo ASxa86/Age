@@ -5,7 +5,7 @@
 using namespace age::entity;
 using namespace age::pong;
 
-PaddleAIComponent::PaddleAIComponent() : ball{nullptr}
+PaddleAIComponent::PaddleAIComponent() : ball{}
 {
 }
 
@@ -13,12 +13,12 @@ PaddleAIComponent::~PaddleAIComponent()
 {
 }
 
-void PaddleAIComponent::setBall(Entity* x)
+void PaddleAIComponent::setBall(Entity x)
 {
 	this->ball = x;
 }
 
-Entity* PaddleAIComponent::getBall() const
+const Entity& PaddleAIComponent::getBall() const
 {
 	return this->ball;
 }

@@ -31,10 +31,10 @@ namespace age
 				ComponentRemoved
 			};
 
-			EntityEvent(Entity* e, Type t);
+			EntityEvent(const Entity& e, Type t);
 			~EntityEvent() override;
 
-			Entity* getEntity() const;
+			const Entity& getEntity() const;
 			EntityEvent::Type getType() const;
 
 			template <typename T>

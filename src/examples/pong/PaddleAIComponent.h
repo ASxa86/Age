@@ -1,12 +1,9 @@
 #pragma once
 
+#include <age/entity/Entity.h>
+
 namespace age
 {
-	namespace entity
-	{
-		class Entity;
-	}
-
 	namespace pong
 	{
 		///
@@ -27,11 +24,11 @@ namespace age
 			///
 			///	\brief Set the ball that this paddle is to track and play against.
 			///
-			void setBall(age::entity::Entity* x);
-			age::entity::Entity* getBall() const;
+			void setBall(age::entity::Entity x);
+			const age::entity::Entity& getBall() const;
 
 		private:
-			age::entity::Entity* ball;
+			age::entity::Entity ball;
 		};
 	}
 }

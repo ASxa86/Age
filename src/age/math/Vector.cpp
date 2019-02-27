@@ -4,70 +4,38 @@
 
 using namespace age::math;
 
-Vector::Vector() : v{}
-{
-}
-
-Vector::Vector(double x, double y) : v{{x, y}}
-{
-}
-
-Vector::~Vector()
-{
-}
-
-void Vector::setX(double x)
-{
-	this->v[0] = x;
-}
-
-double Vector::getX() const
-{
-	return this->v[0];
-}
-
-void Vector::setY(double x)
-{
-	this->v[1] = x;
-}
-
-double Vector::getY() const
-{
-	return this->v[1];
-}
-
 Vector Vector::operator+(const Vector& x) const
 {
-	return Vector(this->v[0] + x.v[0], this->v[1] + x.v[1]);
+	return Vector{this->X + x.X, this->Y + x.Y};
 }
 
 Vector& Vector::operator+=(const Vector& x)
 {
-	this->v[0] += x.v[0];
-	this->v[1] += x.v[1];
+	this->X += x.X;
+	this->Y += x.Y;
 	return *this;
 }
 
 Vector Vector::operator-(const Vector& x) const
 {
-	return Vector(this->v[0] - x.v[0], this->v[1] - x.v[1]);
+	return Vector{this->X - x.X, this->Y - x.Y};
 }
 
 Vector& Vector::operator-=(const Vector& x)
 {
-	this->v[0] -= x.v[0];
-	this->v[1] -= x.v[1];
+	this->X -= x.X;
+	this->Y -= x.Y;
 	return *this;
 }
 
 double Vector::operator*(const Vector& x) const
 {
-	return this->v[0] * x.v[0] + this->v[1] * x.v[1];
+	return this->X * x.X + this->Y * x.Y;
 }
 
 bool Vector::operator==(const Vector& x) const
 {
-	return this->v == x.v;
+	return this->X == x.X && this->Y == x.Y;
 }
 
 bool Vector::operator!=(const Vector& x) const
@@ -77,41 +45,41 @@ bool Vector::operator!=(const Vector& x) const
 
 bool Vector::operator<(const Vector& x) const
 {
-	return (this->v[0] < x.v[0]) || (this->v[1] < x.v[1]);
+	return (this->X < x.X) || (this->Y < x.Y);
 }
 
 bool Vector::operator>(const Vector& x) const
 {
-	return (this->v[0] > x.v[0] || (this->v[1] > x.v[1]));
+	return (this->X > x.X || (this->Y > x.Y));
 }
 
 Vector Vector::operator*(double x) const
 {
-	return Vector(this->v[0] * x, this->v[1] * x);
+	return Vector{this->X * x, this->Y * x};
 }
 
 Vector& Vector::operator*=(double x)
 {
-	this->v[0] *= x;
-	this->v[1] *= x;
+	this->X *= x;
+	this->Y *= x;
 	return *this;
 }
 
 Vector Vector::operator/(double x) const
 {
-	return Vector(this->v[0] / x, this->v[1] / x);
+	return Vector{this->X / x, this->Y / x};
 }
 
 Vector& Vector::operator/=(double x)
 {
-	this->v[0] /= x;
-	this->v[1] /= x;
+	this->X /= x;
+	this->Y /= x;
 	return *this;
 }
 
 double Vector::magnitude() const
 {
-	return std::sqrt(this->v[0] * this->v[0] + this->v[1] * this->v[1]);
+	return std::sqrt(this->X * this->X + this->Y * this->Y);
 }
 
 double Vector::normalize()
@@ -128,5 +96,5 @@ double Vector::normalize()
 
 double age::math::distance(const Vector& a, const Vector& b)
 {
-	return std::sqrt(std::pow(b.getX() - a.getX(), 2.0) + std::pow(b.getY() - a.getY(), 2.0));
+	return std::sqrt(std::pow(b.X - a.X, 2.0) + std::pow(b.Y - a.Y, 2.0));
 }

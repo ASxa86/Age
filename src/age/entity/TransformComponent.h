@@ -8,7 +8,7 @@ namespace age
 	namespace entity
 	{
 		///
-		///	\class TransformComponent
+		///	\struct TransformComponent
 		///
 		///	\brief This component is given to entities that hold a position within the scene.
 		///
@@ -16,39 +16,10 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_ENTITY_EXPORT TransformComponent
+		struct TransformComponent
 		{
-		public:
-			TransformComponent();
-			~TransformComponent();
-
-			///
-			///	Set the position for the component.
-			///	(x, y)
-			///
-			void setPosition(const age::math::Vector& x);
-
-			///
-			///	Get the position for the component.
-			///	(x, y)
-			///
-			age::math::Vector getPosition() const;
-
-			///
-			///	Set the rotation for the component.
-			///	(Degrees)
-			///
-			void setRotation(double x);
-
-			///
-			///	Get the rotation for the component.
-			///	(Degrees)
-			///
-			double getRotation() const;
-
-		private:
-			age::math::Vector position;
-			double rotation;
+			age::math::Vector Position;
+			double Rotation;
 		};
 	}
 }

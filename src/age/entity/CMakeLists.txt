@@ -27,7 +27,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	EntityEvent.cpp
 	EntityManager.cpp
 	System.cpp
-	TransformComponent.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} AgeCore AgeMath)

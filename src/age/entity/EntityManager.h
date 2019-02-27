@@ -34,27 +34,27 @@ namespace age
 			///	For increased performance the entity manager provides creation and destruction of entities
 			/// within a fixed pool.
 			///
-			///	\param count The max number of entities that this entity manager can produce.
+			///	\param reserve Reserve a number of entities before allocations need to be resized.
 			///
-			EntityManager(std::size_t count = 2048);
+			EntityManager(std::size_t reserve = 1024);
 			~EntityManager() override;
 
 			///
 			///	Return a free entity in the object pool.
 			///	If there are no more free entities left in the object pool, than the object pool will be expanded.
 			///
-			Entity* create();
+			Entity create();
 
 			///
 			///	Free up an entity in the object pool.
 			///
-			void destroy(const Entity* x);
+			void destroy(Entity x);
 
 			///
 			///	Return if the entity is a valid entity that holds a spot within an object pool.
 			///	The entity is invalid if it has been destroyed.
 			///
-			bool valid(const Entity* x) const;
+			bool valid(Entity x) const;
 
 			///
 			///	Get a read-only list of all entities within the entity manager.
@@ -83,7 +83,7 @@ namespace age
 
 				if(pool == nullptr)
 				{
-					auto p = std::make_unique<ComponentPool<T>>(this->count);
+					auto p = std::make_unique<ComponentPool<T>>(this->reserve);
 					pool = p.get();
 					this->pools[typeid(T)] = std::move(p);
 				}
@@ -94,12 +94,8 @@ namespace age
 		private:
 			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;
-			std::vector<int> indexList;
-
-			/// Avoiding the use of vector<bool> so opting for another form
-			/// of contiguous memory.
-			bool* validEntities;
-			std::size_t count;
+			std::vector<Entity> destroyed;
+			std::size_t reserve;
 		};
 	}
 }
@@ -115,14 +111,11 @@ void age::entity::EntityManager::each(typename age::entity::EntityManager::ident
 		[this, &x](auto... pool) {
 			for(auto& e : this->entities)
 			{
-				if(this->validEntities[e.id] == true)
-				{
-					const auto valid = ((pool->test(e.id)) && ...);
+				const auto valid = e.id != -1 && ((pool->test(e.id)) && ...);
 
-					if(valid == true)
-					{
-						x(e, (*pool)[e.id]...);
-					}
+				if(valid == true)
+				{
+					x(e, (*pool)[e.id]...);
 				}
 			}
 		},

@@ -84,13 +84,13 @@ namespace
 		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
 		{
 			// Clear the previous entities
-			em = std::make_unique<age::entity::EntityManager>(x.Value);
+			em = std::make_unique<age::entity::EntityManager>();
 
 			for(auto i = 0; i < x.Value; ++i)
 			{
 				auto e = em->create();
-				e->addComponent<Pos>();
-				e->addComponent<Vel>();
+				e.addComponent<Pos>();
+				e.addComponent<Vel>();
 			}
 		}
 

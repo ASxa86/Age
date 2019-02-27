@@ -21,8 +21,9 @@ namespace age
 		{
 		public:
 			Animation();
-			Animation(Animation&& x);
-			~Animation();
+
+			Animation(Animation&&) = default;
+			Animation& operator=(Animation&&) = default;
 
 			Animation(const Animation&) = delete;
 			Animation& operator=(const Animation&) = delete;

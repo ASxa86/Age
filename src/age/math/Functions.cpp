@@ -11,7 +11,7 @@ double age::math::VectorAngle(const age::math::Vector& x)
 		const Vector y_axis{0.0, 1.0};
 		auto angle = Rad2Deg(std::acos((y_axis * x) / (y_axis.magnitude() * x.magnitude())));
 
-		if(x.getX() < 0.0)
+		if(x.X < 0.0)
 		{
 			angle = 360.0 - angle;
 		}

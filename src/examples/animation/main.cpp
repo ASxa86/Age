@@ -19,7 +19,7 @@ using namespace age::graphics;
 int main()
 {
 	Engine engine;
-	engine.addChild(std::make_shared<EntityManager>(1));
+	engine.addChild(std::make_shared<EntityManager>());
 	engine.addChild(std::make_shared<PlayerInputSystem>());
 	engine.addChild(std::make_shared<AnimationSystem>());
 	engine.addChild(std::make_shared<Window>());
@@ -35,23 +35,23 @@ int main()
 	engine.setEngineState(state);
 
 	// Position the entity.
-	auto& transform = entity->addComponent<TransformComponent>();
-	transform.setPosition({64, 64});
+	auto& transform = entity.addComponent<TransformComponent>();
+	transform.Position = {64, 64};
 
 	// Animation Sprite for the entity.
-	auto& sprite = entity->addComponent<SpriteComponent>();
+	auto& sprite = entity.addComponent<SpriteComponent>();
 	sprite.loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");
 	sprite.setHFrames(4);
 	sprite.setVFrames(4);
 	sprite.setFrame(0);
 
-	auto& animation = entity->addComponent<AnimationComponent>();
+	auto& animation = entity.addComponent<AnimationComponent>();
 
 	auto down = animation.create();
 	auto& chDown = down->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity->valid() == true && entity->hasComponent<SpriteComponent>() == true)
+		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
 		{
-			entity->getComponent<SpriteComponent>().setFrame(x);
+			entity.getComponent<SpriteComponent>().setFrame(x);
 		}
 	});
 
@@ -62,9 +62,9 @@ int main()
 
 	auto up = animation.create();
 	auto& chUp = up->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity->valid() == true && entity->hasComponent<SpriteComponent>() == true)
+		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
 		{
-			entity->getComponent<SpriteComponent>().setFrame(x);
+			entity.getComponent<SpriteComponent>().setFrame(x);
 		}
 	});
 
@@ -75,9 +75,9 @@ int main()
 
 	auto left = animation.create();
 	auto& chLeft = left->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity->valid() == true && entity->hasComponent<SpriteComponent>() == true)
+		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
 		{
-			entity->getComponent<SpriteComponent>().setFrame(x);
+			entity.getComponent<SpriteComponent>().setFrame(x);
 		}
 	});
 
@@ -88,9 +88,9 @@ int main()
 
 	auto right = animation.create();
 	auto& chRight = right->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity->valid() == true && entity->hasComponent<SpriteComponent>() == true)
+		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
 		{
-			entity->getComponent<SpriteComponent>().setFrame(x);
+			entity.getComponent<SpriteComponent>().setFrame(x);
 		}
 	});
 
@@ -104,7 +104,7 @@ int main()
 	animation.play();
 
 	// Controller for the entity.
-	auto& controller = entity->addComponent<InputComponent>();
+	auto& controller = entity.addComponent<InputComponent>();
 	controller.addKeyBinding(sf::Keyboard::Key::Up, [up](Entity& entity, auto isPressed) {
 		auto& a = entity.getComponent<AnimationComponent>();
 		if(isPressed == true)

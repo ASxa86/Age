@@ -146,15 +146,18 @@ add_library(${PROJECT_NAME} SHARED ${BOX2D_SRC} ${BOX2D_H})
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
 target_sources(${PROJECT_NAME} PRIVATE
-	BodyComponent.h
+	BoxCollisionComponent.h
+	CircleCollisionComponent.h
 	CollisionEvent.h
+	CollisionComponent.h
+	EdgeCollisionComponent.h
+	KinematicComponent.h
 	Export.h
 	PhysicsSystem.h
 	PhysicsRenderSystem.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-	BodyComponent.cpp
 	CollisionEvent.cpp
 	PhysicsSystem.cpp
 	PhysicsRenderSystem.cpp
