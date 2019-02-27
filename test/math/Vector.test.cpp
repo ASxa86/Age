@@ -43,7 +43,7 @@ TEST(Vector, Reference)
 
 TEST(Vector, Equals)
 {
-	Vector v;
+	Vector v{};
 
 	EXPECT_EQ(v, Vector());
 
