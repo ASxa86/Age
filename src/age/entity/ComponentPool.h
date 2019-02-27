@@ -33,7 +33,7 @@ namespace age
 		class ComponentPool final : public BasePool
 		{
 		public:
-			ComponentPool() : BasePool()
+			ComponentPool() : BasePool(), pool(), indices()
 			{
 			}
 
@@ -59,8 +59,8 @@ namespace age
 					this->indices.resize(x + 1, -1);
 				}
 
-				this->pool.emplace_back(T{std::forward<Args>(args)...});
-				this->indices[x] = static_cast<int>(this->pool.size());
+				this->pool.emplace_back(std::forward<Args>(args)...);
+				this->indices[x] = static_cast<int>(this->pool.size()) - 1;
 			}
 
 			void destroy(std::size_t x) override
@@ -69,13 +69,14 @@ namespace age
 				// we are removing and then pop the last element off as it has been invalidated.
 				auto tmp = std::move(this->pool.back());
 				this->pool[this->indices[x]] = std::move(tmp);
-				this->pool.pop_back();
+				this->indices[static_cast<int>(this->pool.size()) - 1] = this->indices[x];
 				this->indices[x] = -1;
+				this->pool.pop_back();
 			}
 
 		private:
-			std::vector<T> pool{};
-			std::vector<int> indices{};
+			std::vector<T> pool;
+			std::vector<int> indices;
 		};
 	}
 }

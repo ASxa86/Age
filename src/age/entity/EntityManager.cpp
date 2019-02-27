@@ -63,7 +63,7 @@ void EntityManager::destroy(Entity x)
 
 bool EntityManager::valid(Entity x) const
 {
-	return x.id != -1 && x.manager == this;
+	return x.id < this->entities.size() && this->entities[x.id].id != -1;
 }
 
 const std::vector<Entity>& EntityManager::getEntities() const

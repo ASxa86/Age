@@ -9,11 +9,7 @@ namespace
 	bool reference{false};
 	struct Value
 	{
-		Value() : value{reference}
-		{
-		}
-
-		Value(bool& x) : value{x}
+		Value(bool& x = reference) : value{x}
 		{
 			this->value = true;
 		}
