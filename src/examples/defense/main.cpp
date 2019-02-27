@@ -23,7 +23,7 @@ using namespace age::physics;
 int main()
 {
 	const auto engine = std::make_shared<Engine>();
-	const auto manager = std::make_shared<EntityManager>(10);
+	const auto manager = std::make_shared<EntityManager>();
 	const auto window = std::make_shared<Window>();
 	window->addChild(std::make_shared<TileMapSystem>());
 	window->addChild(std::make_shared<DrawableSystem>());
@@ -42,12 +42,11 @@ int main()
 	// Enemy
 	auto enemy = manager->create();
 	auto& transform = enemy.addComponent<TransformComponent>();
-	transform.setPosition({0, 275});
+	transform.Position = {0, 275};
 
 	auto& body = enemy.addComponent<KinematicComponent>();
 	body.BodyType = KinematicComponent::BodyType::Kinematic;
 	body.LinearVelocity = {100.0, 0.0};
-	// body.CalculateHeading = true;
 
 	auto& sprite = enemy.addComponent<SpriteComponent>();
 	sprite.loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");

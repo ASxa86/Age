@@ -6,39 +6,39 @@ using namespace age::math;
 TEST(Vector, Constructor)
 {
 	{
-		Vector v;
-		EXPECT_DOUBLE_EQ(v.getX(), 0.0);
-		EXPECT_DOUBLE_EQ(v.getY(), 0.0);
+		Vector v{};
+		EXPECT_DOUBLE_EQ(v.X, 0.0);
+		EXPECT_DOUBLE_EQ(v.Y, 0.0);
 	}
 
 	{
-		Vector v(-1.0, 1.0);
-		EXPECT_DOUBLE_EQ(v.getX(), -1.0);
-		EXPECT_DOUBLE_EQ(v.getY(), 1.0);
+		Vector v{-1.0, 1.0};
+		EXPECT_DOUBLE_EQ(v.X, -1.0);
+		EXPECT_DOUBLE_EQ(v.Y, 1.0);
 	}
 }
 
 TEST(Vector, Copy)
 {
-	Vector v(-1.0, 1.0);
+	Vector v{-1.0, 1.0};
 	Vector v1(v);
 	Vector v2 = v;
 
-	EXPECT_DOUBLE_EQ(v.getX(), v1.getX());
-	EXPECT_DOUBLE_EQ(v.getY(), v1.getY());
+	EXPECT_DOUBLE_EQ(v.X, v1.X);
+	EXPECT_DOUBLE_EQ(v.Y, v1.Y);
 
-	EXPECT_DOUBLE_EQ(v.getX(), v2.getX());
-	EXPECT_DOUBLE_EQ(v.getY(), v2.getY());
+	EXPECT_DOUBLE_EQ(v.X, v2.X);
+	EXPECT_DOUBLE_EQ(v.Y, v2.Y);
 }
 
 TEST(Vector, Reference)
 {
 	Vector v;
-	v.setX(-1.0);
-	v.setY(1.0);
+	v.X = -1.0;
+	v.Y = 1.0;
 
-	EXPECT_DOUBLE_EQ(v.getX(), -1.0);
-	EXPECT_DOUBLE_EQ(v.getY(), 1.0);
+	EXPECT_DOUBLE_EQ(v.X, -1.0);
+	EXPECT_DOUBLE_EQ(v.Y, 1.0);
 }
 
 TEST(Vector, Equals)
@@ -47,25 +47,25 @@ TEST(Vector, Equals)
 
 	EXPECT_EQ(v, Vector());
 
-	v.setX(1);
-	v.setY(1);
-	EXPECT_EQ(v, Vector(1, 1));
+	v.X = 1;
+	v.Y = 1;
+	EXPECT_EQ(v, (Vector{1, 1}));
 
-	v.setX(-1);
-	v.setY(-1);
-	EXPECT_EQ(v, Vector(-1, -1));
+	v.X = -1;
+	v.Y = -1;
+	EXPECT_EQ(v, (Vector{-1, -1}));
 }
 
 TEST(Vector, LessThan)
 {
-	Vector v;
-	EXPECT_LT(v, Vector(1, 1));
+	Vector v{};
+	EXPECT_LT(v, (Vector{1, 1}));
 }
 
 TEST(Vector, GreaterThan)
 {
-	Vector v;
-	EXPECT_GT(v, Vector(-1, -1));
+	Vector v{};
+	EXPECT_GT(v, (Vector{-1, -1}));
 }
 
 TEST(Vector, OperatorPlus)
@@ -81,7 +81,7 @@ TEST(Vector, OperatorPlus)
 	EXPECT_EQ(v4, v4 + v1);
 
 	const auto v5 = v1 + v2 + v3 + v4;
-	EXPECT_EQ(Vector(2.0, 2.0), v5);
+	EXPECT_EQ((Vector{2.0, 2.0}), v5);
 }
 
 TEST(Vector, OperatorMinus)
@@ -97,5 +97,5 @@ TEST(Vector, OperatorMinus)
 	EXPECT_EQ(v4, v4 - v1);
 
 	const auto v5 = v1 - v2 - v3 - v4;
-	EXPECT_EQ(Vector(-2.0, -2.0), v5);
+	EXPECT_EQ((Vector{-2.0, -2.0}), v5);
 }

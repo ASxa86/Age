@@ -20,36 +20,6 @@ namespace age
 		{
 		public:
 			///
-			///	Constructor.
-			///
-			Vector();
-
-			///
-			///	Constructor
-			///
-			///	\param x The x component.
-			///	\param y The y component.
-			///
-			Vector(double x, double y);
-
-			///
-			///	Destructor
-			///
-			~Vector();
-
-			///
-			///	Set the x component.
-			///
-			void setX(double x);
-			double getX() const;
-
-			///
-			///	Set the y component.
-			///
-			void setY(double x);
-			double getY() const;
-
-			///
 			///	Operator overloads.
 			///
 			Vector operator+(const Vector& x) const;
@@ -81,8 +51,8 @@ namespace age
 			double magnitude() const;
 			double normalize();
 
-		private:
-			std::array<double, 2> v;
+			double X;
+			double Y;
 		};
 
 		AGE_MATH_EXPORT double distance(const Vector& a, const Vector& b);

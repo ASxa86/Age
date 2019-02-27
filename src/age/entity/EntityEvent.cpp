@@ -12,7 +12,7 @@ public:
 	{
 	}
 
-	Entity entity;
+	const Entity& entity;
 	Type type;
 };
 
@@ -23,7 +23,7 @@ EntityEvent::~EntityEvent()
 {
 }
 
-Entity EntityEvent::getEntity() const
+const Entity& EntityEvent::getEntity() const
 {
 	return this->pimpl->entity;
 }

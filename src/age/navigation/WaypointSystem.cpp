@@ -34,7 +34,7 @@ void WaypointSystem::frame(std::chrono::microseconds)
 			if(w.Waypoints.empty() == false && w.CurrentWaypoint >= 0 && w.CurrentWaypoint < w.Waypoints.size())
 			{
 				auto& currentWaypoint = w.Waypoints[w.CurrentWaypoint];
-				const auto currentPosition = t.getPosition();
+				const auto currentPosition = t.Position;
 
 				if(currentWaypoint.Active == true)
 				{

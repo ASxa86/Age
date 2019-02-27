@@ -29,11 +29,11 @@ namespace age
 			///
 			///	\param x The entity that collided.
 			///
-			CollisionEvent(age::entity::Entity* a, age::entity::Entity* b);
+			CollisionEvent(const age::entity::Entity& a, const age::entity::Entity& b);
 			~CollisionEvent() override;
 
-			age::entity::Entity* getEntityA();
-			age::entity::Entity* getEntityB();
+			const age::entity::Entity& getEntityA();
+			const age::entity::Entity& getEntityB();
 
 		private:
 			class Impl;

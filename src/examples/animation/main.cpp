@@ -36,7 +36,7 @@ int main()
 
 	// Position the entity.
 	auto& transform = entity.addComponent<TransformComponent>();
-	transform.setPosition({64, 64});
+	transform.Position = {64, 64};
 
 	// Animation Sprite for the entity.
 	auto& sprite = entity.addComponent<SpriteComponent>();

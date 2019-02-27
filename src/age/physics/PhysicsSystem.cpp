@@ -10,7 +10,9 @@
 #include <age/math/Convert.h>
 #include <age/math/Functions.h>
 #include <age/physics/BoxCollisionComponent.h>
+#include <age/physics/CircleCollisionComponent.h>
 #include <age/physics/CollisionEvent.h>
+#include <age/physics/EdgeCollisionComponent.h>
 #include <age/physics/KinematicComponent.h>
 
 using namespace age::core;
@@ -35,7 +37,7 @@ public:
 
 			// Queue the event in order for the collision to be registered outside of the b2World Step();
 			// This will allow for b2 components to be modified/removed on a collision event.
-			EventQueue::Instance().queueEvent(std::make_unique<CollisionEvent>(eidA, eidB));
+			EventQueue::Instance().queueEvent(std::make_unique<CollisionEvent>(*eidA, *eidB));
 		}
 		void EndContact(b2Contact*) override
 		{ /* handle end event */
@@ -61,7 +63,7 @@ public:
 
 	static b2Vec2 FromVector(const age::math::Vector& x)
 	{
-		return {static_cast<float32>(x.getX()), static_cast<float32>(x.getY())};
+		return {static_cast<float32>(x.X), static_cast<float32>(x.Y)};
 	}
 
 	b2Body* getOrCreateBody(const Entity& x)
@@ -83,6 +85,7 @@ public:
 	void configureBody2D(b2Body* b, KinematicComponent& k)
 	{
 		b->SetLinearVelocity(Impl::FromVector(k.LinearVelocity));
+
 		switch(k.BodyType)
 		{
 			case KinematicComponent::BodyType::Static:
@@ -104,7 +107,7 @@ public:
 
 	void configureBody2D(b2Body* b, TransformComponent& t)
 	{
-		b->SetTransform(Impl::FromVector(t.getPosition()), static_cast<float32>(t.getRotation()));
+		b->SetTransform(Impl::FromVector(t.Position), static_cast<float32>(t.Rotation));
 	}
 
 	void configureBodyAge(b2Body* b, KinematicComponent& k)
@@ -114,8 +117,8 @@ public:
 
 	void configureBodyAge(b2Body* b, TransformComponent& t)
 	{
-		t.setPosition(Impl::ToVector(b->GetPosition()));
-		t.setRotation(b->GetAngle());
+		t.Position = Impl::ToVector(b->GetPosition());
+		t.Rotation = b->GetAngle();
 	}
 
 	void addBody(const Entity& x)
@@ -132,13 +135,33 @@ public:
 		this->world.DestroyBody(body);
 	}
 
+	void configureFixture(b2Fixture* f, CollisionComponent& c)
+	{
+		f->SetDensity(static_cast<float32>(c.Density));
+		f->SetRestitution(static_cast<float32>(c.Restitution));
+		f->SetFriction(static_cast<float32>(c.Friction));
+		f->SetSensor(c.IsSensor);
+	}
+
 	void configureBox2D(b2Fixture* f, BoxCollisionComponent& b)
 	{
 		auto shape = static_cast<b2PolygonShape*>(f->GetShape());
-		shape->SetAsBox(static_cast<float32>(b.Width), static_cast<float32>(b.Height));
-		f->SetDensity(static_cast<float32>(b.Density));
-		f->SetRestitution(static_cast<float32>(b.Restitution));
-		f->SetFriction(static_cast<float32>(b.Friction));
+		shape->SetAsBox(static_cast<float32>(b.Width / 2.0), static_cast<float32>(b.Height / 2.0));
+		this->configureFixture(f, b);
+	}
+
+	void configureCircle2D(b2Fixture* f, CircleCollisionComponent& c)
+	{
+		auto shape = static_cast<b2CircleShape*>(f->GetShape());
+		shape->m_radius = static_cast<float32>(c.Radius);
+		this->configureFixture(f, c);
+	}
+
+	void configureEdge2D(b2Fixture* f, EdgeCollisionComponent& e)
+	{
+		auto shape = static_cast<b2EdgeShape*>(f->GetShape());
+		shape->Set(FromVector(e.Vertex1), FromVector(e.Vertex2));
+		this->configureFixture(f, e);
 	}
 
 	void addBox(const Entity& x)
@@ -154,7 +177,29 @@ public:
 		this->configureBox2D(fixture, box);
 	}
 
-	void removeBox(const Entity& x)
+	void addCircle(const Entity& x)
+	{
+		auto& circle = x.getComponent<CircleCollisionComponent>();
+		b2FixtureDef fdef{};
+		b2CircleShape shape{};
+		fdef.shape = &shape;
+		auto body = this->getOrCreateBody(x);
+		auto fixture = body->CreateFixture(&fdef);
+		this->configureCircle2D(fixture, circle);
+	}
+
+	void addEdge(const Entity& x)
+	{
+		auto& edge = x.getComponent<EdgeCollisionComponent>();
+		b2FixtureDef fdef{};
+		b2EdgeShape shape{};
+		fdef.shape = &shape;
+		auto body = this->getOrCreateBody(x);
+		auto fixture = body->CreateFixture(&fdef);
+		this->configureEdge2D(fixture, edge);
+	}
+
+	void removeFixture(const Entity& x)
 	{
 		auto body = this->getOrCreateBody(x);
 		body->DestroyFixture(body->GetFixtureList());
@@ -200,6 +245,10 @@ void PhysicsSystem::initialize()
 					{
 						this->pimpl->addBox(entityEvt->getEntity());
 					}
+					else if(entityEvt->getComponent<CircleCollisionComponent>() != nullptr)
+					{
+						this->pimpl->addCircle(entityEvt->getEntity());
+					}
 				}
 				break;
 
@@ -209,9 +258,11 @@ void PhysicsSystem::initialize()
 					{
 						this->pimpl->removeBody(entityEvt->getEntity());
 					}
-					else if(entityEvt->getComponent<BoxCollisionComponent>() != nullptr)
+					else if(entityEvt->getComponent<BoxCollisionComponent>() != nullptr
+							|| entityEvt->getComponent<CircleCollisionComponent>() != nullptr
+							|| entityEvt->getComponent<EdgeCollisionComponent>() != nullptr)
 					{
-						this->pimpl->removeBox(entityEvt->getEntity());
+						this->pimpl->removeFixture(entityEvt->getEntity());
 					}
 				}
 				break;
@@ -235,6 +286,16 @@ void PhysicsSystem::initialize()
 			{
 				this->pimpl->addBox(e);
 			}
+
+			if(e.hasComponent<CircleCollisionComponent>() == true)
+			{
+				this->pimpl->addCircle(e);
+			}
+
+			if(e.hasComponent<EdgeCollisionComponent>() == true)
+			{
+				this->pimpl->addEdge(e);
+			}
 		});
 	}
 }
@@ -253,6 +314,16 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 		if(entity->hasComponent<BoxCollisionComponent>() == true)
 		{
 			this->pimpl->configureBox2D(body->GetFixtureList(), entity->getComponent<BoxCollisionComponent>());
+		}
+
+		if(entity->hasComponent<CircleCollisionComponent>() == true)
+		{
+			this->pimpl->configureCircle2D(body->GetFixtureList(), entity->getComponent<CircleCollisionComponent>());
+		}
+
+		if(entity->hasComponent<EdgeCollisionComponent>() == true)
+		{
+			this->pimpl->configureEdge2D(body->GetFixtureList(), entity->getComponent<EdgeCollisionComponent>());
 		}
 
 		if(entity->hasComponent<TransformComponent>() == true)

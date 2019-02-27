@@ -147,8 +147,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
 target_sources(${PROJECT_NAME} PRIVATE
 	BoxCollisionComponent.h
+	CircleCollisionComponent.h
 	CollisionEvent.h
 	CollisionComponent.h
+	EdgeCollisionComponent.h
 	KinematicComponent.h
 	Export.h
 	PhysicsSystem.h
