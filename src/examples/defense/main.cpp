@@ -46,13 +46,15 @@ int main()
 
 	auto& body = enemy.addComponent<KinematicComponent>();
 	body.BodyType = KinematicComponent::BodyType::Kinematic;
-	body.LinearVelocity = {100.0, 0.0};
+	body.LinearVelocity = {50, 0.0};
+	body.CalculateHeading = true;
 
 	auto& sprite = enemy.addComponent<SpriteComponent>();
-	sprite.loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");
-	sprite.setHFrames(4);
-	sprite.setVFrames(4);
-	sprite.setFrame(0);
+	sprite.loadFile(Configuration::Instance().getPathData() / "maps/towerDefense_tilesheet.png");
+	sprite.setHFrames(23);
+	sprite.setVFrames(13);
+	sprite.setFrame(130);
+	sprite.Rotation = -90.0;
 
 	auto& waypoint = enemy.addComponent<WaypointComponent>();
 	waypoint.Waypoints.push_back({{300, 275}});

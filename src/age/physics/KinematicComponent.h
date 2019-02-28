@@ -34,8 +34,15 @@ namespace age
 				Dynamic
 			};
 
+			/// The component velocity to describe an entity.
 			age::math::Vector LinearVelocity;
+
+			/// The body type to describe this an entity.
 			BodyType BodyType;
+
+			/// Enable to calculate heading rotation for an entity.
+			/// This will cause any rotations on an associated TransformComponent to be overwritten.
+			bool CalculateHeading;
 		};
 	}
 }

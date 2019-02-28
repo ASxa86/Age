@@ -91,6 +91,9 @@ namespace age
 			///
 			sf::Sprite& getSprite();
 
+			/// Rotate the sprite with the given angle in degrees.
+			double Rotation;
+
 		protected:
 			///
 			///	\brief Update the internal rectangle for the internal sprite data.

@@ -348,5 +348,16 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 		{
 			this->pimpl->configureBodyAge(body, entity->getComponent<TransformComponent>());
 		}
+
+		if(entity->hasComponent<KinematicComponent>() == true && entity->hasComponent<TransformComponent>() == true)
+		{
+			auto& k = entity->getComponent<KinematicComponent>();
+			auto& t = entity->getComponent<TransformComponent>();
+
+			if(k.CalculateHeading == true)
+			{
+				t.Rotation = VectorAngle({k.LinearVelocity.X, -k.LinearVelocity.Y});
+			}
+		}
 	}
 }

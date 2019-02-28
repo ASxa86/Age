@@ -41,12 +41,13 @@ void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds 
 
 	manager->each<SpriteComponent>([&target, this](Entity& e, SpriteComponent& s) {
 		auto& sprite = s.getSprite();
+		sprite.setRotation(static_cast<float>(s.Rotation));
 
 		if(e.hasComponent<TransformComponent>() == true)
 		{
 			const auto& t = e.getComponent<TransformComponent>();
 			sprite.setPosition(FromVector(t.Position));
-			sprite.setRotation(static_cast<float>(t.Rotation));
+			sprite.setRotation(sprite.getRotation() + static_cast<float>(t.Rotation));
 		}
 
 		target.draw(sprite);

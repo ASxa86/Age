@@ -17,14 +17,14 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		struct AGE_NAVIGATION_EXPORT WaypointComponent
+		struct WaypointComponent
 		{
 			///
 			///	\class Waypoint
 			///
 			///	\brief A single waypoint that is used to determine where to move the entity to.
 			///
-			struct AGE_NAVIGATION_EXPORT Waypoint
+			struct Waypoint
 			{
 				///
 				///	The position to drive the entity toward.
