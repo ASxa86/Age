@@ -19,15 +19,12 @@ using namespace age::graphics;
 int main()
 {
 	Engine engine;
-	engine.addChild(std::make_shared<EntityManager>());
-	engine.addChild(std::make_shared<PlayerInputSystem>());
-	engine.addChild(std::make_shared<AnimationSystem>());
-	engine.addChild(std::make_shared<Window>());
+	engine.addChild(std::make_unique<PlayerInputSystem>());
+	engine.addChild(std::make_unique<AnimationSystem>());
+	auto window = engine.addChild<Window>();
+	window->addChild(std::make_unique<DrawableSystem>());
 
-	auto window = engine.getChild<Window>();
-	window->addChild(std::make_shared<DrawableSystem>());
-
-	auto manager = engine.getChild<EntityManager>();
+	auto manager = engine.addChild<EntityManager>();
 	auto entity = manager->create();
 
 	EngineState state;

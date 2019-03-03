@@ -15,13 +15,10 @@ using namespace age::graphics;
 int main()
 {
 	Engine engine;
-	engine.addChild(std::make_shared<EntityManager>());
-	engine.addChild(std::make_shared<Window>());
+	auto manager = engine.addChild<EntityManager>();
+	auto window = engine.addChild<Window>();
+	window->addChild(std::make_unique<TileMapSystem>());
 
-	auto window = engine.getChild<Window>();
-	window->addChild(std::make_shared<TileMapSystem>());
-
-	auto manager = engine.getChild<EntityManager>();
 	const auto testTMX = Configuration::Instance().getPathMaps() / "test.tmx";
 	if(ReadFile(testTMX, manager) == false)
 	{

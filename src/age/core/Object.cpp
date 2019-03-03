@@ -12,7 +12,7 @@ public:
 	{
 	}
 
-	std::vector<std::shared_ptr<Object>> children;
+	std::vector<std::unique_ptr<Object>> children;
 	std::string id;
 	Object* parent;
 };
@@ -44,14 +44,14 @@ Object* Object::getParent() const
 	return this->pimpl->parent;
 }
 
-bool Object::addChild(const std::shared_ptr<Object>& x)
+bool Object::addChild(std::unique_ptr<Object> x)
 {
 	const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
 
 	if(foundIt == std::end(this->pimpl->children))
 	{
 		x->pimpl->parent = this;
-		this->pimpl->children.push_back(x);
+		this->pimpl->children.push_back(std::move(x));
 
 		return true;
 	}
@@ -59,24 +59,24 @@ bool Object::addChild(const std::shared_ptr<Object>& x)
 	return false;
 }
 
-std::shared_ptr<Object> Object::getChild(size_t x) const
+Object* Object::getChild(size_t x) const
 {
 	if(x < this->pimpl->children.size())
 	{
-		return this->pimpl->children[x];
+		return this->pimpl->children[x].get();
 	}
 
 	return nullptr;
 }
 
-std::vector<std::shared_ptr<Object>> Object::getChildren(bool recursive) const
+std::vector<Object*> Object::getChildren(bool recursive) const
 {
-	std::vector<std::shared_ptr<Object>> v;
+	std::vector<Object*> v;
 	v.reserve(this->pimpl->children.size());
 
 	for(const auto& child : this->pimpl->children)
 	{
-		v.push_back(child);
+		v.push_back(child.get());
 
 		if(recursive == true)
 		{
@@ -88,28 +88,25 @@ std::vector<std::shared_ptr<Object>> Object::getChildren(bool recursive) const
 	return v;
 }
 
-bool Object::removeChild(const std::shared_ptr<Object>& x)
-{
-	const auto removeIt = std::remove(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
-
-	if(removeIt != std::end(this->pimpl->children))
-	{
-		this->pimpl->children.erase(removeIt, std::end(this->pimpl->children));
-		x->pimpl->parent = nullptr;
-		return true;
-	}
-
-	return false;
-}
-
-bool Object::remove()
+std::unique_ptr<Object> Object::remove()
 {
 	const auto parent = this->getParent();
 
 	if(parent != nullptr)
 	{
-		return parent->removeChild(this->shared_from_this());
+		const auto begin = std::begin(parent->pimpl->children);
+		const auto end = std::end(parent->pimpl->children);
+
+		const auto removeIt = std::remove_if(begin, end, [this](auto& x) { return this == x.get(); });
+
+		if(removeIt != end)
+		{
+			auto ptr = std::move(*removeIt);
+			parent->pimpl->children.erase(removeIt, end);
+			this->pimpl->parent = nullptr;
+			return ptr;
+		}
 	}
 
-	return false;
+	return nullptr;
 }

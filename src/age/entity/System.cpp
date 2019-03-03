@@ -18,7 +18,7 @@ EntityManager* System::getEntityManager() const
 
 	if(parent != nullptr)
 	{
-		return parent->getChild<EntityManager>().get();
+		return parent->getChild<EntityManager>();
 	}
 
 	return nullptr;

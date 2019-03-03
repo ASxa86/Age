@@ -22,9 +22,9 @@ ParserTMX::~ParserTMX()
 {
 }
 
-bool ParserTMX::readFile(const std::filesystem::path& x, std::shared_ptr<Object> obj)
+bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 {
-	auto manager = std::dynamic_pointer_cast<EntityManager>(obj);
+	auto manager = dynamic_cast<EntityManager*>(obj);
 	if(std::filesystem::exists(x) == true && x.extension() == ".tmx" && manager != nullptr)
 	{
 		pugi::xml_document doc;

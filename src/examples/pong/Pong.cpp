@@ -43,7 +43,7 @@ struct Pong::Impl
 		this->font.loadFromFile((Configuration::Instance().getPathData() / "fonts/sansation.ttf").string());
 	}
 
-	std::shared_ptr<Engine> engine{std::make_shared<Engine>()};
+	std::shared_ptr<Engine> engine{std::make_unique<Engine>()};
 	sf::SoundBuffer soundBuffer;
 	sf::Sound sound{soundBuffer};
 	sf::Font font;
@@ -51,19 +51,16 @@ struct Pong::Impl
 
 Pong::Pong()
 {
-	auto window = std::make_shared<Window>();
-	window->addChild(std::make_shared<DrawableSystem>());
-	window->addChild(std::make_shared<TextSystem>());
-	window->addChild(std::make_shared<PhysicsRenderSystem>());
-	this->pimpl->engine->addChild(window);
-	auto manager = std::make_shared<EntityManager>();
-	this->pimpl->engine->addChild(manager);
-	this->pimpl->engine->addChild(std::make_shared<PlayerInputSystem>());
-	this->pimpl->engine->addChild(std::make_shared<AudioSystem>());
-	this->pimpl->engine->addChild(std::make_shared<PaddleAISystem>());
+	auto window = this->pimpl->engine->addChild<Window>();
+	window->addChild(std::make_unique<DrawableSystem>());
+	window->addChild(std::make_unique<TextSystem>());
+	window->addChild(std::make_unique<PhysicsRenderSystem>());
 
-	auto physics = std::make_shared<PhysicsSystem>();
-	this->pimpl->engine->addChild(physics);
+	auto manager = this->pimpl->engine->addChild<EntityManager>();
+	this->pimpl->engine->addChild(std::make_unique<PlayerInputSystem>());
+	this->pimpl->engine->addChild(std::make_unique<AudioSystem>());
+	this->pimpl->engine->addChild(std::make_unique<PaddleAISystem>());
+	this->pimpl->engine->addChild(std::make_unique<PhysicsSystem>());
 
 	const auto metersW = static_cast<float>(PixelsToMeters(window->getWidth()));
 	const auto metersH = static_cast<float>(PixelsToMeters(window->getHeight()));

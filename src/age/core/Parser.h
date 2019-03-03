@@ -30,7 +30,7 @@ namespace age
 			///
 			///	\param obj The object to load data into. This parameter is optional, if no object is given, the parser may return its own object.
 			///
-			virtual bool readFile(const std::filesystem::path& x, std::shared_ptr<Object> obj);
+			virtual bool readFile(const std::filesystem::path& x, Object* obj);
 
 		private:
 			struct Impl;
@@ -40,6 +40,6 @@ namespace age
 		///
 		///	\brief Function for generically loading file formats into the given object.
 		///
-		AGE_CORE_EXPORT bool ReadFile(const std::filesystem::path& x, std::shared_ptr<Object> obj);
+		AGE_CORE_EXPORT bool ReadFile(const std::filesystem::path& x, Object* obj);
 	}
 }

@@ -18,12 +18,12 @@ Parser::~Parser()
 {
 }
 
-bool Parser::readFile(const std::filesystem::path&, std::shared_ptr<Object>)
+bool Parser::readFile(const std::filesystem::path&, Object*)
 {
 	return false;
 }
 
-bool age::core::ReadFile(const std::filesystem::path& x, std::shared_ptr<Object> obj)
+bool age::core::ReadFile(const std::filesystem::path& x, Object* obj)
 {
 	const auto parser = Factory::Instance().create<Parser>(x.extension().string());
 

@@ -22,17 +22,14 @@ using namespace age::physics;
 
 int main()
 {
-	const auto engine = std::make_shared<Engine>();
-	const auto manager = std::make_shared<EntityManager>();
-	const auto window = std::make_shared<Window>();
-	window->addChild(std::make_shared<TileMapSystem>());
-	window->addChild(std::make_shared<DrawableSystem>());
-	engine->addChild(manager);
-	engine->addChild(window);
-	engine->addChild(std::make_shared<WaypointSystem>());
+	const auto engine = std::make_unique<Engine>();
+	auto window = engine->addChild<Window>();
+	window->addChild(std::make_unique<TileMapSystem>());
+	window->addChild(std::make_unique<DrawableSystem>());
 
-	auto physics = std::make_shared<PhysicsSystem>();
-	engine->addChild(physics);
+	auto manager = engine->addChild<EntityManager>();
+	engine->addChild(std::make_unique<WaypointSystem>());
+	engine->addChild(std::make_unique<PhysicsSystem>());
 
 	if(ReadFile(Configuration::Instance().getPathMaps() / "defense_level1.tmx", manager) == false)
 	{
