@@ -1,6 +1,6 @@
 project(AgeCore)
 
-add_library(${PROJECT_NAME} SHARED "")
+add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
 if(UNIX)
