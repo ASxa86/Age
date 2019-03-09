@@ -1,5 +1,15 @@
 project(AgeEditor)
 
+###############################################
+#
+#	Find RTTR
+#
+find_package(RTTR)
+
+###############################################
+#
+#	Find Qt
+#
 find_package(Qt5 COMPONENTS Core Gui Widgets)
 set(CMAKE_AUTOMOC ON)
 
@@ -18,19 +28,28 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	Qt5::Core
 	Qt5::Gui
 	Qt5::Widgets
+	RTTR::Core
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
 	Application.h
 	ComponentFactory.h
-	MainWindow.h
+	DialogComponents.h
+	DockWidgetEntity.h
 	ListWidgetComponents.h
+	MainWindow.h
+	Properties.h
+	TreeWidgetEntity.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
 	Application.cpp
 	ComponentFactory.cpp
-	MainWindow.cpp
+	DialogComponents.cpp
+	DockWidgetEntity.cpp
 	ListWidgetComponents.cpp
+	MainWindow.cpp
+	Properties.cpp
+	TreeWidgetEntity.cpp
 	main.cpp
 )

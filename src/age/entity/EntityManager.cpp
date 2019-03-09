@@ -71,3 +71,8 @@ const std::vector<Entity>& EntityManager::getEntities() const
 {
 	return this->entities;
 }
+
+const std::map<std::type_index, std::unique_ptr<BasePool>>& EntityManager::getPools() const
+{
+	return this->pools;
+}

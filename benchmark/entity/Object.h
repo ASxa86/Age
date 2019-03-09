@@ -60,6 +60,14 @@ namespace age
 				return v;
 			}
 
+			virtual void update([[maybe_unused]] double x)
+			{
+				for(auto& child : children)
+				{
+					child->update(x);
+				}
+			}
+
 		private:
 			std::vector<std::unique_ptr<Object>> children;
 		};

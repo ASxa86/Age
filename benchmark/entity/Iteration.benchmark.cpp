@@ -160,6 +160,52 @@ namespace
 
 		std::unique_ptr<age::benchmark::Object> em;
 	};
+
+	struct ObjectF2 : public celero::TestFixture
+	{
+		struct PosF : public age::benchmark::Object, public Pos
+		{
+			virtual void update(double z) override
+			{
+				this->x += 1.0 * z;
+				this->y += 1.0 * z;
+			}
+		};
+
+		struct VelF : public age::benchmark::Object, public Vel
+		{
+			virtual void update(double z) override
+			{
+				this->x += 1.0 * z;
+				this->y += 1.0 * z;
+			}
+		};
+
+		ObjectF2()
+		{
+		}
+
+		virtual std::vector<celero::TestFixture::ExperimentValue> getExperimentValues() const
+		{
+			return ProblemSpace;
+		}
+
+		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
+		{
+			// Clear the previous entities
+			em = std::make_unique<age::benchmark::Object>();
+
+			for(auto i = 0; i < x.Value; ++i)
+			{
+				auto e = std::make_unique<age::benchmark::Object>();
+				e->addChild(std::make_unique<PosF>());
+				e->addChild(std::make_unique<VelF>());
+				em->addChild(std::move(e));
+			}
+		}
+
+		std::unique_ptr<age::benchmark::Object> em;
+	};
 }
 
 BASELINE_F(Iteration, Baseline, EntityArrayF, 10, 1)
@@ -201,5 +247,15 @@ BENCHMARK_F(Iteration, Object, ObjectF, 10, 1)
 
 		p->x += v->x * Time;
 		p->y += v->y * Time;
+	}
+}
+
+BENCHMARK_F(Iteration, Object2, ObjectF2, 10, 1)
+{
+	const auto& entities = this->em->getChildren();
+
+	for(const auto& entity : entities)
+	{
+		entity->update(Time);
 	}
 }

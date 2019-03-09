@@ -2,8 +2,10 @@
 
 #include <age/core/Engine.h>
 #include <age/core/PimplImpl.h>
+#include <age/entity/EntityManager.h>
 
 using namespace age;
+using namespace age::entity;
 
 struct Application::Impl
 {
@@ -12,6 +14,12 @@ struct Application::Impl
 
 Application::Application(int argc, char** argv) : QApplication(argc, argv), pimpl()
 {
+	auto manager = this->pimpl->engine.addChild<EntityManager>();
+	manager->create();
+	manager->create();
+	manager->create();
+	manager->create();
+	manager->create();
 }
 
 Application::~Application()

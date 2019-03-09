@@ -3,6 +3,7 @@
 #include <age/core/EventQueue.h>
 #include <age/entity/EntityEvent.h>
 #include <age/entity/Export.h>
+#include <typeindex>
 
 namespace age
 {
@@ -58,10 +59,14 @@ namespace age
 			bool operator!=(const Entity& e) const;
 
 			///
-			///	Add a component to the entity.
+			///	Add a component to the entity and returns it.
+			///	This will simply return the component if it already exists.
 			///
 			template <typename T, typename... Args>
 			T& addComponent(Args&&... args);
+
+			template <typename T>
+			void addComponent(const T& component);
 
 			///
 			///	Remove a component to the entity.
@@ -74,6 +79,11 @@ namespace age
 			///
 			template <typename T>
 			T& getComponent() const;
+
+			///
+			///	Get a list of type info of all components that exist on the entity.
+			///
+			std::vector<std::type_index> getComponentTypes() const;
 
 			///
 			///	Check if this entity has a component.
@@ -107,6 +117,24 @@ T& age::entity::Entity::addComponent(Args&&... args)
 	}
 
 	return (*pool)[this->id];
+}
+
+template <typename T>
+void age::entity::Entity::addComponent(const T& x)
+{
+	const auto pool = this->manager->template getPool<T>();
+
+	if(pool->test(this->id) == false)
+	{
+		pool->construct(this->id);
+
+		auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
+
+		auto& component = (*pool)[this->id];
+		component = x;
+		event->setComponent(&component);
+		age::core::EventQueue::Instance().sendEvent(std::move(event));
+	}
 }
 
 template <typename T>

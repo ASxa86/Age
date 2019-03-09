@@ -1,6 +1,8 @@
 #include <age/entity/EntityManager.h>
 #include <gtest/gtest.h>
 
+#include <entt/entt.hpp>
+
 using namespace age::entity;
 
 struct Position

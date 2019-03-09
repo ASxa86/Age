@@ -19,6 +19,7 @@ public:
 EntityEvent::EntityEvent(const Entity& e, Type t) : Event(), pimpl(e, t)
 {
 }
+
 EntityEvent::~EntityEvent()
 {
 }
@@ -31,4 +32,9 @@ const Entity& EntityEvent::getEntity() const
 EntityEvent::Type EntityEvent::getType() const
 {
 	return this->pimpl->type;
+}
+
+std::type_index EntityEvent::getComponentType() const
+{
+	return this->component.type();
 }

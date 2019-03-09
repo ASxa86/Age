@@ -1,21 +1,30 @@
 #include <tools/editor/ListWidgetComponents.h>
 
-#include <age/core/PimplImpl.h>
 #include <tools/editor/ComponentFactory.h>
+
+#ifdef WIN32
+#pragma warning(push, 0)
+#endif
+
+#include <rttr/registration.h>
+
+#ifdef WIN32
+#pragma warning(pop)
+#endif
 
 using namespace age;
 
-struct ListWidgetComponents::Impl
+ListWidgetComponents::ListWidgetComponents(QWidget* parent) : QListWidget(parent)
 {
-};
+	const auto types = rttr::type::get_types();
 
-ListWidgetComponents::ListWidgetComponents(QWidget* parent) : QListWidget(parent), pimpl()
-{
-	const auto components = ComponentFactory::Instance().getComponentList();
-
-	for(const auto& component : components)
+	for(const auto& type : types)
 	{
-		this->addItem(QString::fromStdString(component));
+		const auto name = type.get_name();
+		if(name.find("Component") != std::string::npos && name.find("*") == std::string::npos)
+		{
+			this->addItem(QString::fromStdString(name));
+		}
 	}
 }
 

@@ -4,6 +4,7 @@
 #include <age/core/Pimpl.h>
 #include <age/entity/Export.h>
 #include <any>
+#include <typeindex>
 
 namespace age
 {
@@ -36,6 +37,7 @@ namespace age
 
 			const Entity& getEntity() const;
 			EntityEvent::Type getType() const;
+			std::type_index getComponentType() const;
 
 			template <typename T>
 			void setComponent(T* x)

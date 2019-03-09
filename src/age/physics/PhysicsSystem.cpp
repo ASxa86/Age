@@ -88,15 +88,15 @@ public:
 
 		switch(k.BodyType)
 		{
-			case KinematicComponent::BodyType::Static:
+			case KinematicComponent::Type::Static:
 				b->SetType(b2BodyType::b2_staticBody);
 				break;
 
-			case KinematicComponent::BodyType::Kinematic:
+			case KinematicComponent::Type::Kinematic:
 				b->SetType(b2BodyType::b2_kinematicBody);
 				break;
 
-			case KinematicComponent::BodyType::Dynamic:
+			case KinematicComponent::Type::Dynamic:
 				b->SetType(b2BodyType::b2_dynamicBody);
 				break;
 

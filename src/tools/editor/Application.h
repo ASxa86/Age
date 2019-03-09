@@ -16,7 +16,7 @@ namespace age
 		Application(int argc, char** argv);
 		~Application();
 
-		Application* Instance();
+		static Application* Instance();
 
 		age::core::Engine& getEngine();
 

@@ -21,7 +21,7 @@ namespace age
 		void registerComponent()
 		{
 			this->registerAdd(typeid(T).name(), [](age::entity::Entity& e) { e.addComponent<T>(); });
-			// this->registerRemove(typeid(T).name(), [](age::entity::Entity& e) { e.removeComponent<T>(); });
+			this->registerRemove(typeid(T).name(), [](age::entity::Entity& e) { e.removeComponent<T>(); });
 		}
 
 	private:

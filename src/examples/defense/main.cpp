@@ -42,7 +42,7 @@ int main()
 	transform.Position = {0, 275};
 
 	auto& body = enemy.addComponent<KinematicComponent>();
-	body.BodyType = KinematicComponent::BodyType::Kinematic;
+	body.BodyType = KinematicComponent::Type::Kinematic;
 	body.LinearVelocity = {50, 0.0};
 	body.CalculateHeading = true;
 

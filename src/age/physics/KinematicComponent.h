@@ -14,7 +14,7 @@ namespace age
 			///
 			///	\brief Describes how this component is processed during physics calculations.
 			///
-			enum class BodyType : int
+			enum class Type : int
 			{
 				/// A static body does not move under simulation and behaves as if it has infinite mass.Internally, Box2D
 				/// stores zero for the mass and the inverse mass. Static bodies can be moved manually by the user. A static
@@ -38,7 +38,7 @@ namespace age
 			age::math::Vector LinearVelocity;
 
 			/// The body type to describe this an entity.
-			BodyType BodyType;
+			Type BodyType;
 
 			/// Enable to calculate heading rotation for an entity.
 			/// This will cause any rotations on an associated TransformComponent to be overwritten.

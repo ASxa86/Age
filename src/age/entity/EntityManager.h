@@ -91,6 +91,8 @@ namespace age
 				return pool;
 			}
 
+			const std::map<std::type_index, std::unique_ptr<BasePool>>& getPools() const;
+
 		private:
 			std::map<std::type_index, std::unique_ptr<BasePool>> pools;
 			std::vector<Entity> entities;

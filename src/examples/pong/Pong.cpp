@@ -74,7 +74,7 @@ Pong::Pong()
 	paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
 
 	auto& kinematicP1 = paddle.addComponent<KinematicComponent>();
-	kinematicP1.BodyType = KinematicComponent::BodyType::Kinematic;
+	kinematicP1.BodyType = KinematicComponent::Type::Kinematic;
 
 	auto& boxColP1 = paddle.addComponent<BoxCollisionComponent>();
 	boxColP1.Width = rec->getSize().x;
@@ -103,7 +103,7 @@ Pong::Pong()
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
 	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
 	auto& bodyP2 = paddle2.addComponent<KinematicComponent>();
-	bodyP2.BodyType = KinematicComponent::BodyType::Kinematic;
+	bodyP2.BodyType = KinematicComponent::Type::Kinematic;
 
 	auto& boxP2 = paddle2.addComponent<BoxCollisionComponent>();
 	boxP2.Width = rec2->getSize().x;
@@ -123,7 +123,7 @@ Pong::Pong()
 	ball.addComponent<int>();
 
 	auto& bodyBall = ball.addComponent<KinematicComponent>();
-	bodyBall.BodyType = KinematicComponent::BodyType::Dynamic;
+	bodyBall.BodyType = KinematicComponent::Type::Dynamic;
 	bodyBall.LinearVelocity = {5.0, 0.0};
 
 	auto& circleP = ball.addComponent<CircleCollisionComponent>();
@@ -138,7 +138,7 @@ Pong::Pong()
 	auto topWall = manager->create();
 	topWall.addComponent<TransformComponent>();
 	auto& twBody = topWall.addComponent<KinematicComponent>();
-	twBody.BodyType = KinematicComponent::BodyType::Static;
+	twBody.BodyType = KinematicComponent::Type::Static;
 
 	auto& twEdge = topWall.addComponent<EdgeCollisionComponent>();
 	twEdge.Vertex1 = {0.0, 1.0};
@@ -148,7 +148,7 @@ Pong::Pong()
 	auto bottomWall = manager->create();
 	bottomWall.addComponent<TransformComponent>();
 	auto& bwBody = bottomWall.addComponent<KinematicComponent>();
-	bwBody.BodyType = KinematicComponent::BodyType::Static;
+	bwBody.BodyType = KinematicComponent::Type::Static;
 
 	auto& bwEdge = bottomWall.addComponent<EdgeCollisionComponent>();
 	bwEdge.Vertex1 = {0.0, metersH - 1.0};
@@ -158,7 +158,7 @@ Pong::Pong()
 	auto leftWall = manager->create();
 	leftWall.addComponent<TransformComponent>();
 	auto& lwBody = leftWall.addComponent<KinematicComponent>();
-	lwBody.BodyType = KinematicComponent::BodyType::Static;
+	lwBody.BodyType = KinematicComponent::Type::Static;
 
 	auto& lwEdge = leftWall.addComponent<EdgeCollisionComponent>();
 	lwEdge.Vertex1 = {1.0, 0.0};
@@ -169,7 +169,7 @@ Pong::Pong()
 	auto rightWall = manager->create();
 	rightWall.addComponent<TransformComponent>();
 	auto& rwBody = rightWall.addComponent<KinematicComponent>();
-	rwBody.BodyType = KinematicComponent::BodyType::Static;
+	rwBody.BodyType = KinematicComponent::Type::Static;
 
 	auto& rwEdge = rightWall.addComponent<EdgeCollisionComponent>();
 	rwEdge.Vertex1 = {metersW - 1.0, 0.0};

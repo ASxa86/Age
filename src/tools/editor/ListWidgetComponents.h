@@ -2,15 +2,17 @@
 
 #include <QtWidgets/QListWidget>
 
-#include <age/core/Pimpl.h>
-
 namespace age
 {
-	namespace entity
-	{
-		class Entity;
-	}
-
+	///
+	///	\class ListWidgetComponents
+	///
+	///	\brief List the components available within the ComponentFactory.
+	///
+	///	\date March 5, 2019
+	///
+	///	\author Aaron Shelley
+	///
 	class ListWidgetComponents final : public QListWidget
 	{
 		Q_OBJECT
@@ -18,9 +20,5 @@ namespace age
 	public:
 		ListWidgetComponents(QWidget* parent = nullptr);
 		~ListWidgetComponents();
-
-	private:
-		struct Impl;
-		Pimpl<Impl> pimpl;
 	};
 }
