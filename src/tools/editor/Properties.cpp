@@ -66,7 +66,8 @@ RTTR_REGISTRATION
 		.constructor<>(add<KinematicComponent>)
 		.property("BodyType", &KinematicComponent::BodyType)
 		.property("LinearVelocity", &KinematicComponent::LinearVelocity)
-		.property("CalculateHeading", &KinematicComponent::CalculateHeading);
+		.property("CalculateHeading", &KinematicComponent::CalculateHeading)
+		.method("Remove", remove<KinematicComponent>);
 
 	Property::Alias[typeid(KinematicComponent::Type)] = "BodyType";
 	registration::enumeration<KinematicComponent::Type>("BodyType")(value("Static", KinematicComponent::Type::Static),
@@ -82,7 +83,8 @@ RTTR_REGISTRATION
 		.property("Restitution", &BoxCollisionComponent::Restitution)
 		.property("IsSensor", &BoxCollisionComponent::IsSensor)
 		.property("Height", &BoxCollisionComponent::Height)
-		.property("Width", &BoxCollisionComponent::Width);
+		.property("Width", &BoxCollisionComponent::Width)
+		.method("Remove", remove<BoxCollisionComponent>);
 
 	Property::Alias[typeid(CircleCollisionComponent)] = "CircleCollisionComponent";
 	Property::Alias[typeid(CircleCollisionComponent*)] = "CircleCollisionComponent";
@@ -92,7 +94,8 @@ RTTR_REGISTRATION
 		.property("Friction", &CircleCollisionComponent::Friction)
 		.property("Restitution", &CircleCollisionComponent::Restitution)
 		.property("IsSensor", &CircleCollisionComponent::IsSensor)
-		.property("Radius", &CircleCollisionComponent::Radius);
+		.property("Radius", &CircleCollisionComponent::Radius)
+		.method("Remove", remove<CircleCollisionComponent>);
 
 	Property::Alias[typeid(EdgeCollisionComponent)] = "EdgeCollisionComponent";
 	Property::Alias[typeid(EdgeCollisionComponent*)] = "EdgeCollisionComponent";
@@ -103,7 +106,8 @@ RTTR_REGISTRATION
 		.property("Restitution", &EdgeCollisionComponent::Restitution)
 		.property("IsSensor", &EdgeCollisionComponent::IsSensor)
 		.property("Vertex1", &EdgeCollisionComponent::Vertex1)
-		.property("Vertex2", &EdgeCollisionComponent::Vertex2);
+		.property("Vertex2", &EdgeCollisionComponent::Vertex2)
+		.method("Remove", remove<EdgeCollisionComponent>);
 }
 
 Property::Property(Entity& x) : entity{x}

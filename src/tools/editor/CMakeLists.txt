@@ -13,6 +13,8 @@ find_package(RTTR)
 find_package(Qt5 COMPONENTS Core Gui Widgets)
 set(CMAKE_AUTOMOC ON)
 
+qt5_add_resources(QT_RESOURCES ${CMAKE_SOURCE_DIR}/data/icons.qrc)
+
 add_executable(${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -52,4 +54,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Properties.cpp
 	TreeWidgetEntity.cpp
 	main.cpp
+	${QT_RESOURCES}
 )

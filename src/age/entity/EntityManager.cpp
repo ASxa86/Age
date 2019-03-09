@@ -29,6 +29,7 @@ Entity EntityManager::create()
 		e = this->destroyed.back();
 		e.manager = this;
 		this->entities[e.id] = e;
+		this->destroyed.pop_back();
 	}
 
 	EventQueue::Instance().sendEvent(std::make_unique<EntityEvent>(e, EntityEvent::Type::EntityAdded));

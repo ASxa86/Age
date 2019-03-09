@@ -13,8 +13,12 @@ using namespace age;
 using namespace age::core;
 using namespace age::entity;
 
+Q_DECLARE_METATYPE(age::entity::Entity)
+
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
+	qRegisterMetaType<age::entity::Entity>();
+
 	EventQueue::Instance().addEventHandler([this](Event* x) {
 		auto evt = dynamic_cast<EntityEvent*>(x);
 
@@ -60,9 +64,10 @@ TreeWidgetEntity::~TreeWidgetEntity()
 
 void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
 {
-	auto item = new QTreeWidgetItem(this);
+	auto item = new QTreeWidgetItem(this, ItemType::Entity);
 	item->setText(0, "Entity");
-	item->setData(0, Qt::UserRole, x.getID());
+	item->setData(0, Qt::UserRole, QVariant::fromValue(x));
+	item->setIcon(0, QIcon(":icons/pawn.png"));
 
 	auto componentTypes = x.getComponentTypes();
 
@@ -89,7 +94,7 @@ void TreeWidgetEntity::addComponent(const age::entity::Entity& e, const std::typ
 
 void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, const std::type_index& t)
 {
-	auto componentItem = new QTreeWidgetItem(item);
+	auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
 	auto name = Property::Alias[t];
 	componentItem->setText(0, QString::fromStdString(name));
 	item->setExpanded(true);
@@ -106,7 +111,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& x)
 	{
 		auto item = this->topLevelItem(i);
 
-		if(item->data(0, Qt::UserRole).toInt() == x.getID())
+		if(item->data(0, Qt::UserRole).value<age::entity::Entity>() == x)
 		{
 			return item;
 		}

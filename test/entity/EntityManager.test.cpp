@@ -53,6 +53,34 @@ TEST(EntityManager, destroy)
 	EXPECT_FALSE(entity2.valid());
 }
 
+TEST(EntityManager, recreate)
+{
+	EntityManager manager;
+
+	const auto entity0 = manager.create();
+	EXPECT_TRUE(entity0.valid());
+
+	const auto entity1 = manager.create();
+	EXPECT_TRUE(entity1.valid());
+
+	const auto entity2 = manager.create();
+	EXPECT_TRUE(entity2.valid());
+
+	manager.destroy(entity1);
+	EXPECT_FALSE(entity1.valid());
+
+	const auto entity3 = manager.create();
+	EXPECT_TRUE(entity3.valid());
+	EXPECT_EQ(entity3.getID(), entity1.getID());
+
+	// Verify that new entities constructed after a destroyed entity
+	// do not yield ids that are the same as that destroyed entity
+	// after the first entity to replace it.
+	const auto entity4 = manager.create();
+	EXPECT_TRUE(entity4.valid());
+	EXPECT_NE(entity4, entity3);
+}
+
 TEST(EntityManager, addComponent)
 {
 	EntityManager manager;

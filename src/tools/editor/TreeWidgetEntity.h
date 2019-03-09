@@ -16,6 +16,12 @@ namespace age
 		Q_OBJECT
 
 	public:
+		enum ItemType : int
+		{
+			Entity = QTreeWidgetItem::UserType + 1,
+			Component
+		};
+
 		TreeWidgetEntity(QWidget* parent = nullptr);
 		~TreeWidgetEntity();
 

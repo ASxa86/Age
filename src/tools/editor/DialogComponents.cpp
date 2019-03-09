@@ -13,12 +13,10 @@ DialogComponents::DialogComponents(age::entity::Entity e, QWidget* parent) : QDi
 {
 	const auto vLayout = new QVBoxLayout(this);
 	const auto lwComponents = new ListWidgetComponents();
-	vLayout->addWidget(lwComponents);
-
 	const auto btnCreate = new QPushButton("Create");
 	const auto btnCancel = new QPushButton("Cancel");
 
-	this->connect(btnCreate, &QPushButton::clicked, this, [this, lwComponents] {
+	const auto addComponent = [this, lwComponents] {
 		const auto items = lwComponents->selectedItems();
 
 		if(items.empty() == false)
@@ -28,8 +26,10 @@ DialogComponents::DialogComponents(age::entity::Entity e, QWidget* parent) : QDi
 		}
 
 		this->close();
-	});
+	};
 
+	this->connect(lwComponents, &QListWidget::doubleClicked, this, addComponent);
+	this->connect(btnCreate, &QPushButton::clicked, this, addComponent);
 	this->connect(btnCancel, &QPushButton::clicked, this, &QDialog::close);
 
 	const auto hLayout = new QHBoxLayout();
@@ -37,6 +37,7 @@ DialogComponents::DialogComponents(age::entity::Entity e, QWidget* parent) : QDi
 	hLayout->addWidget(btnCreate);
 	hLayout->addWidget(btnCancel);
 
+	vLayout->addWidget(lwComponents);
 	vLayout->addLayout(hLayout);
 }
 

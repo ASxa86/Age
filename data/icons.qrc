@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+
+<!-- http://doc.qt.io/qt-5/resources.html -->
+<!-- Resource files can only compile images that fall within the directory or sub-directory of the resource file. -->
+<qresource>
+	<file>icons/pawn.png</file>
+	<file>icons/plus.png</file>
+</qresource>
+</RCC>
