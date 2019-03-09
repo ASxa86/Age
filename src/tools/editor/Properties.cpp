@@ -110,7 +110,7 @@ RTTR_REGISTRATION
 		.method("Remove", remove<EdgeCollisionComponent>);
 }
 
-Property::Property(Entity& x) : entity{x}
+Property::Property(Entity& x) : components{}, entity{x}
 {
 }
 

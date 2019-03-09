@@ -35,7 +35,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 target_sources(${PROJECT_NAME} PRIVATE
 	Application.h
-	ComponentFactory.h
 	DialogComponents.h
 	DockWidgetEntity.h
 	ListWidgetComponents.h
@@ -46,7 +45,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_sources(${PROJECT_NAME} PRIVATE
 	Application.cpp
-	ComponentFactory.cpp
 	DialogComponents.cpp
 	DockWidgetEntity.cpp
 	ListWidgetComponents.cpp

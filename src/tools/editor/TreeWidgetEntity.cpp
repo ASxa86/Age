@@ -68,6 +68,7 @@ void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
 	item->setText(0, "Entity");
 	item->setData(0, Qt::UserRole, QVariant::fromValue(x));
 	item->setIcon(0, QIcon(":icons/pawn.png"));
+	item->setFlags(item->flags() | Qt::ItemFlag::ItemIsEditable);
 
 	auto componentTypes = x.getComponentTypes();
 
