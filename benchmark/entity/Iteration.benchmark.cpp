@@ -1,6 +1,7 @@
 #include <celero/Celero.h>
 
 #include <age/entity/EntityManager.h>
+#include <entt/entt.hpp>
 #include "Object.h"
 
 #ifdef WIN32
@@ -95,6 +96,34 @@ namespace
 		}
 
 		std::unique_ptr<age::entity::EntityManager> em;
+	};
+
+	struct EnTTF : public celero::TestFixture
+	{
+		EnTTF()
+		{
+		}
+
+		virtual std::vector<celero::TestFixture::ExperimentValue> getExperimentValues() const
+		{
+			return ProblemSpace;
+		}
+
+		/// Before each run, build a vector of random integers.
+		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
+		{
+			// Clear the previous entities
+			em = std::make_unique<entt::DefaultRegistry>();
+
+			for(auto i = 0; i < x.Value; ++i)
+			{
+				auto e = em->create();
+				em->assign<Pos>(e);
+				em->assign<Vel>(e);
+			}
+		}
+
+		std::unique_ptr<entt::DefaultRegistry> em;
 	};
 
 	struct EntityXF : public celero::TestFixture
@@ -223,6 +252,14 @@ BASELINE_F(Iteration, Baseline, EntityArrayF, 10, 1)
 BENCHMARK_F(Iteration, AgeEntity, AgeEntityF, 10, 1)
 {
 	this->em->each<Pos, Vel>([this](age::entity::Entity&, Pos& p, Vel& v) {
+		p.x += v.x * Time;
+		p.y += v.y * Time;
+	});
+}
+
+BENCHMARK_F(Iteration, EnTT, EnTTF, 10, 1)
+{
+	this->em->view<Pos, Vel>().each([this](auto, Pos& p, Vel& v) {
 		p.x += v.x * Time;
 		p.y += v.y * Time;
 	});

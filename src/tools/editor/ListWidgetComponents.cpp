@@ -1,7 +1,5 @@
 #include <tools/editor/ListWidgetComponents.h>
 
-#include <tools/editor/ComponentFactory.h>
-
 #ifdef WIN32
 #pragma warning(push, 0)
 #endif

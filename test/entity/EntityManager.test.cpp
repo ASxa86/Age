@@ -53,6 +53,32 @@ TEST(EntityManager, destroy)
 	EXPECT_FALSE(entity2.valid());
 }
 
+TEST(EntityManager, destroy2)
+{
+	EntityManager manager;
+	auto entity0 = manager.create();
+	EXPECT_TRUE(entity0.valid());
+
+	auto entity1 = manager.create();
+	EXPECT_TRUE(entity1.valid());
+
+	auto entity2 = manager.create();
+	EXPECT_TRUE(entity2.valid());
+
+	entity1.addComponent<Position>();
+	entity2.addComponent<Position>();
+
+	// Test that removing an entity with the same component after
+	// remove that component from another entity doesn't produce
+	// an index out of range error.
+	entity1.removeComponent<Position>();
+	entity1.destroy();
+	EXPECT_FALSE(entity1.valid());
+
+	manager.destroy(entity2);
+	EXPECT_FALSE(entity2.valid());
+}
+
 TEST(EntityManager, recreate)
 {
 	EntityManager manager;

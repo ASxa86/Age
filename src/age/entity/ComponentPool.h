@@ -63,6 +63,7 @@ namespace age
 
 				this->pool.emplace_back(std::forward<Args>(args)...);
 				this->indices[x] = static_cast<int>(this->pool.size()) - 1;
+				this->direct.push_back(static_cast<int>(x));
 			}
 
 			void destroy(std::size_t x) override
@@ -71,14 +72,20 @@ namespace age
 				// we are removing and then pop the last element off as it has been invalidated.
 				auto tmp = std::move(this->pool.back());
 				this->pool[this->indices[x]] = std::move(tmp);
-				this->indices[static_cast<int>(this->pool.size()) - 1] = this->indices[x];
-				this->indices[x] = -1;
 				this->pool.pop_back();
+
+				const auto back = this->direct.back();
+				auto& candidate = this->indices[x];
+				this->indices[back] = candidate;
+				this->direct[candidate] = back;
+				candidate = -1;
+				this->direct.pop_back();
 			}
 
 		private:
 			std::vector<T> pool;
 			std::vector<int> indices;
+			std::vector<int> direct;
 		};
 	}
 }

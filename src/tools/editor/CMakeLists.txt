@@ -37,6 +37,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Application.h
 	DialogComponents.h
 	DockWidgetEntity.h
+	GUIComponent.h
 	ListWidgetComponents.h
 	MainWindow.h
 	Properties.h

@@ -8,6 +8,7 @@
 #include <age/physics/CircleCollisionComponent.h>
 #include <age/physics/EdgeCollisionComponent.h>
 #include <age/physics/KinematicComponent.h>
+#include <tools/editor/GUIComponent.h>
 #include <sstream>
 #include <unordered_map>
 
@@ -46,6 +47,13 @@ std::unordered_map<std::type_index, std::string> Property::Alias;
 
 RTTR_REGISTRATION
 {
+	Property::Alias[typeid(GUIComponent)] = "GUIComponent";
+	Property::Alias[typeid(GUIComponent*)] = "GUIComponent";
+	registration::class_<GUIComponent>("GUIComponent")
+		.constructor<>(add<GUIComponent>)
+		.property("ID", &GUIComponent::ID)
+		.method("Remove", remove<GUIComponent>);
+
 	Property::Alias[typeid(TransformComponent)] = "TransformComponent";
 	Property::Alias[typeid(TransformComponent*)] = "TransformComponent";
 	registration::class_<TransformComponent>("TransformComponent")

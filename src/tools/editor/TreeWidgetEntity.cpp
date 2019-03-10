@@ -6,6 +6,7 @@
 #include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
 #include <tools/editor/Application.h>
+#include <tools/editor/GUIComponent.h>
 #include <tools/editor/Properties.h>
 #include <QtCore/QSize>
 
@@ -29,6 +30,7 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 				case EntityEvent::Type::EntityAdded:
 					this->addEntity(evt->getEntity());
 					break;
+
 				case EntityEvent::Type::EntityRemoved:
 					this->removeEntity(evt->getEntity());
 					break;
@@ -36,11 +38,26 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 				case EntityEvent::Type::ComponentAdded:
 					this->addComponent(evt->getEntity(), evt->getComponentType());
 					break;
+
 				case EntityEvent::Type::ComponentRemoved:
 					this->removeComponent(evt->getEntity(), evt->getComponentType());
 					break;
+
 				default:
 					break;
+			}
+		}
+	});
+
+	this->connect(this, &QTreeWidget::itemChanged, this, [this](QTreeWidgetItem* item) {
+		if(item->type() == ItemType::Entity)
+		{
+			auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity>();
+
+			if(entity.valid() == true)
+			{
+				auto& gui = entity.addComponent<GUIComponent>();
+				gui.ID = item->text(0).toStdString();
 			}
 		}
 	});
@@ -64,6 +81,9 @@ TreeWidgetEntity::~TreeWidgetEntity()
 
 void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
 {
+	// Block the item changed signal until after we've fully added the entity node along with
+	// its component nodes.
+	QSignalBlocker block(this);
 	auto item = new QTreeWidgetItem(this, ItemType::Entity);
 	item->setText(0, "Entity");
 	item->setData(0, Qt::UserRole, QVariant::fromValue(x));

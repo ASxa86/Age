@@ -16,10 +16,6 @@ Application::Application(int argc, char** argv) : QApplication(argc, argv), pimp
 {
 	auto manager = this->pimpl->engine.addChild<EntityManager>();
 	manager->create();
-	manager->create();
-	manager->create();
-	manager->create();
-	manager->create();
 }
 
 Application::~Application()

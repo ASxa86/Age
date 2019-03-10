@@ -8,6 +8,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 find_package(EntityX)
+find_package(EnTT)
 
 target_sources(${PROJECT_NAME} PRIVATE
 	Copy.benchmark.cpp
@@ -19,4 +20,4 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 set(ENTITYX_LIBRARIES debug ${ENTITYX_LIBRARY_DEBUG} optimized ${ENTITYX_LIBRARY})
-target_link_libraries(${PROJECT_NAME} PRIVATE AgeEntity celero ${ENTITYX_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE AgeEntity celero ${ENTITYX_LIBRARIES} EnTT)
