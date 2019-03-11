@@ -1,4 +1,4 @@
-#include <examples/pong/PaddleAIComponent.h>
+#include <age/examples/pong/PaddleAIComponent.h>
 
 #include <age/entity/Entity.h>
 

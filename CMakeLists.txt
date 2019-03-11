@@ -44,11 +44,4 @@ find_package(Boost 1.65 COMPONENTS system filesystem)
 include_directories(${Boost_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/src/age/physics)
 
-option(AGE_ENABLE_BENCHMARKS "Enable building the AGE benchmark suite." OFF)
-
-if(${AGE_ENABLE_BENCHMARKS})
-	add_subdirectory(benchmark)
-endif()
-
 add_subdirectory(src)
-add_subdirectory(test)

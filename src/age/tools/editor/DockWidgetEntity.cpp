@@ -1,12 +1,12 @@
-#include <tools/editor/DockWidgetEntity.h>
+#include <age/tools/editor/DockWidgetEntity.h>
 
 #include <age/core/Engine.h>
 #include <age/core/PimplImpl.h>
 #include <age/entity/EntityManager.h>
-#include <tools/editor/Application.h>
-#include <tools/editor/DialogComponents.h>
-#include <tools/editor/Properties.h>
-#include <tools/editor/TreeWidgetEntity.h>
+#include <age/tools/editor/Application.h>
+#include <age/tools/editor/DialogComponents.h>
+#include <age/tools/editor/Properties.h>
+#include <age/tools/editor/TreeWidgetEntity.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>

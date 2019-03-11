@@ -6,7 +6,12 @@ project(AgeAudio)
 #
 find_package(SFML 2 COMPONENTS audio)
 
-add_library(${PROJECT_NAME} SHARED "")
+add_library(${PROJECT_NAME} SHARED)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER age
+)
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
 target_sources(${PROJECT_NAME} PRIVATE

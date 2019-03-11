@@ -1,4 +1,4 @@
-#include <examples/pong/Pong.h>
+#include <age/examples/pong/Pong.h>
 
 #include <age/audio/AudioEvent.h>
 #include <age/audio/AudioSystem.h>
@@ -10,6 +10,8 @@
 #include <age/core/Utilities.h>
 #include <age/entity/EntityManager.h>
 #include <age/entity/TransformComponent.h>
+#include <age/examples/pong/PaddleAIComponent.h>
+#include <age/examples/pong/PaddleAISystem.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
@@ -22,8 +24,6 @@
 #include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsRenderSystem.h>
 #include <age/physics/PhysicsSystem.h>
-#include <examples/pong/PaddleAIComponent.h>
-#include <examples/pong/PaddleAISystem.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>

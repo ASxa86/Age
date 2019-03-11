@@ -1,4 +1,4 @@
-#include <tools/editor/Properties.h>
+#include <age/tools/editor/Properties.h>
 
 #include <age/entity/AnimationComponent.h>
 #include <age/entity/Entity.h>
@@ -8,7 +8,7 @@
 #include <age/physics/CircleCollisionComponent.h>
 #include <age/physics/EdgeCollisionComponent.h>
 #include <age/physics/KinematicComponent.h>
-#include <tools/editor/GUIComponent.h>
+#include <age/tools/editor/GUIComponent.h>
 #include <sstream>
 #include <unordered_map>
 

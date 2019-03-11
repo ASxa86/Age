@@ -1,13 +1,13 @@
-#include <tools/editor/TreeWidgetEntity.h>
+#include <age/tools/editor/TreeWidgetEntity.h>
 
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
-#include <tools/editor/Application.h>
-#include <tools/editor/GUIComponent.h>
-#include <tools/editor/Properties.h>
+#include <age/tools/editor/Application.h>
+#include <age/tools/editor/GUIComponent.h>
+#include <age/tools/editor/Properties.h>
 #include <QtCore/QSize>
 
 using namespace age;

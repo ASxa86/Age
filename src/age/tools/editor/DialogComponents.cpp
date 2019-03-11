@@ -1,8 +1,8 @@
-#include <tools/editor/DialogComponents.h>
+#include <age/tools/editor/DialogComponents.h>
 
 #include <age/entity/Entity.h>
-#include <tools/editor/ListWidgetComponents.h>
-#include <tools/editor/Properties.h>
+#include <age/tools/editor/ListWidgetComponents.h>
+#include <age/tools/editor/Properties.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QPushButton>
 

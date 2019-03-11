@@ -1,5 +1,5 @@
-#include <tools/editor/Application.h>
-#include <tools/editor/MainWindow.h>
+#include <age/tools/editor/Application.h>
+#include <age/tools/editor/MainWindow.h>
 
 int main(int argc, char** argv)
 {

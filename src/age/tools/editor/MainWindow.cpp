@@ -1,10 +1,10 @@
-#include <tools/editor/MainWindow.h>
+#include <age/tools/editor/MainWindow.h>
 
 #include <age/core/Engine.h>
 #include <age/core/PimplImpl.h>
 #include <age/entity/EntityManager.h>
-#include <tools/editor/Application.h>
-#include <tools/editor/DockWidgetEntity.h>
+#include <age/tools/editor/Application.h>
+#include <age/tools/editor/DockWidgetEntity.h>
 
 using namespace age;
 using namespace age::entity;
