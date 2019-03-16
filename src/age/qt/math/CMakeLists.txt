@@ -1,4 +1,4 @@
-project(AgeCoreQt)
+project(AgeMathQt)
 
 add_library(${PROJECT_NAME} SHARED)
 
@@ -12,18 +12,19 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 
 target_sources(${PROJECT_NAME} PRIVATE
 	Export.h
-	WidgetProperty.h
-	WidgetPropertyFactory.h
+	WidgetVector.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-	WidgetProperty.cpp
-	WidgetPropertyFactory.cpp
+	WidgetVector.cpp
+	Plugin.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	AgeCore
+	AgeCoreQt
+	AgeMath
 	Qt5::Core
 	Qt5::Gui
 	Qt5::Widgets
+	RTTR::Core
 )

@@ -8,10 +8,10 @@ add_subdirectory(navigation)
 add_subdirectory(physics)
 add_subdirectory(plugins)
 add_subdirectory(terrain)
-add_subdirectory(test)
 
 option(AGE_ENABLE_BENCHMARKS "Enable building the AGE benchmark suite." OFF)
 option(AGE_ENABLE_QT "Enable building the AGE benchmark suite." ON)
+option(AGE_ENABLE_TESTS "Enable building the AGE test suite." ON)
 
 if(${AGE_ENABLE_BENCHMARKS})
 	add_subdirectory(benchmark)
@@ -33,4 +33,8 @@ if(${AGE_ENABLE_QT})
 
 	add_subdirectory(qt)
 	add_subdirectory(tools)
+endif()
+
+if(${AGE_ENABLE_TESTS})
+	add_subdirectory(test)
 endif()

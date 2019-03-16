@@ -14,7 +14,7 @@ CreatorBase::~CreatorBase()
 {
 }
 
-QWidget* CreatorBase::create(QWidget*) const
+WidgetProperty* CreatorBase::create(QWidget*) const
 {
 	return nullptr;
 }
@@ -44,7 +44,7 @@ WidgetPropertyFactory& WidgetPropertyFactory::Instance()
 		// causing a recursive loop.
 		singleton.pimpl->initialized = true;
 
-		const auto plugins = Configuration::Instance().getPathPlugins();
+		const auto plugins = Configuration::Instance().getPathBin();
 
 		if(std::filesystem::exists(plugins) == true)
 		{
@@ -61,15 +61,18 @@ WidgetPropertyFactory& WidgetPropertyFactory::Instance()
 
 						if(!ec)
 						{
-							const auto factoryRegister = library.get<void()>("FactoryRegisterQt");
-
-							if(factoryRegister != nullptr)
+							if(library.has("FactoryRegisterQt") == true)
 							{
-								factoryRegister();
-							}
+								const auto factoryRegister = library.get<void()>("FactoryRegisterQt");
 
-							// Keep track of loaded libraries in order to keep them loaded in memory.
-							singleton.pimpl->loadedLibraries.push_back(library);
+								if(factoryRegister != nullptr)
+								{
+									factoryRegister();
+								}
+
+								// Keep track of loaded libraries in order to keep them loaded in memory.
+								singleton.pimpl->loadedLibraries.push_back(library);
+							}
 						}
 						else
 						{
@@ -84,7 +87,7 @@ WidgetPropertyFactory& WidgetPropertyFactory::Instance()
 	return singleton;
 }
 
-QWidget* WidgetPropertyFactory::create(const rttr::type& x, QWidget* parent) const
+WidgetProperty* WidgetPropertyFactory::create(const rttr::type& x, QWidget* parent) const
 {
 	const auto foundIt = this->pimpl->factoryMap.find(x);
 

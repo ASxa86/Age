@@ -61,15 +61,18 @@ Factory& Factory::Instance()
 
 						if(!ec)
 						{
-							const auto factoryRegister = library.get<void()>("FactoryRegister");
-
-							if(factoryRegister != nullptr)
+							if(library.has("FactoryRegister") == true)
 							{
-								factoryRegister();
-							}
+								const auto factoryRegister = library.get<void()>("FactoryRegister");
 
-							// Keep track of loaded libraries in order to keep them loaded in memory.
-							singleton.pimpl->loadedLibraries.push_back(library);
+								if(factoryRegister != nullptr)
+								{
+									factoryRegister();
+								}
+
+								// Keep track of loaded libraries in order to keep them loaded in memory.
+								singleton.pimpl->loadedLibraries.push_back(library);
+							}
 						}
 						else
 						{
