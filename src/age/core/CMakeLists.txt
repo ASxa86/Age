@@ -31,6 +31,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Pimpl.h
 	PimplImpl.h
 	Processor.h
+	Properties.h
+	String.h
 	Timer.h
 	Utilities.h
 )
@@ -47,6 +49,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Object.cpp
 	Parser.cpp
 	Processor.cpp
+	Properties.cpp
+	String.cpp
 	Timer.cpp
 	Utilities.cpp
 )

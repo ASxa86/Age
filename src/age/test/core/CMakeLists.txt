@@ -4,6 +4,8 @@ set(TARGET_SRC
 	Engine.test.cpp
 	Object.test.cpp
 	Observer.test.cpp
+	Properties.test.cpp
+	String.test.cpp
 	Timer.test.cpp
 )
 
