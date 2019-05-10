@@ -9,7 +9,7 @@ TEST(Properties, PropertyInt)
 	int x = 0;
 
 	Properties properties;
-	properties.addProperty(&x, "x");
+	properties.addProperty(x, "x");
 	auto property = properties.getProperty("x");
 	ASSERT_TRUE(property != nullptr);
 	EXPECT_EQ("0", property->getValue());
@@ -23,7 +23,7 @@ TEST(Properties, PropertyFloat)
 	float x = 0;
 
 	Properties properties;
-	properties.addProperty(&x, "x");
+	properties.addProperty(x, "x");
 	auto property = properties.getProperty("x");
 	ASSERT_TRUE(property != nullptr);
 	EXPECT_EQ("0", property->getValue());
@@ -37,7 +37,7 @@ TEST(Properties, PropertyDouble)
 	double x = 0;
 
 	Properties properties;
-	properties.addProperty(&x, "x");
+	properties.addProperty(x, "x");
 	auto property = properties.getProperty("x");
 	ASSERT_TRUE(property != nullptr);
 	EXPECT_EQ("0", property->getValue());
@@ -53,9 +53,9 @@ TEST(Properties, GetProperties)
 	double d{};
 
 	Properties properties;
-	properties.addProperty(&i, "i");
-	properties.addProperty(&f, "f");
-	properties.addProperty(&d, "d");
+	properties.addProperty(i, "i");
+	properties.addProperty(f, "f");
+	properties.addProperty(d, "d");
 
 	const auto& props = properties.getProperties();
 	EXPECT_EQ(std::size_t{3}, props.size());

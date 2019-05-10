@@ -43,6 +43,21 @@ Factory& Factory::Instance()
 		// causing a recursive loop.
 		singleton.pimpl->initialized = true;
 
+		std::vector<std::filesystem::path> ageLibraries;
+
+		const auto agecore = Configuration::Instance().getPathBin();
+		if(std::filesystem::exists(agecore) == true)
+		{
+			for(const auto& it : std::filesystem::directory_iterator(agecore))
+			{
+				if(std::filesystem::is_regular_file(it) == true && it.path().extension() == ".dll")
+				{
+					const auto filepath = it.path();
+					ageLibraries.push_back(it.path());
+				}
+			}
+		}
+
 		const auto plugins = Configuration::Instance().getPathPlugins();
 
 		if(std::filesystem::exists(plugins) == true)
@@ -52,33 +67,38 @@ Factory& Factory::Instance()
 				if(std::filesystem::is_regular_file(it) == true && it.path().extension() == ".dll")
 				{
 					const auto filepath = it.path();
-					const auto filename = filepath.filename().string();
-					const std::string agePlugin = "Age_";
-					if(filename.compare(0, agePlugin.size(), agePlugin) == 0)
+					ageLibraries.push_back(it.path());
+				}
+			}
+		}
+
+		for(const auto& filepath : ageLibraries)
+		{
+			const auto filename = filepath.filename().string();
+			const std::string agePlugin = "Age";
+			if(filename.compare(0, agePlugin.size(), agePlugin) == 0)
+			{
+				boost::system::error_code ec;
+				boost::dll::shared_library library(filepath.string(), ec);
+
+				if(!ec)
+				{
+					if(library.has("FactoryRegister") == true)
 					{
-						boost::system::error_code ec;
-						boost::dll::shared_library library(filepath.string(), ec);
+						const auto factoryRegister = library.get<void()>("FactoryRegister");
 
-						if(!ec)
+						if(factoryRegister != nullptr)
 						{
-							if(library.has("FactoryRegister") == true)
-							{
-								const auto factoryRegister = library.get<void()>("FactoryRegister");
-
-								if(factoryRegister != nullptr)
-								{
-									factoryRegister();
-								}
-
-								// Keep track of loaded libraries in order to keep them loaded in memory.
-								singleton.pimpl->loadedLibraries.push_back(library);
-							}
+							factoryRegister();
 						}
-						else
-						{
-							std::cerr << "Failed to load: " << filepath << " error code: " << ec.message() << "\n";
-						}
+
+						// Keep track of loaded libraries in order to keep them loaded in memory.
+						singleton.pimpl->loadedLibraries.push_back(library);
 					}
+				}
+				else
+				{
+					std::cerr << "Failed to load: " << filepath << " error code: " << ec.message() << "\n";
 				}
 			}
 		}

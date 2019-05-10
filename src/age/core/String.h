@@ -3,7 +3,6 @@
 #include <age/core/Export.h>
 #include <array>
 #include <charconv>
-#include <limits>
 #include <string>
 
 namespace age
@@ -11,7 +10,7 @@ namespace age
 	namespace core
 	{
 		template <typename T>
-		std::string ToString(T x)
+		std::string ToString([[maybe_unused]] const T& x)
 		{
 			if constexpr(std::is_arithmetic<T>::value == true)
 			{
@@ -28,7 +27,7 @@ namespace age
 		}
 
 		template <typename T>
-		T StringTo(const std::string& x)
+		T StringTo([[maybe_unused]] const std::string& x)
 		{
 			if constexpr(std::is_arithmetic<T>::value == true)
 			{

@@ -10,7 +10,7 @@ Property::~Property()
 {
 }
 
-std::string Property::getName() const
+const std::string& Property::getName() const
 {
 	return this->name;
 }
@@ -22,11 +22,13 @@ Properties::Properties()
 Properties::Properties(const Properties&)
 {
 	// Do Nothing
+	// Each derived type will have registered its own member variables.
 }
 
 Properties::Properties(Properties&&)
 {
 	// Do Nothing
+	// Each derived type will have registered its own member variables.
 }
 
 Properties::~Properties()
@@ -36,12 +38,14 @@ Properties::~Properties()
 Properties& Properties::operator=(const Properties&)
 {
 	// Do Nothing
+	// Each derived type will have registered its own member variables.
 	return *this;
 }
 
 Properties& Properties::operator=(Properties&&)
 {
 	// Do Nothing
+	// Each derived type will have registered its own member variables.
 	return *this;
 }
 

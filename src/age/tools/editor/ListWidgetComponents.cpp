@@ -18,7 +18,7 @@ ListWidgetComponents::ListWidgetComponents(QWidget* parent) : QListWidget(parent
 
 	for(const auto& type : types)
 	{
-		const auto name = type.get_name();
+		const auto name = type.get_name().to_string();
 		if(name.find("Component") != std::string::npos && name.find("*") == std::string::npos)
 		{
 			this->addItem(QString::fromStdString(name));

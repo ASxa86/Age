@@ -24,7 +24,7 @@ namespace age
 			Property(std::string_view x);
 			virtual ~Property();
 
-			std::string getName() const;
+			const std::string& getName() const;
 			virtual void setValue(const std::string& x) = 0;
 			virtual std::string getValue() const = 0;
 
@@ -36,22 +36,22 @@ namespace age
 		class TemplateProperty : public Property
 		{
 		public:
-			TemplateProperty(T* r, std::string_view x) : Property{x}, reference{r}
+			TemplateProperty(T& r, std::string_view x) : Property{x}, reference{r}
 			{
 			}
 
 			void setValue(const std::string& x) override
 			{
-				*this->reference = StringTo<T>(x);
+				this->reference = StringTo<T>(x);
 			}
 
 			std::string getValue() const
 			{
-				return ToString(*this->reference);
+				return ToString(this->reference);
 			}
 
 		private:
-			T* reference{};
+			T& reference{};
 		};
 
 		///
@@ -67,15 +67,19 @@ namespace age
 		{
 		public:
 			Properties();
-			Properties(const Properties& x);
-			Properties(Properties&& x);
 			virtual ~Properties();
 
+			///
+			///	Define a copy constructor in order for derived types to remain copyable.
+			///	This is necessary due to the use of unique_ptrs.
+			///
+			Properties(const Properties& x);
+			Properties(Properties&& x);
 			Properties& operator=(const Properties& x);
 			Properties& operator=(Properties&& x);
 
 			template <typename T>
-			void addProperty(T* p, std::string_view name)
+			void addProperty(T& p, std::string_view name)
 			{
 				this->properties.emplace_back(std::make_unique<TemplateProperty<T>>(p, name));
 			}
