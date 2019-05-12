@@ -26,6 +26,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	EventQueue.h
 	Export.h
 	Factory.h
+	MetaEnum.h
 	Object.h
 	Parser.h
 	Pimpl.h

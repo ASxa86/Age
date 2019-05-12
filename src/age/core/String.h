@@ -2,7 +2,9 @@
 
 #include <age/core/Export.h>
 #include <array>
+#include <boost/type_traits.hpp>
 #include <charconv>
+#include <sstream>
 #include <string>
 
 namespace age
@@ -21,9 +23,15 @@ namespace age
 				{
 					return std::string(buffer.data(), p - buffer.data());
 				}
-			}
 
-			return {};
+				return {};
+			}
+			else if constexpr(boost::has_left_shift<std::ostream, T>::value == true)
+			{
+				std::stringstream ss;
+				ss << x;
+				return ss.str();
+			}
 		}
 
 		template <typename T>
@@ -38,9 +46,16 @@ namespace age
 				{
 					return t;
 				}
-			}
 
-			return {};
+				return t;
+			}
+			else if constexpr(boost::has_right_shift<std::istream, T>::value == true)
+			{
+				T t{};
+				std::istringstream ss{x};
+				ss >> t;
+				return t;
+			}
 		}
 	}
 }
