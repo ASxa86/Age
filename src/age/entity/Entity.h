@@ -9,6 +9,7 @@ namespace age
 {
 	namespace entity
 	{
+		class Component;
 		class EntityManager;
 
 		///
@@ -83,7 +84,7 @@ namespace age
 			///
 			///	Get a list of type info of all components that exist on the entity.
 			///
-			std::vector<std::type_index> getComponentTypes() const;
+			std::vector<Component*> getComponents() const;
 
 			///
 			///	Check if this entity has a component.

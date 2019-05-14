@@ -8,6 +8,8 @@ namespace age
 {
 	namespace entity
 	{
+		class Component;
+
 		///
 		///	\class BasePool
 		///
@@ -25,6 +27,7 @@ namespace age
 			BasePool();
 			virtual ~BasePool();
 
+			virtual Component* component(std::size_t) = 0;
 			virtual bool test(std::size_t) const = 0;
 			virtual void destroy(std::size_t) = 0;
 		};
@@ -46,6 +49,18 @@ namespace age
 			T& operator[](std::size_t x)
 			{
 				return this->pool[this->indices[x]];
+			}
+
+			Component* component([[maybe_unused]] std::size_t x)
+			{
+				if constexpr(std::is_base_of<Component, T>::value == true)
+				{
+					return &this->pool[this->indices[x]];
+				}
+				else
+				{
+					return nullptr;
+				}
 			}
 
 			bool test(std::size_t x) const override

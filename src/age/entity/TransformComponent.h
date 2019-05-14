@@ -1,5 +1,7 @@
 #pragma once
 
+#include <age/core/MetaEnum.h>
+#include <age/entity/Component.h>
 #include <age/entity/Export.h>
 #include <age/math/Vector.h>
 
@@ -16,10 +18,12 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		struct TransformComponent
+		struct AGE_ENTITY_EXPORT TransformComponent : public Component
 		{
-			age::math::Vector Position;
-			double Rotation;
+			TransformComponent();
+
+			age::math::Vector Position{};
+			double Rotation{};
 		};
 	}
 }

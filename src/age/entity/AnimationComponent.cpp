@@ -4,6 +4,10 @@ using namespace age::entity;
 
 AnimationComponent::AnimationComponent() : currentAnimation{nullptr}, elapsed{0}, length{0}, speed{1.0}, isPlaying{false}
 {
+	this->addProperty(this->elapsed, "elapsed");
+	this->addProperty(this->length, "length");
+	this->addProperty(this->speed, "speed");
+	this->addProperty(this->isPlaying, "isPlaying");
 }
 
 void AnimationComponent::play()

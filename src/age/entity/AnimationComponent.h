@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/entity/Animation.h>
+#include <age/entity/Component.h>
 #include <age/entity/Export.h>
 #include <deque>
 
@@ -17,7 +18,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_ENTITY_EXPORT AnimationComponent
+		class AGE_ENTITY_EXPORT AnimationComponent : public Component
 		{
 		public:
 			AnimationComponent();
@@ -120,12 +121,12 @@ namespace age
 		private:
 			// Use deque in order to create pointers to the animation without losing
 			// their reference due to container resize that would occur with vector.
-			std::deque<Animation> animations;
-			Animation* currentAnimation;
-			std::chrono::microseconds elapsed;
-			std::chrono::microseconds length;
-			double speed;
-			bool isPlaying;
+			std::deque<Animation> animations{};
+			Animation* currentAnimation{};
+			std::chrono::microseconds elapsed{};
+			std::chrono::microseconds length{};
+			double speed{};
+			bool isPlaying{};
 		};
 	}
 }

@@ -35,17 +35,18 @@ bool Entity::operator!=(const Entity& x) const
 	return !(*this == x);
 }
 
-std::vector<std::type_index> Entity::getComponentTypes() const
+std::vector<Component*> Entity::getComponents() const
 {
-	std::vector<std::type_index> v;
+	std::vector<Component*> v;
 
 	const auto& pools = this->manager->getPools();
 
 	for(const auto& [type, pool] : pools)
 	{
-		if(pool->test(this->id) == true)
+		const auto c = pool->component(this->id);
+		if(c != nullptr)
 		{
-			v.push_back(type);
+			v.push_back(c);
 		}
 	}
 

@@ -13,6 +13,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	AnimationChannel.h
 	AnimationComponent.h
 	AnimationSystem.h
+	Component.h
+	ComponentFactory.h
 	ComponentPool.h
 	Entity.h
 	EntityEvent.h
@@ -27,11 +29,15 @@ target_sources(${PROJECT_NAME} PRIVATE
 	AnimationChannel.cpp
 	AnimationComponent.cpp
 	AnimationSystem.cpp
+	Component.cpp
+	ComponentFactory.cpp
+	ComponentFactoryRegister.cpp
 	ComponentPool.cpp
 	Entity.cpp
 	EntityEvent.cpp
 	EntityManager.cpp
 	System.cpp
+	TransformComponent.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} AgeCore AgeMath)

@@ -56,5 +56,7 @@ namespace age
 		};
 
 		AGE_MATH_EXPORT double distance(const Vector& a, const Vector& b);
+		AGE_MATH_EXPORT std::ostream& operator<<(std::ostream& os, Vector x);
+		AGE_MATH_EXPORT std::istream& operator>>(std::istream& is, Vector& x);
 	}
 }

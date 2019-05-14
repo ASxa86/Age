@@ -3,6 +3,8 @@
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
+#include <age/entity/Component.h>
+#include <age/entity/ComponentFactory.h>
 #include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
 #include <age/tools/editor/Application.h>
@@ -90,11 +92,11 @@ void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
 	item->setIcon(0, QIcon(":icons/pawn.png"));
 	item->setFlags(item->flags() | Qt::ItemFlag::ItemIsEditable);
 
-	auto componentTypes = x.getComponentTypes();
+	auto components = x.getComponents();
 
-	for(const auto& type : componentTypes)
+	for(const auto& component : components)
 	{
-		this->addComponent(item, type);
+		this->addComponent(item, typeid(*component));
 	}
 }
 
@@ -115,8 +117,8 @@ void TreeWidgetEntity::addComponent(const age::entity::Entity& e, const std::typ
 
 void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, const std::type_index& t)
 {
-	auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
-	auto name = Property::Alias[t];
+	const auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
+	const auto name = ComponentFactory::Instance().alias(t);
 	componentItem->setText(0, QString::fromStdString(name));
 	item->setExpanded(true);
 }
