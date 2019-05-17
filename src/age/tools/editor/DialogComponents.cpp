@@ -1,8 +1,8 @@
 #include <age/tools/editor/DialogComponents.h>
 
+#include <age/entity/ComponentFactory.h>
 #include <age/entity/Entity.h>
 #include <age/tools/editor/ListWidgetComponents.h>
-#include <age/tools/editor/Properties.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QPushButton>
 
@@ -21,8 +21,7 @@ DialogComponents::DialogComponents(age::entity::Entity e, QWidget* parent) : QDi
 
 		if(items.empty() == false)
 		{
-			Property p(this->entity);
-			p.addComponent(items[0]->text().toStdString());
+			ComponentFactory::Instance().add(this->entity, items[0]->text().toStdString());
 		}
 
 		this->close();

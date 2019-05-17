@@ -19,11 +19,11 @@ namespace
 		{
 		}
 
-		void setValue(const rttr::argument&) override
+		void setValue(const std::string&) override
 		{
 		}
 
-		rttr::argument getValue() const override
+		std::string getValue() const override
 		{
 			return {};
 		}
@@ -39,7 +39,7 @@ TEST(WidgetPropertyFactory, Create)
 {
 	EXPECT_NO_THROW((WidgetPropertyFactory::RegisterType<Widget, Property>()));
 
-	const auto widget = WidgetPropertyFactory::Instance().create(rttr::type::get<Property>());
+	const auto widget = WidgetPropertyFactory::Instance().create(typeid(Property));
 	ASSERT_TRUE(widget != nullptr);
 	EXPECT_EQ(typeid(*widget), typeid(Widget));
 }

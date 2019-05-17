@@ -1,16 +1,7 @@
 #pragma once
 
 #include <age/qt/core/Export.h>
-
-#ifdef WIN32
-#pragma warning(push, 0)
-#endif
-
-#include <rttr/registration.h>
-
-#ifdef WIN32
-#pragma warning(pop)
-#endif
+#include <string>
 
 namespace age
 {
@@ -40,12 +31,12 @@ namespace age
 				///
 				///	Override to handle applying the data contained within the given argument to a derived property widget.
 				///
-				virtual void setValue(const rttr::argument& x) = 0;
+				virtual void setValue(const std::string& x) = 0;
 
 				///
 				///	Override to handle returning the data within a property widget as a generic property argument.
 				///
-				virtual rttr::argument getValue() const = 0;
+				virtual std::string getValue() const = 0;
 			};
 		}
 	}

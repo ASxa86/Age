@@ -9,7 +9,6 @@
 #include <age/entity/EntityManager.h>
 #include <age/tools/editor/Application.h>
 #include <age/tools/editor/GUIComponent.h>
-#include <age/tools/editor/Properties.h>
 #include <QtCore/QSize>
 
 using namespace age;
@@ -153,7 +152,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& e, const 
 		{
 			auto child = item->child(i);
 
-			if(child->text(0) == QString::fromStdString(Property::Alias[t]))
+			if(child->text(0) == QString::fromStdString(ComponentFactory::Instance().alias(t)))
 			{
 				return child;
 			}

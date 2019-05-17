@@ -15,16 +15,22 @@ namespace age
 		struct AGE_ENTITY_EXPORT ComponentCreatorBase
 		{
 			virtual ~ComponentCreatorBase();
-			virtual Component* create(Entity x) const = 0;
+			virtual Component* add(Entity x) const = 0;
+			virtual void remove(Entity x) const = 0;
 		};
 
 		template <typename T>
 		struct ComponentCreator : public ComponentCreatorBase
 		{
-			Component* create(Entity x) const override
+			Component* add(Entity x) const override
 			{
 				static_assert(std::is_base_of<Component, T>::value, "T must derive from Object");
 				return &x.addComponent<T>();
+			}
+
+			void remove(Entity x) const override
+			{
+				x.removeComponent<T>();
 			}
 		};
 
@@ -41,7 +47,8 @@ namespace age
 			///
 			///	\brief Create type given typeid string.
 			///
-			Component* create(Entity x, std::string component) const;
+			Component* add(Entity x, std::string component) const;
+			void remove(Entity x, std::string component) const;
 			std::string alias(const std::type_index& x);
 
 			template <typename T>

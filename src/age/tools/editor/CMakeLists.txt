@@ -17,7 +17,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	Qt5::Core
 	Qt5::Gui
 	Qt5::Widgets
-	RTTR::Core
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -27,7 +26,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	GUIComponent.h
 	ListWidgetComponents.h
 	MainWindow.h
-	Properties.h
 	TreeWidgetEntity.h
 )
 
@@ -37,7 +35,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	DockWidgetEntity.cpp
 	ListWidgetComponents.cpp
 	MainWindow.cpp
-	Properties.cpp
 	TreeWidgetEntity.cpp
 	main.cpp
 	${QT_RESOURCES}

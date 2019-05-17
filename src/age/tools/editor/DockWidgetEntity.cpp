@@ -2,10 +2,10 @@
 
 #include <age/core/Engine.h>
 #include <age/core/PimplImpl.h>
+#include <age/entity/ComponentFactory.h>
 #include <age/entity/EntityManager.h>
 #include <age/tools/editor/Application.h>
 #include <age/tools/editor/DialogComponents.h>
-#include <age/tools/editor/Properties.h>
 #include <age/tools/editor/TreeWidgetEntity.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -63,10 +63,8 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 	this->connect(this->pimpl->contextMenu->addAction("Delete Node(s)"), &QAction::triggered, this, [this, twEntity] {
 		const auto items = twEntity->selectedItems();
 
-		// for(auto it = std::rbegin(items); it != std::rend(items); ++it)
 		for(auto item : items)
 		{
-			// const auto item = *it;
 			switch(item->type())
 			{
 				case TreeWidgetEntity::ItemType::Entity:
@@ -74,7 +72,6 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 					const auto manager = Application::Instance()->getEngine().getChild<EntityManager>();
 					auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity>();
 
-					std::cerr << "Remove: " << entity.getID() << "\n";
 					manager->destroy(entity);
 				}
 				break;
@@ -83,9 +80,7 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 				{
 					const auto parent = item->parent();
 					auto entity = parent->data(0, Qt::UserRole).value<age::entity::Entity>();
-					Property p(entity);
-					std::cerr << "Remove: " << item->text(0).toStdString() << "\n";
-					p.removeComponent(item->text(0).toStdString());
+					ComponentFactory::Instance().remove(entity, item->text(0).toStdString());
 				}
 				break;
 			}

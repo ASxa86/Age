@@ -21,7 +21,7 @@ WidgetProperty* CreatorBase::create(QWidget*) const
 
 struct WidgetPropertyFactory::Impl
 {
-	std::map<rttr::type, std::unique_ptr<CreatorBase>> factoryMap;
+	std::map<std::type_index, std::unique_ptr<CreatorBase>> factoryMap;
 	std::vector<boost::dll::shared_library> loadedLibraries;
 	std::atomic<bool> initialized{false};
 };
@@ -87,20 +87,20 @@ WidgetPropertyFactory& WidgetPropertyFactory::Instance()
 	return singleton;
 }
 
-WidgetProperty* WidgetPropertyFactory::create(const rttr::type& x, QWidget* parent) const
+WidgetProperty* WidgetPropertyFactory::create(const std::type_index& x, QWidget* parent) const
 {
 	const auto foundIt = this->pimpl->factoryMap.find(x);
 
 	if(foundIt != std::end(this->pimpl->factoryMap))
 	{
 		const auto ptr = foundIt->second.get();
-		return ptr->create();
+		return ptr->create(parent);
 	}
 
 	return nullptr;
 }
 
-void WidgetPropertyFactory::registerType(const rttr::type& x, std::unique_ptr<CreatorBase> creator)
+void WidgetPropertyFactory::registerType(const std::type_index& x, std::unique_ptr<CreatorBase> creator)
 {
 	this->pimpl->factoryMap[x] = std::move(creator);
 }

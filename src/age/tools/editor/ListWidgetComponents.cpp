@@ -1,28 +1,14 @@
+#include <age/entity/ComponentFactory.h>
 #include <age/tools/editor/ListWidgetComponents.h>
 
-#ifdef WIN32
-#pragma warning(push, 0)
-#endif
-
-#include <rttr/registration.h>
-
-#ifdef WIN32
-#pragma warning(pop)
-#endif
-
 using namespace age;
+using namespace age::entity;
 
 ListWidgetComponents::ListWidgetComponents(QWidget* parent) : QListWidget(parent)
 {
-	const auto types = rttr::type::get_types();
-
-	for(const auto& type : types)
+	for(const auto& [name, creator] : ComponentFactory::Instance().FactoryMap)
 	{
-		const auto name = type.get_name().to_string();
-		if(name.find("Component") != std::string::npos && name.find("*") == std::string::npos)
-		{
-			this->addItem(QString::fromStdString(name));
-		}
+		this->addItem(QString::fromStdString(name));
 	}
 }
 

@@ -2,8 +2,8 @@
 
 #include <age/core/Pimpl.h>
 #include <age/qt/core/Export.h>
-
 #include <age/qt/core/WidgetProperty.h>
+#include <typeindex>
 
 class QWidget;
 
@@ -56,21 +56,21 @@ namespace age
 				///
 				///	\brief Create type given typeid string.
 				///
-				WidgetProperty* create(const rttr::type& x, QWidget* parent = nullptr) const;
+				WidgetProperty* create(const std::type_index& x, QWidget* parent = nullptr) const;
 
 				template <typename T>
-				WidgetProperty* create(const rttr::type& x, QWidget* parent = nullptr) const
+				WidgetProperty* create(const std::type_index& x, QWidget* parent = nullptr) const
 				{
 					auto object = this->create(x, parent);
 					return dynamic_cast<T*>(object);
 				}
 
-				void registerType(const rttr::type& x, std::unique_ptr<CreatorBase> creator);
+				void registerType(const std::type_index& x, std::unique_ptr<CreatorBase> creator);
 
 				template <typename WidgetType, typename PropertyType>
 				static void RegisterType()
 				{
-					WidgetPropertyFactory::Instance().registerType(rttr::type::get<PropertyType>(), std::make_unique<Creator<WidgetType>>());
+					WidgetPropertyFactory::Instance().registerType(typeid(PropertyType), std::make_unique<Creator<WidgetType>>());
 				}
 
 			private:

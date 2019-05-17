@@ -1,6 +1,7 @@
 #include <age/qt/math/WidgetVector.h>
 
 #include <age/core/PimplImpl.h>
+#include <age/core/String.h>
 #include <age/math/Vector.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDoubleSpinBox>
@@ -30,14 +31,14 @@ WidgetVector::~WidgetVector()
 {
 }
 
-void WidgetVector::setValue(const rttr::argument& x)
+void WidgetVector::setValue(const std::string& x)
 {
-	const auto& vector = x.get_value<age::math::Vector>();
+	const auto vector = age::core::StringTo<Vector>(x);
 	this->pimpl->sbxX->setValue(vector.X);
 	this->pimpl->sbxY->setValue(vector.Y);
 }
 
-rttr::argument WidgetVector::getValue() const
+std::string WidgetVector::getValue() const
 {
-	return Vector{this->pimpl->sbxX->value(), this->pimpl->sbxY->value()};
+	return age::core::ToString(Vector{this->pimpl->sbxX->value(), this->pimpl->sbxY->value()});
 }

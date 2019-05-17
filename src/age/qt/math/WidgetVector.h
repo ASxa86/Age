@@ -28,8 +28,8 @@ namespace age
 				WidgetVector(QWidget* parent = nullptr);
 				virtual ~WidgetVector();
 
-				void setValue(const rttr::argument& x) override;
-				rttr::argument getValue() const override;
+				void setValue(const std::string& x) override;
+				std::string getValue() const override;
 
 			private:
 				struct Impl;

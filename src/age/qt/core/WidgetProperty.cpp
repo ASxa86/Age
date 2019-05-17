@@ -10,11 +10,11 @@ WidgetProperty::~WidgetProperty()
 {
 }
 
-void WidgetProperty::setValue(const rttr::argument&)
+void WidgetProperty::setValue(const std::string&)
 {
 }
 
-rttr::argument WidgetProperty::getValue() const
+std::string WidgetProperty::getValue() const
 {
 	return {};
 }

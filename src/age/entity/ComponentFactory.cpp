@@ -75,17 +75,28 @@ ComponentFactory& ComponentFactory::Instance()
 	return singleton;
 }
 
-Component* ComponentFactory::create(Entity x, std::string component) const
+Component* ComponentFactory::add(Entity x, std::string component) const
 {
 	const auto foundIt = this->FactoryMap.find(component);
 
 	if(foundIt != std::end(this->FactoryMap))
 	{
 		const auto ptr = foundIt->second.get();
-		return ptr->create(x);
+		return ptr->add(x);
 	}
 
 	return nullptr;
+}
+
+void ComponentFactory::remove(Entity x, std::string component) const
+{
+	const auto foundIt = this->FactoryMap.find(component);
+
+	if(foundIt != std::end(this->FactoryMap))
+	{
+		const auto ptr = foundIt->second.get();
+		return ptr->remove(x);
+	}
 }
 
 std::string ComponentFactory::alias(const std::type_index& x)
