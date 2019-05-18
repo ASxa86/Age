@@ -1,23 +1,22 @@
+#include <age/entity/Component.h>
 #include <age/entity/EntityManager.h>
 #include <gtest/gtest.h>
 
-#include <entt/entt.hpp>
-
 using namespace age::entity;
 
-struct Position
+struct Position : public Component
 {
 	double x{};
 	double y{};
 };
 
-struct Velocity
+struct Velocity : public Component
 {
 	double x{};
 	double y{};
 };
 
-struct Drawable
+struct Drawable : public Component
 {
 	std::string draw{};
 };

@@ -15,6 +15,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	ComponentFactoryRegister.cpp
+	WaypointComponent.cpp
 	WaypointSystem.cpp
 )
 

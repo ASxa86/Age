@@ -237,15 +237,15 @@ void PhysicsSystem::initialize()
 
 				case EntityEvent::Type::ComponentAdded:
 				{
-					if(entityEvt->getComponent<KinematicComponent>() != nullptr)
+					if(dynamic_cast<KinematicComponent*>(entityEvt->Component) != nullptr)
 					{
 						this->pimpl->addBody(entityEvt->getEntity());
 					}
-					else if(entityEvt->getComponent<BoxCollisionComponent>() != nullptr)
+					else if(dynamic_cast<BoxCollisionComponent*>(entityEvt->Component) != nullptr)
 					{
 						this->pimpl->addBox(entityEvt->getEntity());
 					}
-					else if(entityEvt->getComponent<CircleCollisionComponent>() != nullptr)
+					else if(dynamic_cast<CircleCollisionComponent*>(entityEvt->Component) != nullptr)
 					{
 						this->pimpl->addCircle(entityEvt->getEntity());
 					}
@@ -254,13 +254,13 @@ void PhysicsSystem::initialize()
 
 				case EntityEvent::Type::ComponentRemoved:
 				{
-					if(entityEvt->getComponent<KinematicComponent>() != nullptr)
+					if(dynamic_cast<KinematicComponent*>(entityEvt->Component) != nullptr)
 					{
 						this->pimpl->removeBody(entityEvt->getEntity());
 					}
-					else if(entityEvt->getComponent<BoxCollisionComponent>() != nullptr
-							|| entityEvt->getComponent<CircleCollisionComponent>() != nullptr
-							|| entityEvt->getComponent<EdgeCollisionComponent>() != nullptr)
+					else if(dynamic_cast<BoxCollisionComponent*>(entityEvt->Component) != nullptr
+							|| dynamic_cast<CircleCollisionComponent*>(entityEvt->Component) != nullptr
+							|| dynamic_cast<EdgeCollisionComponent*>(entityEvt->Component) != nullptr)
 					{
 						this->pimpl->removeFixture(entityEvt->getEntity());
 					}

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <string>
 
 namespace age
@@ -13,7 +14,7 @@ namespace age
 	///
 	///	\date March 9, 2019
 	///
-	struct GUIComponent
+	struct GUIComponent : public age::entity::Component
 	{
 		std::string ID;
 	};

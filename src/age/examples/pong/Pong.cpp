@@ -71,7 +71,7 @@ Pong::Pong()
 	rec->setSize({1.0, 3.0});
 	rec->setFillColor(sf::Color::White);
 	rec->setOrigin(rec->getSize().x / 2.0f, rec->getSize().y / 2.0f);
-	paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
+	// paddle.addComponent<std::shared_ptr<sf::Drawable>>(rec);
 
 	auto& kinematicP1 = paddle.addComponent<KinematicComponent>();
 	kinematicP1.BodyType = KinematicComponent::Type::Kinematic;
@@ -101,7 +101,7 @@ Pong::Pong()
 	rec2->setSize({1.0, 3.0});
 	rec2->setFillColor(sf::Color::White);
 	rec2->setOrigin(rec2->getSize().x / 2, rec2->getSize().y / 2);
-	paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
+	// paddle2.addComponent<std::shared_ptr<sf::Drawable>>(rec2);
 	auto& bodyP2 = paddle2.addComponent<KinematicComponent>();
 	bodyP2.BodyType = KinematicComponent::Type::Kinematic;
 
@@ -119,8 +119,7 @@ Pong::Pong()
 	circle->setRadius(0.5f);
 	circle->setFillColor(sf::Color::White);
 	circle->setOrigin(circle->getRadius(), circle->getRadius());
-	ball.addComponent<std::shared_ptr<sf::Drawable>>(circle);
-	ball.addComponent<int>();
+	// ball.addComponent<std::shared_ptr<sf::Drawable>>(circle);
 
 	auto& bodyBall = ball.addComponent<KinematicComponent>();
 	bodyBall.BodyType = KinematicComponent::Type::Dynamic;
@@ -184,7 +183,7 @@ Pong::Pong()
 	text1->setCharacterSize(60);
 	auto tb1 = text1->getLocalBounds();
 	text1->setOrigin(tb1.width / 2.0f, tb1.height / 2.0f);
-	score1.addComponent<std::shared_ptr<sf::Text>>(text1);
+	// score1.addComponent<std::shared_ptr<sf::Text>>(text1);
 	auto& st1 = score1.addComponent<TransformComponent>();
 	st1.Position = {window->getWidth() / 4.0, 100};
 
@@ -196,14 +195,14 @@ Pong::Pong()
 	text2->setCharacterSize(60);
 	auto tb2 = text2->getLocalBounds();
 	text2->setOrigin(tb2.width / 2.0f, tb2.height / 2.0f);
-	score2.addComponent<std::shared_ptr<sf::Text>>(text2);
+	// score2.addComponent<std::shared_ptr<sf::Text>>(text2);
 	auto& st2 = score2.addComponent<TransformComponent>();
 
 	st2.Position = {window->getWidth() - st1.Position.X, 100};
 
 	auto& config = Configuration::Instance();
 	this->pimpl->soundBuffer.loadFromFile((config.getPathData() / "audio/ball.wav").string());
-	ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);
+	// ball.addComponent<sf::Sound>(this->pimpl->soundBuffer);
 
 	// Handle what happens when the ball crosses behind the paddles.
 	// Handle playing sounds when the ball collides with the paddles.

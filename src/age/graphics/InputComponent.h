@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <age/entity/EntityManager.h>
 #include <age/graphics/Export.h>
 #include <SFML/Window/Keyboard.hpp>
@@ -22,7 +23,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_GRAPHICS_EXPORT InputComponent
+		class AGE_GRAPHICS_EXPORT InputComponent : public age::entity::Component
 		{
 		public:
 			InputComponent();

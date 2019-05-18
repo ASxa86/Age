@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <age/math/Vector.h>
 #include <age/physics/Export.h>
 
@@ -7,7 +8,7 @@ namespace age
 {
 	namespace physics
 	{
-		struct KinematicComponent
+		struct KinematicComponent : public age::entity::Component
 		{
 			///
 			///	\enum BodyType

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <age/graphics/Export.h>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -18,7 +19,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_GRAPHICS_EXPORT SpriteComponent
+		class AGE_GRAPHICS_EXPORT SpriteComponent : public age::entity::Component
 		{
 		public:
 			SpriteComponent();

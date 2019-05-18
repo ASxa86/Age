@@ -37,11 +37,11 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 					break;
 
 				case EntityEvent::Type::ComponentAdded:
-					this->addComponent(evt->getEntity(), evt->getComponentType());
+					this->addComponent(evt->getEntity(), evt->Component);
 					break;
 
 				case EntityEvent::Type::ComponentRemoved:
-					this->removeComponent(evt->getEntity(), evt->getComponentType());
+					this->removeComponent(evt->getEntity(), evt->Component);
 					break;
 
 				default:
@@ -95,7 +95,7 @@ void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
 
 	for(const auto& component : components)
 	{
-		this->addComponent(item, typeid(*component));
+		this->addComponent(item, component);
 	}
 }
 
@@ -104,27 +104,27 @@ void TreeWidgetEntity::removeEntity(const age::entity::Entity& x)
 	delete this->findItem(x);
 }
 
-void TreeWidgetEntity::addComponent(const age::entity::Entity& e, const std::type_index& t)
+void TreeWidgetEntity::addComponent(const age::entity::Entity& e, age::entity::Component* c)
 {
 	auto item = this->findItem(e);
 
 	if(item != nullptr)
 	{
-		this->addComponent(item, t);
+		this->addComponent(item, c);
 	}
 }
 
-void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, const std::type_index& t)
+void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, age::entity::Component* c)
 {
 	const auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
-	const auto name = ComponentFactory::Instance().alias(t);
+	const auto name = ComponentFactory::Instance().alias(typeid(*c));
 	componentItem->setText(0, QString::fromStdString(name));
 	item->setExpanded(true);
 }
 
-void TreeWidgetEntity::removeComponent(const age::entity::Entity& e, const std::type_index& t)
+void TreeWidgetEntity::removeComponent(const age::entity::Entity& e, age::entity::Component* c)
 {
-	delete this->findItem(e, t);
+	delete this->findItem(e, c);
 }
 
 QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& x)
@@ -142,7 +142,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& x)
 	return nullptr;
 }
 
-QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& e, const std::type_index& t)
+QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& e, age::entity::Component* c)
 {
 	auto item = this->findItem(e);
 
@@ -152,7 +152,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& e, const 
 		{
 			auto child = item->child(i);
 
-			if(child->text(0) == QString::fromStdString(ComponentFactory::Instance().alias(t)))
+			if(child->text(0) == QString::fromStdString(ComponentFactory::Instance().alias(typeid(*c))))
 			{
 				return child;
 			}

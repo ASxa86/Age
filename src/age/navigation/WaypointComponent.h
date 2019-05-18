@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <age/math/Vector.h>
 #include <age/navigation/Export.h>
 #include <vector>
@@ -17,7 +18,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		struct WaypointComponent
+		struct WaypointComponent : public age::entity::Component
 		{
 			///
 			///	\class Waypoint

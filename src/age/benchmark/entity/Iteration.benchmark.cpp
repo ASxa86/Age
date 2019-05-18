@@ -1,6 +1,6 @@
-#include <celero/Celero.h>
-
+#include <age/entity/Component.h>
 #include <age/entity/EntityManager.h>
+#include <celero/Celero.h>
 #include <entt/entt.hpp>
 #include "Object.h"
 
@@ -28,13 +28,13 @@ namespace
 		{{10, 1'000'000}, {100, 100'000}, {1'000, 10'000}, {10'000, 1'000}, {100'000, 100}, {1'000'000, 10}}};
 	constexpr double Time{0.01};
 
-	struct Pos
+	struct Pos : public age::entity::Component
 	{
 		double x{};
 		double y{};
 	};
 
-	struct Vel
+	struct Vel : public age::entity::Component
 	{
 		double x{1.0};
 		double y{2.0};

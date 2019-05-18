@@ -1,13 +1,14 @@
 #include <gtest/gtest.h>
 
 #include <age/core/EventQueue.h>
+#include <age/entity/Component.h>
 #include <age/entity/EntityEvent.h>
 #include <age/entity/EntityManager.h>
 
 using namespace age::core;
 using namespace age::entity;
 
-struct Value
+struct Value : public Component
 {
 	int v{};
 };
@@ -20,7 +21,7 @@ TEST(EntityEvent, EntityAdded)
 		ASSERT_TRUE(entityEvent != nullptr);
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::EntityAdded);
-		EXPECT_TRUE(entityEvent->getComponent<Value>() == nullptr);
+		EXPECT_TRUE(dynamic_cast<Value*>(entityEvent->Component) == nullptr);
 		EXPECT_FALSE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
@@ -44,7 +45,7 @@ TEST(EntityEvent, EntityRemoved)
 		ASSERT_TRUE(entityEvent != nullptr);
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::EntityRemoved);
-		EXPECT_TRUE(entityEvent->getComponent<Value>() == nullptr);
+		EXPECT_TRUE(dynamic_cast<Value*>(entityEvent->Component) == nullptr);
 		EXPECT_FALSE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
@@ -71,7 +72,7 @@ TEST(EntityEvent, ComponentAdded)
 		ASSERT_TRUE(entityEvent != nullptr);
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::ComponentAdded);
-		EXPECT_TRUE(entityEvent->getComponent<Value>() != nullptr);
+		EXPECT_TRUE(dynamic_cast<Value*>(entityEvent->Component) != nullptr);
 		EXPECT_TRUE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});
@@ -99,7 +100,7 @@ TEST(EntityEvent, ComponentRemoved)
 		ASSERT_TRUE(entityEvent != nullptr);
 
 		EXPECT_EQ(entityEvent->getType(), EntityEvent::Type::ComponentRemoved);
-		EXPECT_TRUE(entityEvent->getComponent<Value>() != nullptr);
+		EXPECT_TRUE(dynamic_cast<Value*>(entityEvent->Component) != nullptr);
 		EXPECT_TRUE(entityEvent->getEntity().hasComponent<Value>());
 		eventReceived = true;
 	});

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <age/entity/Entity.h>
 
 namespace age
@@ -15,7 +16,7 @@ namespace age
 		///
 		///	\date July 29, 2018
 		///
-		class PaddleAIComponent
+		class PaddleAIComponent : public age::entity::Component
 		{
 		public:
 			PaddleAIComponent();

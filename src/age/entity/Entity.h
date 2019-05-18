@@ -106,6 +106,8 @@ namespace age
 template <typename T, typename... Args>
 T& age::entity::Entity::addComponent(Args&&... args)
 {
+	static_assert(std::is_base_of<Component, T>::value, "T must derive from Component.");
+
 	const auto pool = this->manager->template getPool<T>();
 
 	if(pool->test(this->id) == false)
@@ -113,7 +115,7 @@ T& age::entity::Entity::addComponent(Args&&... args)
 		pool->construct(this->id, std::forward<Args>(args)...);
 
 		auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentAdded);
-		event->setComponent(&(*pool)[this->id]);
+		event->Component = &(*pool)[this->id];
 		age::core::EventQueue::Instance().sendEvent(std::move(event));
 	}
 
@@ -146,7 +148,7 @@ void age::entity::Entity::removeComponent()
 	if(pool->test(this->id) == true)
 	{
 		auto event = std::make_unique<EntityEvent>(*this, EntityEvent::Type::ComponentRemoved);
-		event->setComponent(&(*pool)[this->id]);
+		event->Component = &(*pool)[this->id];
 		age::core::EventQueue::Instance().sendEvent(std::move(event));
 		pool->destroy(this->id);
 	}

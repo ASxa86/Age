@@ -1,5 +1,7 @@
 #pragma once
 
+#include <age/entity/Component.h>
+
 namespace age
 {
 	namespace physics
@@ -13,7 +15,7 @@ namespace age
 		///
 		///	\date February 26, 2019
 		///
-		struct CollisionComponent
+		struct CollisionComponent : public age::entity::Component
 		{
 			///
 			///	Restitution is used to make objects bounce.The restitution value is usually set to be between 0 and 1.

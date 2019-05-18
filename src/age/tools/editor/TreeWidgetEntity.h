@@ -8,6 +8,7 @@ namespace age
 {
 	namespace entity
 	{
+		class Component;
 		class Entity;
 	}
 
@@ -52,17 +53,17 @@ namespace age
 		///
 		///	Add a tree node to the list under the node associated with the given entity.
 		///
-		void addComponent(const age::entity::Entity& x, const std::type_index& t);
+		void addComponent(const age::entity::Entity& x, age::entity::Component* c);
 
 		///
 		///	Add a tree node to the list under the given tree node.
 		///
-		void addComponent(QTreeWidgetItem* item, const std::type_index& t);
+		void addComponent(QTreeWidgetItem* item, age::entity::Component* c);
 
 		///
 		///	Remove the associated tree node for the given component type of the given entity.
 		///
-		void removeComponent(const age::entity::Entity& x, const std::type_index& t);
+		void removeComponent(const age::entity::Entity& x, age::entity::Component* c);
 
 		///
 		///	Get the tree node associated with the given entity.
@@ -72,7 +73,7 @@ namespace age
 		///
 		///	Get the tree node associated with the given component type of the given entity.
 		///
-		QTreeWidgetItem* findItem(const age::entity::Entity& x, const std::type_index& t);
+		QTreeWidgetItem* findItem(const age::entity::Entity& x, age::entity::Component* c);
 
 		///
 		///	Overload the default size hint to adjust the default size within an application.

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <age/entity/Component.h>
 #include <age/graphics/Export.h>
 #include <age/terrain/TileMap.h>
 #include <SFML/Graphics/Drawable.hpp>
@@ -10,7 +11,7 @@ namespace age
 {
 	namespace graphics
 	{
-		class AGE_GRAPHICS_EXPORT TileMapComponent : public sf::Drawable
+		class AGE_GRAPHICS_EXPORT TileMapComponent : public age::entity::Component, public sf::Drawable
 		{
 		public:
 			TileMapComponent();
