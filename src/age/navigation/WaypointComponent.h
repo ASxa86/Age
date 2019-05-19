@@ -18,7 +18,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		struct WaypointComponent : public age::entity::Component
+		struct AGE_NAVIGATION_EXPORT WaypointComponent : public age::entity::Component
 		{
 			///
 			///	\class Waypoint
@@ -37,6 +37,8 @@ namespace age
 				///
 				bool Active{false};
 			};
+
+			WaypointComponent();
 
 			///
 			///	List of waypoints managed by this component.

@@ -15,13 +15,16 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Export.h
 	TableModelProperties.h
 	WidgetProperty.h
+	WidgetPropertyBool.h
 	WidgetPropertyFactory.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
 	DelegateWidgetProperty.cpp
+	FactoryRegister.cpp
 	TableModelProperties.cpp
 	WidgetProperty.cpp
+	WidgetPropertyBool.cpp
 	WidgetPropertyFactory.cpp
 )
 

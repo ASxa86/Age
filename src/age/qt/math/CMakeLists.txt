@@ -16,8 +16,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	FactoryRegister.cpp
 	WidgetVector.cpp
-	Plugin.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

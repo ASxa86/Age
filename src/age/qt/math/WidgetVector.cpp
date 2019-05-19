@@ -6,6 +6,7 @@
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QMenu>
 
 using namespace age::core::qt;
 using namespace age::math::qt;
@@ -18,13 +19,21 @@ struct WidgetVector::Impl
 
 WidgetVector::WidgetVector(QWidget* parent) : WidgetProperty(parent), pimpl()
 {
-	const auto hLayout = new QHBoxLayout(this);
-	hLayout->setMargin(0);
+	const auto vLayout = new QVBoxLayout(this);
+	vLayout->setMargin(0);
+
+	auto menu = new QMenu();
+	vLayout->addWidget(menu);
+
+	const auto hLayout = new QHBoxLayout(menu);
 
 	hLayout->addWidget(new QLabel("X:"));
 	hLayout->addWidget(this->pimpl->sbxX);
 	hLayout->addWidget(new QLabel("Y:"));
 	hLayout->addWidget(this->pimpl->sbxY);
+
+	this->connect(this->pimpl->sbxX, &QSpinBox::editingFinished, this, &WidgetProperty::editingFinished);
+	this->connect(this->pimpl->sbxY, &QSpinBox::editingFinished, this, &WidgetProperty::editingFinished);
 }
 
 WidgetVector::~WidgetVector()
