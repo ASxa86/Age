@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/core/Pimpl.h>
+#include <age/entity/Component.h>
 #include <QtWidgets/QApplication>
 
 namespace age
@@ -21,6 +22,8 @@ namespace age
 	///
 	class Application final : public QApplication
 	{
+		Q_OBJECT
+
 	public:
 		Application(int argc, char** argv);
 		~Application();
@@ -34,6 +37,9 @@ namespace age
 		///	Get the core game engine for the application.
 		///
 		age::core::Engine& getEngine();
+
+	signals:
+		void componentSelected(age::entity::Component*);
 
 	private:
 		struct Impl;

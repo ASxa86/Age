@@ -12,10 +12,10 @@ namespace
 	{
 	};
 
-	class Widget : public QWidget, public WidgetProperty
+	class Widget : public WidgetProperty
 	{
 	public:
-		Widget(QWidget* parent) : QWidget(parent), WidgetProperty()
+		Widget(QWidget* parent) : WidgetProperty(parent)
 		{
 		}
 

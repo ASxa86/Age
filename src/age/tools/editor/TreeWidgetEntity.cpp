@@ -16,11 +16,13 @@ using namespace age::core;
 using namespace age::entity;
 
 Q_DECLARE_METATYPE(age::entity::Entity)
+Q_DECLARE_METATYPE(age::entity::Component*)
 
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
 	ComponentFactory::RegisterType<GUIComponent>("GUIComponent");
 	qRegisterMetaType<age::entity::Entity>();
+	qRegisterMetaType<age::entity::Component*>();
 
 	EventQueue::Instance().addEventHandler([this](Event* x) {
 		auto evt = dynamic_cast<EntityEvent*>(x);
@@ -61,6 +63,14 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 				auto& gui = entity.addComponent<GUIComponent>();
 				gui.ID = item->text(0).toStdString();
 			}
+		}
+	});
+
+	this->connect(this, &QTreeWidget::itemClicked, this, [this](QTreeWidgetItem* item) {
+		if(item->type() == ItemType::Component)
+		{
+			auto component = item->data(0, Qt::UserRole).value<age::entity::Component*>();
+			Application::Instance()->componentSelected(component);
 		}
 	});
 
@@ -120,6 +130,7 @@ void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, age::entity::Componen
 	const auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
 	const auto name = ComponentFactory::Instance().alias(typeid(*c));
 	componentItem->setText(0, QString::fromStdString(name));
+	componentItem->setData(0, Qt::UserRole, QVariant::fromValue(c));
 	item->setExpanded(true);
 }
 

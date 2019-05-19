@@ -20,7 +20,7 @@ namespace age
 			///
 			///	\author Aaron Shelley
 			///
-			class AGE_MATH_QT_EXPORT WidgetVector : public QWidget, public age::core::qt::WidgetProperty
+			class AGE_MATH_QT_EXPORT WidgetVector : public age::core::qt::WidgetProperty
 			{
 				Q_OBJECT
 

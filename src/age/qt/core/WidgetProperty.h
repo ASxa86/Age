@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/qt/core/Export.h>
+#include <QtWidgets/QWidget>
 #include <string>
 
 namespace age
@@ -22,10 +23,12 @@ namespace age
 			///
 			///	\date March 15, 2019
 			///
-			class AGE_CORE_QT_EXPORT WidgetProperty
+			class AGE_CORE_QT_EXPORT WidgetProperty : public QWidget
 			{
+				Q_OBJECT
+
 			public:
-				WidgetProperty();
+				WidgetProperty(QWidget* parent = nullptr);
 				virtual ~WidgetProperty() = 0;
 
 				///
@@ -37,6 +40,9 @@ namespace age
 				///	Override to handle returning the data within a property widget as a generic property argument.
 				///
 				virtual std::string getValue() const = 0;
+
+			signals:
+				void editingFinished();
 			};
 		}
 	}

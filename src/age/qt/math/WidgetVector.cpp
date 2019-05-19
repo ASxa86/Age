@@ -16,7 +16,7 @@ struct WidgetVector::Impl
 	QDoubleSpinBox* sbxY{new QDoubleSpinBox()};
 };
 
-WidgetVector::WidgetVector(QWidget* parent) : QWidget(parent), WidgetProperty(), pimpl()
+WidgetVector::WidgetVector(QWidget* parent) : WidgetProperty(parent), pimpl()
 {
 	const auto hLayout = new QHBoxLayout(this);
 	hLayout->setMargin(0);

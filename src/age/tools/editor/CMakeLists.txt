@@ -10,6 +10,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	AgeCore
+	AgeCoreQt
 	AgeEntity
 	AgeGraphics
 	AgePhysics
@@ -22,6 +23,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 target_sources(${PROJECT_NAME} PRIVATE
 	Application.h
 	DialogComponents.h
+	DockWidgetComponent.h
 	DockWidgetEntity.h
 	GUIComponent.h
 	ListWidgetComponents.h
@@ -32,6 +34,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_sources(${PROJECT_NAME} PRIVATE
 	Application.cpp
 	DialogComponents.cpp
+	DockWidgetComponent.cpp
 	DockWidgetEntity.cpp
 	ListWidgetComponents.cpp
 	MainWindow.cpp

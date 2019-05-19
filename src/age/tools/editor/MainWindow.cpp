@@ -4,6 +4,7 @@
 #include <age/core/PimplImpl.h>
 #include <age/entity/EntityManager.h>
 #include <age/tools/editor/Application.h>
+#include <age/tools/editor/DockWidgetComponent.h>
 #include <age/tools/editor/DockWidgetEntity.h>
 
 using namespace age;
@@ -21,6 +22,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), pimpl()
 	this->setCentralWidget(new QWidget());
 
 	this->addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, new DockWidgetEntity());
+	this->addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, new DockWidgetComponent());
 }
 
 MainWindow::~MainWindow()

@@ -2,7 +2,7 @@
 
 using namespace age::core::qt;
 
-WidgetProperty::WidgetProperty()
+WidgetProperty::WidgetProperty(QWidget* parent) : QWidget(parent)
 {
 }
 

@@ -3,6 +3,7 @@
 #include <age/core/Export.h>
 #include <age/core/String.h>
 #include <memory>
+#include <typeinfo>
 #include <vector>
 
 namespace age
@@ -25,6 +26,7 @@ namespace age
 			virtual ~Property();
 
 			const std::string& getName() const;
+			virtual const std::type_info& getTypeInfo() const = 0;
 			virtual void setValue(const std::string& x) = 0;
 			virtual std::string getValue() const = 0;
 
@@ -38,6 +40,11 @@ namespace age
 		public:
 			TemplateProperty(T& r, std::string_view x) : Property{x}, reference{r}
 			{
+			}
+
+			const std::type_info& getTypeInfo() const override
+			{
+				return typeid(this->reference);
 			}
 
 			void setValue(const std::string& x) override
