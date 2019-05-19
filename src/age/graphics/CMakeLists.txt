@@ -30,6 +30,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	ComponentFactoryRegister.cpp
 	DrawableSystem.cpp
 	InputComponent.cpp
 	KeyEvent.cpp

@@ -43,10 +43,14 @@ std::vector<Component*> Entity::getComponents() const
 
 	for(const auto& [type, pool] : pools)
 	{
-		const auto c = pool->component(this->id);
-		if(c != nullptr)
+		if(pool->test(this->id) == true)
 		{
-			v.push_back(c);
+			const auto c = pool->component(this->id);
+
+			if(c != nullptr)
+			{
+				v.push_back(c);
+			}
 		}
 	}
 

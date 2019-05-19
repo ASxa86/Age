@@ -19,6 +19,7 @@ Q_DECLARE_METATYPE(age::entity::Entity)
 
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
+	ComponentFactory::RegisterType<GUIComponent>("GUIComponent");
 	qRegisterMetaType<age::entity::Entity>();
 
 	EventQueue::Instance().addEventHandler([this](Event* x) {
@@ -63,7 +64,7 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 		}
 	});
 
-	auto manager = Application::Instance()->getEngine().getChild<EntityManager>();
+	const auto manager = Application::Instance()->getEngine().getChild<EntityManager>();
 
 	if(manager != nullptr)
 	{
