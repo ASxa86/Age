@@ -1,6 +1,7 @@
 project(TestAgeCoreQt)
 
 set(TARGET_SRC
+	ComboBoxEnum.test.cpp
 	main.cpp
 	WidgetPropertyFactory.test.cpp
 )

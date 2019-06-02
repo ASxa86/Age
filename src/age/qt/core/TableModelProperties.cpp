@@ -1,3 +1,4 @@
+#include <age/core/MagicEnum.h>
 #include <age/core/Properties.h>
 #include <age/core/String.h>
 #include <age/qt/core/TableModelProperties.h>
@@ -19,7 +20,7 @@ int TableModelProperties::rowCount(const QModelIndex&) const
 
 int TableModelProperties::columnCount(const QModelIndex&) const
 {
-	return static_cast<int>(Column_internal_size());
+	return static_cast<int>(magic_enum::enum_count<Column>());
 }
 
 QVariant TableModelProperties::headerData(int section, Qt::Orientation orientation, int role) const

@@ -11,6 +11,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	ComboBoxEnum.h
 	DelegateWidgetProperty.h
 	Export.h
 	TableModelProperties.h
@@ -20,6 +21,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	ComboBoxEnum.cpp
 	DelegateWidgetProperty.cpp
 	FactoryRegister.cpp
 	TableModelProperties.cpp

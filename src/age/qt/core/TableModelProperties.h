@@ -1,6 +1,5 @@
 #pragma once
 
-#include <age/core/MetaEnum.h>
 #include <age/qt/core/Export.h>
 #include <QtCore/QAbstractTableModel>
 
@@ -17,7 +16,11 @@ namespace age
 				Q_OBJECT
 
 			public:
-				MetaEnumClassNested(Column, int, Name, Value);
+				enum class Column : int
+				{
+					Name,
+					Value
+				};
 
 				TableModelProperties(age::core::Properties* x, QObject* parent = nullptr);
 

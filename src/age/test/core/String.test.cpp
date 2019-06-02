@@ -1,17 +1,27 @@
 #include <gtest/gtest.h>
 
-#include <age/core/MetaEnum.h>
 #include <age/core/String.h>
 
 using namespace age::core;
 
 namespace
 {
-	MetaEnumClass(TestEnum, int, One, Two, Three);
+	enum class TestEnum : int
+	{
+		One,
+		Two,
+		Three
+	};
 
 	struct TestClass
 	{
-		MetaEnumClassNested(TestEnum, int, One, Two, Three);
+		enum class TestEnum : int
+		{
+			One,
+			Two,
+			Three,
+			Four
+		};
 	};
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/core/Export.h>
+#include <age/core/MagicEnum.h>
 #include <array>
 #include <boost/type_traits.hpp>
 #include <charconv>
@@ -36,6 +37,10 @@ namespace age
 
 				return {};
 			}
+			else if constexpr(std::is_enum<T>::value == true)
+			{
+				return std::string(magic_enum::enum_name(x));
+			}
 			else if constexpr(boost::has_left_shift<std::ostream, T>::value == true)
 			{
 				std::stringstream ss;
@@ -66,6 +71,10 @@ namespace age
 				}
 
 				return t;
+			}
+			else if constexpr(std::is_enum<T>::value == true)
+			{
+				return magic_enum::enum_cast<T>(x).value_or(T{});
 			}
 			else if constexpr(boost::has_right_shift<std::istream, T>::value == true)
 			{
