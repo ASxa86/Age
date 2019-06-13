@@ -1,12 +1,15 @@
+#include <age/graphics/Window.h>
+
+#include <age/core/Configuration.h>
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
 #include <age/entity/EntityManager.h>
+#include <age/entity/TransformComponent.h>
 #include <age/graphics/KeyEvent.h>
-#include <age/graphics/Window.h>
-#include <age/math/TransformComponent.h>
+#include <age/graphics/RenderSystem.h>
 #include <SFML/Graphics.hpp>
 #include <iomanip>
 #include <numeric>
@@ -21,22 +24,14 @@ class Window::Impl
 {
 public:
 	Impl(unsigned int width, unsigned int height)
-		: settings{0, 0, 0}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}, pixelsPerMeter{32}
+		: settings{0, 0, 8}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
 
-		this->font.loadFromFile("D:/age/resources/sansation.ttf");
+		this->font.loadFromFile((Configuration::Instance().getPathData() / "fonts/sansation.ttf").string());
 		this->text.setFont(this->font);
 		this->text.setPosition({10.0, 30.0});
-
-		const auto factor = static_cast<float>(this->pixelsPerMeter);
-		this->renderState.transform.scale(factor, factor);
-	}
-
-	static sf::Vector2f FromVector(const age::math::Vector& x)
-	{
-		return {static_cast<float>(x.getX()), static_cast<float>(x.getY())};
 	}
 
 	sf::ContextSettings settings;
@@ -46,8 +41,6 @@ public:
 	// Temporary until I find a generic way to handle GUI widgets.
 	sf::Text text;
 	sf::Font font;
-	sf::RenderStates renderState;
-	unsigned int pixelsPerMeter;
 };
 
 Window::Window(unsigned int width, unsigned int height) : Processor(), pimpl(width, height)
@@ -68,19 +61,6 @@ unsigned int Window::getWidth() const
 unsigned int Window::getHeight() const
 {
 	return this->pimpl->window.getSize().y;
-}
-
-void Window::setPixelsPerMeter(unsigned int x)
-{
-	this->pimpl->pixelsPerMeter = x;
-
-	const auto factor = static_cast<float>(this->pimpl->pixelsPerMeter);
-	this->pimpl->renderState.transform.scale(factor, factor);
-}
-
-unsigned int Window::getPixelsPerMeter() const
-{
-	return this->pimpl->pixelsPerMeter;
 }
 
 void Window::variable(std::chrono::microseconds)
@@ -112,29 +92,23 @@ void Window::variable(std::chrono::microseconds)
 	}
 }
 
-void Window::render(std::chrono::microseconds /*x*/)
+void Window::render(std::chrono::microseconds x)
 {
 	if(this->pimpl->window.isOpen() == true)
 	{
+		this->pimpl->window.clear();
+
+		const auto renderSystems = this->getChildren<RenderSystem>();
+
+		for(const auto& system : renderSystems)
+		{
+			system->render(this->pimpl->window, x);
+		}
+
+		// FPS
 		static double elapsed = 0.0;
 		const auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
-		this->pimpl->window.clear();
 		elapsed += delta.count();
-
-		auto parent = this->getParent();
-		auto manager = parent->getChild<EntityManager>();
-
-		manager->each<TransformComponent, std::shared_ptr<sf::Drawable>>([this](Entity, TransformComponent& t, std::shared_ptr<sf::Drawable>& d) {
-			auto transform = dynamic_cast<sf::Transformable*>(d.get());
-
-			if(transform != nullptr)
-			{
-				auto p = t.getPosition();
-				transform->setPosition(Impl::FromVector(p));
-			}
-
-			this->pimpl->window.draw(*d, this->pimpl->renderState);
-		});
 
 		if(elapsed >= 0.5)
 		{

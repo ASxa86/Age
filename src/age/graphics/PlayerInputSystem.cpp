@@ -12,7 +12,7 @@ using namespace age::graphics;
 
 PlayerInputSystem::PlayerInputSystem() : System()
 {
-	this->addVariableFunction([this](auto x) {this->frame(x); });
+	this->addVariableFunction([this](auto x) { this->frame(x); });
 }
 
 PlayerInputSystem::~PlayerInputSystem()
@@ -32,9 +32,10 @@ void PlayerInputSystem::event(age::core::Event* x)
 	{
 		const auto manager = this->getEntityManager();
 
-		manager->each<InputComponent>([&keyEvent](Entity e, InputComponent& i) {
+		manager->each<InputComponent>([&keyEvent](Entity& e, InputComponent& i) {
 			const auto& keyBindings = i.getKeyBindings();
-			const auto foundIt = std::find_if(std::begin(keyBindings), std::end(keyBindings), [keyEvent](auto c) { return keyEvent->getKey() == c.first; });
+			const auto foundIt =
+				std::find_if(std::begin(keyBindings), std::end(keyBindings), [keyEvent](auto c) { return keyEvent->getKey() == c.first; });
 
 			if(foundIt != std::end(keyBindings))
 			{
@@ -48,7 +49,7 @@ void PlayerInputSystem::frame(std::chrono::microseconds)
 {
 	const auto manager = this->getEntityManager();
 
-	manager->each<InputComponent>([](Entity e, InputComponent& i) {
+	manager->each<InputComponent>([](Entity& e, InputComponent& i) {
 		for(const auto& keyBinding : i.getKeyBindings())
 		{
 			if(sf::Keyboard::isKeyPressed(keyBinding.first) == true)

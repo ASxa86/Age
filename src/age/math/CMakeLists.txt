@@ -1,16 +1,26 @@
 project(AgeMath)
 
-add_definitions(-D${PROJECT_NAME}_Export)
+add_library(${PROJECT_NAME} SHARED)
 
-set(TARGET_H
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER age
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
+
+target_sources(${PROJECT_NAME} PRIVATE
+	Constants.h
+	Convert.h
 	Export.h
-	TransformComponent.h
+	Functions.h
 	Vector.h
 )
 
-set(TARGET_SRC
-	TransformComponent.cpp
+target_sources(${PROJECT_NAME} PRIVATE
+	Functions.cpp
 	Vector.cpp
 )
 
-add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${TARGET_H})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+	AgeCore
+)

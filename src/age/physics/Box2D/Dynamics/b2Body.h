@@ -1,27 +1,28 @@
 /*
-* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #ifndef B2_BODY_H
 #define B2_BODY_H
 
-#include "Box2D/Common/b2Math.h"
-#include "Box2D/Collision/Shapes/b2Shape.h"
+#include <age/physics/Export.h>
 #include <memory>
+#include "Box2D/Collision/Shapes/b2Shape.h"
+#include "Box2D/Common/b2Math.h"
 
 class b2Fixture;
 class b2Joint;
@@ -43,12 +44,12 @@ enum b2BodyType
 	b2_dynamicBody
 
 	// TODO_ERIN
-	//b2_bulletBody,
+	// b2_bulletBody,
 };
 
 /// A body definition holds all the data needed to construct a rigid body.
 /// You can safely re-use body definitions. Shapes are added to a body after construction.
-struct b2BodyDef
+struct AGE_PHYSICS_EXPORT b2BodyDef
 {
 	/// This constructor sets the body definition default values.
 	b2BodyDef()
@@ -125,7 +126,7 @@ struct b2BodyDef
 };
 
 /// A rigid body. These are created via b2World::CreateBody.
-class b2Body
+class AGE_PHYSICS_EXPORT b2Body
 {
 public:
 	/// Creates a fixture and attach it to this body. Use this function if you need
@@ -390,13 +391,12 @@ public:
 	void Dump();
 
 private:
-
 	friend class b2World;
 	friend class b2Island;
 	friend class b2ContactManager;
 	friend class b2ContactSolver;
 	friend class b2Contact;
-	
+
 	friend class b2DistanceJoint;
 	friend class b2FrictionJoint;
 	friend class b2GearJoint;
@@ -412,13 +412,13 @@ private:
 	// m_flags
 	enum
 	{
-		e_islandFlag		= 0x0001,
-		e_awakeFlag			= 0x0002,
-		e_autoSleepFlag		= 0x0004,
-		e_bulletFlag		= 0x0008,
-		e_fixedRotationFlag	= 0x0010,
-		e_activeFlag		= 0x0020,
-		e_toiFlag			= 0x0040
+		e_islandFlag = 0x0001,
+		e_awakeFlag = 0x0002,
+		e_autoSleepFlag = 0x0004,
+		e_bulletFlag = 0x0008,
+		e_fixedRotationFlag = 0x0010,
+		e_activeFlag = 0x0020,
+		e_toiFlag = 0x0040
 	};
 
 	b2Body(const b2BodyDef* bd, b2World* world);
@@ -439,8 +439,8 @@ private:
 
 	int32 m_islandIndex;
 
-	b2Transform m_xf;		// the body origin transform
-	b2Sweep m_sweep;		// the swept motion for CCD
+	b2Transform m_xf; // the body origin transform
+	b2Sweep m_sweep;  // the swept motion for CCD
 
 	b2Vec2 m_linearVelocity;
 	float32 m_angularVelocity;
@@ -504,12 +504,12 @@ inline const b2Vec2& b2Body::GetLocalCenter() const
 
 inline void b2Body::SetLinearVelocity(const b2Vec2& v)
 {
-	if (m_type == b2_staticBody)
+	if(m_type == b2_staticBody)
 	{
 		return;
 	}
 
-	if (b2Dot(v,v) > 0.0f)
+	if(b2Dot(v, v) > 0.0f)
 	{
 		SetAwake(true);
 	}
@@ -524,12 +524,12 @@ inline const b2Vec2& b2Body::GetLinearVelocity() const
 
 inline void b2Body::SetAngularVelocity(float32 w)
 {
-	if (m_type == b2_staticBody)
+	if(m_type == b2_staticBody)
 	{
 		return;
 	}
 
-	if (w * w > 0.0f)
+	if(w * w > 0.0f)
 	{
 		SetAwake(true);
 	}
@@ -621,7 +621,7 @@ inline void b2Body::SetGravityScale(float32 scale)
 
 inline void b2Body::SetBullet(bool flag)
 {
-	if (flag)
+	if(flag)
 	{
 		m_flags |= e_bulletFlag;
 	}
@@ -638,7 +638,7 @@ inline bool b2Body::IsBullet() const
 
 inline void b2Body::SetAwake(bool flag)
 {
-	if (flag)
+	if(flag)
 	{
 		m_flags |= e_awakeFlag;
 		m_sleepTime = 0.0f;
@@ -671,7 +671,7 @@ inline bool b2Body::IsFixedRotation() const
 
 inline void b2Body::SetSleepingAllowed(bool flag)
 {
-	if (flag)
+	if(flag)
 	{
 		m_flags |= e_autoSleepFlag;
 	}
@@ -739,18 +739,18 @@ inline void* b2Body::GetUserData() const
 
 inline void b2Body::ApplyForce(const b2Vec2& force, const b2Vec2& point, bool wake)
 {
-	if (m_type != b2_dynamicBody)
+	if(m_type != b2_dynamicBody)
 	{
 		return;
 	}
 
-	if (wake && (m_flags & e_awakeFlag) == 0)
+	if(wake && (m_flags & e_awakeFlag) == 0)
 	{
 		SetAwake(true);
 	}
 
 	// Don't accumulate a force if the body is sleeping.
-	if (m_flags & e_awakeFlag)
+	if(m_flags & e_awakeFlag)
 	{
 		m_force += force;
 		m_torque += b2Cross(point - m_sweep.c, force);
@@ -759,18 +759,18 @@ inline void b2Body::ApplyForce(const b2Vec2& force, const b2Vec2& point, bool wa
 
 inline void b2Body::ApplyForceToCenter(const b2Vec2& force, bool wake)
 {
-	if (m_type != b2_dynamicBody)
+	if(m_type != b2_dynamicBody)
 	{
 		return;
 	}
 
-	if (wake && (m_flags & e_awakeFlag) == 0)
+	if(wake && (m_flags & e_awakeFlag) == 0)
 	{
 		SetAwake(true);
 	}
 
 	// Don't accumulate a force if the body is sleeping
-	if (m_flags & e_awakeFlag)
+	if(m_flags & e_awakeFlag)
 	{
 		m_force += force;
 	}
@@ -778,18 +778,18 @@ inline void b2Body::ApplyForceToCenter(const b2Vec2& force, bool wake)
 
 inline void b2Body::ApplyTorque(float32 torque, bool wake)
 {
-	if (m_type != b2_dynamicBody)
+	if(m_type != b2_dynamicBody)
 	{
 		return;
 	}
 
-	if (wake && (m_flags & e_awakeFlag) == 0)
+	if(wake && (m_flags & e_awakeFlag) == 0)
 	{
 		SetAwake(true);
 	}
 
 	// Don't accumulate a force if the body is sleeping
-	if (m_flags & e_awakeFlag)
+	if(m_flags & e_awakeFlag)
 	{
 		m_torque += torque;
 	}
@@ -797,18 +797,18 @@ inline void b2Body::ApplyTorque(float32 torque, bool wake)
 
 inline void b2Body::ApplyLinearImpulse(const b2Vec2& impulse, const b2Vec2& point, bool wake)
 {
-	if (m_type != b2_dynamicBody)
+	if(m_type != b2_dynamicBody)
 	{
 		return;
 	}
 
-	if (wake && (m_flags & e_awakeFlag) == 0)
+	if(wake && (m_flags & e_awakeFlag) == 0)
 	{
 		SetAwake(true);
 	}
 
 	// Don't accumulate velocity if the body is sleeping
-	if (m_flags & e_awakeFlag)
+	if(m_flags & e_awakeFlag)
 	{
 		m_linearVelocity += m_invMass * impulse;
 		m_angularVelocity += m_invI * b2Cross(point - m_sweep.c, impulse);
@@ -817,18 +817,18 @@ inline void b2Body::ApplyLinearImpulse(const b2Vec2& impulse, const b2Vec2& poin
 
 inline void b2Body::ApplyLinearImpulseToCenter(const b2Vec2& impulse, bool wake)
 {
-	if (m_type != b2_dynamicBody)
+	if(m_type != b2_dynamicBody)
 	{
 		return;
 	}
 
-	if (wake && (m_flags & e_awakeFlag) == 0)
+	if(wake && (m_flags & e_awakeFlag) == 0)
 	{
 		SetAwake(true);
 	}
 
 	// Don't accumulate velocity if the body is sleeping
-	if (m_flags & e_awakeFlag)
+	if(m_flags & e_awakeFlag)
 	{
 		m_linearVelocity += m_invMass * impulse;
 	}
@@ -836,18 +836,18 @@ inline void b2Body::ApplyLinearImpulseToCenter(const b2Vec2& impulse, bool wake)
 
 inline void b2Body::ApplyAngularImpulse(float32 impulse, bool wake)
 {
-	if (m_type != b2_dynamicBody)
+	if(m_type != b2_dynamicBody)
 	{
 		return;
 	}
 
-	if (wake && (m_flags & e_awakeFlag) == 0)
+	if(wake && (m_flags & e_awakeFlag) == 0)
 	{
 		SetAwake(true);
 	}
 
 	// Don't accumulate velocity if the body is sleeping
-	if (m_flags & e_awakeFlag)
+	if(m_flags & e_awakeFlag)
 	{
 		m_angularVelocity += m_invI * impulse;
 	}

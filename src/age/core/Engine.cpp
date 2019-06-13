@@ -1,4 +1,5 @@
 #include <age/core/Engine.h>
+
 #include <age/core/EngineState.h>
 #include <age/core/EngineStateEvent.h>
 #include <age/core/EventQueue.h>
@@ -63,6 +64,7 @@ void Engine::frame()
 			processor->fixed(this->pimpl->fixedDelta);
 		}
 
+		this->pimpl->engineState.setSimTime(this->pimpl->engineState.getSimTime() + this->pimpl->fixedDelta);
 		this->pimpl->accumulatedDelta -= this->pimpl->fixedDelta;
 		count++;
 	}
@@ -73,6 +75,8 @@ void Engine::frame()
 		// the engine's state.
 		processor->render(std::chrono::microseconds(this->pimpl->accumulatedDelta / this->pimpl->fixedDelta));
 	}
+
+	this->pimpl->engineState.setFrameCount(this->pimpl->engineState.getFrameCount() + 1);
 }
 
 void Engine::setEngineState(const EngineState& x)
@@ -86,6 +90,7 @@ void Engine::setEngineState(const EngineState& x)
 			{
 				child->initialize();
 			}
+			this->pimpl->engineState.setState(EngineState::State::Run);
 			break;
 		case EngineState::State::Run:
 		case EngineState::State::Pause:

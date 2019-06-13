@@ -1,27 +1,28 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #ifndef B2_FIXTURE_H
 #define B2_FIXTURE_H
 
-#include "Box2D/Dynamics/b2Body.h"
-#include "Box2D/Collision/b2Collision.h"
+#include <age/physics/Export.h>
 #include "Box2D/Collision/Shapes/b2Shape.h"
+#include "Box2D/Collision/b2Collision.h"
+#include "Box2D/Dynamics/b2Body.h"
 
 class b2BlockAllocator;
 class b2Body;
@@ -53,7 +54,7 @@ struct b2Filter
 
 /// A fixture definition is used to create a fixture. This class defines an
 /// abstract fixture definition. You can reuse fixture definitions safely.
-struct b2FixtureDef
+struct AGE_PHYSICS_EXPORT b2FixtureDef
 {
 	/// The constructor sets the default fixture definition values.
 	b2FixtureDef()
@@ -104,7 +105,7 @@ struct b2FixtureProxy
 /// such as friction, collision filters, etc.
 /// Fixtures are created via b2Body::CreateFixture.
 /// @warning you cannot reuse fixtures.
-class b2Fixture
+class AGE_PHYSICS_EXPORT b2Fixture
 {
 public:
 	/// Get the type of the child shape. You can use this to down cast to the concrete shape.
@@ -196,7 +197,6 @@ public:
 	void Dump(int32 bodyIndex);
 
 protected:
-
 	friend class b2Body;
 	friend class b2World;
 	friend class b2Contact;

@@ -1,30 +1,31 @@
 /*
-* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #ifndef B2_WORLD_H
 #define B2_WORLD_H
 
-#include "Box2D/Common/b2Math.h"
+#include <age/physics/Export.h>
 #include "Box2D/Common/b2BlockAllocator.h"
+#include "Box2D/Common/b2Math.h"
 #include "Box2D/Common/b2StackAllocator.h"
 #include "Box2D/Dynamics/b2ContactManager.h"
-#include "Box2D/Dynamics/b2WorldCallbacks.h"
 #include "Box2D/Dynamics/b2TimeStep.h"
+#include "Box2D/Dynamics/b2WorldCallbacks.h"
 
 struct b2AABB;
 struct b2BodyDef;
@@ -38,7 +39,7 @@ class b2Joint;
 /// The world class manages all physics entities, dynamic simulation,
 /// and asynchronous queries. The world also contains efficient memory
 /// management facilities.
-class b2World
+class AGE_PHYSICS_EXPORT b2World
 {
 public:
 	/// Construct a world object.
@@ -54,7 +55,7 @@ public:
 
 	/// Register a contact filter to provide specific control over collision.
 	/// Otherwise the default filter is used (b2_defaultFilter). The listener is
-	/// owned by you and must remain in scope. 
+	/// owned by you and must remain in scope.
 	void SetContactFilter(b2ContactFilter* filter);
 
 	/// Register a contact event listener. The listener is owned by you and must
@@ -91,9 +92,7 @@ public:
 	/// @param timeStep the amount of time to simulate, this should not vary.
 	/// @param velocityIterations for the velocity constraint solver.
 	/// @param positionIterations for the position constraint solver.
-	void Step(	float32 timeStep,
-				int32 velocityIterations,
-				int32 positionIterations);
+	void Step(float32 timeStep, int32 velocityIterations, int32 positionIterations);
 
 	/// Manually clear the force buffer on all bodies. By default, forces are cleared automatically
 	/// after each call to Step. The default behavior is modified by calling SetAutoClearForces.
@@ -143,19 +142,40 @@ public:
 
 	/// Enable/disable sleep.
 	void SetAllowSleeping(bool flag);
-	bool GetAllowSleeping() const { return m_allowSleep; }
+	bool GetAllowSleeping() const
+	{
+		return m_allowSleep;
+	}
 
 	/// Enable/disable warm starting. For testing.
-	void SetWarmStarting(bool flag) { m_warmStarting = flag; }
-	bool GetWarmStarting() const { return m_warmStarting; }
+	void SetWarmStarting(bool flag)
+	{
+		m_warmStarting = flag;
+	}
+	bool GetWarmStarting() const
+	{
+		return m_warmStarting;
+	}
 
 	/// Enable/disable continuous physics. For testing.
-	void SetContinuousPhysics(bool flag) { m_continuousPhysics = flag; }
-	bool GetContinuousPhysics() const { return m_continuousPhysics; }
+	void SetContinuousPhysics(bool flag)
+	{
+		m_continuousPhysics = flag;
+	}
+	bool GetContinuousPhysics() const
+	{
+		return m_continuousPhysics;
+	}
 
 	/// Enable/disable single stepped continuous physics. For testing.
-	void SetSubStepping(bool flag) { m_subStepping = flag; }
-	bool GetSubStepping() const { return m_subStepping; }
+	void SetSubStepping(bool flag)
+	{
+		m_subStepping = flag;
+	}
+	bool GetSubStepping() const
+	{
+		return m_subStepping;
+	}
 
 	/// Get the number of broad-phase proxies.
 	int32 GetProxyCount() const;
@@ -181,7 +201,7 @@ public:
 
 	/// Change the global gravity vector.
 	void SetGravity(const b2Vec2& gravity);
-	
+
 	/// Get the global gravity vector.
 	b2Vec2 GetGravity() const;
 
@@ -210,13 +230,12 @@ public:
 	void Dump();
 
 private:
-
 	// m_flags
 	enum
 	{
-		e_newFixture	= 0x0001,
-		e_locked		= 0x0002,
-		e_clearForces	= 0x0004
+		e_newFixture = 0x0001,
+		e_locked = 0x0002,
+		e_clearForces = 0x0004
 	};
 
 	friend class b2Body;
@@ -247,7 +266,7 @@ private:
 	bool m_allowSleep;
 
 	b2DestructionListener* m_destructionListener;
-	b2Draw* g_debugDraw;
+	b2Draw* m_debugDraw;
 
 	// This is used to compute the time step ratio to
 	// support a variable time step.
@@ -325,7 +344,7 @@ inline bool b2World::IsLocked() const
 
 inline void b2World::SetAutoClearForces(bool flag)
 {
-	if (flag)
+	if(flag)
 	{
 		m_flags |= e_clearForces;
 	}

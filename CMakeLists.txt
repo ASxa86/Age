@@ -3,13 +3,16 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(Age)
 
-if(MSVC) 
+if(MSVC)
 	add_compile_options(/wd4251) # w4251 - 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
+	add_compile_options(/wd4275) # w4275 - non dll-interface class 'std::runtime_error' used as base for dll-interface class
 	add_compile_options(/W4)
 	add_compile_options(/MP)
 	add_compile_options(/WX)
 	add_compile_options(/D_SCL_SECURE_NO_WARNINGS)
-elseif(CMAKE_COMPILER_IS_GNUCXX) 
+	add_compile_options(/permissive-)
+	add_compile_options(-std:c++17)
+elseif(CMAKE_COMPILER_IS_GNUCXX)
 	add_definitions("-Werror")
 elseif(CMAKE_COMPILER_IS_GNUCC)
 	add_definitions("-Werror")
@@ -26,7 +29,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+if(UNIX)
+	# Needed for finding dynamic SFML libraries on linux. Windows we can use VCPKG for dynamic libraries.
+	set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
@@ -34,8 +40,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 #
 #	Find Boost
 #
-find_package(Boost 1.65)
+find_package(Boost 1.65 COMPONENTS system filesystem)
 include_directories(${Boost_INCLUDE_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/src/age/physics)
 
 add_subdirectory(src)
-add_subdirectory(test)

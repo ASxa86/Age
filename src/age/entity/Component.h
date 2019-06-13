@@ -1,28 +1,15 @@
 #pragma once
 
-#include <age/entity/Export.h>
+#include <age/core/Properties.h>
 
 namespace age
 {
 	namespace entity
 	{
-		struct AGE_ENTITY_EXPORT BaseComponent
+		class Component : public age::core::Properties
 		{
-			BaseComponent();
-			BaseComponent(const BaseComponent&) = delete;
-			BaseComponent& operator=(const BaseComponent&) = delete;
-
-			static unsigned int counter;
-		};
-
-		template <typename T>
-		struct Component : public BaseComponent
-		{
-			static unsigned int index()
-			{
-				static unsigned int index = BaseComponent::counter++;
-				return index;
-			}
+		public:
+		private:
 		};
 	}
 }

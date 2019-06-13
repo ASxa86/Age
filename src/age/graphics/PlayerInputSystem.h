@@ -1,7 +1,7 @@
 #pragma once
 
-#include <age/graphics/Export.h>
 #include <age/entity/System.h>
+#include <age/graphics/Export.h>
 
 namespace age
 {
@@ -17,7 +17,7 @@ namespace age
 		///
 		///	\brief This system manages controller/keyboard input for a player.
 		///
-		///	This class is built around the command pattern. Commands can be defined to handle different actions which 
+		///	This class is built around the command pattern. Commands can be defined to handle different actions which
 		///	are defined to modify components of an entity with a PlayerInputComponent.
 		///
 		///	\date June 9, 2017

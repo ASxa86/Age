@@ -1,15 +1,17 @@
 #pragma once
 
-#include <age/core/Pimpl.h>
 #include <age/core/Event.h>
+#include <age/core/Pimpl.h>
 #include <age/entity/Export.h>
 #include <any>
+#include <typeindex>
 
 namespace age
 {
 	namespace entity
 	{
 		class Entity;
+		class Component;
 
 		///
 		///	\class EntityEvent
@@ -31,39 +33,17 @@ namespace age
 				ComponentRemoved
 			};
 
-			EntityEvent(Entity e, Type t);
+			EntityEvent(const Entity& e, Type t);
 			~EntityEvent() override;
 
-			Entity EntityEvent::getEntity() const;
-			EntityEvent::Type EntityEvent::getType() const;
+			const Entity& getEntity() const;
+			EntityEvent::Type getType() const;
 
-			template <typename T>
-			void setComponent(T* x)
-			{
-				this->component = x;
-			}
-
-			template <typename T>
-			T* getComponent() const
-			{
-				T* c{};
-
-				try
-				{
-					c = std::any_cast<T*>(this->component);
-				}
-				catch(...)
-				{
-				}
-
-				return c;
-			}
+			Component* Component{};
 
 		private:
-			std::any component;
-
-			class Impl;
-			Pimpl<Impl> pimpl;
+			const Entity& entity;
+			Type type;
 		};
 	}
 }

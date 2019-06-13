@@ -3,9 +3,10 @@
 
 using namespace age::entity;
 
-Entity::Entity() : id{0}, manager{nullptr}
+Entity::Entity() : id{-1}, manager{nullptr}
 {
 }
+
 int Entity::getID() const
 {
 	return this->id;
@@ -27,4 +28,31 @@ void Entity::destroy() const
 bool Entity::operator==(const Entity& x) const
 {
 	return this->id == x.id;
+}
+
+bool Entity::operator!=(const Entity& x) const
+{
+	return !(*this == x);
+}
+
+std::vector<Component*> Entity::getComponents() const
+{
+	std::vector<Component*> v;
+
+	const auto& pools = this->manager->getPools();
+
+	for(const auto& [type, pool] : pools)
+	{
+		if(pool->test(this->id) == true)
+		{
+			const auto c = pool->component(this->id);
+
+			if(c != nullptr)
+			{
+				v.push_back(c);
+			}
+		}
+	}
+
+	return v;
 }

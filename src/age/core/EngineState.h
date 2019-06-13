@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/core/Export.h>
+#include <chrono>
 #include <cstdint>
 
 namespace age
@@ -39,8 +40,16 @@ namespace age
 			void setState(State x);
 			State getState() const;
 
+			void setSimTime(std::chrono::microseconds x);
+			std::chrono::microseconds getSimTime() const;
+
+			void setFrameCount(int x);
+			int getFrameCount() const;
+
 		private:
 			State state;
+			std::chrono::microseconds simTime;
+			int frameCount;
 		};
 	}
 }

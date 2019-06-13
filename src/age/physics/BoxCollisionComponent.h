@@ -1,42 +1,24 @@
 #pragma once
 
-#include <age/math/Vector.h>
-#include <age/physics/Export.h>
+#include <age/physics/CollisionComponent.h>
 
 namespace age
 {
 	namespace physics
 	{
 		///
-		///	\class BoxCollisionComponent
+		///	\struct BoxCollisionComponent
 		///
-		///	\brief A box collision component for determining if this object collides with another.
+		///	\brief Define the size of a box used to determine collision with other collision components.
 		///
-		///	\date July 28, 2017
+		///	\author Aaron Shelley
 		///
-		///	\date Aaron Shelley
+		///	\date February 26, 2019
 		///
-		class AGE_PHYSICS_EXPORT BoxCollisionComponent
+		struct BoxCollisionComponent final : public CollisionComponent
 		{
-		public:
-			BoxCollisionComponent();
-			~BoxCollisionComponent();
-
-			///
-			///	Set the center of this collision component. This is an offset to the entity it is attached to.
-			///
-			void setCenter(const age::math::Vector& x);
-			age::math::Vector getCenter() const;
-
-			///
-			///	Set the size of the box (x:width, y:height).
-			///
-			void setSize(const age::math::Vector& x);
-			age::math::Vector getSize() const;
-
-		private:
-			age::math::Vector center;
-			age::math::Vector size;
+			double Width;
+			double Height;
 		};
 	}
 }

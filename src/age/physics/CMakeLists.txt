@@ -1,16 +1,10 @@
 project(AgePhysics)
 
-add_definitions(-D${PROJECT_NAME}_Export)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-set(TARGET_H
-	BoxCollisionComponent.h
-	BoxCollisionTree.h
-	CollisionSystem.h
-	Export.h
-	KinematicComponent.h
-	PhysicsSystem.h
-)
+###############################################
+#
+#	Find Box2D
+#
+# find_package(unofficial-box2d CONFIG REQUIRED)
 
 set(TARGET_H_BOX2D
 	Box2D/Box2D.h
@@ -72,14 +66,6 @@ set(TARGET_H_BOX2D_DYNAMICS
 
 set(TARGET_H_BOX2D_ROPE
 	Box2D/Rope/b2Rope.h
-)
-
-set(TARGET_SRC
-	BoxCollisionComponent.cpp
-	BoxCollisionTree.cpp
-	CollisionSystem.cpp
-	KinematicComponent.cpp
-	PhysicsSystem.cpp
 )
 
 set(TARGET_SRC_BOX2D_COLLISION
@@ -155,11 +141,38 @@ set(BOX2D_SRC
 	${TARGET_SRC_BOX2D_ROPE}
 )
 
-add_library(${PROJECT_NAME} SHARED ${TARGET_SRC} ${BOX2D_SRC} ${TARGET_H} ${BOX2D_H})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+add_library(${PROJECT_NAME} SHARED ${BOX2D_SRC} ${BOX2D_H})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER age
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
+
+target_sources(${PROJECT_NAME} PRIVATE
+	BoxCollisionComponent.h
+	CircleCollisionComponent.h
+	CollisionEvent.h
+	CollisionComponent.h
+	EdgeCollisionComponent.h
+	KinematicComponent.h
+	Export.h
+	PhysicsSystem.h
+	PhysicsRenderSystem.h
+)
+
+target_sources(${PROJECT_NAME} PRIVATE
+	CollisionEvent.cpp
+	PhysicsSystem.cpp
+	PhysicsRenderSystem.cpp
+)
 
 target_link_libraries(${PROJECT_NAME}
 	AgeEntity
 	AgeMath
+	AgeTerrain
+	AgeGraphics
 )
 
 if(MSVC)
@@ -171,5 +184,5 @@ if(MSVC)
 	source_group("Source Files\\Box2D\\Collision" FILES ${TARGET_SRC_BOX2D_COLLISION})
 	source_group("Source Files\\Box2D\\Common" FILES ${TARGET_SRC_BOX2D_COMMON})
 	source_group("Source Files\\Box2D\\Dynamics" FILES ${TARGET_SRC_BOX2D_DYNAMICS})
-	source_group("Source Files\\Box2D\\Rope" FILES ${TARGET_SRC_BOX2D_ROPE})	
+	source_group("Source Files\\Box2D\\Rope" FILES ${TARGET_SRC_BOX2D_ROPE})
 endif()

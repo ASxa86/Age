@@ -1,54 +1,49 @@
 #pragma once
 
-#include <age/physics/Export.h>
+#include <age/entity/Component.h>
 #include <age/math/Vector.h>
+#include <age/physics/Export.h>
 
 namespace age
 {
 	namespace physics
 	{
-		///
-		///	\class KinematicComponent
-		///
-		///	\brief A component for managing velocity in a physical world.
-		///
-		///	\date June 11, 2017
-		///
-		///	\author Aaron Shelley
-		///
-		class AGE_PHYSICS_EXPORT KinematicComponent
+		struct KinematicComponent : public age::entity::Component
 		{
-		public:
-			KinematicComponent();
-			~KinematicComponent();
+			///
+			///	\enum BodyType
+			///
+			///	\brief Describes how this component is processed during physics calculations.
+			///
+			enum class Type : int
+			{
+				/// A static body does not move under simulation and behaves as if it has infinite mass.Internally, Box2D
+				/// stores zero for the mass and the inverse mass. Static bodies can be moved manually by the user. A static
+				/// body has zero velocity. Static bodies do not collide with other static or kinematic bodies.
+				Static,
 
-			///
-			///	Set the velocity vector.
-			///	(m/s)
-			///
-			void setVelocity(const age::math::Vector& x);
+				/// A kinematic body moves under simulation according to its velocity.Kinematic bodies do not respond to
+				/// forces. They can be moved manually by the user, but normally a kinematic body is moved by setting its
+				/// velocity. A kinematic body behaves as if it has infinite mass, however, Box2D stores zero for the mass
+				/// and the inverse mass.Kinematic bodies do not collide with other kinematic or static bodies
+				Kinematic,
 
-			///
-			///	Get the velocity vector.
-			///	(m/s)
-			///
-			age::math::Vector getVelocity() const;
+				/// A dynamic body is fully simulated.They can be moved manually by the user, but normally they move
+				/// according to forces. A dynamic body can collide with all body types. A dynamic body always has finite,
+				/// non - zero mass. If you try to set the mass of a dynamic body to zero, it will automatically acquire a mass
+				/// of one kilogram and it won’t rotate.
+				Dynamic
+			};
 
-			///
-			///	Set the angular velocity.
-			///	(deg/s)
-			///
-			void setAngularVelocity(double x);
+			/// The component velocity to describe an entity.
+			age::math::Vector LinearVelocity;
 
-			///
-			///	Get the angular velocity.
-			///	(deg/s)
-			///
-			double getAngularVelocity() const;
+			/// The body type to describe this an entity.
+			Type BodyType;
 
-		private:
-			age::math::Vector velocity;
-			double angularVelocity;
+			/// Enable to calculate heading rotation for an entity.
+			/// This will cause any rotations on an associated TransformComponent to be overwritten.
+			bool CalculateHeading;
 		};
 	}
 }
