@@ -69,7 +69,7 @@ Object* Object::getChild(size_t x) const
 	return nullptr;
 }
 
-std::vector<Object*> Object::getChildren(bool recursive) const
+std::vector<Object*> Object::getChildren(FindOption option) const
 {
 	std::vector<Object*> v;
 	v.reserve(this->pimpl->children.size());
@@ -78,9 +78,9 @@ std::vector<Object*> Object::getChildren(bool recursive) const
 	{
 		v.push_back(child.get());
 
-		if(recursive == true)
+		if(option == FindOption::Recursive)
 		{
-			const auto children = child->getChildren(recursive);
+			const auto children = child->getChildren(option);
 			v.insert(std::end(v), std::begin(children), std::end(children));
 		}
 	}

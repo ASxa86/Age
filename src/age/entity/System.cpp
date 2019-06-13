@@ -14,7 +14,7 @@ System::~System()
 
 EntityManager* System::getEntityManager() const
 {
-	const auto parent = this->getParent<age::core::Engine>(true);
+	const auto parent = this->getParent<age::core::Engine>(FindOption::Recursive);
 
 	if(parent != nullptr)
 	{

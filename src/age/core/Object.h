@@ -22,6 +22,12 @@ namespace age
 		class AGE_CORE_EXPORT Object : public std::enable_shared_from_this<Object>
 		{
 		public:
+			enum class FindOption : int
+			{
+				Direct,
+				Recursive
+			};
+
 			Object();
 			virtual ~Object();
 
@@ -51,16 +57,16 @@ namespace age
 			///	\param recursive Recursively search for a parent of the given type T.
 			///
 			template <typename T>
-			T* getParent(bool recursive = false) const
+			T* getParent(FindOption option = FindOption::Direct) const
 			{
 				const auto parent = this->getParent();
 				auto parentType = dynamic_cast<T*>(parent);
 
-				if(recursive == true)
+				if(option == FindOption::Recursive)
 				{
 					if(parent != nullptr && parentType == nullptr)
 					{
-						parentType = parent->getParent<T>(recursive);
+						parentType = parent->getParent<T>(option);
 					}
 				}
 
@@ -116,7 +122,7 @@ namespace age
 			///
 			///	\param recursive If set to true, this will get all children and their children.
 			///
-			virtual std::vector<Object*> getChildren(bool recursive = false) const;
+			virtual std::vector<Object*> getChildren(FindOption option = FindOption::Direct) const;
 
 			///
 			///	Return all children of the given type for this object.
@@ -124,10 +130,10 @@ namespace age
 			///	\param recursive If set to true, this will get all children and their children.
 			///
 			template <typename T>
-			std::vector<T*> getChildren(bool recursive = false) const
+			std::vector<T*> getChildren(FindOption option = FindOption::Direct) const
 			{
 				std::vector<T*> v;
-				const auto children = this->getChildren(recursive);
+				const auto children = this->getChildren(option);
 				v.reserve(children.size());
 
 				for(const auto& c : children)
