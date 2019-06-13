@@ -1,6 +1,5 @@
 #pragma once
 
-#include <age/core/MetaEnum.h>
 #include <age/entity/Component.h>
 #include <age/entity/Export.h>
 #include <age/math/Vector.h>
