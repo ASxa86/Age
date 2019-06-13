@@ -4,7 +4,6 @@
 #include <age/entity/EntityManager.h>
 #include <age/entity/TransformComponent.h>
 #include <age/navigation/WaypointComponent.h>
-#include <age/physics/Box2D/Box2D.h>
 #include <age/physics/KinematicComponent.h>
 
 using namespace age::entity;

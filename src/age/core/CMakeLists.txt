@@ -55,3 +55,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Timer.cpp
 	Utilities.cpp
 )
+
+if(${AGE_ENABLE_QT})
+	add_subdirectory(qt)
+endif()

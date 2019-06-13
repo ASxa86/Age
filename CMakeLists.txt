@@ -42,6 +42,30 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 #
 find_package(Boost 1.65 COMPONENTS system filesystem)
 include_directories(${Boost_INCLUDE_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/src/age/physics)
+
+option(AGE_ENABLE_BENCHMARKS "Enable building the AGE benchmark suite." OFF)
+option(AGE_ENABLE_TESTS "Enable building the AGE test suite." ON)
+option(AGE_ENABLE_TOOLS "Enable building the AGE tools." ON)
+option(AGE_ENABLE_QT "Enable building the AGE benchmark suite." ON)
+
+if(${AGE_ENABLE_QT})
+	###############################################
+	#
+	#	Find Qt
+	#
+	find_package(Qt5 CONFIG COMPONENTS Core Gui Widgets)
+endif()
 
 add_subdirectory(src)
+
+if(${AGE_ENABLE_BENCHMARKS})
+	add_subdirectory(benchmarks)
+endif()
+
+if(${AGE_ENABLE_TESTS})
+	add_subdirectory(tests)
+endif()
+
+if(${AGE_ENABLE_TOOLS})
+	add_subdirectory(tools)
+endif()
