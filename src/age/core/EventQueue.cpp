@@ -37,7 +37,7 @@ boost::signals2::connection EventQueue::addEventHandler(std::function<void(Event
 
 	if(tracked != nullptr)
 	{
-		slot.track_foreign(tracked->shared_from_this());
+		// slot.track_foreign(tracked->shared_from_this());
 	}
 
 	return this->pimpl->handlers.connect(slot);

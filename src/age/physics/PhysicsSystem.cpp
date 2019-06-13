@@ -220,7 +220,7 @@ PhysicsSystem::~PhysicsSystem()
 {
 }
 
-void PhysicsSystem::initialize()
+void PhysicsSystem::startup()
 {
 	EventQueue::Instance().addEventHandler([this](auto evt) {
 		const auto entityEvt = dynamic_cast<EntityEvent*>(evt);

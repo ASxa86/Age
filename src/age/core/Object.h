@@ -2,6 +2,7 @@
 
 #include <age/core/Export.h>
 #include <age/core/Pimpl.h>
+#include <age/core/Properties.h>
 
 #include <functional>
 #include <vector>
@@ -19,7 +20,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT Object : public std::enable_shared_from_this<Object>
+		class AGE_CORE_EXPORT Object : public Properties
 		{
 		public:
 			enum class FindOption : int
@@ -44,7 +45,12 @@ namespace age
 			///
 			///
 			///
-			virtual void initialize();
+			virtual void startup();
+
+			///
+			///
+			///
+			virtual void shutdown();
 
 			///
 			///	Gets the parent for this object.

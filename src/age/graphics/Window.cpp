@@ -75,7 +75,7 @@ void Window::variable(std::chrono::microseconds)
 		{
 			case sf::Event::EventType::Closed:
 				this->pimpl->window.close();
-				engine->setEngineState(EngineState::State::Exit);
+				engine->setEngineState(EngineState::State::Shutdown);
 				break;
 			case sf::Event::EventType::KeyPressed:
 				EventQueue::Instance().sendEvent(std::make_unique<KeyEvent>(e.key.code, KeyEvent::Type::Pressed));

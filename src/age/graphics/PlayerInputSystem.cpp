@@ -19,7 +19,7 @@ PlayerInputSystem::~PlayerInputSystem()
 {
 }
 
-void PlayerInputSystem::initialize()
+void PlayerInputSystem::startup()
 {
 	EventQueue::Instance().addEventHandler([this](auto x) { this->event(x); }, this);
 }

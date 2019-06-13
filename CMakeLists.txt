@@ -44,9 +44,10 @@ find_package(Boost 1.65 COMPONENTS system filesystem)
 include_directories(${Boost_INCLUDE_DIR})
 
 option(AGE_ENABLE_BENCHMARKS "Enable building the AGE benchmark suite." OFF)
+option(AGE_ENABLE_EXAMPLES "Enable building the AGE examples." ON)
 option(AGE_ENABLE_TESTS "Enable building the AGE test suite." ON)
 option(AGE_ENABLE_TOOLS "Enable building the AGE tools." ON)
-option(AGE_ENABLE_QT "Enable building the AGE benchmark suite." ON)
+option(AGE_ENABLE_QT "Enable building the AGE Qt libraries." ON)
 
 if(${AGE_ENABLE_QT})
 	###############################################
@@ -60,6 +61,10 @@ add_subdirectory(src)
 
 if(${AGE_ENABLE_BENCHMARKS})
 	add_subdirectory(benchmarks)
+endif()
+
+if(${AGE_ENABLE_EXAMPLES})
+	add_subdirectory(examples)
 endif()
 
 if(${AGE_ENABLE_TESTS})

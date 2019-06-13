@@ -35,7 +35,11 @@ std::string Object::getID() const
 	return this->pimpl->id;
 }
 
-void Object::initialize()
+void Object::startup()
+{
+}
+
+void Object::shutdown()
 {
 }
 

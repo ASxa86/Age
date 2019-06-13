@@ -4,7 +4,7 @@
 #include <age/entity/AnimationComponent.h>
 #include <age/entity/AnimationSystem.h>
 #include <age/entity/Entity.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
@@ -24,31 +24,32 @@ int main()
 	auto window = engine.addChild<Window>();
 	window->addChild(std::make_unique<DrawableSystem>());
 
-	auto manager = engine.addChild<EntityManager>();
-	auto entity = manager->create();
+	auto manager = engine.addChild<EntityDatabase>();
+	auto entity = manager->addEntity();
 
 	EngineState state;
-	state.setState(EngineState::State::Initialize);
+	state.setState(EngineState::State::StartUp);
 	engine.setEngineState(state);
 
 	// Position the entity.
-	auto& transform = entity.addComponent<TransformComponent>();
-	transform.Position = {64, 64};
+	auto transform = entity->addComponent<TransformComponent>();
+	transform->Position = {64, 64};
 
 	// Animation Sprite for the entity.
-	auto& sprite = entity.addComponent<SpriteComponent>();
-	sprite.loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");
-	sprite.setHFrames(4);
-	sprite.setVFrames(4);
-	sprite.setFrame(0);
+	auto sprite = entity->addComponent<SpriteComponent>();
+	sprite->loadFile(Configuration::Instance().getPathData() / "characters/Filga_1.png");
+	sprite->setHFrames(4);
+	sprite->setVFrames(4);
+	sprite->setFrame(0);
 
-	auto& animation = entity.addComponent<AnimationComponent>();
+	auto animation = entity->addComponent<AnimationComponent>();
 
-	auto down = animation.create();
+	auto down = animation->create();
 	auto& chDown = down->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
+		auto sprite = entity->getChild<SpriteComponent>();
+		if(sprite != nullptr)
 		{
-			entity.getComponent<SpriteComponent>().setFrame(x);
+			sprite->setFrame(x);
 		}
 	});
 
@@ -57,11 +58,12 @@ int main()
 	chDown.addKey({std::chrono::seconds{2}, 2});
 	chDown.addKey({std::chrono::seconds{3}, 3});
 
-	auto up = animation.create();
+	auto up = animation->create();
 	auto& chUp = up->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
+		auto sprite = entity->getChild<SpriteComponent>();
+		if(sprite != nullptr)
 		{
-			entity.getComponent<SpriteComponent>().setFrame(x);
+			sprite->setFrame(x);
 		}
 	});
 
@@ -70,11 +72,12 @@ int main()
 	chUp.addKey({std::chrono::seconds{2}, 10});
 	chUp.addKey({std::chrono::seconds{3}, 11});
 
-	auto left = animation.create();
+	auto left = animation->create();
 	auto& chLeft = left->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
+		auto sprite = entity->getChild<SpriteComponent>();
+		if(sprite != nullptr)
 		{
-			entity.getComponent<SpriteComponent>().setFrame(x);
+			sprite->setFrame(x);
 		}
 	});
 
@@ -83,11 +86,12 @@ int main()
 	chLeft.addKey({std::chrono::seconds{2}, 14});
 	chLeft.addKey({std::chrono::seconds{3}, 15});
 
-	auto right = animation.create();
+	auto right = animation->create();
 	auto& chRight = right->addChannel<int>(Channel::Shape::Step, [entity](int x) {
-		if(entity.valid() == true && entity.hasComponent<SpriteComponent>() == true)
+		auto sprite = entity->getChild<SpriteComponent>();
+		if(sprite != nullptr)
 		{
-			entity.getComponent<SpriteComponent>().setFrame(x);
+			sprite->setFrame(x);
 		}
 	});
 
@@ -96,69 +100,69 @@ int main()
 	chRight.addKey({std::chrono::seconds{2}, 6});
 	chRight.addKey({std::chrono::seconds{3}, 7});
 
-	animation.setLength(std::chrono::seconds{4});
-	animation.setSpeed(10.0);
-	animation.play();
+	animation->setLength(std::chrono::seconds{4});
+	animation->setSpeed(10.0);
+	animation->play();
 
 	// Controller for the entity.
-	auto& controller = entity.addComponent<InputComponent>();
-	controller.addKeyBinding(sf::Keyboard::Key::Up, [up](Entity& entity, auto isPressed) {
-		auto& a = entity.getComponent<AnimationComponent>();
+	auto controller = entity->addComponent<InputComponent>();
+	controller->addKeyBinding(sf::Keyboard::Key::Up, [up](Entity& entity, auto isPressed) {
+		auto a = entity.getChild<AnimationComponent>();
 		if(isPressed == true)
 		{
-			a.setCurrentAnimation(up);
-			a.play();
+			a->setCurrentAnimation(up);
+			a->play();
 		}
 		else
 		{
-			a.stop();
-			a.reset();
+			a->stop();
+			a->reset();
 		}
 	});
 
-	controller.addKeyBinding(sf::Keyboard::Key::Down, [down](Entity& entity, auto isPressed) {
-		auto& a = entity.template getComponent<AnimationComponent>();
+	controller->addKeyBinding(sf::Keyboard::Key::Down, [down](Entity& entity, auto isPressed) {
+		auto a = entity.template getChild<AnimationComponent>();
 		if(isPressed == true)
 		{
-			a.setCurrentAnimation(down);
-			a.play();
+			a->setCurrentAnimation(down);
+			a->play();
 		}
 		else
 		{
-			a.stop();
-			a.reset();
+			a->stop();
+			a->reset();
 		}
 	});
 
-	controller.addKeyBinding(sf::Keyboard::Key::Left, [left](auto& entity, auto isPressed) {
-		auto& a = entity.template getComponent<AnimationComponent>();
+	controller->addKeyBinding(sf::Keyboard::Key::Left, [left](auto& entity, auto isPressed) {
+		auto a = entity.template getChild<AnimationComponent>();
 		if(isPressed == true)
 		{
-			a.setCurrentAnimation(left);
-			a.play();
+			a->setCurrentAnimation(left);
+			a->play();
 		}
 		else
 		{
-			a.stop();
-			a.reset();
+			a->stop();
+			a->reset();
 		}
 	});
 
-	controller.addKeyBinding(sf::Keyboard::Key::Right, [right](auto& entity, auto isPressed) {
-		auto& a = entity.template getComponent<AnimationComponent>();
+	controller->addKeyBinding(sf::Keyboard::Key::Right, [right](auto& entity, auto isPressed) {
+		auto a = entity.template getChild<AnimationComponent>();
 		if(isPressed == true)
 		{
-			a.setCurrentAnimation(right);
-			a.play();
+			a->setCurrentAnimation(right);
+			a->play();
 		}
 		else
 		{
-			a.stop();
-			a.reset();
+			a->stop();
+			a->reset();
 		}
 	});
 
-	while(engine.getEngineState().getState() < EngineState::State::Exit)
+	while(engine.getEngineState().getState() < EngineState::State::Shutdown)
 	{
 		engine.frame();
 	}
