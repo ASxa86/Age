@@ -1,11 +1,10 @@
-#include <age/examples/pong/PaddleAISystem.h>
-
-#include <Box2D/Box2D.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
-#include <age/examples/pong/PaddleAIComponent.h>
+#include <age/physics/Box2D/Box2D.h>
 #include <age/physics/BoxCollisionComponent.h>
 #include <age/physics/KinematicComponent.h>
+#include <pong/PaddleAIComponent.h>
+#include <pong/PaddleAISystem.h>
 
 using namespace age::entity;
 using namespace age::physics;
@@ -22,26 +21,34 @@ PaddleAISystem::~PaddleAISystem()
 
 void PaddleAISystem::frame(std::chrono::microseconds)
 {
-	const auto manager = this->getEntityManager();
+	const auto manager = this->getEntityDatabase();
 
-	manager->each<PaddleAIComponent, KinematicComponent, BoxCollisionComponent, TransformComponent>(
-		[](Entity&, PaddleAIComponent& p, KinematicComponent& k, BoxCollisionComponent& b, TransformComponent& t) {
-			const auto& ball = p.getBall();
+	for(auto entity : manager->getChildren<Entity>())
+	{
+		auto p = entity->getChild<PaddleAIComponent>();
+		auto k = entity->getChild<KinematicComponent>();
+		auto b = entity->getChild<BoxCollisionComponent>();
+		auto t = entity->getChild<TransformComponent>();
 
-			auto& bc = ball.getComponent<TransformComponent>();
+		if(p != nullptr && k != nullptr && b != nullptr && t != nullptr)
+		{
+			const auto& ball = p->getBall();
 
-			k.LinearVelocity = {0.0, 0.0};
+			auto bc = ball.getChild<TransformComponent>();
 
-			const auto top = t.Position.Y - b.Height / 2.0;
-			const auto bottom = t.Position.Y + b.Height / 2.0;
+			k->LinearVelocity = {0.0, 0.0};
 
-			if(bc.Position.Y > bottom)
+			const auto top = t->Position.Y - b->Height / 2.0;
+			const auto bottom = t->Position.Y + b->Height / 2.0;
+
+			if(bc->Position.Y > bottom)
 			{
-				k.LinearVelocity = {0.0, 30.0};
+				k->LinearVelocity = {0.0, 30.0};
 			}
-			else if(bc.Position.Y < top)
+			else if(bc->Position.Y < top)
 			{
-				k.LinearVelocity = {0.0, -30.0};
+				k->LinearVelocity = {0.0, -30.0};
 			}
-		});
+		}
+	}
 }

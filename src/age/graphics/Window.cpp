@@ -6,7 +6,7 @@
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
 #include <age/graphics/KeyEvent.h>
 #include <age/graphics/RenderSystem.h>

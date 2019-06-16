@@ -1,6 +1,6 @@
 #include <editor/DialogComponents.h>
 
-#include <age/entity/ComponentFactory.h>
+#include <age/core/Factory.h>
 #include <age/entity/Entity.h>
 #include <editor/ListWidgetComponents.h>
 #include <QtWidgets/QBoxLayout>
@@ -9,7 +9,7 @@
 using namespace age;
 using namespace age::entity;
 
-DialogComponents::DialogComponents(age::entity::Entity e, QWidget* parent) : QDialog(parent), entity{e}
+DialogComponents::DialogComponents(age::entity::Entity* e, QWidget* parent) : QDialog(parent), entity{e}
 {
 	const auto vLayout = new QVBoxLayout(this);
 	const auto lwComponents = new ListWidgetComponents();
@@ -21,7 +21,7 @@ DialogComponents::DialogComponents(age::entity::Entity e, QWidget* parent) : QDi
 
 		if(items.empty() == false)
 		{
-			ComponentFactory::Instance().add(this->entity, items[0]->text().toStdString());
+			// ComponentFactory::Instance().add(this->entity, items[0]->text().toStdString());
 		}
 
 		this->close();

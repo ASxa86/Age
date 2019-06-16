@@ -1,7 +1,6 @@
-#include <age/core/Factory.h>
-
 #include <age/core/Configuration.h>
-#include <age/core/PimplImpl.h>
+#include <age/core/Factory.h>
+#include <age/core/Object.h>
 #include <atomic>
 #include <boost/dll/import.hpp>
 #include <iostream>
@@ -13,19 +12,49 @@ CreatorBase::~CreatorBase()
 {
 }
 
-std::shared_ptr<Object> CreatorBase::create() const
+std::unique_ptr<Object> CreatorBase::create() const
 {
 	return nullptr;
 }
 
-struct Factory::Impl
+Factory::Type::Type(const std::type_index& type) : TypeIndex{type}
 {
-	std::map<std::string, std::shared_ptr<CreatorBase>> factoryMap;
-	std::vector<boost::dll::shared_library> loadedLibraries;
-	std::atomic<bool> initialized{false};
-};
+}
 
-Factory::Factory() : pimpl{}
+Factory::Type& Factory::Type::addAlias(std::string_view x)
+{
+	this->Aliases.insert(std::string(x));
+	return *this;
+}
+
+bool Factory::Type::valid() const
+{
+	return this->TypeIndex != typeid(*this);
+}
+
+bool Factory::Type::operator==(std::string_view x) const
+{
+	return this->Name == x || this->NameClean == x || std::find_if(std::begin(this->Aliases), std::end(this->Aliases), [x](const std::string& name) {
+														  return name == x;
+													  }) != std::end(this->Aliases);
+}
+
+bool Factory::Type::operator!=(std::string_view x) const
+{
+	return !(*this == x);
+}
+
+bool Factory::Type::operator==(const Type& x) const
+{
+	return this->TypeIndex == x.TypeIndex;
+}
+
+bool Factory::Type::operator!=(const Type& x) const
+{
+	return !(*this == x);
+}
+
+Factory::Factory()
 {
 }
 
@@ -37,11 +66,11 @@ Factory& Factory::Instance()
 {
 	static Factory singleton;
 
-	if(singleton.pimpl->initialized == false)
+	if(singleton.initialized == false)
 	{
 		// Prevent re-entering this block of code to prevent calls to factoryRegister() from
 		// causing a recursive loop.
-		singleton.pimpl->initialized = true;
+		singleton.initialized = true;
 
 		std::vector<std::filesystem::path> ageLibraries;
 
@@ -93,7 +122,7 @@ Factory& Factory::Instance()
 						}
 
 						// Keep track of loaded libraries in order to keep them loaded in memory.
-						singleton.pimpl->loadedLibraries.push_back(library);
+						singleton.loadedLibraries.push_back(library);
 					}
 				}
 				else
@@ -107,20 +136,61 @@ Factory& Factory::Instance()
 	return singleton;
 }
 
-std::shared_ptr<Object> Factory::create(const std::string& x) const
+Factory::Type Factory::getType(std::string_view x)
 {
-	const auto foundIt = this->pimpl->factoryMap.find(x);
+	const auto foundIt = std::find_if(std::begin(this->types), std::end(this->types), [x](Factory::Type& type) { return type == x; });
 
-	if(foundIt != std::end(this->pimpl->factoryMap))
+	if(foundIt != std::end(this->types))
 	{
-		const auto ptr = foundIt->second;
-		return ptr->create();
+		return *foundIt;
 	}
 
-	return nullptr;
+	return Factory::Type();
 }
 
-void Factory::registerType(const std::string& id, std::shared_ptr<CreatorBase> creator)
+Factory::Type Factory::getType(std::type_index x)
 {
-	this->pimpl->factoryMap[id] = creator;
+	const auto foundIt = std::find_if(std::begin(this->types), std::end(this->types), [x](Factory::Type& type) { return type.TypeIndex == x; });
+
+	if(foundIt != std::end(this->types))
+	{
+		return *foundIt;
+	}
+
+	return Factory::Type();
+}
+
+std::vector<Factory::Type> Factory::getTypes() const
+{
+	return this->types;
+}
+
+std::vector<Factory::Type> Factory::getTypesFromBase(std::type_index x)
+{
+	std::vector<Factory::Type> v;
+
+	for(const auto& type : this->types)
+	{
+		const auto foundIt =
+			std::find_if(std::begin(type.BaseTypes), std::end(type.BaseTypes), [x](const std::type_index& type) { return type == x; });
+
+		if(foundIt != std::end(type.BaseTypes))
+		{
+			v.push_back(*foundIt);
+		}
+	}
+
+	return v;
+}
+
+std::unique_ptr<Object> Factory::create(std::string_view x)
+{
+	auto type = this->getType(x);
+
+	if(type.valid() == true)
+	{
+		return type.Creator->create();
+	}
+
+	return {};
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/entity/Component.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/graphics/Export.h>
 #include <SFML/Window/Keyboard.hpp>
 #include <functional>

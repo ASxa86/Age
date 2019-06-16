@@ -2,7 +2,8 @@
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/Parser.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/SpriteComponent.h>
@@ -27,7 +28,7 @@ int main()
 	window->addChild(std::make_unique<TileMapSystem>());
 	window->addChild(std::make_unique<DrawableSystem>());
 
-	auto manager = engine->addChild<EntityManager>();
+	auto manager = engine->addChild<EntityDatabase>();
 	engine->addChild(std::make_unique<WaypointSystem>());
 	engine->addChild(std::make_unique<PhysicsSystem>());
 
@@ -37,34 +38,34 @@ int main()
 	}
 
 	// Enemy
-	auto enemy = manager->create();
-	auto& transform = enemy.addComponent<TransformComponent>();
-	transform.Position = {0, 275};
+	auto enemy = manager->addEntity();
+	auto transform = enemy->addComponent<TransformComponent>();
+	transform->Position = {0, 275};
 
-	auto& body = enemy.addComponent<KinematicComponent>();
-	body.BodyType = KinematicComponent::Type::Kinematic;
-	body.LinearVelocity = {50, 0.0};
-	body.CalculateHeading = true;
+	auto body = enemy->addComponent<KinematicComponent>();
+	body->BodyType = KinematicComponent::Type::Kinematic;
+	body->LinearVelocity = {50, 0.0};
+	body->CalculateHeading = true;
 
-	auto& sprite = enemy.addComponent<SpriteComponent>();
-	sprite.loadFile(Configuration::Instance().getPathData() / "maps/towerDefense_tilesheet.png");
-	sprite.setHFrames(23);
-	sprite.setVFrames(13);
-	sprite.setFrame(130);
-	sprite.Rotation = -90.0;
+	auto sprite = enemy->addComponent<SpriteComponent>();
+	sprite->loadFile(Configuration::Instance().getPathData() / "maps/towerDefense_tilesheet.png");
+	sprite->setHFrames(23);
+	sprite->setVFrames(13);
+	sprite->setFrame(130);
+	sprite->Rotation = -90.0;
 
-	auto& waypoint = enemy.addComponent<WaypointComponent>();
-	waypoint.Waypoints.push_back({{300, 275}});
-	waypoint.Waypoints.push_back({{300, 75}});
-	waypoint.Waypoints.push_back({{500, 75}});
-	waypoint.Waypoints.push_back({{500, 525}});
-	waypoint.Waypoints.push_back({{775, 525}});
-	waypoint.Waypoints.push_back({{775, 275}});
-	waypoint.Waypoints.push_back({{850, 275}});
+	auto waypoint = enemy->addComponent<WaypointComponent>();
+	waypoint->Waypoints.push_back({{300, 275}});
+	waypoint->Waypoints.push_back({{300, 75}});
+	waypoint->Waypoints.push_back({{500, 75}});
+	waypoint->Waypoints.push_back({{500, 525}});
+	waypoint->Waypoints.push_back({{775, 525}});
+	waypoint->Waypoints.push_back({{775, 275}});
+	waypoint->Waypoints.push_back({{850, 275}});
 
-	engine->setEngineState(age::core::EngineState::State::Initialize);
+	engine->setEngineState(age::core::EngineState::State::StartUp);
 
-	while(engine->getEngineState().getState() < EngineState::State::Exit)
+	while(engine->getEngineState().getState() < EngineState::State::Shutdown)
 	{
 		engine->frame();
 	}

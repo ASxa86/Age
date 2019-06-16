@@ -1,4 +1,4 @@
-#include <age/examples/pong/Pong.h>
+#include <pong/Pong.h>
 
 int main()
 {

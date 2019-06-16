@@ -22,10 +22,10 @@ namespace age
 		///
 		///	\param e The entity to add a new component too.
 		///
-		DialogComponents(age::entity::Entity e, QWidget* parent = nullptr);
+		DialogComponents(age::entity::Entity* e, QWidget* parent = nullptr);
 		~DialogComponents();
 
 	private:
-		age::entity::Entity entity;
+		age::entity::Entity* entity;
 	};
 }

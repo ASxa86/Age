@@ -1,9 +1,9 @@
 #include <editor/DockWidgetEntity.h>
 
 #include <age/core/Engine.h>
+#include <age/core/Factory.h>
 #include <age/core/PimplImpl.h>
-#include <age/entity/ComponentFactory.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <editor/Application.h>
 #include <editor/DialogComponents.h>
 #include <editor/TreeWidgetEntity.h>
@@ -18,7 +18,7 @@
 using namespace age;
 using namespace age::entity;
 
-Q_DECLARE_METATYPE(age::entity::Entity)
+Q_DECLARE_METATYPE(age::entity::Entity*)
 
 struct DockWidgetEntity::Impl
 {
@@ -27,7 +27,7 @@ struct DockWidgetEntity::Impl
 
 DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 {
-	qRegisterMetaType<age::entity::Entity>();
+	qRegisterMetaType<age::entity::Entity*>();
 
 	const auto widget = new QWidget();
 	const auto vLayout = new QVBoxLayout(widget);
@@ -48,11 +48,11 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 	this->setWidget(widget);
 
 	const auto addEntity = [this, twEntity] {
-		const auto manager = Application::Instance()->getEngine().getChild<EntityManager>();
+		const auto manager = Application::Instance()->getEngine().getChild<EntityDatabase>();
 
 		if(manager != nullptr)
 		{
-			manager->create();
+			manager->addEntity();
 		}
 	};
 
@@ -69,18 +69,17 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 			{
 				case TreeWidgetEntity::ItemType::Entity:
 				{
-					const auto manager = Application::Instance()->getEngine().getChild<EntityManager>();
-					auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity>();
-
-					manager->destroy(entity);
+					auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity*>();
+					entity->remove();
 				}
 				break;
 
 				case TreeWidgetEntity::ItemType::Component:
 				{
 					const auto parent = item->parent();
-					auto entity = parent->data(0, Qt::UserRole).value<age::entity::Entity>();
-					ComponentFactory::Instance().remove(entity, item->text(0).toStdString());
+					auto entity = parent->data(0, Qt::UserRole).value<age::entity::Entity*>();
+					(void)entity;
+					// ComponentFactory::Instance().remove(entity, item->text(0).toStdString());
 				}
 				break;
 			}
@@ -94,13 +93,13 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 
 		if(items.empty() == false)
 		{
-			const auto& item = items[0];
-			const auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity>();
-			const auto dlgComponents = new DialogComponents(entity);
-			dlgComponents->setModal(true);
-			dlgComponents->setAttribute(Qt::WA_DeleteOnClose);
-			dlgComponents->resize(500, 500);
-			dlgComponents->show();
+			// const auto& item = items[0];
+			// const auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity*>();
+			// const auto dlgComponents = new DialogComponents(entity);
+			// dlgComponents->setModal(true);
+			// dlgComponents->setAttribute(Qt::WA_DeleteOnClose);
+			// dlgComponents->resize(500, 500);
+			// dlgComponents->show();
 		}
 	});
 

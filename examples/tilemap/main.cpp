@@ -3,7 +3,7 @@
 #include <age/core/EngineState.h>
 #include <age/core/Parser.h>
 #include <age/entity/Entity.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/graphics/TileMapSystem.h>
 #include <age/graphics/Window.h>
 #include <iostream>
@@ -15,7 +15,7 @@ using namespace age::graphics;
 int main()
 {
 	Engine engine;
-	auto manager = engine.addChild<EntityManager>();
+	auto manager = engine.addChild<EntityDatabase>();
 	auto window = engine.addChild<Window>();
 	window->addChild(std::make_unique<TileMapSystem>());
 
@@ -26,10 +26,10 @@ int main()
 	}
 
 	auto state = engine.getEngineState();
-	state.setState(EngineState::State::Initialize);
+	state.setState(EngineState::State::StartUp);
 	engine.setEngineState(state);
 
-	while(engine.getEngineState().getState() < EngineState::State::Exit)
+	while(engine.getEngineState().getState() < EngineState::State::Shutdown)
 	{
 		engine.frame();
 	}

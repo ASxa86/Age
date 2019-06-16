@@ -15,7 +15,7 @@ namespace age
 	///
 	///	\class TreeWidgetEntity
 	///
-	///	\brief A QTreeWidget used to list and select entities and components that exist within age::entity::EntityManager.
+	///	\brief A QTreeWidget used to list and select entities and components that exist within age::entity::EntityDatabase.
 	///
 	///	\author Aaron Shelley
 	///

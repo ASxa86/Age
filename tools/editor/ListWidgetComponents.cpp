@@ -1,14 +1,16 @@
-#include <age/entity/ComponentFactory.h>
+#include <age/core/Factory.h>
+#include <age/entity/Component.h>
 #include <editor/ListWidgetComponents.h>
 
 using namespace age;
-using namespace age::entity;
 
 ListWidgetComponents::ListWidgetComponents(QWidget* parent) : QListWidget(parent)
 {
-	for(const auto& [name, creator] : ComponentFactory::Instance().FactoryMap)
+	const auto types = age::core::Factory::Instance().getTypesFromBase(typeid(age::entity::Component));
+
+	for(auto type : types)
 	{
-		this->addItem(QString::fromStdString(name));
+		this->addItem(QString::fromStdString(type.NameClean));
 	}
 }
 

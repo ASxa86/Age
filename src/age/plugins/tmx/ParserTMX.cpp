@@ -1,7 +1,7 @@
 #include <age/plugins/tmx/ParserTMX.h>
 
 #include <age/entity/Entity.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/graphics/TileMapComponent.h>
 #include <age/terrain/TileMap.h>
 #include <boost/algorithm/string.hpp>
@@ -24,7 +24,7 @@ ParserTMX::~ParserTMX()
 
 bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 {
-	auto manager = dynamic_cast<EntityManager*>(obj);
+	auto manager = dynamic_cast<EntityDatabase*>(obj);
 	if(std::filesystem::exists(x) == true && x.extension() == ".tmx" && manager != nullptr)
 	{
 		pugi::xml_document doc;
@@ -34,7 +34,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 		{
 			for(const auto& map : doc.children("map"))
 			{
-				auto entity = manager->create();
+				auto entity = manager->addEntity();
 				age::terrain::TileMap tileMap;
 				tileMap.setWidth(map.attribute("width").as_int());
 				tileMap.setHeight(map.attribute("height").as_int());
@@ -102,8 +102,8 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 					tileMap.addLayer(mapLayer);
 				}
 
-				auto& tileMapComponent = entity.addComponent<TileMapComponent>();
-				tileMapComponent.loadTileMap(tileMap);
+				auto tileMapComponent = entity->addComponent<TileMapComponent>();
+				tileMapComponent->loadTileMap(tileMap);
 			}
 
 			return true;

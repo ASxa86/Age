@@ -1,6 +1,6 @@
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <celero/Celero.h>
-
-#include <age/entity/EntityManager.h>
 #include "Object.h"
 
 #ifdef WIN32
@@ -66,10 +66,10 @@ namespace
 		virtual void setUp(const celero::TestFixture::ExperimentValue&) override
 		{
 			// Clear the previous entities
-			this->em = std::make_unique<age::entity::EntityManager>();
+			this->em = std::make_unique<age::entity::EntityDatabase>();
 		}
 
-		std::unique_ptr<age::entity::EntityManager> em;
+		std::unique_ptr<age::entity::EntityDatabase> em;
 	};
 
 	struct EntityXF : public celero::TestFixture
@@ -125,7 +125,7 @@ BENCHMARK_F(Create, AgeEntity, AgeEntityF, 10, 100)
 {
 	for(auto i = 0; i < IterationCount; ++i)
 	{
-		celero::DoNotOptimizeAway(this->em->create());
+		celero::DoNotOptimizeAway(this->em->addEntity());
 	}
 }
 

@@ -109,7 +109,7 @@ namespace age
 			///	Return the child of type T with the given index. Default 0.
 			///
 			template <typename T>
-			T* getChild(size_t x = 0)
+			T* getChild(size_t x = 0) const
 			{
 				T* child{};
 

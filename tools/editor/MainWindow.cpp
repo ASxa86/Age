@@ -2,7 +2,7 @@
 
 #include <age/core/Engine.h>
 #include <age/core/PimplImpl.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <editor/Application.h>
 #include <editor/DockWidgetComponent.h>
 #include <editor/DockWidgetEntity.h>

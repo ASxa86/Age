@@ -1,27 +1,27 @@
-#include <editor/TreeWidgetEntity.h>
-
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
+#include <age/core/Factory.h>
 #include <age/core/PimplImpl.h>
 #include <age/entity/Component.h>
-#include <age/entity/ComponentFactory.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/EntityEvent.h>
-#include <age/entity/EntityManager.h>
 #include <editor/Application.h>
 #include <editor/GUIComponent.h>
+#include <editor/TreeWidgetEntity.h>
 #include <QtCore/QSize>
 
 using namespace age;
 using namespace age::core;
 using namespace age::entity;
 
-Q_DECLARE_METATYPE(age::entity::Entity)
+Q_DECLARE_METATYPE(age::entity::Entity*)
 Q_DECLARE_METATYPE(age::entity::Component*)
 
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
-	ComponentFactory::RegisterType<GUIComponent>("GUIComponent");
-	qRegisterMetaType<age::entity::Entity>();
+	AgeFactoryRegister(age::GUIComponent);
+	qRegisterMetaType<age::entity::Entity*>();
 	qRegisterMetaType<age::entity::Component*>();
 
 	EventQueue::Instance().addEventHandler([this](Event* x) {
@@ -56,12 +56,12 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 	this->connect(this, &QTreeWidget::itemChanged, this, [this](QTreeWidgetItem* item) {
 		if(item->type() == ItemType::Entity)
 		{
-			auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity>();
+			auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity*>();
 
-			if(entity.valid() == true)
+			if(entity != nullptr)
 			{
-				auto& gui = entity.addComponent<GUIComponent>();
-				gui.ID = item->text(0).toStdString();
+				auto gui = entity->addComponent<GUIComponent>();
+				gui->ID = item->text(0).toStdString();
 			}
 		}
 	});
@@ -74,15 +74,15 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 		}
 	});
 
-	const auto manager = Application::Instance()->getEngine().getChild<EntityManager>();
+	const auto manager = Application::Instance()->getEngine().getChild<EntityDatabase>();
 
 	if(manager != nullptr)
 	{
-		const auto& entities = manager->getEntities();
+		const auto& entities = manager->getChildren<age::entity::Entity>();
 
 		for(const auto& entity : entities)
 		{
-			this->addEntity(entity);
+			this->addEntity(*entity);
 		}
 	}
 }
@@ -98,11 +98,11 @@ void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
 	QSignalBlocker block(this);
 	auto item = new QTreeWidgetItem(this, ItemType::Entity);
 	item->setText(0, "Entity");
-	item->setData(0, Qt::UserRole, QVariant::fromValue(x));
+	// item->setData(0, Qt::UserRole, QVariant::fromValue(&x));
 	item->setIcon(0, QIcon(":icons/pawn.png"));
 	item->setFlags(item->flags() | Qt::ItemFlag::ItemIsEditable);
 
-	auto components = x.getComponents();
+	auto components = x.getChildren<age::entity::Component>();
 
 	for(const auto& component : components)
 	{
@@ -128,8 +128,8 @@ void TreeWidgetEntity::addComponent(const age::entity::Entity& e, age::entity::C
 void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, age::entity::Component* c)
 {
 	const auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
-	const auto name = ComponentFactory::Instance().alias(typeid(*c));
-	componentItem->setText(0, QString::fromStdString(name));
+	auto type = Factory::Instance().getType(typeid(*c));
+	componentItem->setText(0, QString::fromStdString(type.NameClean));
 	componentItem->setData(0, Qt::UserRole, QVariant::fromValue(c));
 	item->setExpanded(true);
 }
@@ -145,7 +145,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& x)
 	{
 		auto item = this->topLevelItem(i);
 
-		if(item->data(0, Qt::UserRole).value<age::entity::Entity>() == x)
+		if(item->data(0, Qt::UserRole).value<age::entity::Entity*>() == &x)
 		{
 			return item;
 		}
@@ -164,7 +164,9 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& e, age::e
 		{
 			auto child = item->child(i);
 
-			if(child->text(0) == QString::fromStdString(ComponentFactory::Instance().alias(typeid(*c))))
+			auto type = Factory::Instance().getType(typeid(*c));
+
+			if(child->text(0) == QString::fromStdString(type.NameClean))
 			{
 				return child;
 			}
