@@ -66,7 +66,7 @@ public:
 		return {static_cast<float32>(x.X), static_cast<float32>(x.Y)};
 	}
 
-	b2Body* getOrCreateBody(const Entity& x)
+	b2Body* getOrCreateBody(Entity* x)
 	{
 		for(auto body = this->world.GetBodyList(); body != nullptr; body = body->GetNext())
 		{
@@ -121,15 +121,15 @@ public:
 		t.Rotation = b->GetAngle();
 	}
 
-	void addBody(const Entity& x)
+	void addBody(Entity* x)
 	{
-		auto kinematic = x.getChild<KinematicComponent>();
+		auto kinematic = x->getChild<KinematicComponent>();
 
 		auto body = this->getOrCreateBody(x);
 		this->configureBody2D(body, *kinematic);
 	}
 
-	void removeBody(const Entity& e)
+	void removeBody(Entity* e)
 	{
 		auto body = this->getOrCreateBody(e);
 		this->world.DestroyBody(body);
@@ -164,9 +164,9 @@ public:
 		this->configureFixture(f, e);
 	}
 
-	void addBox(const Entity& x)
+	void addBox(Entity* x)
 	{
-		auto box = x.getChild<BoxCollisionComponent>();
+		auto box = x->getChild<BoxCollisionComponent>();
 
 		b2FixtureDef fdef{};
 		b2PolygonShape shape{};
@@ -177,9 +177,9 @@ public:
 		this->configureBox2D(fixture, *box);
 	}
 
-	void addCircle(const Entity& x)
+	void addCircle(Entity* x)
 	{
-		auto circle = x.getChild<CircleCollisionComponent>();
+		auto circle = x->getChild<CircleCollisionComponent>();
 		b2FixtureDef fdef{};
 		b2CircleShape shape{};
 		fdef.shape = &shape;
@@ -188,9 +188,9 @@ public:
 		this->configureCircle2D(fixture, *circle);
 	}
 
-	void addEdge(const Entity& x)
+	void addEdge(Entity* x)
 	{
-		auto edge = x.getChild<EdgeCollisionComponent>();
+		auto edge = x->getChild<EdgeCollisionComponent>();
 		b2FixtureDef fdef{};
 		b2EdgeShape shape{};
 		fdef.shape = &shape;
@@ -199,7 +199,7 @@ public:
 		this->configureEdge2D(fixture, *edge);
 	}
 
-	void removeFixture(const Entity& x)
+	void removeFixture(Entity* x)
 	{
 		auto body = this->getOrCreateBody(x);
 		body->DestroyFixture(body->GetFixtureList());
@@ -280,22 +280,22 @@ void PhysicsSystem::startup()
 		{
 			if(e->getChild<KinematicComponent>() != nullptr)
 			{
-				this->pimpl->addBody(*e);
+				this->pimpl->addBody(e);
 			}
 
 			if(e->getChild<BoxCollisionComponent>() != nullptr)
 			{
-				this->pimpl->addBox(*e);
+				this->pimpl->addBox(e);
 			}
 
 			if(e->getChild<CircleCollisionComponent>() != nullptr)
 			{
-				this->pimpl->addCircle(*e);
+				this->pimpl->addCircle(e);
 			}
 
 			if(e->getChild<EdgeCollisionComponent>() != nullptr)
 			{
-				this->pimpl->addEdge(*e);
+				this->pimpl->addEdge(e);
 			}
 		}
 	}

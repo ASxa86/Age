@@ -176,7 +176,7 @@ std::vector<Factory::Type> Factory::getTypesFromBase(std::type_index x)
 
 		if(foundIt != std::end(type.BaseTypes))
 		{
-			v.push_back(*foundIt);
+			v.push_back(type);
 		}
 	}
 

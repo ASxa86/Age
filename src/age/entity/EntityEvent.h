@@ -33,16 +33,16 @@ namespace age
 				ComponentRemoved
 			};
 
-			EntityEvent(const Entity& e, Type t);
+			EntityEvent(Entity* e, Type t);
 			~EntityEvent() override;
 
-			const Entity& getEntity() const;
+			Entity* getEntity() const;
 			EntityEvent::Type getType() const;
 
 			Component* Component{};
 
 		private:
-			const Entity& entity;
+			Entity* entity;
 			Type type;
 		};
 	}

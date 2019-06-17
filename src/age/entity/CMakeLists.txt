@@ -31,6 +31,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Entity.cpp
 	EntityDatabase.cpp
 	EntityEvent.cpp
+	Plugin.cpp
 	System.cpp
 	TransformComponent.cpp
 )

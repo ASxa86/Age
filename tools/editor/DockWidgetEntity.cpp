@@ -3,6 +3,8 @@
 #include <age/core/Engine.h>
 #include <age/core/Factory.h>
 #include <age/core/PimplImpl.h>
+#include <age/entity/Component.h>
+#include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <editor/Application.h>
 #include <editor/DialogComponents.h>
@@ -19,6 +21,7 @@ using namespace age;
 using namespace age::entity;
 
 Q_DECLARE_METATYPE(age::entity::Entity*)
+Q_DECLARE_METATYPE(age::entity::Component*)
 
 struct DockWidgetEntity::Impl
 {
@@ -28,6 +31,7 @@ struct DockWidgetEntity::Impl
 DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 {
 	qRegisterMetaType<age::entity::Entity*>();
+	qRegisterMetaType<age::entity::Component*>();
 
 	const auto widget = new QWidget();
 	const auto vLayout = new QVBoxLayout(widget);
@@ -76,10 +80,8 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 
 				case TreeWidgetEntity::ItemType::Component:
 				{
-					const auto parent = item->parent();
-					auto entity = parent->data(0, Qt::UserRole).value<age::entity::Entity*>();
-					(void)entity;
-					// ComponentFactory::Instance().remove(entity, item->text(0).toStdString());
+					auto component = item->data(0, Qt::UserRole).value<age::entity::Component*>();
+					component->remove();
 				}
 				break;
 			}
@@ -93,13 +95,13 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 
 		if(items.empty() == false)
 		{
-			// const auto& item = items[0];
-			// const auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity*>();
-			// const auto dlgComponents = new DialogComponents(entity);
-			// dlgComponents->setModal(true);
-			// dlgComponents->setAttribute(Qt::WA_DeleteOnClose);
-			// dlgComponents->resize(500, 500);
-			// dlgComponents->show();
+			const auto& item = items[0];
+			const auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity*>();
+			const auto dlgComponents = new DialogComponents(entity);
+			dlgComponents->setModal(true);
+			dlgComponents->setAttribute(Qt::WA_DeleteOnClose);
+			dlgComponents->resize(500, 500);
+			dlgComponents->show();
 		}
 	});
 

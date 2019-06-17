@@ -82,7 +82,7 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 
 		for(const auto& entity : entities)
 		{
-			this->addEntity(*entity);
+			this->addEntity(entity);
 		}
 	}
 }
@@ -91,18 +91,18 @@ TreeWidgetEntity::~TreeWidgetEntity()
 {
 }
 
-void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
+void TreeWidgetEntity::addEntity(age::entity::Entity* x)
 {
 	// Block the item changed signal until after we've fully added the entity node along with
 	// its component nodes.
 	QSignalBlocker block(this);
 	auto item = new QTreeWidgetItem(this, ItemType::Entity);
 	item->setText(0, "Entity");
-	// item->setData(0, Qt::UserRole, QVariant::fromValue(&x));
+	item->setData(0, Qt::UserRole, QVariant::fromValue(x));
 	item->setIcon(0, QIcon(":icons/pawn.png"));
 	item->setFlags(item->flags() | Qt::ItemFlag::ItemIsEditable);
 
-	auto components = x.getChildren<age::entity::Component>();
+	auto components = x->getChildren<age::entity::Component>();
 
 	for(const auto& component : components)
 	{
@@ -110,12 +110,12 @@ void TreeWidgetEntity::addEntity(const age::entity::Entity& x)
 	}
 }
 
-void TreeWidgetEntity::removeEntity(const age::entity::Entity& x)
+void TreeWidgetEntity::removeEntity(age::entity::Entity* x)
 {
 	delete this->findItem(x);
 }
 
-void TreeWidgetEntity::addComponent(const age::entity::Entity& e, age::entity::Component* c)
+void TreeWidgetEntity::addComponent(age::entity::Entity* e, age::entity::Component* c)
 {
 	auto item = this->findItem(e);
 
@@ -134,18 +134,18 @@ void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, age::entity::Componen
 	item->setExpanded(true);
 }
 
-void TreeWidgetEntity::removeComponent(const age::entity::Entity& e, age::entity::Component* c)
+void TreeWidgetEntity::removeComponent(age::entity::Entity* e, age::entity::Component* c)
 {
 	delete this->findItem(e, c);
 }
 
-QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& x)
+QTreeWidgetItem* TreeWidgetEntity::findItem(age::entity::Entity* x)
 {
 	for(auto i = 0; i < this->topLevelItemCount(); i++)
 	{
 		auto item = this->topLevelItem(i);
 
-		if(item->data(0, Qt::UserRole).value<age::entity::Entity*>() == &x)
+		if(item->data(0, Qt::UserRole).value<age::entity::Entity*>() == x)
 		{
 			return item;
 		}
@@ -154,7 +154,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& x)
 	return nullptr;
 }
 
-QTreeWidgetItem* TreeWidgetEntity::findItem(const age::entity::Entity& e, age::entity::Component* c)
+QTreeWidgetItem* TreeWidgetEntity::findItem(age::entity::Entity* e, age::entity::Component* c)
 {
 	auto item = this->findItem(e);
 

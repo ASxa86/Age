@@ -22,7 +22,7 @@ namespace age
 				auto child = std::make_unique<T>();
 				const auto p = child.get();
 
-				if(this->addChild(std::move(child)) == true)
+				if(this->addEntity(std::move(child)) == true)
 				{
 					return p;
 				}

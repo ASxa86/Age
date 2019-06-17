@@ -43,17 +43,17 @@ namespace age
 		///
 		///	Add a tree node to list and edit the given entity.
 		///
-		void addEntity(const age::entity::Entity& x);
+		void addEntity(age::entity::Entity* x);
 
 		///
 		///	Remove the associated tree tode for the given entity.
 		///
-		void removeEntity(const age::entity::Entity& x);
+		void removeEntity(age::entity::Entity* x);
 
 		///
 		///	Add a tree node to the list under the node associated with the given entity.
 		///
-		void addComponent(const age::entity::Entity& x, age::entity::Component* c);
+		void addComponent(age::entity::Entity* x, age::entity::Component* c);
 
 		///
 		///	Add a tree node to the list under the given tree node.
@@ -63,17 +63,17 @@ namespace age
 		///
 		///	Remove the associated tree node for the given component type of the given entity.
 		///
-		void removeComponent(const age::entity::Entity& x, age::entity::Component* c);
+		void removeComponent(age::entity::Entity* x, age::entity::Component* c);
 
 		///
 		///	Get the tree node associated with the given entity.
 		///
-		QTreeWidgetItem* findItem(const age::entity::Entity& x);
+		QTreeWidgetItem* findItem(age::entity::Entity* x);
 
 		///
 		///	Get the tree node associated with the given component type of the given entity.
 		///
-		QTreeWidgetItem* findItem(const age::entity::Entity& x, age::entity::Component* c);
+		QTreeWidgetItem* findItem(age::entity::Entity* x, age::entity::Component* c);
 
 		///
 		///	Overload the default size hint to adjust the default size within an application.

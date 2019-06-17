@@ -164,8 +164,10 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_sources(${PROJECT_NAME} PRIVATE
 	CollisionEvent.cpp
+	KinematicComponent.cpp
 	PhysicsSystem.cpp
 	PhysicsRenderSystem.cpp
+	Plugin.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
