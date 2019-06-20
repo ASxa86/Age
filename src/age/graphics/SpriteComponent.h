@@ -25,6 +25,8 @@ namespace age
 			SpriteComponent();
 			~SpriteComponent();
 
+			void startup() override;
+
 			///
 			///	\brief Load a sprite or spriesheet file.
 			///
@@ -104,6 +106,7 @@ namespace age
 		private:
 			sf::Texture texture;
 			sf::Sprite sprite;
+			std::filesystem::path file;
 			unsigned int frame;
 			unsigned int vFrames;
 			unsigned int hFrames;

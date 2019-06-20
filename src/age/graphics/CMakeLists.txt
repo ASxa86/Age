@@ -34,6 +34,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	InputComponent.cpp
 	KeyEvent.cpp
 	PlayerInputSystem.cpp
+	Plugin.cpp
 	RenderSystem.cpp
 	SpriteComponent.cpp
 	TextSystem.cpp
