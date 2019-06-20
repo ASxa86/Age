@@ -1,6 +1,7 @@
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/KeyEvent.h>
 #include <age/graphics/PlayerInputSystem.h>
@@ -19,7 +20,7 @@ PlayerInputSystem::~PlayerInputSystem()
 {
 }
 
-void PlayerInputSystem::initialize()
+void PlayerInputSystem::startup()
 {
 	EventQueue::Instance().addEventHandler([this](auto x) { this->event(x); }, this);
 }
@@ -30,32 +31,44 @@ void PlayerInputSystem::event(age::core::Event* x)
 
 	if(keyEvent != nullptr)
 	{
-		const auto manager = this->getEntityManager();
+		const auto manager = this->getEntityDatabase();
 
-		manager->each<InputComponent>([&keyEvent](Entity& e, InputComponent& i) {
-			const auto& keyBindings = i.getKeyBindings();
-			const auto foundIt =
-				std::find_if(std::begin(keyBindings), std::end(keyBindings), [keyEvent](auto c) { return keyEvent->getKey() == c.first; });
+		for(auto entity : manager->getChildren<Entity>())
+		{
+			auto i = entity->getChild<InputComponent>();
 
-			if(foundIt != std::end(keyBindings))
+			if(i != nullptr)
 			{
-				foundIt->second(e, keyEvent->getType() == KeyEvent::Type::Pressed);
+				const auto& keyBindings = i->getKeyBindings();
+				const auto foundIt =
+					std::find_if(std::begin(keyBindings), std::end(keyBindings), [keyEvent](auto c) { return keyEvent->getKey() == c.first; });
+
+				if(foundIt != std::end(keyBindings))
+				{
+					foundIt->second(*entity, keyEvent->getType() == KeyEvent::Type::Pressed);
+				}
 			}
-		});
+		}
 	}
 }
 
 void PlayerInputSystem::frame(std::chrono::microseconds)
 {
-	const auto manager = this->getEntityManager();
+	const auto manager = this->getEntityDatabase();
 
-	manager->each<InputComponent>([](Entity& e, InputComponent& i) {
-		for(const auto& keyBinding : i.getKeyBindings())
+	for(auto entity : manager->getChildren<Entity>())
+	{
+		auto i = entity->getChild<InputComponent>();
+
+		if(i != nullptr)
 		{
-			if(sf::Keyboard::isKeyPressed(keyBinding.first) == true)
+			for(const auto& keyBinding : i->getKeyBindings())
 			{
-				keyBinding.second(e, true);
+				if(sf::Keyboard::isKeyPressed(keyBinding.first) == true)
+				{
+					keyBinding.second(*entity, true);
+				}
 			}
 		}
-	});
+	}
 }

@@ -1,7 +1,7 @@
 #include <age/graphics/TextSystem.h>
 
 #include <age/core/PimplImpl.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
 #include <SFML/Graphics.hpp>
 
@@ -25,18 +25,18 @@ TextSystem::~TextSystem()
 {
 }
 
-void TextSystem::render(sf::RenderTarget& target, std::chrono::microseconds /*x*/)
+void TextSystem::render(sf::RenderTarget& /*target*/, std::chrono::microseconds /*x*/)
 {
-	const auto manager = this->getEntityManager();
+	// const auto manager = this->getEntityDatabase();
 
-	manager->each<TransformComponent, std::shared_ptr<sf::Text>>([&target, this](Entity&, TransformComponent& t, std::shared_ptr<sf::Text>& d) {
-		auto transform = dynamic_cast<sf::Transformable*>(d.get());
+	// manager->each<TransformComponent, std::shared_ptr<sf::Text>>([&target, this](Entity&, TransformComponent& t, std::shared_ptr<sf::Text>& d) {
+	//	auto transform = dynamic_cast<sf::Transformable*>(d.get());
 
-		if(transform != nullptr)
-		{
-			transform->setPosition(FromVector(t.Position));
-		}
+	//	if(transform != nullptr)
+	//	{
+	//		transform->setPosition(FromVector(t.Position));
+	//	}
 
-		target.draw(*d);
-	});
+	//	target.draw(*d);
+	//});
 }

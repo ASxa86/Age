@@ -2,7 +2,8 @@
 
 #include <age/core/Timer.h>
 #include <age/entity/AnimationComponent.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 
 using namespace age::entity;
 
@@ -17,27 +18,33 @@ AnimationSystem::~AnimationSystem()
 
 void AnimationSystem::frame(std::chrono::microseconds x)
 {
-	const auto em = this->getEntityManager();
+	const auto em = this->getEntityDatabase();
 
-	em->each<AnimationComponent>([x](auto&, AnimationComponent& a) {
-		const auto animation = a.getCurrentAnimation();
+	for(auto entity : em->getChildren<Entity>())
+	{
+		auto a = entity->getChild<AnimationComponent>();
 
-		if(a.getIsPlaying() == true && animation != nullptr)
+		if(a != nullptr)
 		{
-			const auto delta = age::core::seconds{std::chrono::duration_cast<age::core::seconds>(x).count() * a.getSpeed()};
-			a.setElapsed(a.getElapsed() + std::chrono::duration_cast<std::chrono::microseconds>(delta));
+			const auto animation = a->getCurrentAnimation();
 
-			if(a.getElapsed() > a.getLength())
+			if(a->getIsPlaying() == true && animation != nullptr)
 			{
-				a.setElapsed(a.getLength());
-			}
+				const auto delta = age::core::seconds{std::chrono::duration_cast<age::core::seconds>(x).count() * a->getSpeed()};
+				a->setElapsed(a->getElapsed() + std::chrono::duration_cast<std::chrono::microseconds>(delta));
 
-			animation->process(a.getElapsed());
+				if(a->getElapsed() > a->getLength())
+				{
+					a->setElapsed(a->getLength());
+				}
 
-			if(a.getElapsed() >= a.getLength())
-			{
-				a.setElapsed(std::chrono::microseconds::zero());
+				animation->process(a->getElapsed());
+
+				if(a->getElapsed() >= a->getLength())
+				{
+					a->setElapsed(std::chrono::microseconds::zero());
+				}
 			}
 		}
-	});
+	}
 }

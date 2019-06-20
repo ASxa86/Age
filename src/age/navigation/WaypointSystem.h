@@ -23,10 +23,6 @@ namespace age
 			~WaypointSystem() override;
 
 			void frame(std::chrono::microseconds x);
-
-		private:
-			struct Impl;
-			Pimpl<Impl> pimpl;
 		};
 	}
 }

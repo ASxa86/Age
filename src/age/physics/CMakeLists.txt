@@ -147,7 +147,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 	FOLDER age
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -164,8 +164,10 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_sources(${PROJECT_NAME} PRIVATE
 	CollisionEvent.cpp
+	KinematicComponent.cpp
 	PhysicsSystem.cpp
 	PhysicsRenderSystem.cpp
+	Plugin.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

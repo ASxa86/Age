@@ -1,5 +1,5 @@
 #include <age/core/Engine.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/System.h>
 
 using namespace age::entity;
@@ -12,13 +12,13 @@ System::~System()
 {
 }
 
-EntityManager* System::getEntityManager() const
+EntityDatabase* System::getEntityDatabase() const
 {
-	const auto parent = this->getParent<age::core::Engine>(true);
+	const auto parent = this->getParent<age::core::Engine>(FindOption::Recursive);
 
 	if(parent != nullptr)
 	{
-		return parent->getChild<EntityManager>();
+		return parent->getChild<EntityDatabase>();
 	}
 
 	return nullptr;

@@ -1,58 +1,18 @@
+#include <age/core/EventQueue.h>
+#include <age/entity/Component.h>
 #include <age/entity/Entity.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/EntityEvent.h>
 
 using namespace age::entity;
 
-Entity::Entity() : id{-1}, manager{nullptr}
+Entity::Entity()
 {
 }
 
-int Entity::getID() const
+bool Entity::addComponent(std::unique_ptr<Component> x)
 {
-	return this->id;
-}
-
-bool Entity::valid() const
-{
-	return (this->manager != nullptr) && (this->manager->valid(*this) == true);
-}
-
-void Entity::destroy() const
-{
-	if(this->manager != nullptr)
-	{
-		this->manager->destroy(*this);
-	}
-}
-
-bool Entity::operator==(const Entity& x) const
-{
-	return this->id == x.id;
-}
-
-bool Entity::operator!=(const Entity& x) const
-{
-	return !(*this == x);
-}
-
-std::vector<Component*> Entity::getComponents() const
-{
-	std::vector<Component*> v;
-
-	const auto& pools = this->manager->getPools();
-
-	for(const auto& [type, pool] : pools)
-	{
-		if(pool->test(this->id) == true)
-		{
-			const auto c = pool->component(this->id);
-
-			if(c != nullptr)
-			{
-				v.push_back(c);
-			}
-		}
-	}
-
-	return v;
+	auto evt = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
+	evt->Component = x.get();
+	age::core::EventQueue::Instance().sendEvent(std::move(evt));
+	return this->addChild(std::move(x));
 }

@@ -3,7 +3,7 @@
 
 using namespace age::entity;
 
-EntityEvent::EntityEvent(const Entity& e, Type t) : entity{e}, type{t}
+EntityEvent::EntityEvent(Entity* e, Type t) : entity{e}, type{t}
 {
 }
 
@@ -11,7 +11,7 @@ EntityEvent::~EntityEvent()
 {
 }
 
-const Entity& EntityEvent::getEntity() const
+Entity* EntityEvent::getEntity() const
 {
 	return this->entity;
 }

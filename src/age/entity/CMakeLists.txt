@@ -14,11 +14,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 	AnimationComponent.h
 	AnimationSystem.h
 	Component.h
-	ComponentFactory.h
-	ComponentPool.h
 	Entity.h
+	EntityDatabase.h
 	EntityEvent.h
-	EntityManager.h
 	Export.h
 	System.h
 	TransformComponent.h
@@ -30,12 +28,10 @@ target_sources(${PROJECT_NAME} PRIVATE
 	AnimationComponent.cpp
 	AnimationSystem.cpp
 	Component.cpp
-	ComponentFactory.cpp
-	ComponentFactoryRegister.cpp
-	ComponentPool.cpp
 	Entity.cpp
+	EntityDatabase.cpp
 	EntityEvent.cpp
-	EntityManager.cpp
+	Plugin.cpp
 	System.cpp
 	TransformComponent.cpp
 )

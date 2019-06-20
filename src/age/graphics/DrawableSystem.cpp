@@ -2,7 +2,8 @@
 
 #include <age/core/Configuration.h>
 #include <age/core/PimplImpl.h>
-#include <age/entity/EntityManager.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
 #include <age/graphics/SpriteComponent.h>
 #include <SFML/Graphics.hpp>
@@ -37,20 +38,25 @@ DrawableSystem::~DrawableSystem()
 
 void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds /*x*/)
 {
-	const auto manager = this->getEntityManager();
+	const auto manager = this->getEntityDatabase();
 
-	manager->each<SpriteComponent>([&target, this](Entity& e, SpriteComponent& s) {
-		auto& sprite = s.getSprite();
-		sprite.setRotation(static_cast<float>(s.Rotation));
+	for(auto entity : manager->getChildren<Entity>())
+	{
+		auto s = entity->getChild<SpriteComponent>();
 
-		if(e.hasComponent<TransformComponent>() == true)
+		if(s != nullptr)
 		{
-			const auto& t = e.getComponent<TransformComponent>();
-			sprite.setPosition(FromVector(t.Position));
-			sprite.setRotation(sprite.getRotation() + static_cast<float>(t.Rotation));
-		}
+			auto& sprite = s->getSprite();
+			sprite.setRotation(static_cast<float>(s->Rotation));
 
-		target.draw(sprite);
-		// target.draw(sprite, this->pimpl->state);
-	});
+			auto t = entity->getChild<TransformComponent>();
+			if(t != nullptr)
+			{
+				sprite.setPosition(FromVector(t->Position));
+				sprite.setRotation(sprite.getRotation() + static_cast<float>(t->Rotation));
+			}
+
+			target.draw(sprite);
+		}
+	}
 }

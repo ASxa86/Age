@@ -8,7 +8,7 @@ namespace age
 {
 	namespace physics
 	{
-		struct KinematicComponent : public age::entity::Component
+		struct AGE_PHYSICS_EXPORT KinematicComponent : public age::entity::Component
 		{
 			///
 			///	\enum BodyType
@@ -35,15 +35,17 @@ namespace age
 				Dynamic
 			};
 
+			KinematicComponent();
+
 			/// The component velocity to describe an entity.
-			age::math::Vector LinearVelocity;
+			age::math::Vector LinearVelocity{};
 
 			/// The body type to describe this an entity.
 			Type BodyType;
 
 			/// Enable to calculate heading rotation for an entity.
 			/// This will cause any rotations on an associated TransformComponent to be overwritten.
-			bool CalculateHeading;
+			bool CalculateHeading{false};
 		};
 	}
 }

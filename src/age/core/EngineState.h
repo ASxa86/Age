@@ -28,10 +28,10 @@ namespace age
 			enum class State : uint8_t
 			{
 				Unknown,
-				Initialize,
+				StartUp,
 				Run,
 				Pause,
-				Exit
+				Shutdown
 			};
 
 			EngineState(State x = State::Unknown);

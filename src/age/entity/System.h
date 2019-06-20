@@ -8,7 +8,7 @@ namespace age
 {
 	namespace entity
 	{
-		class EntityManager;
+		class EntityDatabase;
 
 		///
 		///	\class Processor
@@ -29,7 +29,7 @@ namespace age
 			///
 			///	Systems perform work on entities. This provides a convenient way to collect them.
 			///
-			EntityManager* getEntityManager() const;
+			EntityDatabase* getEntityDatabase() const;
 		};
 	}
 }

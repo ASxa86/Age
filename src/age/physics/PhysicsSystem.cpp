@@ -1,11 +1,10 @@
-#include <age/physics/PhysicsSystem.h>
-
 #include <Box2D/Box2D.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
 #include <age/core/Timer.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/EntityEvent.h>
-#include <age/entity/EntityManager.h>
 #include <age/entity/TransformComponent.h>
 #include <age/math/Convert.h>
 #include <age/math/Functions.h>
@@ -14,6 +13,7 @@
 #include <age/physics/CollisionEvent.h>
 #include <age/physics/EdgeCollisionComponent.h>
 #include <age/physics/KinematicComponent.h>
+#include <age/physics/PhysicsSystem.h>
 
 using namespace age::core;
 using namespace age::entity;
@@ -66,7 +66,7 @@ public:
 		return {static_cast<float32>(x.X), static_cast<float32>(x.Y)};
 	}
 
-	b2Body* getOrCreateBody(const Entity& x)
+	b2Body* getOrCreateBody(Entity* x)
 	{
 		for(auto body = this->world.GetBodyList(); body != nullptr; body = body->GetNext())
 		{
@@ -121,15 +121,15 @@ public:
 		t.Rotation = b->GetAngle();
 	}
 
-	void addBody(const Entity& x)
+	void addBody(Entity* x)
 	{
-		auto& kinematic = x.getComponent<KinematicComponent>();
+		auto kinematic = x->getChild<KinematicComponent>();
 
 		auto body = this->getOrCreateBody(x);
-		this->configureBody2D(body, kinematic);
+		this->configureBody2D(body, *kinematic);
 	}
 
-	void removeBody(const Entity& e)
+	void removeBody(Entity* e)
 	{
 		auto body = this->getOrCreateBody(e);
 		this->world.DestroyBody(body);
@@ -164,9 +164,9 @@ public:
 		this->configureFixture(f, e);
 	}
 
-	void addBox(const Entity& x)
+	void addBox(Entity* x)
 	{
-		auto& box = x.getComponent<BoxCollisionComponent>();
+		auto box = x->getChild<BoxCollisionComponent>();
 
 		b2FixtureDef fdef{};
 		b2PolygonShape shape{};
@@ -174,32 +174,32 @@ public:
 		auto body = this->getOrCreateBody(x);
 		auto fixture = body->CreateFixture(&fdef);
 
-		this->configureBox2D(fixture, box);
+		this->configureBox2D(fixture, *box);
 	}
 
-	void addCircle(const Entity& x)
+	void addCircle(Entity* x)
 	{
-		auto& circle = x.getComponent<CircleCollisionComponent>();
+		auto circle = x->getChild<CircleCollisionComponent>();
 		b2FixtureDef fdef{};
 		b2CircleShape shape{};
 		fdef.shape = &shape;
 		auto body = this->getOrCreateBody(x);
 		auto fixture = body->CreateFixture(&fdef);
-		this->configureCircle2D(fixture, circle);
+		this->configureCircle2D(fixture, *circle);
 	}
 
-	void addEdge(const Entity& x)
+	void addEdge(Entity* x)
 	{
-		auto& edge = x.getComponent<EdgeCollisionComponent>();
+		auto edge = x->getChild<EdgeCollisionComponent>();
 		b2FixtureDef fdef{};
 		b2EdgeShape shape{};
 		fdef.shape = &shape;
 		auto body = this->getOrCreateBody(x);
 		auto fixture = body->CreateFixture(&fdef);
-		this->configureEdge2D(fixture, edge);
+		this->configureEdge2D(fixture, *edge);
 	}
 
-	void removeFixture(const Entity& x)
+	void removeFixture(Entity* x)
 	{
 		auto body = this->getOrCreateBody(x);
 		body->DestroyFixture(body->GetFixtureList());
@@ -220,7 +220,7 @@ PhysicsSystem::~PhysicsSystem()
 {
 }
 
-void PhysicsSystem::initialize()
+void PhysicsSystem::startup()
 {
 	EventQueue::Instance().addEventHandler([this](auto evt) {
 		const auto entityEvt = dynamic_cast<EntityEvent*>(evt);
@@ -272,31 +272,32 @@ void PhysicsSystem::initialize()
 
 	// Initialize all entities that have been configured before running the engine.
 	// Any entities or components added/removed will be handled by the event handler beyond this point.
-	const auto manager = this->getEntityManager();
+	const auto manager = this->getEntityDatabase();
 
 	if(manager != nullptr)
 	{
-		manager->each([this](auto& e) {
-			if(e.hasComponent<KinematicComponent>() == true)
+		for(auto e : manager->getChildren<Entity>())
+		{
+			if(e->getChild<KinematicComponent>() != nullptr)
 			{
 				this->pimpl->addBody(e);
 			}
 
-			if(e.hasComponent<BoxCollisionComponent>() == true)
+			if(e->getChild<BoxCollisionComponent>() != nullptr)
 			{
 				this->pimpl->addBox(e);
 			}
 
-			if(e.hasComponent<CircleCollisionComponent>() == true)
+			if(e->getChild<CircleCollisionComponent>() != nullptr)
 			{
 				this->pimpl->addCircle(e);
 			}
 
-			if(e.hasComponent<EdgeCollisionComponent>() == true)
+			if(e->getChild<EdgeCollisionComponent>() != nullptr)
 			{
 				this->pimpl->addEdge(e);
 			}
-		});
+		}
 	}
 }
 
@@ -306,29 +307,29 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 	{
 		auto entity = reinterpret_cast<Entity*>(body->GetUserData());
 
-		if(entity->hasComponent<KinematicComponent>() == true)
+		if(entity->getChild<KinematicComponent>() != nullptr)
 		{
-			this->pimpl->configureBody2D(body, entity->getComponent<KinematicComponent>());
+			this->pimpl->configureBody2D(body, *entity->getChild<KinematicComponent>());
 		}
 
-		if(entity->hasComponent<BoxCollisionComponent>() == true)
+		if(entity->getChild<BoxCollisionComponent>() != nullptr)
 		{
-			this->pimpl->configureBox2D(body->GetFixtureList(), entity->getComponent<BoxCollisionComponent>());
+			this->pimpl->configureBox2D(body->GetFixtureList(), *entity->getChild<BoxCollisionComponent>());
 		}
 
-		if(entity->hasComponent<CircleCollisionComponent>() == true)
+		if(entity->getChild<CircleCollisionComponent>() != nullptr)
 		{
-			this->pimpl->configureCircle2D(body->GetFixtureList(), entity->getComponent<CircleCollisionComponent>());
+			this->pimpl->configureCircle2D(body->GetFixtureList(), *entity->getChild<CircleCollisionComponent>());
 		}
 
-		if(entity->hasComponent<EdgeCollisionComponent>() == true)
+		if(entity->getChild<EdgeCollisionComponent>() != nullptr)
 		{
-			this->pimpl->configureEdge2D(body->GetFixtureList(), entity->getComponent<EdgeCollisionComponent>());
+			this->pimpl->configureEdge2D(body->GetFixtureList(), *entity->getChild<EdgeCollisionComponent>());
 		}
 
-		if(entity->hasComponent<TransformComponent>() == true)
+		if(entity->getChild<TransformComponent>() != nullptr)
 		{
-			this->pimpl->configureBody2D(body, entity->getComponent<TransformComponent>());
+			this->pimpl->configureBody2D(body, *entity->getChild<TransformComponent>());
 		}
 	}
 
@@ -339,24 +340,24 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 	{
 		auto entity = reinterpret_cast<Entity*>(body->GetUserData());
 
-		if(entity->hasComponent<KinematicComponent>() == true)
+		if(entity->getChild<KinematicComponent>() != nullptr)
 		{
-			this->pimpl->configureBodyAge(body, entity->getComponent<KinematicComponent>());
+			this->pimpl->configureBodyAge(body, *entity->getChild<KinematicComponent>());
 		}
 
-		if(entity->hasComponent<TransformComponent>() == true)
+		if(entity->getChild<TransformComponent>() != nullptr)
 		{
-			this->pimpl->configureBodyAge(body, entity->getComponent<TransformComponent>());
+			this->pimpl->configureBodyAge(body, *entity->getChild<TransformComponent>());
 		}
 
-		if(entity->hasComponent<KinematicComponent>() == true && entity->hasComponent<TransformComponent>() == true)
+		if(entity->getChild<KinematicComponent>() != nullptr && entity->getChild<TransformComponent>() != nullptr)
 		{
-			auto& k = entity->getComponent<KinematicComponent>();
-			auto& t = entity->getComponent<TransformComponent>();
+			auto k = entity->getChild<KinematicComponent>();
+			auto t = entity->getChild<TransformComponent>();
 
-			if(k.CalculateHeading == true)
+			if(k->CalculateHeading == true)
 			{
-				t.Rotation = VectorAngle({k.LinearVelocity.X, -k.LinearVelocity.Y});
+				t->Rotation = VectorAngle({k->LinearVelocity.X, -k->LinearVelocity.Y});
 			}
 		}
 	}

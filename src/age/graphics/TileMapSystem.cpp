@@ -1,6 +1,7 @@
 #include <age/graphics/TileMapSystem.h>
 
-#include <age/entity/EntityManager.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/graphics/TileMapComponent.h>
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -17,10 +18,15 @@ TileMapSystem::~TileMapSystem()
 
 void TileMapSystem::render(sf::RenderTarget& target, std::chrono::microseconds)
 {
-	const auto manager = this->getEntityManager();
+	const auto manager = this->getEntityDatabase();
 
-	manager->each<TileMapComponent>([&target](auto&, TileMapComponent& tileMap) {
-		// Use some kind of camera to determine bounds and apply a culling mask to the tile map
-		target.draw(tileMap);
-	});
+	for(auto entity : manager->getChildren<Entity>())
+	{
+		auto tileMap = entity->getChild<TileMapComponent>();
+
+		if(tileMap != nullptr)
+		{
+			target.draw(*tileMap);
+		}
+	}
 }
