@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<age>
+	<object type="age::entity::EntityDatabase">
+		<object type="age::entity::Entity">
+			<object type="age::entity::TransformComponent">
+				<property name="Position" value="{0, 275}"/>
+			</object>
+
+			<object type="age::physics::KinematicComponent">
+				<property name="BodyType" value="Kinematic"/>
+				<property name="LinearVelocity" value="{50.0, 0.0}"/>
+				<property name="CalculateHeading" value="true"/>
+			</object>
+
+			<object type="age::graphics::SpriteComponent">
+				<property name="file" value="C:/age/data/maps/towerDefense_tilesheet.png"/>
+				<property name="HFrames" value="23"/>
+				<property name="VFrames" value="13"/>
+				<property name="Frame" value="130"/>
+				<property name="Rotation" value="-90.0"/>
+			</object>
+
+			<object type="age::navigation::WaypointComponent">
+				<object type="age::navigation::Waypoint">
+					<property name="Position" value="{300, 275}"/>
+				</object>
+				<object type="age::navigation::Waypoint">
+					<property name="Position" value="{300, 75}"/>
+				</object>
+				<object type="age::navigation::Waypoint">
+					<property name="Position" value="{500, 75}"/>
+				</object>
+				<object type="age::navigation::Waypoint">
+					<property name="Position" value="{500, 525}"/>
+				</object>
+				<object type="age::navigation::Waypoint">
+					<property name="Position" value="{775, 525}"/>
+				</object>
+				<object type="age::navigation::Waypoint">
+					<property name="Position" value="{775, 275}"/>
+				</object>
+				<object type="age::navigation::Waypoint">
+					<property name="Position" value="{850, 275}"/>
+				</object>
+			</object>
+		</object>
+	</object>
+
+	<object type="age::navigation::WaypointSystem"/>
+	<object type="age::physics::PhysicsSystem"/>
+
+	<object type="age::graphics::Window">
+		<object type="age::graphics::TileMapSystem"/>
+		<object type="age::graphics::DrawableSystem"/>
+	</object>
+</age>
