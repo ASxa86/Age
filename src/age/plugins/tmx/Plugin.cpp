@@ -3,5 +3,5 @@
 
 AGE_TMX_EXPORT_C void FactoryRegister()
 {
-	AgeFactoryRegister(age::tmx::ParserTMX).addAlias("tmx").addAlias(".tmx");
+	AgeFactoryRegister(age::tmx::ParserTMX).addAlias("tmx").addAlias(".tmx").addBaseType<age::core::Parser>();
 }

@@ -70,7 +70,7 @@ public:
 	{
 		for(auto body = this->world.GetBodyList(); body != nullptr; body = body->GetNext())
 		{
-			if(&x == body->GetUserData())
+			if(x == body->GetUserData())
 			{
 				return body;
 			}
@@ -78,7 +78,7 @@ public:
 
 		b2BodyDef bdef{};
 		auto body = this->world.CreateBody(&bdef);
-		body->SetUserData(const_cast<void*>(reinterpret_cast<const void*>(&x)));
+		body->SetUserData(const_cast<void*>(reinterpret_cast<const void*>(x)));
 		return body;
 	}
 
