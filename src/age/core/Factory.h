@@ -78,6 +78,7 @@ namespace age
 			std::vector<Factory::Type> getTypes() const;
 			std::vector<Factory::Type> getTypesFromBase(std::type_index x);
 			std::unique_ptr<Object> create(std::string_view x);
+			std::unique_ptr<Object> create(std::type_index x);
 
 			template <typename T>
 			std::unique_ptr<T> create(std::string_view x)

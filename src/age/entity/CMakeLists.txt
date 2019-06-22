@@ -13,6 +13,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	AnimationChannel.h
 	AnimationComponent.h
 	AnimationSystem.h
+	CloneSystem.h
 	Component.h
 	Entity.h
 	EntityDatabase.h
@@ -27,6 +28,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	AnimationChannel.cpp
 	AnimationComponent.cpp
 	AnimationSystem.cpp
+	CloneSystem.cpp
 	Component.cpp
 	Entity.cpp
 	EntityDatabase.cpp

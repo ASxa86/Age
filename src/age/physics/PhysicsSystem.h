@@ -22,7 +22,7 @@ namespace age
 			PhysicsSystem();
 			~PhysicsSystem() override;
 
-			void startup() override;
+			void onStartup() override;
 
 			///
 			///	Updates entity transformations using physics.

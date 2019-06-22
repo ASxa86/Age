@@ -86,19 +86,16 @@ void Engine::setEngineState(const EngineState& x)
 	switch(this->pimpl->engineState.getState())
 	{
 		case EngineState::State::StartUp:
-			for(const auto& child : this->getChildren(FindOption::Recursive))
-			{
-				child->startup();
-			}
+			this->startup();
 			this->pimpl->engineState.setState(EngineState::State::Run);
 			break;
+
 		case EngineState::State::Run:
 		case EngineState::State::Pause:
 		case EngineState::State::Shutdown:
-			for(const auto& child : this->getChildren(FindOption::Recursive))
-			{
-				child->shutdown();
-			}
+			this->shutdown();
+			break;
+
 		case EngineState::State::Unknown:
 		default:
 			break;

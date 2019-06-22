@@ -15,6 +15,7 @@ public:
 	std::vector<std::unique_ptr<Object>> children;
 	std::string id;
 	Object* parent;
+	Status status{Status::None};
 };
 
 Object::Object() : pimpl()
@@ -37,10 +38,32 @@ std::string Object::getID() const
 
 void Object::startup()
 {
+	if(this->pimpl->status < Status::Startup)
+	{
+		for(auto& child : this->pimpl->children)
+		{
+			child->startup();
+		}
+
+		this->onStartup();
+
+		this->pimpl->status = Status::Startup;
+	}
 }
 
 void Object::shutdown()
 {
+	if(this->pimpl->status < Status::Shutdown)
+	{
+		for(auto& child : this->pimpl->children)
+		{
+			child->shutdown();
+		}
+
+		this->onShutdown();
+
+		this->pimpl->status = Status::Shutdown;
+	}
 }
 
 Object* Object::getParent() const
@@ -56,6 +79,7 @@ bool Object::addChild(std::unique_ptr<Object> x)
 	{
 		x->pimpl->parent = this;
 		this->pimpl->children.push_back(std::move(x));
+		this->pimpl->children.back()->startup();
 
 		return true;
 	}
@@ -113,4 +137,12 @@ std::unique_ptr<Object> Object::remove()
 	}
 
 	return nullptr;
+}
+
+void Object::onStartup()
+{
+}
+
+void Object::onShutdown()
+{
 }

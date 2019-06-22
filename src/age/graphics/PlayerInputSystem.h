@@ -33,7 +33,7 @@ namespace age
 			///
 			///	Initialize input system to pick up keyboard events.
 			///
-			void startup() override;
+			void onStartup() override;
 
 			///
 			///	\brief Handles input events and forwards them on to InputComponents.

@@ -15,7 +15,7 @@ SpriteComponent::~SpriteComponent()
 {
 }
 
-void SpriteComponent::startup()
+void SpriteComponent::onStartup()
 {
 	this->loadFile(this->file);
 }

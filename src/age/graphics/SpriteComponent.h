@@ -25,7 +25,7 @@ namespace age
 			SpriteComponent();
 			~SpriteComponent();
 
-			void startup() override;
+			void onStartup() override;
 
 			///
 			///	\brief Load a sprite or spriesheet file.

@@ -220,15 +220,41 @@ PhysicsSystem::~PhysicsSystem()
 {
 }
 
-void PhysicsSystem::startup()
+void PhysicsSystem::onStartup()
 {
-	EventQueue::Instance().addEventHandler([this](auto evt) {
+	const auto processEntity = [this](auto e) {
+		if(e->getChild<KinematicComponent>() != nullptr)
+		{
+			this->pimpl->addBody(e);
+		}
+
+		if(e->getChild<BoxCollisionComponent>() != nullptr)
+		{
+			this->pimpl->addBox(e);
+		}
+
+		if(e->getChild<CircleCollisionComponent>() != nullptr)
+		{
+			this->pimpl->addCircle(e);
+		}
+
+		if(e->getChild<EdgeCollisionComponent>() != nullptr)
+		{
+			this->pimpl->addEdge(e);
+		}
+	};
+
+	EventQueue::Instance().addEventHandler([this, processEntity](auto evt) {
 		const auto entityEvt = dynamic_cast<EntityEvent*>(evt);
 
 		if(entityEvt != nullptr)
 		{
 			switch(entityEvt->getType())
 			{
+				case EntityEvent::Type::EntityAdded:
+					processEntity(entityEvt->getEntity());
+					break;
+
 				case EntityEvent::Type::EntityRemoved:
 				{
 					this->pimpl->removeBody(entityEvt->getEntity());
@@ -278,25 +304,7 @@ void PhysicsSystem::startup()
 	{
 		for(auto e : manager->getChildren<Entity>())
 		{
-			if(e->getChild<KinematicComponent>() != nullptr)
-			{
-				this->pimpl->addBody(e);
-			}
-
-			if(e->getChild<BoxCollisionComponent>() != nullptr)
-			{
-				this->pimpl->addBox(e);
-			}
-
-			if(e->getChild<CircleCollisionComponent>() != nullptr)
-			{
-				this->pimpl->addCircle(e);
-			}
-
-			if(e->getChild<EdgeCollisionComponent>() != nullptr)
-			{
-				this->pimpl->addEdge(e);
-			}
+			processEntity(e);
 		}
 	}
 }

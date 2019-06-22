@@ -2,9 +2,18 @@
 
 <age>
 	<object type="age::entity::EntityDatabase">
+	</object>
+
+	<object type="age::navigation::WaypointSystem"/>
+	<object type="age::physics::PhysicsSystem"/>
+
+	<object type="age::entity::CloneSystem">
+		<property name="Rate" value="1000000"/>
+		<property name="Limit" value="20"/>
+
 		<object type="age::entity::Entity">
 			<object type="age::entity::TransformComponent">
-				<property name="Position" value="{0, 275}"/>
+				<property name="Position" value="{0, 325}"/>
 			</object>
 
 			<object type="age::physics::KinematicComponent">
@@ -23,32 +32,29 @@
 
 			<object type="age::navigation::WaypointComponent">
 				<object type="age::navigation::Waypoint">
-					<property name="Position" value="{300, 275}"/>
+					<property name="Position" value="{325, 325}"/>
 				</object>
 				<object type="age::navigation::Waypoint">
-					<property name="Position" value="{300, 75}"/>
+					<property name="Position" value="{325, 125}"/>
 				</object>
 				<object type="age::navigation::Waypoint">
-					<property name="Position" value="{500, 75}"/>
+					<property name="Position" value="{505, 125}"/>
 				</object>
 				<object type="age::navigation::Waypoint">
-					<property name="Position" value="{500, 525}"/>
+					<property name="Position" value="{505, 575}"/>
 				</object>
 				<object type="age::navigation::Waypoint">
-					<property name="Position" value="{775, 525}"/>
+					<property name="Position" value="{775, 575}"/>
 				</object>
 				<object type="age::navigation::Waypoint">
-					<property name="Position" value="{775, 275}"/>
+					<property name="Position" value="{775, 325}"/>
 				</object>
 				<object type="age::navigation::Waypoint">
-					<property name="Position" value="{850, 275}"/>
+					<property name="Position" value="{850, 325}"/>
 				</object>
 			</object>
 		</object>
 	</object>
-
-	<object type="age::navigation::WaypointSystem"/>
-	<object type="age::physics::PhysicsSystem"/>
 
 	<object type="age::graphics::Window">
 		<object type="age::graphics::TileMapSystem"/>

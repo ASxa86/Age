@@ -29,6 +29,13 @@ namespace age
 				Recursive
 			};
 
+			enum class Status : int
+			{
+				None,
+				Startup,
+				Shutdown
+			};
+
 			Object();
 			virtual ~Object();
 
@@ -45,12 +52,12 @@ namespace age
 			///
 			///
 			///
-			virtual void startup();
+			void startup();
 
 			///
 			///
 			///
-			virtual void shutdown();
+			void shutdown();
 
 			///
 			///	Gets the parent for this object.
@@ -163,6 +170,9 @@ namespace age
 			[[maybe_unused]] std::unique_ptr<Object> remove();
 
 		private:
+			virtual void onStartup();
+			virtual void onShutdown();
+
 			class Impl;
 			Pimpl<Impl> pimpl;
 		};

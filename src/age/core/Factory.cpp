@@ -194,3 +194,15 @@ std::unique_ptr<Object> Factory::create(std::string_view x)
 
 	return {};
 }
+
+std::unique_ptr<Object> Factory::create(std::type_index x)
+{
+	auto type = this->getType(x);
+
+	if(type.valid() == true)
+	{
+		return type.Creator->create();
+	}
+
+	return {};
+}

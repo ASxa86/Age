@@ -20,7 +20,7 @@ AudioSystem::~AudioSystem()
 {
 }
 
-void AudioSystem::startup()
+void AudioSystem::onStartup()
 {
 	age::core::EventQueue::Instance().addEventHandler([this](auto x) { this->onEvent(x); }, this);
 }

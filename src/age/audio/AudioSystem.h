@@ -28,7 +28,7 @@ namespace age
 			~AudioSystem();
 
 		protected:
-			virtual void startup() override;
+			virtual void onStartup() override;
 			virtual void onEvent(age::core::Event* x);
 
 		private:
