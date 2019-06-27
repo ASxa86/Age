@@ -2,6 +2,33 @@
 
 <age>
 	<object type="age::entity::EntityDatabase">
+		<object type="age::entity::Entity">
+			<object type="age::entity::TransformComponent">
+				<property name="Position" value="{8, 200}"/>
+			</object>
+
+			<object type="age::graphics::BoxSelectionComponent">
+				<property name="Selected" value="true"/>
+				<property name="Size" value="{48, 50}"/>
+				<property name="OutlineThickness" value="2.0"/>
+				<property name="OutlineColor" value="{255, 0, 0, 255}"/>
+				<property name="FillColor" value="{255, 0, 0, 150}"/>
+			</object>
+		</object>
+
+		<object type="age::entity::Entity">
+			<object type="age::entity::TransformComponent">
+				<property name="Position" value="{136, 200}"/>
+			</object>
+
+			<object type="age::graphics::BoxSelectionComponent">
+				<property name="Selected" value="true"/>
+				<property name="Size" value="{48, 50}"/>
+				<property name="OutlineThickness" value="2.0"/>
+				<property name="OutlineColor" value="{255, 0, 0, 255}"/>
+				<property name="FillColor" value="{255, 0, 0, 150}"/>
+			</object>
+		</object>
 	</object>
 
 	<object type="age::navigation::WaypointSystem"/>

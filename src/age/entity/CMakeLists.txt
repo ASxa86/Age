@@ -19,6 +19,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	EntityDatabase.h
 	EntityEvent.h
 	Export.h
+	SelectionComponent.h
 	System.h
 	TransformComponent.h
 )
@@ -34,6 +35,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	EntityDatabase.cpp
 	EntityEvent.cpp
 	Plugin.cpp
+	SelectionComponent.cpp
 	System.cpp
 	TransformComponent.cpp
 )

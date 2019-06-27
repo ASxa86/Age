@@ -16,6 +16,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_Export)
 target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIR})
 
 target_sources(${PROJECT_NAME} PRIVATE
+	BoxSelectionComponent.h
 	DrawableSystem.h
 	Export.h
 	KeyEvent.h
@@ -30,6 +31,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	BoxSelectionComponent.cpp
 	DrawableSystem.cpp
 	InputComponent.cpp
 	KeyEvent.cpp

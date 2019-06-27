@@ -1,4 +1,5 @@
 #include <age/core/Factory.h>
+#include <age/graphics/BoxSelectionComponent.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/Export.h>
 #include <age/graphics/SpriteComponent.h>
@@ -7,6 +8,7 @@
 
 AGE_GRAPHICS_EXPORT_C void FactoryRegister()
 {
+	AgeFactoryRegister(age::graphics::BoxSelectionComponent).addBaseType<age::entity::Component>();
 	AgeFactoryRegister(age::graphics::SpriteComponent).addBaseType<age::entity::Component>();
 	AgeFactoryRegister(age::graphics::Window);
 	AgeFactoryRegister(age::graphics::TileMapSystem).addBaseType<age::entity::System>();

@@ -2,6 +2,7 @@
 
 #include <age/core/Export.h>
 #include <age/core/MagicEnum.h>
+#include <age/core/TypeTraits.h>
 #include <array>
 #include <boost/type_traits.hpp>
 #include <charconv>
@@ -14,6 +15,8 @@ namespace age
 {
 	namespace core
 	{
+		AGE_CORE_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
+
 		template <typename T>
 		std::string ToString([[maybe_unused]] const T& x)
 		{
@@ -40,6 +43,22 @@ namespace age
 			else if constexpr(std::is_enum<T>::value == true)
 			{
 				return std::string(magic_enum::enum_name(x));
+			}
+			else if constexpr(age::core::is_array<T>::value == true)
+			{
+				std::string s = "{";
+
+				for(const auto& i : x)
+				{
+					s += ToString(i);
+					s += ", ";
+				}
+
+				// Remove last ", "
+				s.pop_back();
+				s.pop_back();
+
+				return s + "}";
 			}
 			else if constexpr(boost::has_left_shift<std::ostream, T>::value == true)
 			{
@@ -76,6 +95,17 @@ namespace age
 			{
 				return magic_enum::enum_cast<T>(x).value_or(T{});
 			}
+			else if constexpr(age::core::is_array<T>::value == true)
+			{
+				T t{};
+				const auto tokens = Split(x);
+				for(auto i = 0; i < t.size(); i++)
+				{
+					t[i] = StringTo<T::value_type>(tokens[i]);
+				}
+
+				return t;
+			}
 			else if constexpr(boost::has_right_shift<std::istream, T>::value == true)
 			{
 				T t{};
@@ -84,7 +114,5 @@ namespace age
 				return t;
 			}
 		}
-
-		AGE_CORE_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
 	}
 }

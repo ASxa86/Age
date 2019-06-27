@@ -1,9 +1,8 @@
-#include <age/entity/CloneComponent.h>
 #include <age/entity/CloneSystem.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
 
 #include <age/core/Utilities.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 
 using namespace age::entity;
 

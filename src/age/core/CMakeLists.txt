@@ -35,6 +35,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Properties.h
 	String.h
 	Timer.h
+	TypeTraits.h
 	Utilities.h
 )
 
