@@ -74,6 +74,7 @@ void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds 
 			shape.setOutlineColor(FromColor(bSelect->OutlineColor));
 			shape.setOutlineThickness(static_cast<float>(bSelect->OutlineThickness));
 			shape.setSize(FromVector(bSelect->Size));
+			shape.setOrigin({shape.getSize().x / 2, shape.getSize().y / 2});
 
 			if(t != nullptr)
 			{

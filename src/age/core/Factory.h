@@ -2,6 +2,7 @@
 
 #include <age/core/Export.h>
 #include <map>
+#include <memory>
 #include <set>
 #include <string>
 #include <typeindex>

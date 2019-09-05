@@ -19,6 +19,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	BoxSelectionComponent.h
 	DrawableSystem.h
 	Export.h
+	HealthBarSystem.h
 	KeyEvent.h
 	InputComponent.h
 	PlayerInputSystem.h
@@ -34,6 +35,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	BoxSelectionComponent.cpp
 	DrawableSystem.cpp
 	InputComponent.cpp
+	HealthBarSystem.cpp
 	KeyEvent.cpp
 	PlayerInputSystem.cpp
 	Plugin.cpp

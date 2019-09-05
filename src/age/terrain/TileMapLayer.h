@@ -1,6 +1,7 @@
 #pragma once
 
 #include <age/terrain/Export.h>
+#include <string>
 #include <vector>
 
 namespace age

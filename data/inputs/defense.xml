@@ -4,7 +4,7 @@
 	<object type="age::entity::EntityDatabase">
 		<object type="age::entity::Entity">
 			<object type="age::entity::TransformComponent">
-				<property name="Position" value="{8, 200}"/>
+				<property name="Position" value="{32, 224}"/>
 			</object>
 
 			<object type="age::graphics::BoxSelectionComponent">
@@ -18,15 +18,29 @@
 
 		<object type="age::entity::Entity">
 			<object type="age::entity::TransformComponent">
-				<property name="Position" value="{136, 200}"/>
+				<property name="Position" value="{160, 224}"/>
 			</object>
 
-			<object type="age::graphics::BoxSelectionComponent">
-				<property name="Selected" value="true"/>
-				<property name="Size" value="{48, 50}"/>
-				<property name="OutlineThickness" value="2.0"/>
-				<property name="OutlineColor" value="{255, 0, 0, 255}"/>
-				<property name="FillColor" value="{255, 0, 0, 150}"/>
+			<object type="age::graphics::SpriteComponent">
+				<property name="file" value="D:/age/data/maps/towerDefense_tilesheet.png"/>
+				<property name="HFrames" value="23"/>
+				<property name="VFrames" value="13"/>
+				<property name="Frame" value="135"/>
+				<property name="Rotation" value="135.0"/>
+			</object>
+		</object>
+
+		<object type="age::entity::Entity">
+			<object type="age::entity::TransformComponent">
+				<property name="Position" value="{200, 270}"/>
+			</object>
+
+			<object type="age::graphics::SpriteComponent">
+				<property name="file" value="D:/age/data/maps/towerDefense_tilesheet.png"/>
+				<property name="HFrames" value="23"/>
+				<property name="VFrames" value="13"/>
+				<property name="Frame" value="136"/>
+				<property name="Rotation" value="135.0"/>
 			</object>
 		</object>
 	</object>
@@ -43,6 +57,11 @@
 				<property name="Position" value="{0, 325}"/>
 			</object>
 
+			<object type="age::entity::HealthComponent">
+				<property name="Health" value="50"/>
+				<property name="HealthMax" value="100"/>
+			</object>
+
 			<object type="age::physics::KinematicComponent">
 				<property name="BodyType" value="Kinematic"/>
 				<property name="LinearVelocity" value="{50.0, 0.0}"/>
@@ -50,7 +69,7 @@
 			</object>
 
 			<object type="age::graphics::SpriteComponent">
-				<property name="file" value="C:/age/data/maps/towerDefense_tilesheet.png"/>
+				<property name="file" value="D:/age/data/maps/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
 				<property name="Frame" value="130"/>
@@ -86,5 +105,10 @@
 	<object type="age::graphics::Window">
 		<object type="age::graphics::TileMapSystem"/>
 		<object type="age::graphics::DrawableSystem"/>
+		<object type="age::graphics::HealthBarSystem">
+			<property name="Offset" value="{-15, -30}"/>
+			<property name="Size" value="{30, 5}"/>
+			<property name="Color" value="{0, 255, 0, 255}"/>
+		</object>
 	</object>
 </age>

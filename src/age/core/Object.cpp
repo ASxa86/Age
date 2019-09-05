@@ -73,15 +73,18 @@ Object* Object::getParent() const
 
 bool Object::addChild(std::unique_ptr<Object> x)
 {
-	const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
-
-	if(foundIt == std::end(this->pimpl->children))
+	if(x != nullptr)
 	{
-		x->pimpl->parent = this;
-		this->pimpl->children.push_back(std::move(x));
-		this->pimpl->children.back()->startup();
+		const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
 
-		return true;
+		if(foundIt == std::end(this->pimpl->children))
+		{
+			x->pimpl->parent = this;
+			this->pimpl->children.push_back(std::move(x));
+			this->pimpl->children.back()->startup();
+
+			return true;
+		}
 	}
 
 	return false;
