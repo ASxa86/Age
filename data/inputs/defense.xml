@@ -16,9 +16,15 @@
 			</object>
 		</object>
 
+		<!-- Tower -->
 		<object type="age::entity::Entity">
 			<object type="age::entity::TransformComponent">
 				<property name="Position" value="{160, 224}"/>
+			</object>
+
+			<object type="age::physics::CircleCollisionComponent">
+				<property name="Radius" value="100.0"/>
+				<property name="IsSensor" value="true"/>
 			</object>
 
 			<object type="age::graphics::SpriteComponent">
@@ -110,5 +116,6 @@
 			<property name="Size" value="{30, 5}"/>
 			<property name="Color" value="{0, 255, 0, 255}"/>
 		</object>
+		<object type="age::physics::PhysicsRenderSystem"/>
 	</object>
 </age>

@@ -60,9 +60,11 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 
 			sf::CircleShape circle;
 			circle.setRadius(static_cast<float>(c->Radius));
-			circle.setOutlineColor(sf::Color::Green);
-			circle.setFillColor(sf::Color::Transparent);
-			circle.setOutlineThickness(0.1f);
+			circle.setOutlineColor(sf::Color::Blue);
+			auto blue = sf::Color::Blue;
+			blue.a = 100;
+			circle.setFillColor(blue);
+			circle.setOutlineThickness(1.0f);
 			circle.setOrigin(circle.getRadius(), circle.getRadius());
 
 			if(e->getChild<TransformComponent>() != nullptr)
@@ -71,7 +73,8 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 				circle.setPosition({static_cast<float>(t->Position.X), static_cast<float>(t->Position.Y)});
 			}
 
-			target.draw(circle, this->pimpl->state);
+			//target.draw(circle, this->pimpl->state);
+			target.draw(circle);
 		}
 
 		if(e->getChild<EdgeCollisionComponent>() != nullptr)

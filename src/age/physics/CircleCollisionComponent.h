@@ -15,8 +15,10 @@ namespace age
 		///
 		///	\date February 26, 2019
 		///
-		struct CircleCollisionComponent final : public CollisionComponent
+		struct AGE_PHYSICS_EXPORT CircleCollisionComponent final : public CollisionComponent
 		{
+			CircleCollisionComponent();
+
 			double Radius;
 		};
 	}

@@ -163,6 +163,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	CircleCollisionComponent.cpp
+	CollisionComponent.cpp
 	CollisionEvent.cpp
 	KinematicComponent.cpp
 	PhysicsSystem.cpp
