@@ -28,3 +28,19 @@ std::unique_ptr<age::core::Object> age::core::Clone(age::core::Object* x)
 
 	return clone;
 }
+
+std::string age::core::ResolvePath(std::string x)
+{
+	if(x.empty() == false)
+	{
+		if(x[0] == '$')
+		{
+			const auto tokenPos = x.find_first_of("/\\");
+			const auto pathAlias = x.substr(0, tokenPos);
+			const auto leafPath = x.substr(tokenPos);
+			return Configuration::Instance().getPath(pathAlias).string() + leafPath;
+		}
+	}
+
+	return x;
+}

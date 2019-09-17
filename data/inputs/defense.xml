@@ -22,7 +22,7 @@
 			</object>
 
 			<object type="age::graphics::SpriteComponent">
-				<property name="file" value="D:/age/data/maps/towerDefense_tilesheet.png"/>
+				<property name="file" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
 				<property name="Frame" value="135"/>
@@ -36,7 +36,7 @@
 			</object>
 
 			<object type="age::graphics::SpriteComponent">
-				<property name="file" value="D:/age/data/maps/towerDefense_tilesheet.png"/>
+				<property name="file" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
 				<property name="Frame" value="136"/>
@@ -69,7 +69,7 @@
 			</object>
 
 			<object type="age::graphics::SpriteComponent">
-				<property name="file" value="D:/age/data/maps/towerDefense_tilesheet.png"/>
+				<property name="file" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
 				<property name="Frame" value="130"/>

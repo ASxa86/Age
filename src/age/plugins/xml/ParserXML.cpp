@@ -1,5 +1,6 @@
 #include <age/core/Factory.h>
 #include <age/core/Object.h>
+#include <age/core/Utilities.h>
 #include <age/plugins/xml/ParserXML.h>
 #include <iostream>
 #include <pugixml.hpp>
@@ -17,7 +18,8 @@ namespace
 
 			if(property != nullptr)
 			{
-				property->setValue(x.attribute("value").as_string());
+				const auto value = age::core::ResolvePath(x.attribute("value").as_string());
+				property->setValue(value);
 				return true;
 			}
 			else

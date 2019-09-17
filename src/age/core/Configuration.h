@@ -3,6 +3,7 @@
 #include <age/core/Export.h>
 #include <age/core/Pimpl.h>
 #include <filesystem>
+#include <string>
 
 namespace age
 {
@@ -23,6 +24,11 @@ namespace age
 			~Configuration();
 			Configuration(const Configuration&) = delete;
 			Configuration& operator=(const Configuration&) = delete;
+
+			static const std::string PathDataAlias;
+			static const std::string PathMapsAlias;
+			static const std::string PathBinAlias;
+			static const std::string PathRootAlias;
 
 			///
 			///	Singleton
@@ -54,6 +60,11 @@ namespace age
 			///	Get the full path to AGE's plugin directory.
 			///
 			std::filesystem::path getPathPlugins() const;
+
+			///
+			///	Get the full path to an AGE directory referenced by the given path ID.
+			///
+			std::filesystem::path getPath(std::string_view x) const;
 
 			///
 			///	Set the pixels per meter unit scaling for drawable objects.

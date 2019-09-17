@@ -14,5 +14,7 @@ namespace age
 		AGE_CORE_EXPORT double PixelsToMeters(unsigned int x);
 
 		AGE_CORE_EXPORT std::unique_ptr<Object> Clone(Object* x);
+
+		AGE_CORE_EXPORT std::string ResolvePath(std::string x);
 	}
 }

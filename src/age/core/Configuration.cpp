@@ -12,6 +12,11 @@
 
 using namespace age::core;
 
+const std::string Configuration::PathDataAlias = "$AGE_DATA";
+const std::string Configuration::PathMapsAlias = "$AGE_MAPS";
+const std::string Configuration::PathBinAlias = "$AGE_BIN";
+const std::string Configuration::PathRootAlias = "$AGE_ROOT";
+
 struct Configuration::Impl
 {
 	std::filesystem::path pathRoot;
@@ -69,7 +74,6 @@ std::filesystem::path Configuration::getPathRoot() const
 	return this->pimpl->pathRoot;
 }
 
-
 std::filesystem::path Configuration::getPathData() const
 {
 	return this->pimpl->pathData;
@@ -88,6 +92,28 @@ std::filesystem::path Configuration::getPathBin() const
 std::filesystem::path Configuration::getPathPlugins() const
 {
 	return this->pimpl->pathPlugins;
+}
+
+std::filesystem::path Configuration::getPath(std::string_view x) const
+{
+	if(x == Configuration::PathDataAlias)
+	{
+		return this->pimpl->pathData;
+	}
+	else if(x == Configuration::PathMapsAlias)
+	{
+		return this->pimpl->pathMaps;
+	}
+	else if(x == Configuration::PathBinAlias)
+	{
+		return this->pimpl->pathBin;
+	}
+	else if(x == Configuration::PathRootAlias)
+	{
+		return this->pimpl->pathRoot;
+	}
+
+	return {};
 }
 
 void Configuration::setPixelsPerMeter(unsigned int x)
