@@ -2,13 +2,13 @@
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <celero/Celero.h>
-#include <entt/entt.hpp>
 #include "Object.h"
 
 #ifdef WIN32
 #pragma warning(push, 0)
 #endif
 
+#include <entt/entt.hpp>
 #include <entityx/entityx.h>
 
 #ifdef WIN32
@@ -158,7 +158,7 @@ namespace
 		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
 		{
 			// Clear the previous entities
-			em = std::make_unique<entt::DefaultRegistry>();
+			em = std::make_unique<entt::registry>();
 
 			for(auto i = 0; i < x.Value; ++i)
 			{
@@ -168,7 +168,7 @@ namespace
 			}
 		}
 
-		std::unique_ptr<entt::DefaultRegistry> em;
+		std::unique_ptr<entt::registry> em;
 	};
 
 	struct EntityXF : public celero::TestFixture
