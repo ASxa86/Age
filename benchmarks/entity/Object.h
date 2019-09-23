@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <map>
+#include <typeindex>
 #include <vector>
 
 namespace age
@@ -20,6 +22,7 @@ namespace age
 
 			void addChild(std::unique_ptr<Object> x)
 			{
+				this->children2[typeid(*x)] = x.get();
 				this->children.push_back(std::move(x));
 			}
 
@@ -39,6 +42,12 @@ namespace age
 				}
 
 				return nullptr;
+			}
+
+			template <typename T>
+			T* getChild2()
+			{
+				return static_cast<T*>(this->children2[typeid(T)]);
 			}
 
 			void removeChild(Object* x)
@@ -68,8 +77,8 @@ namespace age
 				}
 			}
 
-		private:
 			std::vector<std::unique_ptr<Object>> children;
+			std::map<std::type_index, Object*> children2;
 		};
 	}
 }

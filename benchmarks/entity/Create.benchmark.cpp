@@ -7,6 +7,7 @@
 #pragma warning(push, 0)
 #endif
 
+#include <entt/entt.hpp>
 #include <entityx/entityx.h>
 
 #ifdef WIN32
@@ -88,6 +89,17 @@ namespace
 		std::unique_ptr<entityx::EntityManager> em;
 	};
 
+	struct EnTTF : public celero::TestFixture
+	{
+		void setUp(const celero::TestFixture::ExperimentValue&) override
+		{
+			// Clear the previous entities
+			this->em = std::make_unique<entt::registry>();
+		}
+
+		std::unique_ptr<entt::registry> em;
+	};
+
 	struct ObjectF : public celero::TestFixture
 	{
 		struct PosF : public age::benchmark::Object, public Pos
@@ -132,6 +144,14 @@ BENCHMARK_F(Create, AgeEntity, AgeEntityF, 10, 100)
 BENCHMARK_F(Create, EntityX, EntityXF, 10, 100)
 {
 	for(auto i = 0; i < IterationCount; ++i)
+	{
+		celero::DoNotOptimizeAway(this->em->create());
+	}
+}
+
+BENCHMARK_F(Create, EnTT, EnTTF, 10, 100)
+{
+	for (auto i = 0; i < IterationCount; ++i)
 	{
 		celero::DoNotOptimizeAway(this->em->create());
 	}

@@ -125,11 +125,12 @@ namespace age
 			{
 				T* child{};
 
-				const auto children = this->getChildren<T>();
+				//const auto children = this->getChildren<T>();
+				auto children = this->getChildren(typeid(T));
 
 				if(children.empty() == false)
 				{
-					child = children[x];
+					child = static_cast<T*>(children[x]);
 				}
 
 				return child;
@@ -141,6 +142,7 @@ namespace age
 			///	\param recursive If set to true, this will get all children and their children.
 			///
 			virtual std::vector<Object*> getChildren(FindOption option = FindOption::Direct) const;
+			virtual std::vector<Object*> getChildren(const std::type_info& type, FindOption option = FindOption::Direct) const;
 
 			///
 			///	Return all children of the given type for this object.

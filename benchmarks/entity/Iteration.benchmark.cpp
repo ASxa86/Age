@@ -26,7 +26,7 @@
 namespace
 {
 	const std::vector<celero::TestFixture::ExperimentValue> ProblemSpace{
-		{{10, 1'000'000}, {100, 100'000}, {1'000, 10'000}, {10'000, 1'000}, {100'000, 100}, {1'000'000, 10}}};
+		{{100, 100'000}, {1'000, 10'000}, {10'000, 1'000}, {100'000, 100}}};
 	constexpr double Time{0.01};
 
 	struct Pos : public age::entity::Component
@@ -272,8 +272,8 @@ namespace
 			for(auto i = 0; i < x.Value; ++i)
 			{
 				auto e = std::make_unique<age::benchmark::Object>();
-				e->addChild(std::make_unique<PosF>());
-				e->addChild(std::make_unique<VelF>());
+				e->addChild(std::make_unique<ObjectF::PosF>());
+				e->addChild(std::make_unique<ObjectF::VelF>());
 				em->addChild(std::move(e));
 			}
 		}
@@ -282,7 +282,7 @@ namespace
 	};
 }
 
-BASELINE_F(Iteration, Baseline, EntityArrayF, 10, 1)
+BASELINE_F(Iteration, Baseline, EntityArrayF, 30, 1)
 {
 	for(auto i = 0; i < this->pos.size(); ++i)
 	{
@@ -294,22 +294,22 @@ BASELINE_F(Iteration, Baseline, EntityArrayF, 10, 1)
 	}
 }
 
-BENCHMARK_F(Iteration, AgeEntity, AgeEntityF, 10, 1)
-{
-	for(auto e : this->em->getChildren<age::entity::Entity>())
-	{
-		auto p = e->getChild<Pos>();
-		auto v = e->getChild<Vel>();
+ BENCHMARK_F(Iteration, AgeEntity, AgeEntityF, 30, 1)
+ {
+ 	for(auto e : this->em->getChildren<age::entity::Entity>())
+ 	{
+ 		auto p = e->getChild<Pos>();
+ 		auto v = e->getChild<Vel>();
+ 
+ 		if(p != nullptr && e != nullptr)
+ 		{
+ 			p->x += v->x * Time;
+ 			p->y += v->y * Time;
+ 		}
+ 	}
+ }
 
-		if(p != nullptr && e != nullptr)
-		{
-			p->x += v->x * Time;
-			p->y += v->y * Time;
-		}
-	}
-}
-
-BENCHMARK_F(Iteration, EnTT, EnTTF, 10, 1)
+BENCHMARK_F(Iteration, EnTT, EnTTF, 30, 1)
 {
 	this->em->view<Pos, Vel>().each([this](auto, Pos& p, Vel& v) {
 		p.x += v.x * Time;
@@ -317,7 +317,7 @@ BENCHMARK_F(Iteration, EnTT, EnTTF, 10, 1)
 	});
 }
 
-BENCHMARK_F(Iteration, EntityX, EntityXF, 10, 1)
+BENCHMARK_F(Iteration, EntityX, EntityXF, 30, 1)
 {
 	this->em->each<Pos, Vel>([this](entityx::Entity, Pos& p, Vel& v) {
 		p.x += v.x * Time;
@@ -325,7 +325,7 @@ BENCHMARK_F(Iteration, EntityX, EntityXF, 10, 1)
 	});
 }
 
-BENCHMARK_F(Iteration, Object, ObjectF, 10, 1)
+BENCHMARK_F(Iteration, Object, ObjectF, 30, 1)
 {
 	const auto& entities = this->em->getChildren();
 
@@ -339,12 +339,16 @@ BENCHMARK_F(Iteration, Object, ObjectF, 10, 1)
 	}
 }
 
-BENCHMARK_F(Iteration, Object2, ObjectF2, 10, 1)
+BENCHMARK_F(Iteration, Object2, ObjectF2, 30, 1)
 {
 	const auto& entities = this->em->getChildren();
 
 	for(const auto& entity : entities)
 	{
-		entity->update(Time);
+		const auto p = entity->getChild2<ObjectF::PosF>();
+		const auto v = entity->getChild2<ObjectF::VelF>();
+
+		p->x += v->x * Time;
+		p->y += v->y * Time;
 	}
 }

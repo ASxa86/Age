@@ -11,8 +11,8 @@ Entity::Entity()
 
 bool Entity::addComponent(std::unique_ptr<Component> x)
 {
-	auto evt = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
-	evt->Component = x.get();
-	age::core::EventQueue::Instance().sendEvent(std::move(evt));
+	// auto evt = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
+	// evt->Component = x.get();
+	// age::core::EventQueue::Instance().sendEvent(std::move(evt));
 	return this->addChild(std::move(x));
 }

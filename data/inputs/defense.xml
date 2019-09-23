@@ -36,6 +36,7 @@
 			</object>
 		</object>
 
+		<!-- Bullet -->
 		<object type="age::entity::Entity">
 			<object type="age::entity::TransformComponent">
 				<property name="Position" value="{200, 270}"/>

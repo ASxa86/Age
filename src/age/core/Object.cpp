@@ -1,8 +1,11 @@
 #include <age/core/Object.h>
 #include <age/core/PimplImpl.h>
-
+#include <age/core/SigSlot.h>
 #include <algorithm>
 #include <iostream>
+#include <map>
+#include <typeindex>
+
 using namespace age::core;
 
 class Object::Impl
@@ -13,10 +16,12 @@ public:
 	}
 
 	std::vector<std::unique_ptr<Object>> children;
+	std::map<std::type_index, std::vector<Object*>> childmap;
 	std::vector<sigslot::scoped_connection> connection;
 	std::string id;
 	Object* parent;
 	Status status{Status::None};
+
 	sigslot::signal<Object*> onAddChild;
 	sigslot::signal<Object*> onRemoveChild;
 };
@@ -78,11 +83,12 @@ bool Object::addChild(std::unique_ptr<Object> x)
 {
 	if(x != nullptr)
 	{
-		const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
-
-		if(foundIt == std::end(this->pimpl->children))
+		// const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
+		//
+		// if(foundIt == std::end(this->pimpl->children))
 		{
 			x->pimpl->parent = this;
+			this->pimpl->childmap[typeid(*x)].push_back(x.get());
 			this->pimpl->children.push_back(std::move(x));
 			this->pimpl->children.back()->startup();
 			this->pimpl->onAddChild(this->pimpl->children.back().get());
@@ -123,6 +129,29 @@ std::vector<Object*> Object::getChildren(FindOption option) const
 	return v;
 }
 
+std::vector<Object*> Object::getChildren(const std::type_info& type, FindOption option) const
+{
+	std::vector<Object*> v;
+
+	const auto foundIt = this->pimpl->childmap.find(type);
+
+	if(foundIt != std::end(this->pimpl->childmap))
+	{
+		v = foundIt->second;
+
+		if(option == FindOption::Recursive)
+		{
+			for(auto child : v)
+			{
+				const auto children = child->getChildren(type, option);
+				v.insert(std::end(v), std::begin(children), std::end(children));
+			}
+		}
+	}
+
+	return v;
+}
+
 std::unique_ptr<Object> Object::remove()
 {
 	const auto parent = this->getParent();
@@ -132,13 +161,21 @@ std::unique_ptr<Object> Object::remove()
 		const auto begin = std::begin(parent->pimpl->children);
 		const auto end = std::end(parent->pimpl->children);
 
-		const auto removeIt = std::remove_if(begin, end, [this](auto& x) { return this == x.get(); });
+		auto& childvec = parent->pimpl->childmap[typeid(*this)];
+		const auto begvec = std::begin(childvec);
+		const auto endvec = std::end(childvec);
 
-		if(removeIt != end)
+		const auto removeIt = std::remove_if(begin, end, [this](auto& x) { return this == x.get(); });
+		const auto vecRemoveIt = std::remove_if(begvec, endvec, [this](auto& x) { return this == x; });
+
+		if(removeIt != end && vecRemoveIt != endvec)
 		{
 			auto ptr = std::move(*removeIt);
 			this->pimpl->onRemoveChild(ptr.get());
+
 			parent->pimpl->children.erase(removeIt, end);
+			childvec.erase(vecRemoveIt, endvec);
+
 			this->pimpl->parent = nullptr;
 			return ptr;
 		}
