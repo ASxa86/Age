@@ -1,24 +1,21 @@
 #include <age/core/Object.h>
 #include <age/core/PimplImpl.h>
-
+#include <age/core/SigSlot.h>
 #include <algorithm>
 #include <iostream>
+
 using namespace age::core;
 
 class Object::Impl
 {
 public:
-	Impl() : children{}, id{}, parent{nullptr}
-	{
-	}
-
 	std::vector<std::unique_ptr<Object>> children;
 	std::vector<sigslot::scoped_connection> connection;
-	std::string id;
-	Object* parent;
-	Status status{Status::None};
 	sigslot::signal<Object*> onAddChild;
 	sigslot::signal<Object*> onRemoveChild;
+	std::string id;
+	Object* parent{nullptr};
+	Status status{Status::None};
 };
 
 Object::Object() : pimpl()
