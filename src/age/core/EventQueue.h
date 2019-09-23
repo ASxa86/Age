@@ -2,8 +2,12 @@
 
 #include <age/core/Event.h>
 #include <age/core/Pimpl.h>
-#include <boost/signals2/connection.hpp>
 #include <functional>
+
+namespace sigslot
+{
+	class scoped_connection;
+}
 
 namespace age
 {
@@ -34,7 +38,7 @@ namespace age
 			///
 			///	\brief Register an event handler for any events.
 			///
-			boost::signals2::connection addEventHandler(std::function<void(Event*)> x, Object* tracked = nullptr);
+			[[nodiscard]] sigslot::scoped_connection addEventHandler(std::function<void(Event*)> x);
 
 			///
 			///	\brief Sends the event directly to registered handlers.

@@ -1,5 +1,6 @@
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
+#include <age/core/SigSlot.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/graphics/InputComponent.h>
@@ -22,7 +23,7 @@ PlayerInputSystem::~PlayerInputSystem()
 
 void PlayerInputSystem::onStartup()
 {
-	EventQueue::Instance().addEventHandler([this](auto x) { this->event(x); }, this);
+	this->track(EventQueue::Instance().addEventHandler([this](auto x) { this->event(x); }));
 }
 
 void PlayerInputSystem::event(age::core::Event* x)

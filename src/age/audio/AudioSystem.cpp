@@ -1,5 +1,6 @@
 #include <age/audio/AudioSystem.h>
 
+#include <age/core/SigSlot.h>
 #include <age/audio/AudioEvent.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
@@ -22,7 +23,7 @@ AudioSystem::~AudioSystem()
 
 void AudioSystem::onStartup()
 {
-	age::core::EventQueue::Instance().addEventHandler([this](auto x) { this->onEvent(x); }, this);
+	this->track(age::core::EventQueue::Instance().addEventHandler([this](auto x) { this->onEvent(x); }));
 }
 
 void AudioSystem::onEvent(age::core::Event* x)

@@ -1,7 +1,7 @@
 #include <age/core/EventQueue.h>
 #include <age/core/Object.h>
 #include <age/core/PimplImpl.h>
-#include <boost/signals2/signal.hpp>
+#include <age/core/SigSlot.h>
 #include <mutex>
 #include <queue>
 #include <unordered_map>
@@ -12,7 +12,7 @@ using namespace age::core;
 class EventQueue::Impl
 {
 public:
-	boost::signals2::signal<void(Event*)> handlers;
+	sigslot::signal<Event*> handlers;
 	std::queue<std::unique_ptr<Event>> queue;
 	std::mutex queueMutex;
 };
@@ -31,16 +31,9 @@ EventQueue& EventQueue::Instance()
 	return singleton;
 }
 
-boost::signals2::connection EventQueue::addEventHandler(std::function<void(Event*)> x, Object* tracked)
+sigslot::scoped_connection EventQueue::addEventHandler(std::function<void(Event*)> x)
 {
-	boost::signals2::signal<void(Event*)>::slot_type slot(x);
-
-	if(tracked != nullptr)
-	{
-		// slot.track_foreign(tracked->shared_from_this());
-	}
-
-	return this->pimpl->handlers.connect(slot);
+	return this->pimpl->handlers.connect_scoped(x);
 }
 
 void EventQueue::sendEvent(std::unique_ptr<Event> x)

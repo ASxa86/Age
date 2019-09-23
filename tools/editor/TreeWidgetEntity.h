@@ -79,5 +79,9 @@ namespace age
 		///	Overload the default size hint to adjust the default size within an application.
 		///
 		virtual QSize sizeHint() const override;
+
+	private:
+		struct Impl;
+		Pimpl<Impl> pimpl;
 	};
 }

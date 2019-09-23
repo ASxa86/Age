@@ -13,9 +13,12 @@ public:
 	}
 
 	std::vector<std::unique_ptr<Object>> children;
+	std::vector<sigslot::scoped_connection> connection;
 	std::string id;
 	Object* parent;
 	Status status{Status::None};
+	sigslot::signal<Object*> onAddChild;
+	sigslot::signal<Object*> onRemoveChild;
 };
 
 Object::Object() : pimpl()
@@ -82,6 +85,7 @@ bool Object::addChild(std::unique_ptr<Object> x)
 			x->pimpl->parent = this;
 			this->pimpl->children.push_back(std::move(x));
 			this->pimpl->children.back()->startup();
+			this->pimpl->onAddChild(this->pimpl->children.back().get());
 
 			return true;
 		}
@@ -133,6 +137,7 @@ std::unique_ptr<Object> Object::remove()
 		if(removeIt != end)
 		{
 			auto ptr = std::move(*removeIt);
+			this->pimpl->onRemoveChild(ptr.get());
 			parent->pimpl->children.erase(removeIt, end);
 			this->pimpl->parent = nullptr;
 			return ptr;
@@ -140,6 +145,21 @@ std::unique_ptr<Object> Object::remove()
 	}
 
 	return nullptr;
+}
+
+sigslot::scoped_connection Object::addOnAddChild(std::function<void(Object*)> x)
+{
+	return this->pimpl->onAddChild.connect_scoped(x);
+}
+
+sigslot::scoped_connection Object::addOnRemoveChild(std::function<void(Object*)> x)
+{
+	return this->pimpl->onRemoveChild.connect_scoped(x);
+}
+
+void Object::track(sigslot::scoped_connection x)
+{
+	this->pimpl->connection.emplace_back(std::move(x));
 }
 
 void Object::onStartup()

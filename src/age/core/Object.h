@@ -7,6 +7,11 @@
 #include <functional>
 #include <vector>
 
+namespace sigslot
+{
+	class scoped_connection;
+}
+
 namespace age
 {
 	namespace core
@@ -168,6 +173,11 @@ namespace age
 			///	Returns ownership of itself upon successful removal.
 			///
 			[[maybe_unused]] std::unique_ptr<Object> remove();
+
+		protected:
+			[[nodiscard]] sigslot::scoped_connection addOnAddChild(std::function<void(Object*)> x);
+			[[nodiscard]] sigslot::scoped_connection addOnRemoveChild(std::function<void(Object*)> x);
+			void track(sigslot::scoped_connection x);
 
 		private:
 			virtual void onStartup();

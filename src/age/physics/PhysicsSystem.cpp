@@ -1,6 +1,7 @@
 #include <Box2D/Box2D.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
+#include <age/core/SigSlot.h>
 #include <age/core/Timer.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
@@ -244,7 +245,7 @@ void PhysicsSystem::onStartup()
 		}
 	};
 
-	EventQueue::Instance().addEventHandler([this, processEntity](auto evt) {
+	this->track(EventQueue::Instance().addEventHandler([this, processEntity](auto evt) {
 		const auto entityEvt = dynamic_cast<EntityEvent*>(evt);
 
 		if(entityEvt != nullptr)
@@ -294,7 +295,7 @@ void PhysicsSystem::onStartup()
 				break;
 			}
 		}
-	});
+	}));
 
 	// Initialize all entities that have been configured before running the engine.
 	// Any entities or components added/removed will be handled by the event handler beyond this point.

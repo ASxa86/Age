@@ -33,6 +33,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	PimplImpl.h
 	Processor.h
 	Properties.h
+	SigSlot.h
 	String.h
 	Timer.h
 	TypeTraits.h

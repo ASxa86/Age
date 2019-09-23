@@ -7,6 +7,7 @@
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
 #include <age/core/PimplImpl.h>
+#include <age/core/SigSlot.h>
 #include <age/core/Utilities.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
@@ -45,6 +46,7 @@ struct Pong::Impl
 	}
 
 	std::shared_ptr<Engine> engine{std::make_unique<Engine>()};
+	sigslot::scoped_connection connection;
 	sf::SoundBuffer soundBuffer;
 	sf::Sound sound{soundBuffer};
 	sf::Font font;
@@ -208,7 +210,7 @@ Pong::Pong()
 
 	// Handle what happens when the ball crosses behind the paddles.
 	// Handle playing sounds when the ball collides with the paddles.
-	EventQueue::Instance().addEventHandler([=](auto evt) mutable {
+	this->pimpl->connection = EventQueue::Instance().addEventHandler([=](auto evt) mutable {
 		auto evtCollision = dynamic_cast<CollisionEvent*>(evt);
 
 		if(evtCollision != nullptr)
@@ -223,21 +225,21 @@ Pong::Pong()
 
 				// if(evtCollision->getEntityA() == leftWall)
 				{
-					auto text = *score2->getChild<std::shared_ptr<sf::Text>>();
-					auto score = std::stoi(text->getString().toAnsiString());
-					text->setString(std::to_string(++score));
+					//auto text = *score2->getChild<std::shared_ptr<sf::Text>>();
+					//auto score = std::stoi(text->getString().toAnsiString());
+					//text->setString(std::to_string(++score));
 				}
 
 				// if(evtCollision->getEntityA() == rightWall)
 				{
-					auto text = *score1->getChild<std::shared_ptr<sf::Text>>();
-					auto score = std::stoi(text->getString().toAnsiString());
-					text->setString(std::to_string(++score));
+					//auto text = *score1->getChild<std::shared_ptr<sf::Text>>();
+					//auto score = std::stoi(text->getString().toAnsiString());
+					//text->setString(std::to_string(++score));
 				}
 			}
 			// else
 			{
-				ball->getChild<sf::Sound>()->play();
+				//ball->getChild<sf::Sound>()->play();
 				auto v = ball->getChild<KinematicComponent>()->LinearVelocity;
 				ball->getChild<KinematicComponent>()->LinearVelocity = {v.X * 1.1f, v.Y * 1.1f};
 			}

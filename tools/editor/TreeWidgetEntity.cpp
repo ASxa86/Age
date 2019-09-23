@@ -2,6 +2,7 @@
 #include <age/core/EventQueue.h>
 #include <age/core/Factory.h>
 #include <age/core/PimplImpl.h>
+#include <age/core/SigSlot.h>
 #include <age/entity/Component.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
@@ -18,13 +19,18 @@ using namespace age::entity;
 Q_DECLARE_METATYPE(age::entity::Entity*)
 Q_DECLARE_METATYPE(age::entity::Component*)
 
+struct TreeWidgetEntity::Impl
+{
+	sigslot::scoped_connection connection;
+};
+
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
 	AgeFactoryRegister(age::GUIComponent);
 	qRegisterMetaType<age::entity::Entity*>();
 	qRegisterMetaType<age::entity::Component*>();
 
-	EventQueue::Instance().addEventHandler([this](Event* x) {
+	this->pimpl->connection = EventQueue::Instance().addEventHandler([this](Event* x) {
 		auto evt = dynamic_cast<EntityEvent*>(x);
 
 		if(evt != nullptr)
