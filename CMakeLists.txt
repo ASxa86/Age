@@ -3,6 +3,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 include(cmake/macros.cmake)
 include(cmake/GenerateExportHeader.cmake)
+include(CMakePackageConfigHelpers)
+include(GNUInstallDirs)
 
 project(age)
 
@@ -24,3 +26,20 @@ include_directories(${AGE_INCLUDE_DIR})
 add_subdirectory(examples)
 add_subdirectory(src)
 add_subdirectory(tools)
+
+################################################################
+#
+#	Install setup for configuration and exported targets
+#
+
+set(AGE_CONFIG_VERSION ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake)
+write_basic_package_version_file(${AGE_CONFIG_VERSION} VERSION 0.0.0 COMPATIBILITY SameMajorVersion)
+
+# Installs age-config.cmake to <prefix>/share
+install(EXPORT age-config DESTINATION ${CMAKE_INSTALL_DATAROOTDIR})
+
+# Installs include/ to <prefix>/include
+install(DIRECTORY include/age DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# Installs hcl-config-version.cmake to <prefix>/share
+install(FILES ${AGE_CONFIG_VERSION} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR})

@@ -17,3 +17,4 @@ target_link_libraries(${PROJECT_NAME} age-graphics)
 
 AGE_COMPILE_OPTIONS()
 AGE_WARNINGS_AS_ERRORS()
+AGE_INSTALL()
