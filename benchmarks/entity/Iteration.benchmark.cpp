@@ -1,14 +1,13 @@
 #include <age/entity/Component.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
+#include <age/entity/EntityManager.h>
 #include <celero/Celero.h>
+#include <entt/entt.hpp>
 #include "Object.h"
 
 #ifdef WIN32
 #pragma warning(push, 0)
 #endif
 
-#include <entt/entt.hpp>
 #include <entityx/entityx.h>
 
 #ifdef WIN32
@@ -31,56 +30,12 @@ namespace
 
 	struct Pos : public age::entity::Component
 	{
-		Pos()
-		{
-		}
-
-		Pos(const Pos&)
-		{
-		}
-
-		Pos(Pos&&)
-		{
-		}
-
-		Pos& operator=(const Pos&)
-		{
-			return *this;
-		}
-
-		Pos& operator=(Pos&&)
-		{
-			return *this;
-		}
-
 		double x{};
 		double y{};
 	};
 
 	struct Vel : public age::entity::Component
 	{
-		Vel()
-		{
-		}
-
-		Vel(const Vel&)
-		{
-		}
-
-		Vel(Vel&&)
-		{
-		}
-
-		Vel& operator=(const Vel&)
-		{
-			return *this;
-		}
-
-		Vel& operator=(Vel&&)
-		{
-			return *this;
-		}
-
 		double x{1.0};
 		double y{2.0};
 	};
@@ -130,17 +85,17 @@ namespace
 		virtual void setUp(const celero::TestFixture::ExperimentValue& x) override
 		{
 			// Clear the previous entities
-			em = std::make_unique<age::entity::EntityDatabase>();
+			em = std::make_unique<age::entity::EntityManager>();
 
 			for(auto i = 0; i < x.Value; ++i)
 			{
-				auto e = em->addEntity();
-				e->addComponent<Pos>();
-				e->addComponent<Vel>();
+				auto e = em->create();
+				e.addComponent<Pos>();
+				e.addComponent<Vel>();
 			}
 		}
 
-		std::unique_ptr<age::entity::EntityDatabase> em;
+		std::unique_ptr<age::entity::EntityManager> em;
 	};
 
 	struct EnTTF : public celero::TestFixture
@@ -296,17 +251,10 @@ BASELINE_F(Iteration, Baseline, EntityArrayF, 10, 1)
 
 BENCHMARK_F(Iteration, AgeEntity, AgeEntityF, 10, 1)
 {
-	for(auto e : this->em->getChildren<age::entity::Entity>())
-	{
-		auto p = e->getChild<Pos>();
-		auto v = e->getChild<Vel>();
-
-		if(p != nullptr && e != nullptr)
-		{
-			p->x += v->x * Time;
-			p->y += v->y * Time;
-		}
-	}
+	this->em->each<Pos, Vel>([this](age::entity::Entity&, Pos& p, Vel& v) {
+		p.x += v.x * Time;
+		p.y += v.y * Time;
+	});
 }
 
 BENCHMARK_F(Iteration, EnTT, EnTTF, 10, 1)

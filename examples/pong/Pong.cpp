@@ -1,5 +1,7 @@
-#include <pong/Pong.h>
+#include <Pong.h>
 
+#include <PaddleAIComponent.h>
+#include <PaddleAISystem.h>
 #include <age/audio/AudioEvent.h>
 #include <age/audio/AudioSystem.h>
 #include <age/core/Configuration.h>
@@ -24,8 +26,6 @@
 #include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsRenderSystem.h>
 #include <age/physics/PhysicsSystem.h>
-#include <pong/PaddleAIComponent.h>
-#include <pong/PaddleAISystem.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -225,21 +225,21 @@ Pong::Pong()
 
 				// if(evtCollision->getEntityA() == leftWall)
 				{
-					//auto text = *score2->getChild<std::shared_ptr<sf::Text>>();
-					//auto score = std::stoi(text->getString().toAnsiString());
-					//text->setString(std::to_string(++score));
+					// auto text = *score2->getChild<std::shared_ptr<sf::Text>>();
+					// auto score = std::stoi(text->getString().toAnsiString());
+					// text->setString(std::to_string(++score));
 				}
 
 				// if(evtCollision->getEntityA() == rightWall)
 				{
-					//auto text = *score1->getChild<std::shared_ptr<sf::Text>>();
-					//auto score = std::stoi(text->getString().toAnsiString());
-					//text->setString(std::to_string(++score));
+					// auto text = *score1->getChild<std::shared_ptr<sf::Text>>();
+					// auto score = std::stoi(text->getString().toAnsiString());
+					// text->setString(std::to_string(++score));
 				}
 			}
 			// else
 			{
-				//ball->getChild<sf::Sound>()->play();
+				// ball->getChild<sf::Sound>()->play();
 				auto v = ball->getChild<KinematicComponent>()->LinearVelocity;
 				ball->getChild<KinematicComponent>()->LinearVelocity = {v.X * 1.1f, v.Y * 1.1f};
 			}

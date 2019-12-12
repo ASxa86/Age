@@ -1,6 +1,6 @@
+#include <ListWidgetComponents.h>
 #include <age/core/Factory.h>
 #include <age/entity/Component.h>
-#include <editor/ListWidgetComponents.h>
 
 using namespace age;
 

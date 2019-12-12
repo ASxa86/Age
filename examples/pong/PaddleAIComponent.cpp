@@ -1,5 +1,5 @@
+#include <PaddleAIComponent.h>
 #include <age/entity/Entity.h>
-#include <pong/PaddleAIComponent.h>
 
 using namespace age::entity;
 using namespace age::pong;

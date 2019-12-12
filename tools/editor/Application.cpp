@@ -1,8 +1,8 @@
+#include <Application.h>
 #include <age/core/Engine.h>
 #include <age/core/PimplImpl.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
-#include <editor/Application.h>
 
 using namespace age;
 using namespace age::entity;

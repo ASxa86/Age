@@ -1,10 +1,10 @@
+#include <PaddleAISystem.h>
+
+#include <PaddleAIComponent.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
-#include <age/physics/Box2D/Box2D.h>
 #include <age/physics/BoxCollisionComponent.h>
 #include <age/physics/KinematicComponent.h>
-#include <pong/PaddleAIComponent.h>
-#include <pong/PaddleAISystem.h>
 
 using namespace age::entity;
 using namespace age::physics;

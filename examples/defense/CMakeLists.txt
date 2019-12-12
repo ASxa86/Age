@@ -1,4 +1,4 @@
-project(AgeDefense)
+project(age-defense)
 
 add_executable(${PROJECT_NAME})
 
@@ -11,7 +11,10 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	AgeGraphics
-	AgeNavigation
-	AgePhysics
+	age-graphics
+	age-navigation
+	age-physics
 )
+
+AGE_COMPILE_OPTIONS()
+AGE_WARNINGS_AS_ERRORS()

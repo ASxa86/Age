@@ -1,6 +1,6 @@
 project(BenchmarkAgeEntity)
 
-add_executable(${PROJECT_NAME} "")
+add_executable(${PROJECT_NAME})
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DCELERO_STATIC)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -20,4 +20,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 set(ENTITYX_LIBRARIES debug ${ENTITYX_LIBRARY_DEBUG} optimized ${ENTITYX_LIBRARY})
-target_link_libraries(${PROJECT_NAME} PRIVATE AgeEntity celero ${ENTITYX_LIBRARIES} EnTT)
+target_link_libraries(${PROJECT_NAME} PRIVATE age-core age-entity celero ${ENTITYX_LIBRARIES} EnTT)
+
+AGE_COMPILE_OPTIONS()
+AGE_WARNINGS_AS_ERRORS()

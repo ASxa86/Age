@@ -1,7 +1,7 @@
+#include <Application.h>
+#include <DockWidgetComponent.h>
 #include <age/core/qt/DelegateWidgetProperty.h>
 #include <age/core/qt/TableModelProperties.h>
-#include <editor/Application.h>
-#include <editor/DockWidgetComponent.h>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTableView>
 

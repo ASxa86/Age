@@ -1,3 +1,7 @@
+#include <TreeWidgetEntity.h>
+
+#include <Application.h>
+#include <GUIComponent.h>
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
 #include <age/core/Factory.h>
@@ -7,9 +11,6 @@
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/EntityEvent.h>
-#include <editor/Application.h>
-#include <editor/GUIComponent.h>
-#include <editor/TreeWidgetEntity.h>
 #include <QtCore/QSize>
 
 using namespace age;
