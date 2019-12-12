@@ -22,6 +22,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${AGE_INCLUDE_DIR}/age/core/PimplImpl.h
 	${AGE_INCLUDE_DIR}/age/core/Processor.h
 	${AGE_INCLUDE_DIR}/age/core/Properties.h
+	${AGE_INCLUDE_DIR}/age/core/Reflection.h
 	${AGE_INCLUDE_DIR}/age/core/String.h
 	${AGE_INCLUDE_DIR}/age/core/Timer.h
 	${AGE_INCLUDE_DIR}/age/core/Utilities.h
@@ -40,6 +41,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Parser.cpp
 	Processor.cpp
 	Properties.cpp
+	Reflection.cpp
 	String.cpp
 	Timer.cpp
 	Utilities.cpp
