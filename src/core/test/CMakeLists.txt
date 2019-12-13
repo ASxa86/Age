@@ -2,6 +2,8 @@ project(age-core-test)
 
 AGE_ADD_TEST()
 
+find_package(RTTR)
+
 target_sources(${PROJECT_NAME} PRIVATE
 	Engine.test.cpp
 	Object.test.cpp
@@ -14,4 +16,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-core
+	RTTR::Core
 )

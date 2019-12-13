@@ -10,38 +10,19 @@ namespace age
 {
 	namespace core
 	{
+		class ReflType;
+
 		namespace impl
 		{
-			template <typename M>
-			struct MemberType
-			{
-				template <typename C, typename T>
-				static T GetType(T C::*)
-				{
-				}
-
-				using Type = decltype(GetType(static_cast<M>(nullptr)));
-			};
-
 			struct AnyRef
 			{
 				template <typename T>
-				AnyRef(T& x) : type{typeid(T)}, obj{&x}
-				{
-				}
+				AnyRef(T& x);
 
 				template <typename T>
-				T* convert() const
-				{
-					if(typeid(T) == this->type)
-					{
-						return static_cast<T*>(this->obj);
-					}
+				T* convert() const;
 
-					return nullptr;
-				}
-
-				const std::type_info& type;
+				const ReflType* type{nullptr};
 				void* obj{nullptr};
 			};
 		}
@@ -73,7 +54,7 @@ namespace age
 
 			bool setValue(const impl::AnyRef& x, const std::string& v) override
 			{
-				auto obj = x.convert<C>();
+				const auto obj = x.convert<C>();
 
 				if(obj != nullptr)
 				{
@@ -88,7 +69,7 @@ namespace age
 			{
 				std::string s;
 
-				auto obj = x.convert<C>();
+				const auto obj = x.convert<C>();
 
 				if(obj != nullptr)
 				{
@@ -105,9 +86,11 @@ namespace age
 		class AGE_CORE_EXPORT ReflType
 		{
 		public:
-			ReflType(const std::string& n, const std::type_info& x) : Name{n}, index{x}
-			{
-			}
+			ReflType();
+			ReflType(const std::string& n, const std::type_info& x);
+
+			template <typename T>
+			void addBase();
 
 			template <typename T>
 			void addProperty(const std::string& x, T t)
@@ -118,16 +101,21 @@ namespace age
 			ReflProp* getProperty(std::string_view x) const;
 			std::vector<ReflProp*> getProperties() const;
 
+			bool operator==(const ReflType& rhs) const;
+
 			std::string Name;
 
 		private:
 			std::vector<std::shared_ptr<ReflProp>> properties;
+			std::map<std::type_index, ReflType>::const_iterator baseTypeIt;
 			std::type_index index;
 		};
 
 		class AGE_CORE_EXPORT Reflection
 		{
 		public:
+			static void Clear();
+
 			template <typename T>
 			static ReflType& Add(const std::string& x)
 			{
@@ -144,7 +132,45 @@ namespace age
 			}
 
 		private:
+			friend ReflType;
 			static std::map<std::type_index, ReflType> ReflMap;
 		};
+
+		template <typename T>
+		class Register
+		{
+		public:
+			template <typename Func>
+			Register(Func f)
+			{
+				f();
+			}
+		};
+
+		namespace impl
+		{
+			template <typename T>
+			AnyRef::AnyRef(T& x) : type{Reflection::Get<T>()}, obj{&x}
+			{
+			}
+
+			template <typename T>
+			T* AnyRef::convert() const
+			{
+				if(*Reflection::Get<T>() == *this->type)
+				{
+					return static_cast<T*>(this->obj);
+				}
+
+				return nullptr;
+			}
+		}
+
+		template <typename T>
+		void ReflType::addBase()
+		{
+			Reflection::ReflMap[typeid(T)];
+			this->baseTypeIt = Reflection::ReflMap.find(typeid(T));
+		}
 	}
 }
