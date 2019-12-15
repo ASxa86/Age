@@ -2,7 +2,7 @@
 
 #include <age/core/Event.h>
 #include <age/core/Pimpl.h>
-#include <age/entity/Export.h>
+#include <age/entity/export.h>
 #include <any>
 #include <typeindex>
 

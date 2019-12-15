@@ -3,7 +3,7 @@
 #include <age/core/EventQueue.h>
 #include <age/core/Object.h>
 #include <age/entity/ComponentPool.h>
-#include <age/entity/Export.h>
+#include <age/entity/export.h>
 #include <deque>
 #include <map>
 #include <tuple>

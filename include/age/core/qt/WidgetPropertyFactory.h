@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/core/Pimpl.h>
-#include <age/core/qt/Export.h>
+#include <age/core/qt/export.h>
 #include <age/core/qt/WidgetProperty.h>
 #include <typeindex>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Export.h>
+#include <age/core/export.h>
 #include <chrono>
 #include <cstdint>
 

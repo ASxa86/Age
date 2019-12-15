@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/entity/SelectionComponent.h>
-#include <age/graphics/Export.h>
+#include <age/graphics/export.h>
 #include <age/math/Vector.h>
 #include <SFML/Graphics/RectangleShape.hpp>
 

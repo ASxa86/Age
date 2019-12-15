@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/math/Export.h>
+#include <age/math/export.h>
 #include <algorithm>
 
 namespace age

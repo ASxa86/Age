@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/graphics/Export.h>
+#include <age/graphics/export.h>
 #include <age/graphics/RenderSystem.h>
 
 namespace age

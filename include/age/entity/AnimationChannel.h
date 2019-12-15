@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/entity/Export.h>
+#include <age/entity/export.h>
 #include <algorithm>
 #include <chrono>
 #include <functional>

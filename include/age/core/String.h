@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Export.h>
+#include <age/core/export.h>
 #include <age/core/MagicEnum.h>
 #include <age/core/TypeTraits.h>
 #include <array>

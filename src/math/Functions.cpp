@@ -2,6 +2,7 @@
 
 #include <age/math/Convert.h>
 #include <age/math/Vector.h>
+#include <cmath>
 
 double age::math::VectorAngle(const age::math::Vector& x)
 {

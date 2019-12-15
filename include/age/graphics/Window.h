@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/core/Processor.h>
-#include <age/graphics/Export.h>
+#include <age/graphics/export.h>
 
 namespace age
 {

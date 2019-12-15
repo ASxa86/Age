@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/qt/Export.h>
+#include <age/core/qt/export.h>
 #include <QtWidgets/QStyledItemDelegate>
 
 namespace age

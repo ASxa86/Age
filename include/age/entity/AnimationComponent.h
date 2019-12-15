@@ -2,7 +2,7 @@
 
 #include <age/entity/Animation.h>
 #include <age/entity/Component.h>
-#include <age/entity/Export.h>
+#include <age/entity/export.h>
 #include <deque>
 
 namespace age
