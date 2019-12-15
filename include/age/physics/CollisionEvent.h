@@ -2,7 +2,7 @@
 
 #include <age/core/Event.h>
 #include <age/core/Pimpl.h>
-#include <age/physics/Export.h>
+#include <age/physics/export.h>
 #include <vector>
 
 namespace age

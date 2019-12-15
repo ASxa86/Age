@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/core/Parser.h>
-#include <age/plugins/tmx/Export.h>
+#include <age/plugins/tmx/export.h>
 
 namespace age
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/audio/Export.h>
+#include <age/audio/export.h>
 #include <age/entity/System.h>
 
 namespace age

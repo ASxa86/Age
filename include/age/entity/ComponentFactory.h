@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/entity/Entity.h>
-#include <age/entity/Export.h>
+#include <age/entity/export.h>
 #include <boost/dll/import.hpp>
 #include <map>
 #include <string>

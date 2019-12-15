@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/terrain/Export.h>
+#include <age/terrain/export.h>
 #include <age/terrain/TileSource.h>
 #include <filesystem>
 

@@ -2,7 +2,7 @@
 
 #include <age/entity/Component.h>
 #include <age/entity/EntityDatabase.h>
-#include <age/graphics/Export.h>
+#include <age/graphics/export.h>
 #include <SFML/Window/Keyboard.hpp>
 #include <functional>
 #include <vector>

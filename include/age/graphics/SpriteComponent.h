@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/entity/Component.h>
-#include <age/graphics/Export.h>
+#include <age/graphics/export.h>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <filesystem>

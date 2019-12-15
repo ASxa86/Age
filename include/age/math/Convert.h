@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/math/Constants.h>
-#include <age/math/Export.h>
+#include <age/math/export.h>
 
 namespace age
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/entity/AnimationChannel.h>
-#include <age/entity/Export.h>
+#include <age/entity/export.h>
 #include <memory>
 
 namespace age

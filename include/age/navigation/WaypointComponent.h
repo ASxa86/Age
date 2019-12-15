@@ -2,7 +2,7 @@
 
 #include <age/entity/Component.h>
 #include <age/math/Vector.h>
-#include <age/navigation/Export.h>
+#include <age/navigation/export.h>
 #include <vector>
 
 namespace age
