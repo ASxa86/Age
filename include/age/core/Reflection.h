@@ -10,6 +10,11 @@ namespace age
 {
 	namespace core
 	{
+		struct Test
+		{
+			void setV(int) {}
+			int getV() { return 0; }
+		};
 		class ReflType;
 
 		namespace impl
@@ -83,6 +88,52 @@ namespace age
 			accessor property;
 		};
 
+		template <typename S, typename G>
+		class TemplateMethod;
+
+		template <typename Class, typename SetR, typename GetR, typename Arg>
+		class TemplateMethod<SetR(Class::*)(Arg), GetR(Class::*)() const> : public ReflProp
+		{
+		public:
+			using funcptr_set = SetR(Class::*)(Arg);
+			using funcptr_get = GetR(Class::*)() const;
+
+			TemplateMethod(const std::string& n, funcptr_set s, funcptr_get g) : ReflProp{n}, setter{s}, getter{g}
+			{
+			}
+
+			bool setValue(const impl::AnyRef& x, const std::string& v) override
+			{
+				const auto obj = x.convert<Class>();
+
+				if(obj != nullptr)
+				{
+					(obj->*setter)(StringTo<Arg>(v));
+					return true;
+				}
+
+				return false;
+			}
+
+			std::string getValue(const impl::AnyRef& x) const override
+			{
+				std::string s;
+
+				const auto obj = x.convert<Class>();
+
+				if(obj != nullptr)
+				{
+					s = ToString((obj->*getter)());
+				}
+
+				return s;
+			}
+
+		private:
+			funcptr_set setter;
+			funcptr_get getter;
+		};
+
 		class AGE_CORE_EXPORT ReflType
 		{
 		public:
@@ -96,6 +147,13 @@ namespace age
 			void addProperty(const std::string& x, T t)
 			{
 				this->properties.push_back(std::make_shared<TemplateProperty<T>>(x, t));
+			}
+
+			template <typename Setter, typename Getter>
+			void addMethod(const std::string& x, Setter setter, Getter getter)
+			{
+				auto temp = std::make_shared<TemplateMethod<Setter, Getter>>(x, setter, getter);
+				this->properties.push_back(temp);
 			}
 
 			ReflProp* getProperty(std::string_view x) const;

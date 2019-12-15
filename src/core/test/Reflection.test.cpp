@@ -9,6 +9,16 @@ namespace
 	class MyBase
 	{
 	public:
+		void setD(double x)
+		{
+			this->d = x;
+		}
+
+		double getD() const
+		{
+			return this->d;
+		}
+
 		double d{};
 		float f{};
 		
@@ -24,14 +34,25 @@ namespace
 			Three
 		};
 
+		void setX(int x)
+		{
+			this->x = x;
+		}
+
+		int getX() const
+		{
+			return this->x;
+		}
+
 		int x{0};
 		Enum e{Enum::One};
 	};
 }
 
-TEST(ReflObj, Constructor)
+TEST(AnyRef, Constructor)
 {
 	MyClass myClass;
+	Reflection::Add<MyClass>("");
 	impl::AnyRef obj(myClass);
 	obj.convert<MyClass>()->x = 1;
 }
@@ -57,6 +78,34 @@ TEST(TemplateProperty, GetValue)
 {
 	MyClass myClass;
 	TemplateProperty<int(MyClass::*)> property("x", &MyClass::x);
+
+	EXPECT_EQ("0", property.getValue(myClass));
+
+	myClass.x = 1;
+
+	EXPECT_EQ("1", property.getValue(myClass));
+
+	myClass.x = -1;
+
+	EXPECT_EQ("-1", property.getValue(myClass));
+}
+
+TEST(TemplateMethod, SetValue)
+{
+	MyClass myClass;
+	TemplateMethod<void(MyClass::*)(int), int(MyClass::*)() const> property("x", &MyClass::setX, &MyClass::getX);
+
+	property.setValue(myClass, "1");
+	EXPECT_EQ(1, myClass.x);
+
+	property.setValue(myClass, "-1");
+	EXPECT_EQ(-1, myClass.x);
+}
+
+TEST(TemplateMethod, GetValue)
+{
+	MyClass myClass;
+	TemplateMethod<void(MyClass::*)(int), int(MyClass::*)() const> property("x", &MyClass::setX, &MyClass::getX);
 
 	EXPECT_EQ("0", property.getValue(myClass));
 
@@ -110,14 +159,15 @@ TEST(Reflection, RegisterBaseClass)
 	auto& typeBase = Reflection::Add<MyBase>("MyBase");
 	typeBase.addProperty("d", &MyBase::d);
 	typeBase.addProperty("f", &MyBase::f);
+	typeBase.addMethod("D", &MyBase::setD, &MyBase::getD);
 
 	properties = type.getProperties();
-	EXPECT_EQ(properties.size(), 4);
+	EXPECT_EQ(properties.size(), 5);
 
 	MyClass myClass;
 	myClass.d = 1;
 
-	auto p = type.getProperty("d");
+	auto p = type.getProperty("D");
 	p->setValue(myClass, "2");
 	EXPECT_EQ(myClass.d, 2);
 }
