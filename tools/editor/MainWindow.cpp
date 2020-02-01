@@ -5,7 +5,6 @@
 #include <DockWidgetEntity.h>
 #include <age/core/Engine.h>
 #include <age/core/PimplImpl.h>
-#include <age/entity/EntityManager.h>
 
 using namespace age;
 using namespace age::entity;

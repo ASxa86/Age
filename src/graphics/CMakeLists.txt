@@ -4,7 +4,6 @@ project(age-graphics)
 #
 #	Find SFML
 #
-set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2 COMPONENTS system graphics window)
 
 AGE_ADD_LIBRARY()
@@ -47,7 +46,7 @@ if(UNIX)
 	)
 endif()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME} PUBLIC
 	age-core
 	age-entity
 	age-math

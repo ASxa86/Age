@@ -19,6 +19,12 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE age-core age-entity age-math age-graphics)
 
+if(UNIX)
+	target_link_libraries(${PROJECT_NAME} PRIVATE
+		-lGL
+	)
+endif()
+
 AGE_COMPILE_OPTIONS()
 AGE_WARNINGS_AS_ERRORS()
 AGE_INSTALL()

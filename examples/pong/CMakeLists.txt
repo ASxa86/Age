@@ -1,6 +1,5 @@
 project(age-pong)
 
-set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2 COMPONENTS system graphics window)
 
 add_executable(${PROJECT_NAME})

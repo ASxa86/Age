@@ -36,5 +36,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-entity
 	age-graphics
 	age-terrain
-	pugixml
+	pugixml::pugixml
 )
