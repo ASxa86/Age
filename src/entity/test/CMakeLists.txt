@@ -13,5 +13,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-core
 	age-entity
-	EnTT::EnTT
+	EnTT
+	# EnTT::EnTT
 )

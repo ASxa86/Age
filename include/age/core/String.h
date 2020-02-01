@@ -1,11 +1,12 @@
 #pragma once
 
-#include <age/core/export.h>
 #include <age/core/MagicEnum.h>
 #include <age/core/TypeTraits.h>
+#include <age/core/export.h>
 #include <array>
 #include <charconv>
 #include <chrono>
+#include <filesystem>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -42,7 +43,6 @@ namespace age
 		// 										  std::chars_format fmt = std::chars_format::fixed);
 		AGE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
 
-
 		template <typename T>
 		std::string ToString([[maybe_unused]] const T& x)
 		{
@@ -55,6 +55,10 @@ namespace age
 			else if constexpr(std::is_same<bool, T>::value == true)
 			{
 				return x ? "true" : "false";
+			}
+			else if constexpr(std::is_same<std::filesystem::path, T>::value == true)
+			{
+				return x.string();
 			}
 			else if constexpr(std::is_arithmetic<T>::value == true && std::is_floating_point<T>::value == false)
 			{
@@ -75,7 +79,7 @@ namespace age
 			else if constexpr(std::is_convertible<T, std::string>::value == true)
 			{
 				return static_cast<std::string>(x);
-			}			
+			}
 			else if constexpr(age::core::is_array<T>::value == true)
 			{
 				std::string s = "{";
@@ -107,6 +111,10 @@ namespace age
 			{
 				return x == "true" ? true : false;
 			}
+			else if constexpr(std::is_same<std::filesystem::path, T>::value == true)
+			{
+				return std::filesystem::path{x};
+			}
 			// AMS // 10/6/2019 // gcc v9.0.1 doesn't support charconv for floating point types.
 			else if constexpr(std::is_floating_point<T>::value == true)
 			{
@@ -136,7 +144,7 @@ namespace age
 				}
 
 				return t;
-			}			
+			}
 			else if constexpr(std::is_arithmetic<T>::value == true)
 			{
 				T t{};
