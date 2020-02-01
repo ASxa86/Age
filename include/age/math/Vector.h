@@ -19,6 +19,9 @@ namespace age
 		class AGE_MATH_EXPORT Vector
 		{
 		public:
+			Vector(double x = 0.0, double y = 0.0);
+			Vector(const std::string& x);
+			operator std::string() const;
 			///
 			///	Operator overloads.
 			///
@@ -56,7 +59,5 @@ namespace age
 		};
 
 		AGE_MATH_EXPORT double distance(const Vector& a, const Vector& b);
-		AGE_MATH_EXPORT std::ostream& operator<<(std::ostream& os, Vector x);
-		AGE_MATH_EXPORT std::istream& operator>>(std::istream& is, Vector& x);
 	}
 }

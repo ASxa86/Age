@@ -13,7 +13,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE age-graphics)
+target_link_libraries(${PROJECT_NAME} PRIVATE age-core age-graphics)
 
 AGE_COMPILE_OPTIONS()
 AGE_WARNINGS_AS_ERRORS()

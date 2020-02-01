@@ -74,7 +74,7 @@ namespace age
 			{
 			}
 
-			AnimationChannel(AnimationChannel&& x) : shape{x.shape}, evaluator{x.evaluator}
+			AnimationChannel(AnimationChannel&& x) : Channel{x.shape}, evaluator{x.evaluator}
 			{
 			}
 

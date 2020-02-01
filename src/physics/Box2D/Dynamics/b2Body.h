@@ -19,7 +19,6 @@
 #ifndef B2_BODY_H
 #define B2_BODY_H
 
-#include <age/physics/Export.h>
 #include <memory>
 #include "Box2D/Collision/Shapes/b2Shape.h"
 #include "Box2D/Common/b2Math.h"
@@ -49,7 +48,7 @@ enum b2BodyType
 
 /// A body definition holds all the data needed to construct a rigid body.
 /// You can safely re-use body definitions. Shapes are added to a body after construction.
-struct AGE_PHYSICS_EXPORT b2BodyDef
+struct b2BodyDef
 {
 	/// This constructor sets the body definition default values.
 	b2BodyDef()
@@ -126,7 +125,7 @@ struct AGE_PHYSICS_EXPORT b2BodyDef
 };
 
 /// A rigid body. These are created via b2World::CreateBody.
-class AGE_PHYSICS_EXPORT b2Body
+class b2Body
 {
 public:
 	/// Creates a fixture and attach it to this body. Use this function if you need

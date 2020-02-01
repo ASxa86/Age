@@ -10,7 +10,15 @@ target_sources(${PROJECT_NAME} PRIVATE
 	main.cpp
 )
 
+if(UNIX)
+	target_link_libraries(${PROJECT_NAME} PUBLIC
+		${CMAKE_DL_LIBS}
+		GL
+	)
+endif()
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
+	age-core
 	age-graphics
 	age-navigation
 	age-physics

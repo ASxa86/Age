@@ -19,7 +19,6 @@
 #ifndef B2_SHAPE_H
 #define B2_SHAPE_H
 
-#include <age/physics/Export.h>
 #include "Box2D/Collision/b2Collision.h"
 #include "Box2D/Common/b2BlockAllocator.h"
 #include "Box2D/Common/b2Math.h"
@@ -40,7 +39,7 @@ struct b2MassData
 /// A shape is used for collision detection. You can create a shape however you like.
 /// Shapes used for simulation in b2World are created automatically when a b2Fixture
 /// is created. Shapes may encapsulate a one or more child shapes.
-class AGE_PHYSICS_EXPORT b2Shape
+class b2Shape
 {
 public:
 	enum Type

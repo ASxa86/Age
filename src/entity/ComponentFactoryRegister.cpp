@@ -1,6 +1,6 @@
 #include <age/entity/AnimationComponent.h>
 #include <age/entity/ComponentFactory.h>
-#include <age/entity/Export.h>
+#include <age/entity/export.h>
 #include <age/entity/TransformComponent.h>
 
 using namespace age::entity;

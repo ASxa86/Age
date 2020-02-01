@@ -7,6 +7,14 @@
 
 namespace age
 {
+	namespace entity
+	{
+		class Entity;
+	}
+}
+
+namespace age
+{
 	namespace navigation
 	{
 		///

@@ -4,11 +4,14 @@ project(age-graphics)
 #
 #	Find SFML
 #
-find_package(SFML 2 CONFIG COMPONENTS system graphics window)
+set(SFML_STATIC_LIBRARIES TRUE)
+find_package(SFML 2 COMPONENTS system graphics window)
 
 AGE_ADD_LIBRARY()
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIR})
+set(SFML_INCLUDE_DIR ${SFML_DIR}/../../include)
+message(STATUS "inc ${SFML_INCLUDE_DIR}")
+target_include_directories(${PROJECT_NAME} PUBLIC ${SFML_INCLUDE_DIR})
 
 target_sources(${PROJECT_NAME} PRIVATE
 	${AGE_INCLUDE_DIR}/age/graphics/BoxSelectionComponent.h
@@ -38,7 +41,13 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Window.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}
+if(UNIX)
+	target_link_libraries(${PROJECT_NAME} PUBLIC
+		GL
+	)
+endif()
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-core
 	age-entity
 	age-math

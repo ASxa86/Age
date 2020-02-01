@@ -102,6 +102,8 @@ macro(AGE_INCLUDE_BOOST)
 		Boost::system
 		Boost::filesystem
 	)
+
+	target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIR})
 endmacro()
 
 macro(AGE_ADD_LIBRARY)

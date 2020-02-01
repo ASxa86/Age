@@ -2,7 +2,6 @@
 
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
-#include <age/entity/EntityManager.h>
 #include <age/entity/TransformComponent.h>
 #include <age/physics/PhysicsSystem.h>
 
