@@ -29,6 +29,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	EntityDatabase.cpp
 	EntityEvent.cpp
 	HealthComponent.cpp
+	Reflection.cpp
 	SelectionComponent.cpp
 	System.cpp
 	TransformComponent.cpp
@@ -37,6 +38,12 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-core
 	age-math
+)
+
+find_package(EnTT CONFIG REQUIRED)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+	EnTT
 )
 
 AGE_INCLUDE_BOOST()

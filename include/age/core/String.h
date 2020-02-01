@@ -1,8 +1,8 @@
 #pragma once
 
-#include <age/core/export.h>
 #include <age/core/MagicEnum.h>
 #include <age/core/TypeTraits.h>
+#include <age/core/export.h>
 #include <array>
 #include <boost/type_traits.hpp>
 #include <charconv>
@@ -66,6 +66,10 @@ namespace age
 				ss << x;
 				return ss.str();
 			}
+			else if constexpr(std::is_same<const std::string&, T>::value == true)
+			{
+				return x;
+			}
 		}
 
 		template <typename T>
@@ -112,6 +116,10 @@ namespace age
 				std::istringstream ss{x};
 				ss >> t;
 				return t;
+			}
+			else if constexpr(std::is_same<const std::string&, T>::value == true)
+			{
+				return x;
 			}
 		}
 	}
