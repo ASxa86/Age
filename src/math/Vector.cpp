@@ -5,26 +5,24 @@
 
 using namespace age::math;
 
-std::ostream& age::math::operator<<(std::ostream& os, Vector x)
+Vector::Vector(double x, double y) : X{x}, Y{y}
 {
-	os << "{" << x.X << ", " << x.Y << "}";
-	return os;
 }
 
-std::istream& age::math::operator>>(std::istream& is, Vector& x)
+Vector::Vector(const std::string& x)
 {
-	std::string temp;
-	std::getline(is, temp);
-
-	const auto tokens = age::core::Split(temp);
+	const auto tokens = age::core::Split(x);
 
 	if(tokens.size() == 2)
 	{
-		x.X = age::core::StringTo<double>(tokens[0]);
-		x.Y = age::core::StringTo<double>(tokens[1]);
+		this->X = age::core::StringTo<double>(tokens[0]);
+		this->Y = age::core::StringTo<double>(tokens[1]);
 	}
+}
 
-	return is;
+Vector::operator std::string() const
+{
+	return "{" + age::core::ToString(this->X) + ", " + age::core::ToString(this->Y) + "}";
 }
 
 Vector Vector::operator+(const Vector& x) const

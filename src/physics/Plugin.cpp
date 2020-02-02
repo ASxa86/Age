@@ -1,7 +1,7 @@
 #include <age/core/Factory.h>
 #include <age/physics/BoxCollisionComponent.h>
 #include <age/physics/CircleCollisionComponent.h>
-#include <age/physics/Export.h>
+#include <age/physics/export.h>
 #include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsSystem.h>
 #include <age/physics/PhysicsRenderSystem.h>

@@ -19,7 +19,6 @@
 #ifndef B2_WORLD_H
 #define B2_WORLD_H
 
-#include <age/physics/Export.h>
 #include "Box2D/Common/b2BlockAllocator.h"
 #include "Box2D/Common/b2Math.h"
 #include "Box2D/Common/b2StackAllocator.h"
@@ -39,7 +38,7 @@ class b2Joint;
 /// The world class manages all physics entities, dynamic simulation,
 /// and asynchronous queries. The world also contains efficient memory
 /// management facilities.
-class AGE_PHYSICS_EXPORT b2World
+class b2World
 {
 public:
 	/// Construct a world object.

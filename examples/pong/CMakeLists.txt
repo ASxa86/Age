@@ -1,5 +1,7 @@
 project(age-pong)
 
+find_package(SFML 2 COMPONENTS system graphics window)
+
 add_executable(${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -21,11 +23,24 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Pong.cpp
 )
 
+if(UNIX)
+	target_link_libraries(${PROJECT_NAME} PUBLIC
+		${CMAKE_DL_LIBS}
+		GL
+	)
+endif()
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-graphics
-	age-physics
 	age-audio
+	age-entity
+	age-graphics
+	age-math
+	age-physics
+	sfml-system
+	sfml-graphics
+	sfml-window
 )
+
 
 AGE_COMPILE_OPTIONS()
 AGE_WARNINGS_AS_ERRORS()

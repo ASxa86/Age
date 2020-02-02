@@ -1,5 +1,5 @@
 #include <age/core/qt/WidgetPropertyFactory.h>
-#include <age/math/qt/Export.h>
+#include <age/math/qt/export.h>
 
 #include <age/math/Vector.h>
 #include <age/math/qt/WidgetVector.h>

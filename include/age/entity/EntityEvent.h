@@ -39,7 +39,7 @@ namespace age
 			Entity* getEntity() const;
 			EntityEvent::Type getType() const;
 
-			Component* Component{};
+			age::entity::Component* Component{};
 
 		private:
 			Entity* entity;

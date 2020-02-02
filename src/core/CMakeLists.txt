@@ -3,7 +3,7 @@ project(age-core)
 AGE_ADD_LIBRARY()
 
 if(UNIX)
-	target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
+	target_link_libraries(${PROJECT_NAME} PUBLIC dl stdc++fs)
 endif()
 
 target_sources(${PROJECT_NAME} PRIVATE

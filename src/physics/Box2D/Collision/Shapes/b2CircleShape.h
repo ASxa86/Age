@@ -19,11 +19,10 @@
 #ifndef B2_CIRCLE_SHAPE_H
 #define B2_CIRCLE_SHAPE_H
 
-#include <age/physics/Export.h>
 #include "Box2D/Collision/Shapes/b2Shape.h"
 
 /// A circle shape.
-class AGE_PHYSICS_EXPORT b2CircleShape : public b2Shape
+class b2CircleShape : public b2Shape
 {
 public:
 	b2CircleShape();

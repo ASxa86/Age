@@ -223,7 +223,7 @@ PhysicsSystem::~PhysicsSystem()
 
 void PhysicsSystem::onStartup()
 {
-	const auto processEntity = [this](auto e) {
+	const auto processEntity = [this](Entity* e) {
 		if(e->getChild<KinematicComponent>() != nullptr)
 		{
 			this->pimpl->addBody(e);

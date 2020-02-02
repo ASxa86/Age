@@ -4,9 +4,9 @@
 #include <age/core/TypeTraits.h>
 #include <age/core/export.h>
 #include <array>
-#include <boost/type_traits.hpp>
 #include <charconv>
 #include <chrono>
+#include <filesystem>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -17,10 +17,38 @@ namespace age
 	{
 		AGE_CORE_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
 
+		///
+		///	\brief Special ToString overload to support floating point precision and format.
+		///
+		///	\param x The float to convert.
+		///	\param precision The decimal precision to output.
+		///	\param fmt Specify either scientific or fixed format.
+		///
+
+		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
+		// AGE_CORE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10,
+		// 										  std::chars_format fmt = std::chars_format::fixed);
+		AGE_CORE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10);
+
+		///
+		///	\brief Special ToString overload to support floating point precision and format.
+		///
+		///	\param x The double to convert.
+		///	\param precision The decimal precision to output.
+		///	\param fmt Specify either scientific or fixed format.
+		///
+
+		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
+		// AGE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10,
+		// 										  std::chars_format fmt = std::chars_format::fixed);
+		AGE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
+
 		template <typename T>
 		std::string ToString([[maybe_unused]] const T& x)
 		{
-			if constexpr(std::is_same<std::chrono::microseconds, T>::value == true)
+			if constexpr(std::is_same<std::chrono::microseconds, T>::value == true || std::is_same<std::chrono::milliseconds, T>::value == true
+						 || std::is_same<std::chrono::seconds, T>::value == true || std::is_same<std::chrono::minutes, T>::value == true
+						 || std::is_same<std::chrono::hours, T>::value == true)
 			{
 				return ToString(x.count());
 			}
@@ -28,7 +56,11 @@ namespace age
 			{
 				return x ? "true" : "false";
 			}
-			else if constexpr(std::is_arithmetic<T>::value == true)
+			else if constexpr(std::is_same<std::filesystem::path, T>::value == true)
+			{
+				return x.string();
+			}
+			else if constexpr(std::is_arithmetic<T>::value == true && std::is_floating_point<T>::value == false)
 			{
 				std::array<char, 100> buffer{};
 				const auto [p, ec] = std::to_chars(buffer.data(), buffer.data() + buffer.size(), x);
@@ -43,6 +75,10 @@ namespace age
 			else if constexpr(std::is_enum<T>::value == true)
 			{
 				return std::string(magic_enum::enum_name(x));
+			}
+			else if constexpr(std::is_convertible<T, std::string>::value == true)
+			{
+				return static_cast<std::string>(x);
 			}
 			else if constexpr(age::core::is_array<T>::value == true)
 			{
@@ -60,12 +96,6 @@ namespace age
 
 				return s + "}";
 			}
-			else if constexpr(boost::has_left_shift<std::ostream, T>::value == true)
-			{
-				std::stringstream ss;
-				ss << x;
-				return ss.str();
-			}
 			else if constexpr(std::is_same<const std::string&, T>::value == true)
 			{
 				return x;
@@ -75,13 +105,49 @@ namespace age
 		template <typename T>
 		T StringTo([[maybe_unused]] const std::string& x)
 		{
-			if constexpr(std::is_same<std::chrono::microseconds, T>::value == true)
+			if constexpr(std::is_same<std::chrono::microseconds, T>::value == true || std::is_same<std::chrono::milliseconds, T>::value == true
+						 || std::is_same<std::chrono::seconds, T>::value == true || std::is_same<std::chrono::minutes, T>::value == true
+						 || std::is_same<std::chrono::hours, T>::value == true)
 			{
-				return std::chrono::microseconds{StringTo<T::rep>(x)};
+				return T{StringTo<typename T::rep>(x)};
 			}
 			else if constexpr(std::is_same<bool, T>::value == true)
 			{
 				return x == "true" ? true : false;
+			}
+			else if constexpr(std::is_same<std::filesystem::path, T>::value == true)
+			{
+				return std::filesystem::path{x};
+			}
+			// AMS // 10/6/2019 // gcc v9.0.1 doesn't support charconv for floating point types.
+			else if constexpr(std::is_floating_point<T>::value == true)
+			{
+				T t{};
+
+				if constexpr(std::is_same<T, float>::value == true)
+				{
+					try
+					{
+						t = std::stof(x);
+					}
+					catch(...)
+					{
+						t = std::numeric_limits<float>::quiet_NaN();
+					}
+				}
+				else
+				{
+					try
+					{
+						t = std::stod(x);
+					}
+					catch(...)
+					{
+						t = std::numeric_limits<double>::quiet_NaN();
+					}
+				}
+
+				return t;
 			}
 			else if constexpr(std::is_arithmetic<T>::value == true)
 			{
@@ -99,6 +165,10 @@ namespace age
 			{
 				return magic_enum::enum_cast<T>(x).value_or(T{});
 			}
+			else if constexpr(std::is_constructible<T, const std::string&>::value == true)
+			{
+				return T{x};
+			}
 			else if constexpr(age::core::is_array<T>::value == true)
 			{
 				T t{};
@@ -108,13 +178,6 @@ namespace age
 					t[i] = StringTo<T::value_type>(tokens[i]);
 				}
 
-				return t;
-			}
-			else if constexpr(boost::has_right_shift<std::istream, T>::value == true)
-			{
-				T t{};
-				std::istringstream ss{x};
-				ss >> t;
 				return t;
 			}
 			else if constexpr(std::is_same<const std::string&, T>::value == true)
