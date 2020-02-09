@@ -1,6 +1,6 @@
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
-#include <age/core/SigSlot.h>
+#include <age/utilities/Signal.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/graphics/InputComponent.h>

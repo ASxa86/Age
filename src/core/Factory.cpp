@@ -1,12 +1,13 @@
 #include <age/core/Configuration.h>
 #include <age/core/Factory.h>
 #include <age/core/Object.h>
+#include <age/utilities/SharedLibrary.h>
 #include <atomic>
-#include <boost/dll/import.hpp>
 #include <iostream>
 #include <map>
 
 using namespace age::core;
+using namespace age::utilities;
 
 CreatorBase::~CreatorBase()
 {
@@ -104,30 +105,27 @@ Factory& Factory::Instance()
 		for(const auto& filepath : ageLibraries)
 		{
 			const auto filename = filepath.filename().string();
-			const std::string agePlugin = "age";
+		
+			const std::string agePlugin = "age-";
 			if(filename.compare(0, agePlugin.size(), agePlugin) == 0)
 			{
-				boost::system::error_code ec;
-				boost::dll::shared_library library(filepath.string(), ec);
+				SharedLibrary library(filepath);
 
-				if(!ec)
+				if(library.loaded() == true)
 				{
-					if(library.has("FactoryRegister") == true)
+					const auto factoryRegister = library.symbol("FactoryRegister");
+
+					if(factoryRegister != nullptr)
 					{
-						const auto factoryRegister = library.get<void()>("FactoryRegister");
-
-						if(factoryRegister != nullptr)
-						{
-							factoryRegister();
-						}
-
-						// Keep track of loaded libraries in order to keep them loaded in memory.
-						singleton.loadedLibraries.push_back(library);
+						factoryRegister();
 					}
+
+					// Keep track of loaded libraries in order to keep them loaded in memory.
+					singleton.loadedLibraries.push_back(library);
 				}
 				else
 				{
-					std::cerr << "Failed to load: " << filepath << " error code: " << ec.message() << "\n";
+					std::cerr << "Failed to load: " << filepath << "\n";
 				}
 			}
 		}

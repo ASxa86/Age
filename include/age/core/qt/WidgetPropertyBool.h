@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Pimpl.h>
+#include <age/utilities/Pimpl.h>
 #include <age/core/qt/WidgetProperty.h>
 
 namespace age

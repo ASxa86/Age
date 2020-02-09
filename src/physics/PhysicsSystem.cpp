@@ -1,7 +1,7 @@
+#include <age/physics/PhysicsSystem.h>
+
 #include <Box2D/Box2D.h>
 #include <age/core/EventQueue.h>
-#include <age/core/PimplImpl.h>
-#include <age/core/SigSlot.h>
 #include <age/core/Timer.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
@@ -14,7 +14,8 @@
 #include <age/physics/CollisionEvent.h>
 #include <age/physics/EdgeCollisionComponent.h>
 #include <age/physics/KinematicComponent.h>
-#include <age/physics/PhysicsSystem.h>
+#include <age/utilities/PimplImpl.h>
+#include <age/utilities/Signal.h>
 
 using namespace age::core;
 using namespace age::entity;

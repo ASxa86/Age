@@ -2,7 +2,7 @@
 
 #include <age/audio/export.h>
 #include <age/core/Event.h>
-#include <age/core/Pimpl.h>
+#include <age/utilities/Pimpl.h>
 
 namespace sf
 {

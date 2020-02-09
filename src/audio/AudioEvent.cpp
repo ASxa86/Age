@@ -1,6 +1,6 @@
 #include <age/audio/AudioEvent.h>
 
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 
 using namespace age::audio;
 

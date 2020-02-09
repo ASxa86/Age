@@ -8,8 +8,6 @@
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
-#include <age/core/PimplImpl.h>
-#include <age/core/SigSlot.h>
 #include <age/core/Utilities.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
@@ -26,6 +24,8 @@
 #include <age/physics/KinematicComponent.h>
 #include <age/physics/PhysicsRenderSystem.h>
 #include <age/physics/PhysicsSystem.h>
+#include <age/utilities/PimplImpl.h>
+#include <age/utilities/Signal.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -37,6 +37,7 @@ using namespace age::math;
 using namespace age::graphics;
 using namespace age::physics;
 using namespace age::pong;
+using namespace age::utilities;
 
 struct Pong::Impl
 {
@@ -46,7 +47,7 @@ struct Pong::Impl
 	}
 
 	std::shared_ptr<Engine> engine{std::make_unique<Engine>()};
-	sigslot::scoped_connection connection;
+	ScopedConnection connection;
 	sf::SoundBuffer soundBuffer;
 	sf::Sound sound{soundBuffer};
 	sf::Font font;

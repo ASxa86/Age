@@ -1,16 +1,16 @@
 #pragma once
 
 #include <age/core/Event.h>
-#include <age/core/Pimpl.h>
+#include <age/utilities/Pimpl.h>
 #include <functional>
-
-namespace sigslot
-{
-	class scoped_connection;
-}
 
 namespace age
 {
+	namespace utilities
+	{
+		class ScopedConnection;
+	}
+
 	namespace core
 	{
 		class Event;
@@ -38,7 +38,7 @@ namespace age
 			///
 			///	\brief Register an event handler for any events.
 			///
-			[[nodiscard]] sigslot::scoped_connection addEventHandler(std::function<void(Event*)> x);
+			[[nodiscard]] age::utilities::ScopedConnection addEventHandler(std::function<void(Event*)> x);
 
 			///
 			///	\brief Sends the event directly to registered handlers.

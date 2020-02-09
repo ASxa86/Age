@@ -1,6 +1,6 @@
 #include <age/physics/CollisionEvent.h>
 
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/entity/Entity.h>
 
 using namespace age::entity;

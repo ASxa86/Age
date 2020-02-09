@@ -1,20 +1,20 @@
 #pragma once
 
 #include <age/core/export.h>
-#include <age/core/Pimpl.h>
+#include <age/utilities/Pimpl.h>
 #include <age/core/Properties.h>
 
 #include <functional>
 #include <string>
 #include <vector>
 
-namespace sigslot
-{
-	class scoped_connection;
-}
-
 namespace age
 {
+	namespace utilities
+	{
+		class ScopedConnection;
+	}
+
 	namespace core
 	{
 		///
@@ -176,9 +176,9 @@ namespace age
 			[[maybe_unused]] std::unique_ptr<Object> remove();
 
 		protected:
-			[[nodiscard]] sigslot::scoped_connection addOnAddChild(std::function<void(Object*)> x);
-			[[nodiscard]] sigslot::scoped_connection addOnRemoveChild(std::function<void(Object*)> x);
-			void track(sigslot::scoped_connection x);
+			[[nodiscard]] age::utilities::ScopedConnection addOnAddChild(std::function<void(Object*)> x);
+			[[nodiscard]] age::utilities::ScopedConnection addOnRemoveChild(std::function<void(Object*)> x);
+			void track(age::utilities::ScopedConnection x);
 
 		private:
 			virtual void onStartup();

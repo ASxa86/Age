@@ -1,18 +1,19 @@
 #include <age/core/EventQueue.h>
 #include <age/core/Object.h>
-#include <age/core/PimplImpl.h>
-#include <age/core/SigSlot.h>
+#include <age/utilities/PimplImpl.h>
+#include <age/utilities/Signal.h>
 #include <mutex>
 #include <queue>
 #include <unordered_map>
 #include <vector>
 
 using namespace age::core;
+using namespace age::utilities;
 
 class EventQueue::Impl
 {
 public:
-	sigslot::signal<Event*> handlers;
+	Signal<Event*> handlers;
 	std::queue<std::unique_ptr<Event>> queue;
 	std::mutex queueMutex;
 };
@@ -31,7 +32,7 @@ EventQueue& EventQueue::Instance()
 	return singleton;
 }
 
-sigslot::scoped_connection EventQueue::addEventHandler(std::function<void(Event*)> x)
+ScopedConnection EventQueue::addEventHandler(std::function<void(Event*)> x)
 {
 	return this->pimpl->handlers.connect_scoped(x);
 }

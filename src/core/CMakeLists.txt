@@ -2,10 +2,6 @@ project(age-core)
 
 AGE_ADD_LIBRARY()
 
-if(UNIX)
-	target_link_libraries(${PROJECT_NAME} PUBLIC dl stdc++fs)
-endif()
-
 target_sources(${PROJECT_NAME} PRIVATE
 	${AGE_INCLUDE_DIR}/age/core/ChildEvent.h
 	${AGE_INCLUDE_DIR}/age/core/Configuration.h
@@ -18,8 +14,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${AGE_INCLUDE_DIR}/age/core/MagicEnum.h
 	${AGE_INCLUDE_DIR}/age/core/Object.h
 	${AGE_INCLUDE_DIR}/age/core/Parser.h
-	${AGE_INCLUDE_DIR}/age/core/Pimpl.h
-	${AGE_INCLUDE_DIR}/age/core/PimplImpl.h
 	${AGE_INCLUDE_DIR}/age/core/Processor.h
 	${AGE_INCLUDE_DIR}/age/core/Properties.h
 	${AGE_INCLUDE_DIR}/age/core/Reflection.h
@@ -45,6 +39,10 @@ target_sources(${PROJECT_NAME} PRIVATE
 	String.cpp
 	Timer.cpp
 	Utilities.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+	age-utilities
 )
 
 AGE_INCLUDE_BOOST()

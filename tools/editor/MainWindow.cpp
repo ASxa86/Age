@@ -4,7 +4,7 @@
 #include <DockWidgetComponent.h>
 #include <DockWidgetEntity.h>
 #include <age/core/Engine.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 
 using namespace age;
 using namespace age::entity;
