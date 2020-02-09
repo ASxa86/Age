@@ -1,18 +1,19 @@
 #include <age/core/Object.h>
 #include <age/utilities/PimplImpl.h>
-#include <age/core/SigSlot.h>
+#include <age/utilities/Signal.h>
 #include <algorithm>
 #include <iostream>
 
 using namespace age::core;
+using namespace age::utilities;
 
 class Object::Impl
 {
 public:
 	std::vector<std::unique_ptr<Object>> children;
-	std::vector<sigslot::scoped_connection> connection;
-	sigslot::signal<Object*> onAddChild;
-	sigslot::signal<Object*> onRemoveChild;
+	std::vector<ScopedConnection> connection;
+	Signal<Object*> onAddChild;
+	Signal<Object*> onRemoveChild;
 	std::string id;
 	Object* parent{nullptr};
 	Status status{Status::None};
@@ -144,17 +145,17 @@ std::unique_ptr<Object> Object::remove()
 	return nullptr;
 }
 
-sigslot::scoped_connection Object::addOnAddChild(std::function<void(Object*)> x)
+ScopedConnection Object::addOnAddChild(std::function<void(Object*)> x)
 {
 	return this->pimpl->onAddChild.connect_scoped(x);
 }
 
-sigslot::scoped_connection Object::addOnRemoveChild(std::function<void(Object*)> x)
+ScopedConnection Object::addOnRemoveChild(std::function<void(Object*)> x)
 {
 	return this->pimpl->onRemoveChild.connect_scoped(x);
 }
 
-void Object::track(sigslot::scoped_connection x)
+void Object::track(ScopedConnection x)
 {
 	this->pimpl->connection.emplace_back(std::move(x));
 }

@@ -5,24 +5,25 @@
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
 #include <age/core/Factory.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/core/SigSlot.h>
 #include <age/entity/Component.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/EntityEvent.h>
+#include <age/utilities/PimplImpl.h>
+#include <age/utilities/Signal.h>
 #include <QtCore/QSize>
 
 using namespace age;
 using namespace age::core;
 using namespace age::entity;
+using namespace age::utilities;
 
 Q_DECLARE_METATYPE(age::entity::Entity*)
 Q_DECLARE_METATYPE(age::entity::Component*)
 
 struct TreeWidgetEntity::Impl
 {
-	sigslot::scoped_connection connection;
+	ScopedConnection connection;
 };
 
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
