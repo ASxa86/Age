@@ -1,8 +1,8 @@
-#include <age/core/Reflection.h>
+#include <age/utilities/Reflection.h>
 #include <gtest/gtest.h>
 #include <functional>
 
-using namespace age::core;
+using namespace age::utilities;
 
 namespace
 {

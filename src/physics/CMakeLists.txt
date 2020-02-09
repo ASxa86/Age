@@ -174,6 +174,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-math
 	age-terrain
 	age-graphics
+	age-utilities
 )
 
 if(MSVC)

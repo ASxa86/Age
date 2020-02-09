@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include <age/core/String.h>
+#include <age/utilities/String.h>
 
-using namespace age::core;
+using namespace age::utilities;
 
 namespace
 {

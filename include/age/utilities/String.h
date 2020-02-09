@@ -1,8 +1,8 @@
 #pragma once
 
-#include <age/core/MagicEnum.h>
 #include <age/core/TypeTraits.h>
-#include <age/core/export.h>
+#include <age/utilities/export.h>
+#include <age/utilities/MagicEnum.h>
 #include <array>
 #include <charconv>
 #include <chrono>
@@ -13,9 +13,9 @@
 
 namespace age
 {
-	namespace core
+	namespace utilities
 	{
-		AGE_CORE_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
+		AGE_UTILITIES_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
 
 		///
 		///	\brief Special ToString overload to support floating point precision and format.
@@ -28,7 +28,7 @@ namespace age
 		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
 		// AGE_CORE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10,
 		// 										  std::chars_format fmt = std::chars_format::fixed);
-		AGE_CORE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10);
+		AGE_UTILITIES_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10);
 
 		///
 		///	\brief Special ToString overload to support floating point precision and format.
@@ -41,7 +41,7 @@ namespace age
 		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
 		// AGE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10,
 		// 										  std::chars_format fmt = std::chars_format::fixed);
-		AGE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
+		AGE_UTILITIES_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
 
 		template <typename T>
 		std::string ToString([[maybe_unused]] const T& x)

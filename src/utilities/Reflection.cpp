@@ -1,7 +1,7 @@
-#include <age/core/Reflection.h>
+#include <age/utilities/Reflection.h>
 #include <algorithm>
 
-using namespace age::core;
+using namespace age::utilities;
 
 std::map<std::type_index, ReflType> Reflection::ReflMap;
 
@@ -63,12 +63,12 @@ bool ReflType::operator==(const ReflType& rhs) const
 	return this->index == rhs.index || equalsBaseType;
 }
 
-void age::core::Reflection::Clear()
+void age::utilities::Reflection::Clear()
 {
 	ReflMap.clear();
 }
 
-const ReflType* const age::core::Reflection::Get(std::string_view x)
+const ReflType* const age::utilities::Reflection::Get(std::string_view x)
 {
 	for(const auto& [index, type] : ReflMap)
 	{

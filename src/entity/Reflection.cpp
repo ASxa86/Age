@@ -1,4 +1,4 @@
-#include <age/core/Reflection.h>
+#include <age/utilities/Reflection.h>
 #include <age/entity/CloneSystem.h>
 #include <age/entity/HealthComponent.h>
 #include <age/entity/SelectionComponent.h>
@@ -9,8 +9,8 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-using namespace age::core;
 using namespace age::entity;
+using namespace age::utilities;
 
 namespace
 {
@@ -38,21 +38,21 @@ namespace
 		type.addProperty("Rotation", &TransformComponent::Rotation);
 	});
 
-	class EnTT;
-	Register<EnTT> reg1([] {
-		std::hash<std::string_view> hash{};
-		// auto factory = entt::reflect<Component>();
+	//class EnTT;
+	//Register<EnTT> reg1([] {
+	//	//std::hash<std::string_view> hash{};
+	//	// auto factory = entt::reflect<Component>();
 
-		auto factory = entt::reflect<HealthComponent>(hash("HealthComponent"));
-		factory.base<Component>();
-		factory.data<&HealthComponent::Health>(hash("Health"));
-		//factory.data<&HealthComponent::HealthMax>(hash("HealthMax"));
+	//	//auto factory = entt::reflect<HealthComponent>(hash("HealthComponent"));
+	//	//factory.base<Component>();
+	//	//factory.data<&HealthComponent::Health>(hash("Health"));
+	//	//factory.data<&HealthComponent::HealthMax>(hash("HealthMax"));
 
-		//auto type = entt::resolve<HealthComponent>();
-		//auto p = type.prop(hash("Health"));
+	//	//auto type = entt::resolve<HealthComponent>();
+	//	//auto p = type.prop(hash("Health"));
 
-		//HealthComponent c;
-		//entt::meta_handle h{c};
-		//h.type().prop(hash("Health")).value().cast<int>() = 3;
-	});
+	//	//HealthComponent c;
+	//	//entt::meta_handle h{c};
+	//	//h.type().prop(hash("Health")).value().cast<int>() = 3;
+	//});
 }

@@ -1,7 +1,8 @@
-#include <age/core/MagicEnum.h>
-#include <age/core/Properties.h>
-#include <age/core/String.h>
 #include <age/core/qt/TableModelProperties.h>
+
+#include <age/core/Properties.h>
+#include <age/utilities/MagicEnum.h>
+#include <age/utilities/String.h>
 
 using namespace age::core;
 using namespace age::core::qt;
@@ -32,7 +33,7 @@ QVariant TableModelProperties::headerData(int section, Qt::Orientation orientati
 		switch(orientation)
 		{
 			case Qt::Orientation::Horizontal:
-				data = QString::fromStdString(age::core::ToString(static_cast<Column>(section)));
+				data = QString::fromStdString(age::utilities::ToString(static_cast<Column>(section)));
 				break;
 
 			case Qt::Orientation::Vertical:

@@ -1,19 +1,24 @@
 #pragma once
 
-#include <age/core/String.h>
-#include <age/core/export.h>
+#include <age/utilities/export.h>
+#include <age/utilities/String.h>
 #include <map>
 #include <string_view>
 #include <typeindex>
 
 namespace age
 {
-	namespace core
+	namespace utilities
 	{
 		struct Test
 		{
-			void setV(int) {}
-			int getV() { return 0; }
+			void setV(int)
+			{
+			}
+			int getV()
+			{
+				return 0;
+			}
 		};
 		class ReflType;
 
@@ -32,7 +37,7 @@ namespace age
 			};
 		}
 
-		class AGE_CORE_EXPORT ReflProp
+		class AGE_UTILITIES_EXPORT ReflProp
 		{
 		public:
 			ReflProp(const std::string& n);
@@ -92,11 +97,11 @@ namespace age
 		class TemplateMethod;
 
 		template <typename Class, typename SetR, typename GetR, typename Arg>
-		class TemplateMethod<SetR(Class::*)(Arg), GetR(Class::*)() const> : public ReflProp
+		class TemplateMethod<SetR (Class::*)(Arg), GetR (Class::*)() const> : public ReflProp
 		{
 		public:
-			using funcptr_set = SetR(Class::*)(Arg);
-			using funcptr_get = GetR(Class::*)() const;
+			using funcptr_set = SetR (Class::*)(Arg);
+			using funcptr_get = GetR (Class::*)() const;
 
 			TemplateMethod(const std::string& n, funcptr_set s, funcptr_get g) : ReflProp{n}, setter{s}, getter{g}
 			{
@@ -134,7 +139,7 @@ namespace age
 			funcptr_get getter;
 		};
 
-		class AGE_CORE_EXPORT ReflType
+		class AGE_UTILITIES_EXPORT ReflType
 		{
 		public:
 			ReflType();
@@ -169,7 +174,7 @@ namespace age
 			std::type_index index;
 		};
 
-		class AGE_CORE_EXPORT Reflection
+		class AGE_UTILITIES_EXPORT Reflection
 		{
 		public:
 			static void Clear();

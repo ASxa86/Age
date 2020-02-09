@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/core/export.h>
-#include <age/core/String.h>
+#include <age/utilities/String.h>
 #include <memory>
 #include <typeinfo>
 #include <vector>
@@ -49,12 +49,12 @@ namespace age
 
 			void setValue(const std::string& x) override
 			{
-				this->reference = StringTo<T>(x);
+				this->reference = age::utilities::StringTo<T>(x);
 			}
 
 			std::string getValue() const
 			{
-				return ToString(this->reference);
+				return age::utilities::ToString(this->reference);
 			}
 
 		private:

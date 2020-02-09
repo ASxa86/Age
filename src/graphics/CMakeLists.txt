@@ -54,6 +54,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 	age-entity
 	age-math
 	age-terrain
+	age-utilities
 	sfml-system
 	sfml-graphics
 	sfml-window
