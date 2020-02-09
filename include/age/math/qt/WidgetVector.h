@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/Pimpl.h>
+#include <age/utilities/Pimpl.h>
 #include <age/core/qt/WidgetProperty.h>
 #include <age/math/qt/export.h>
 #include <QtWidgets/QWidget>

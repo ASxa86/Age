@@ -1,5 +1,5 @@
 #include <age/core/Configuration.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>

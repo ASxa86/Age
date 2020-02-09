@@ -1,6 +1,6 @@
 #include <age/core/qt/WidgetPropertyBool.h>
 
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/core/String.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QComboBox>

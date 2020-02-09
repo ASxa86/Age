@@ -4,7 +4,7 @@
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/core/Timer.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>

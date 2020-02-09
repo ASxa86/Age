@@ -1,6 +1,6 @@
 #include <age/graphics/TextSystem.h>
 
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
 #include <SFML/Graphics.hpp>

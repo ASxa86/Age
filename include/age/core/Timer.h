@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/core/export.h>
-#include <age/core/Pimpl.h>
+#include <age/utilities/Pimpl.h>
 #include <chrono>
 
 namespace age

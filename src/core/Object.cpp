@@ -1,5 +1,5 @@
 #include <age/core/Object.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/core/SigSlot.h>
 #include <algorithm>
 #include <iostream>

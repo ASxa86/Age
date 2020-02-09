@@ -1,7 +1,7 @@
 #pragma once
 
 #include <age/core/Event.h>
-#include <age/core/Pimpl.h>
+#include <age/utilities/Pimpl.h>
 #include <functional>
 
 namespace sigslot

@@ -1,7 +1,7 @@
 #include <age/core/Parser.h>
 
 #include <age/core/Factory.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 
 using namespace age::core;
 

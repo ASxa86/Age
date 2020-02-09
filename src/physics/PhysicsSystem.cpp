@@ -1,6 +1,6 @@
 #include <Box2D/Box2D.h>
 #include <age/core/EventQueue.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/core/SigSlot.h>
 #include <age/core/Timer.h>
 #include <age/entity/Entity.h>

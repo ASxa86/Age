@@ -3,7 +3,7 @@
 #include <age/core/SigSlot.h>
 #include <age/audio/AudioEvent.h>
 #include <age/core/EventQueue.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <SFML/Audio/Sound.hpp>
 
 using namespace age::audio;

@@ -1,14 +1,15 @@
 #include <age/core/qt/WidgetPropertyFactory.h>
 
 #include <age/core/Configuration.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
+#include <age/utilities/SharedLibrary.h>
 #include <QtWidgets/QWidget>
 #include <atomic>
-#include <boost/dll/import.hpp>
 #include <iostream>
 #include <map>
 
 using namespace age::core::qt;
+using namespace age::utilities;
 
 CreatorBase::~CreatorBase()
 {
@@ -22,11 +23,11 @@ WidgetProperty* CreatorBase::create(QWidget*) const
 struct WidgetPropertyFactory::Impl
 {
 	std::map<std::type_index, std::unique_ptr<CreatorBase>> factoryMap;
-	std::vector<boost::dll::shared_library> loadedLibraries;
+	std::vector<SharedLibrary> loadedLibraries;
 	std::atomic<bool> initialized{false};
 };
 
-WidgetPropertyFactory::WidgetPropertyFactory() : pimpl{}
+WidgetPropertyFactory::WidgetPropertyFactory() /* : pimpl{}*/
 {
 }
 
@@ -54,29 +55,25 @@ WidgetPropertyFactory& WidgetPropertyFactory::Instance()
 				{
 					const auto filepath = it.path();
 					const auto filename = filepath.filename().string();
-					if(filename.find("Qt") != std::string::npos)
+					if(filename.find("qt") != std::string::npos)
 					{
-						boost::system::error_code ec;
-						boost::dll::shared_library library(filepath.string(), ec);
+						SharedLibrary library(filepath);
 
-						if(!ec)
+						if(library.loaded() == true)
 						{
-							if(library.has("FactoryRegisterQt") == true)
+							const auto factoryRegister = library.symbol("FactoryRegisterQt");
+
+							if(factoryRegister != nullptr)
 							{
-								const auto factoryRegister = library.get<void()>("FactoryRegisterQt");
-
-								if(factoryRegister != nullptr)
-								{
-									factoryRegister();
-								}
-
-								// Keep track of loaded libraries in order to keep them loaded in memory.
-								singleton.pimpl->loadedLibraries.push_back(library);
+								factoryRegister();
 							}
+
+							// Keep track of loaded libraries in order to keep them loaded in memory.
+							singleton.pimpl->loadedLibraries.push_back(library);
 						}
 						else
 						{
-							std::cerr << "Failed to load: " << filepath << " error code: " << ec.message() << "\n";
+							std::cerr << "Failed to load: " << filepath << "\n";
 						}
 					}
 				}
@@ -89,18 +86,18 @@ WidgetPropertyFactory& WidgetPropertyFactory::Instance()
 
 WidgetProperty* WidgetPropertyFactory::create(const std::type_index& x, QWidget* parent) const
 {
-	const auto foundIt = this->pimpl->factoryMap.find(x);
+	// const auto foundIt = this->pimpl->factoryMap.find(x);
 
-	if(foundIt != std::end(this->pimpl->factoryMap))
-	{
-		const auto ptr = foundIt->second.get();
-		return ptr->create(parent);
-	}
+	// if(foundIt != std::end(this->pimpl->factoryMap))
+	//{
+	//	const auto ptr = foundIt->second.get();
+	//	return ptr->create(parent);
+	//}
 
 	return nullptr;
 }
 
 void WidgetPropertyFactory::registerType(const std::type_index& x, std::unique_ptr<CreatorBase> creator)
 {
-	this->pimpl->factoryMap[x] = std::move(creator);
+	// this->pimpl->factoryMap[x] = std::move(creator);
 }

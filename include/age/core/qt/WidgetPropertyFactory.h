@@ -1,8 +1,8 @@
 #pragma once
 
-#include <age/core/Pimpl.h>
-#include <age/core/qt/export.h>
 #include <age/core/qt/WidgetProperty.h>
+#include <age/core/qt/export.h>
+#include <age/utilities/Pimpl.h>
 #include <typeindex>
 
 class QWidget;
@@ -79,7 +79,6 @@ namespace age
 				struct Impl;
 				Pimpl<Impl> pimpl;
 			};
-
 		}
 	}
 }

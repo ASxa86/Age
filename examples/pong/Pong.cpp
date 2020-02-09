@@ -8,7 +8,7 @@
 #include <age/core/Engine.h>
 #include <age/core/EngineState.h>
 #include <age/core/EventQueue.h>
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/core/SigSlot.h>
 #include <age/core/Utilities.h>
 #include <age/entity/Entity.h>

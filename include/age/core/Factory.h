@@ -8,16 +8,13 @@
 #include <typeindex>
 #include <vector>
 
-namespace boost
-{
-	namespace dll
-	{
-		class shared_library;
-	}
-}
-
 namespace age
 {
+	namespace utilities
+	{
+		class SharedLibrary;
+	}
+
 	namespace core
 	{
 		class Object;
@@ -117,7 +114,7 @@ namespace age
 			Factory();
 
 			std::vector<Factory::Type> types;
-			std::vector<boost::dll::shared_library> loadedLibraries;
+			std::vector<age::utilities::SharedLibrary> loadedLibraries;
 			bool initialized{false};
 		};
 	}

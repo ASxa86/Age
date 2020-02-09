@@ -1,6 +1,6 @@
 #include <age/math/qt/WidgetVector.h>
 
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <age/core/String.h>
 #include <age/math/Vector.h>
 #include <QtWidgets/QBoxLayout>

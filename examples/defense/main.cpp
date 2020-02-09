@@ -10,7 +10,6 @@ using namespace age::entity;
 
 int main()
 {
-	(void)Factory::Instance();
 	const auto engine = std::make_unique<Engine>();
 
 	if(ReadFile(Configuration::Instance().getPathData() / "inputs/defense.xml", engine.get()) == false)

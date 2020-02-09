@@ -1,6 +1,6 @@
 #include <age/core/Configuration.h>
 
-#include <age/core/PimplImpl.h>
+#include <age/utilities/PimplImpl.h>
 #include <mutex>
 
 #ifdef WIN32
