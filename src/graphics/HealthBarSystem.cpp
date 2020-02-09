@@ -1,11 +1,11 @@
 #include <age/graphics/HealthBarSystem.h>
 
 #include <age/core/Configuration.h>
-#include <age/core/PimplImpl.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/HealthComponent.h>
 #include <age/entity/TransformComponent.h>
+#include <age/utilities/PimplImpl.h>
 #include <SFML/Graphics.hpp>
 
 using namespace age::core;
