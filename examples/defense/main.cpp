@@ -1,5 +1,6 @@
 #include <age/core/Configuration.h>
 #include <age/core/Engine.h>
+#include <age/core/Factory.h>
 #include <age/core/EngineState.h>
 #include <age/core/Parser.h>
 #include <age/entity/EntityDatabase.h>
@@ -9,6 +10,7 @@ using namespace age::entity;
 
 int main()
 {
+	(void)Factory::Instance();
 	const auto engine = std::make_unique<Engine>();
 
 	if(ReadFile(Configuration::Instance().getPathData() / "inputs/defense.xml", engine.get()) == false)

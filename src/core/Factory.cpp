@@ -104,7 +104,7 @@ Factory& Factory::Instance()
 		for(const auto& filepath : ageLibraries)
 		{
 			const auto filename = filepath.filename().string();
-			const std::string agePlugin = "Age";
+			const std::string agePlugin = "age-";
 			if(filename.compare(0, agePlugin.size(), agePlugin) == 0)
 			{
 				boost::system::error_code ec;
