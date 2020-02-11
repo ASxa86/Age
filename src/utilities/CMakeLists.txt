@@ -12,6 +12,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${AGE_INCLUDE_DIR}/age/utilities/Reflection.h
 	${AGE_INCLUDE_DIR}/age/utilities/SharedLibrary.h
 	${AGE_INCLUDE_DIR}/age/utilities/Signal.h
+	${AGE_INCLUDE_DIR}/age/utilities/StaticInvoke.h
 	${AGE_INCLUDE_DIR}/age/utilities/String.h
 )
 
