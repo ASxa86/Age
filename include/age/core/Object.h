@@ -2,8 +2,6 @@
 
 #include <age/core/export.h>
 #include <age/utilities/Pimpl.h>
-#include <age/core/Properties.h>
-
 #include <functional>
 #include <string>
 #include <vector>
@@ -26,7 +24,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT Object : public Properties
+		class AGE_CORE_EXPORT Object
 		{
 		public:
 			enum class FindOption : int

@@ -4,11 +4,6 @@ using namespace age::graphics;
 
 SpriteComponent::SpriteComponent() : frame{0}, vFrames{1}, hFrames{1}
 {
-	this->addProperty(this->file, "file");
-	this->addProperty(this->hFrames, "HFrames");
-	this->addProperty(this->vFrames, "VFrames");
-	this->addProperty(this->frame, "Frame");
-	this->addProperty(this->Rotation, "Rotation");
 }
 
 SpriteComponent::~SpriteComponent()

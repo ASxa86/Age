@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <age>
-	<object type="age::entity::EntityDatabase">
-		<object type="age::entity::Entity">
-			<object type="age::entity::TransformComponent">
+	<object type="EntityDatabase">
+		<object type="Entity">
+			<object type="TransformComponent">
 				<property name="Position" value="{32, 224}"/>
 			</object>
 
-			<object type="age::graphics::BoxSelectionComponent">
+			<object type="BoxSelectionComponent">
 				<property name="Selected" value="true"/>
 				<property name="Size" value="{48, 50}"/>
 				<property name="OutlineThickness" value="2.0"/>
@@ -17,17 +17,17 @@
 		</object>
 
 		<!-- Tower -->
-		<object type="age::entity::Entity">
-			<object type="age::entity::TransformComponent">
+		<object type="Entity">
+			<object type="TransformComponent">
 				<property name="Position" value="{160, 224}"/>
 			</object>
 
-			<object type="age::physics::CircleCollisionComponent">
+			<object type="CircleCollisionComponent">
 				<property name="Radius" value="100.0"/>
 				<property name="IsSensor" value="true"/>
 			</object>
 
-			<object type="age::graphics::SpriteComponent">
+			<object type="SpriteComponent">
 				<property name="file" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
@@ -36,12 +36,12 @@
 			</object>
 		</object>
 
-		<object type="age::entity::Entity">
-			<object type="age::entity::TransformComponent">
+		<object type="Entity">
+			<object type="TransformComponent">
 				<property name="Position" value="{200, 270}"/>
 			</object>
 
-			<object type="age::graphics::SpriteComponent">
+			<object type="SpriteComponent">
 				<property name="file" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
@@ -51,30 +51,30 @@
 		</object>
 	</object>
 
-	<object type="age::navigation::WaypointSystem"/>
-	<object type="age::physics::PhysicsSystem"/>
+	<object type="WaypointSystem"/>
+	<object type="PhysicsSystem"/>
 
-	<object type="age::entity::CloneSystem">
+	<object type="CloneSystem">
 		<property name="Rate" value="1000000"/>
 		<property name="Limit" value="20"/>
 
-		<object type="age::entity::Entity">
-			<object type="age::entity::TransformComponent">
+		<object type="Entity">
+			<object type="TransformComponent">
 				<property name="Position" value="{0, 325}"/>
 			</object>
 
-			<object type="age::entity::HealthComponent">
+			<object type="HealthComponent">
 				<property name="Health" value="50"/>
 				<property name="HealthMax" value="100"/>
 			</object>
 
-			<object type="age::physics::KinematicComponent">
+			<object type="KinematicComponent">
 				<property name="BodyType" value="Kinematic"/>
 				<property name="LinearVelocity" value="{50.0, 0.0}"/>
 				<property name="CalculateHeading" value="true"/>
 			</object>
 
-			<object type="age::graphics::SpriteComponent">
+			<object type="SpriteComponent">
 				<property name="file" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
@@ -82,40 +82,40 @@
 				<property name="Rotation" value="-90.0"/>
 			</object>
 
-			<object type="age::navigation::WaypointComponent">
-				<object type="age::navigation::Waypoint">
+			<object type="WaypointComponent">
+				<object type="Waypoint">
 					<property name="Position" value="{325, 325}"/>
 				</object>
-				<object type="age::navigation::Waypoint">
+				<object type="Waypoint">
 					<property name="Position" value="{325, 125}"/>
 				</object>
-				<object type="age::navigation::Waypoint">
+				<object type="Waypoint">
 					<property name="Position" value="{505, 125}"/>
 				</object>
-				<object type="age::navigation::Waypoint">
+				<object type="Waypoint">
 					<property name="Position" value="{505, 575}"/>
 				</object>
-				<object type="age::navigation::Waypoint">
+				<object type="Waypoint">
 					<property name="Position" value="{775, 575}"/>
 				</object>
-				<object type="age::navigation::Waypoint">
+				<object type="Waypoint">
 					<property name="Position" value="{775, 325}"/>
 				</object>
-				<object type="age::navigation::Waypoint">
+				<object type="Waypoint">
 					<property name="Position" value="{850, 325}"/>
 				</object>
 			</object>
 		</object>
 	</object>
 
-	<object type="age::graphics::Window">
-		<object type="age::graphics::TileMapSystem"/>
-		<object type="age::graphics::DrawableSystem"/>
-		<object type="age::graphics::HealthBarSystem">
+	<object type="Window">
+		<object type="TileMapSystem"/>
+		<object type="DrawableSystem"/>
+		<object type="HealthBarSystem">
 			<property name="Offset" value="{-15, -30}"/>
 			<property name="Size" value="{30, 5}"/>
 			<property name="Color" value="{0, 255, 0, 255}"/>
 		</object>
-		<object type="age::physics::PhysicsRenderSystem"/>
+		<object type="PhysicsRenderSystem"/>
 	</object>
 </age>

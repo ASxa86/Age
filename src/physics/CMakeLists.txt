@@ -166,7 +166,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	KinematicComponent.cpp
 	PhysicsSystem.cpp
 	PhysicsRenderSystem.cpp
-	Plugin.cpp
+	Reflection.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

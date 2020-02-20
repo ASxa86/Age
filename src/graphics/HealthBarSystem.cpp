@@ -33,10 +33,6 @@ struct HealthBarSystem::Impl
 
 HealthBarSystem::HealthBarSystem()
 {
-	this->addProperty(this->Color, "Color");
-	this->addProperty(this->Size, "Size");
-	this->addProperty(this->Offset, "Offset");
-
 	const auto factor = static_cast<float>(Configuration::Instance().getPixelsPerMeter());
 	this->pimpl->state.transform.scale(factor, factor);
 }

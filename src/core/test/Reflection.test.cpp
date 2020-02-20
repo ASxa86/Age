@@ -1,12 +1,12 @@
-#include <age/utilities/Reflection.h>
+#include <age/core/Reflection.h>
 #include <gtest/gtest.h>
 #include <functional>
 
-using namespace age::utilities;
+using namespace age::core;
 
 namespace
 {
-	class MyBase
+	class MyBase : public Object
 	{
 	public:
 		void setD(double x)
@@ -19,9 +19,13 @@ namespace
 			return this->d;
 		}
 
+		void add()
+		{
+			this->d += this->f;
+		}
+
 		double d{};
 		float f{};
-		
 	};
 
 	class MyClass : public MyBase
@@ -52,7 +56,7 @@ namespace
 TEST(AnyRef, Constructor)
 {
 	MyClass myClass;
-	Reflection::Add<MyClass>("");
+	Reflection::Instance().add<MyClass>("MyClass");
 	impl::AnyRef obj(myClass);
 	obj.convert<MyClass>()->x = 1;
 }
@@ -90,22 +94,10 @@ TEST(TemplateProperty, GetValue)
 	EXPECT_EQ("-1", property.getValue(myClass));
 }
 
-TEST(TemplateMethod, SetValue)
-{
-	MyClass myClass;
-	TemplateMethod<void(MyClass::*)(int), int(MyClass::*)() const> property("x", &MyClass::setX, &MyClass::getX);
-
-	property.setValue(myClass, "1");
-	EXPECT_EQ(1, myClass.x);
-
-	property.setValue(myClass, "-1");
-	EXPECT_EQ(-1, myClass.x);
-}
-
 TEST(TemplateMethod, GetValue)
 {
 	MyClass myClass;
-	TemplateMethod<void(MyClass::*)(int), int(MyClass::*)() const> property("x", &MyClass::setX, &MyClass::getX);
+	TemplateMethod<void (MyClass::*)(int), int (MyClass::*)() const> property("x", &MyClass::setX, &MyClass::getX);
 
 	EXPECT_EQ("0", property.getValue(myClass));
 
@@ -118,37 +110,65 @@ TEST(TemplateMethod, GetValue)
 	EXPECT_EQ("-1", property.getValue(myClass));
 }
 
-TEST(ReflType, GetProperty)
+TEST(ReflType, Copy)
 {
+	std::map<std::type_index, ReflType> ReflMap;
 	MyClass myClass;
 	ReflType type("MyClass", typeid(MyClass));
+	type.Creator = std::make_shared<ReflCreator<MyClass>>();
+
+	const auto copy = type;
+	EXPECT_EQ(copy.Name, type.Name);
+	EXPECT_EQ(copy.Creator, type.Creator);
+	ReflMap.insert({typeid(MyClass), copy});
+
+	auto& copied = ReflMap.at(typeid(MyClass));
 }
 
 TEST(Reflection, Register)
 {
-	auto& type = Reflection::Add<MyClass>("MyClass");
+	Reflection::Instance().clear();
+
+	auto& type = Reflection::Instance().add<MyClass>("MyClass");
+	type.addBase<MyBase>();
 	type.addProperty("x", &MyClass::x);
 	type.addProperty("e", &MyClass::e);
 
+	auto& typeBase = Reflection::Instance().add<MyBase>("MyBase");
+	typeBase.addBase<Object>();
+
 	{
 		MyClass myClass;
+		MyBase& myBase = myClass;
 
-		auto type = Reflection::Get<MyClass>();
+		auto type = Reflection::Instance().get<MyClass>();
+		ASSERT_TRUE(type != nullptr);
+
 		auto p = type->getProperty("x");
+		ASSERT_TRUE(p != nullptr);
+
 		p->setValue(myClass, "5");
 		EXPECT_EQ(5, myClass.x);
 
 		p = type->getProperty("e");
+		ASSERT_TRUE(p != nullptr);
+
 		p->setValue(myClass, "Two");
 		EXPECT_EQ(MyClass::Enum::Two, myClass.e);
+
+		type = Reflection::Instance().get(myBase);
+		ASSERT_TRUE(type != nullptr);
+		p = type->getProperty("e");
+		p->setValue(myBase, "Three");
+		EXPECT_EQ(MyClass::Enum::Three, myClass.e);
 	}
 }
 
 TEST(Reflection, RegisterBaseClass)
 {
-	Reflection::Clear();
+	Reflection::Instance().clear();
 
-	auto& type = Reflection::Add<MyClass>("MyClass");
+	auto& type = Reflection::Instance().add<MyClass>("MyClass");
 	type.addBase<MyBase>();
 	type.addProperty("x", &MyClass::x);
 	type.addProperty("e", &MyClass::e);
@@ -156,7 +176,7 @@ TEST(Reflection, RegisterBaseClass)
 	auto properties = type.getProperties();
 	EXPECT_EQ(properties.size(), 2);
 
-	auto& typeBase = Reflection::Add<MyBase>("MyBase");
+	auto& typeBase = Reflection::Instance().add<MyBase>("MyBase");
 	typeBase.addProperty("d", &MyBase::d);
 	typeBase.addProperty("f", &MyBase::f);
 	typeBase.addMethod("D", &MyBase::setD, &MyBase::getD);
@@ -169,5 +189,32 @@ TEST(Reflection, RegisterBaseClass)
 
 	auto p = type.getProperty("D");
 	p->setValue(myClass, "2");
-	EXPECT_EQ(myClass.d, 2);
+	EXPECT_DOUBLE_EQ(myClass.d, 2);
+
+	p = typeBase.getProperty("f");
+	p->setValue(myClass, "1.0f");
+	EXPECT_FLOAT_EQ(myClass.f, 1.0f);
+}
+
+TEST(Reflection, Create)
+{
+	Reflection::Instance().clear();
+
+	auto& type = Reflection::Instance().add<MyClass>("MyClass");
+	type.addBase<MyBase>();
+	type.addProperty("x", &MyClass::x);
+	type.addProperty("e", &MyClass::e);
+
+	auto& typeBase = Reflection::Instance().add<MyBase>("MyBase");
+	typeBase.addProperty("d", &MyBase::d);
+	typeBase.addProperty("f", &MyBase::f);
+	typeBase.addMethod("D", &MyBase::setD, &MyBase::getD);
+
+	auto reflObj = Reflection::Instance().create("MyClass");
+	ASSERT_TRUE(reflObj != nullptr);
+	EXPECT_EQ(typeid(*reflObj), typeid(MyClass));
+
+	reflObj = Reflection::Instance().create("MyBase");
+	ASSERT_TRUE(reflObj != nullptr);
+	EXPECT_EQ(typeid(*reflObj), typeid(MyBase));
 }

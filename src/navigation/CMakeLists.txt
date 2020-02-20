@@ -8,7 +8,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-	Plugin.cpp
+	Reflection.cpp
 	WaypointComponent.cpp
 	WaypointSystem.cpp
 )
@@ -18,4 +18,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-entity
 	age-math
 	age-physics
+	age-utilities
 )

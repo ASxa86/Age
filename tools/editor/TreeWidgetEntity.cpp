@@ -4,7 +4,7 @@
 #include <GUIComponent.h>
 #include <age/core/Engine.h>
 #include <age/core/EventQueue.h>
-#include <age/core/Factory.h>
+#include <age/core/Reflection.h>
 #include <age/entity/Component.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
@@ -28,7 +28,7 @@ struct TreeWidgetEntity::Impl
 
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
-	AgeFactoryRegister(age::GUIComponent);
+	Reflection::Instance().add<age::GUIComponent>("GUIComponent");
 	qRegisterMetaType<age::entity::Entity*>();
 	qRegisterMetaType<age::entity::Component*>();
 
@@ -136,8 +136,8 @@ void TreeWidgetEntity::addComponent(age::entity::Entity* e, age::entity::Compone
 void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, age::entity::Component* c)
 {
 	const auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
-	auto type = Factory::Instance().getType(typeid(*c));
-	componentItem->setText(0, QString::fromStdString(type.NameClean));
+	auto type = Reflection::Instance().get(typeid(*c));
+	componentItem->setText(0, QString::fromStdString(type->Name));
 	componentItem->setData(0, Qt::UserRole, QVariant::fromValue(c));
 	item->setExpanded(true);
 }
@@ -172,9 +172,9 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(age::entity::Entity* e, age::entity:
 		{
 			auto child = item->child(i);
 
-			auto type = Factory::Instance().getType(typeid(*c));
+			auto type = Reflection::Instance().get(typeid(*c));
 
-			if(child->text(0) == QString::fromStdString(type.NameClean))
+			if(child->text(0) == QString::fromStdString(type->Name))
 			{
 				return child;
 			}

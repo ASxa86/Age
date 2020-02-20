@@ -6,7 +6,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	Engine.test.cpp
 	Object.test.cpp
 	Observer.test.cpp
-	Properties.test.cpp
+	Reflection.test.cpp
 	Timer.test.cpp
 )
 

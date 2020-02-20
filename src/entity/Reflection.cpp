@@ -1,58 +1,51 @@
-#include <age/utilities/Reflection.h>
+#include <age/core/Reflection.h>
+#include <age/entity/AnimationComponent.h>
 #include <age/entity/CloneSystem.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include <age/entity/HealthComponent.h>
 #include <age/entity/SelectionComponent.h>
 #include <age/entity/TransformComponent.h>
+#include <age/utilities/StaticInvoke.h>
 
-
-#define ENTT_ID_TYPE std::size_t
-#include <entt/meta/factory.hpp>
-#include <entt/meta/meta.hpp>
-
+using namespace age::core;
 using namespace age::entity;
-using namespace age::utilities;
 
-namespace
+STATIC_INVOKE
 {
-	class Entity;
-	Register<Entity> reg([] {
-		auto& type = Reflection::Add<CloneSystem>("CloneSystem");
-		type.addProperty("Rate", &CloneSystem::Rate);
-		type.addProperty("Limit", &CloneSystem::Limit);
-		type.addProperty("Count", &CloneSystem::Count);
+	Reflection::Instance().add<Entity>("Entity").addBase<Object>();
 
-		type = Reflection::Add<Component>("Component");
+	Reflection::Instance().add<EntityDatabase>("EntityDatabase").addBase<Object>();
 
-		type = Reflection::Add<HealthComponent>("HealthComponent");
-		type.addBase<Component>();
-		type.addProperty("Health", &HealthComponent::Health);
-		type.addProperty("HealthMax", &HealthComponent::HealthMax);
+	Reflection::Instance().add<System>("System").addBase<Object>();
 
-		type = Reflection::Add<SelectionComponent>("SelectionComponent");
-		type.addBase<Component>();
-		type.addProperty("Selected", &SelectionComponent::Selected);
+	Reflection::Instance()
+		.add<CloneSystem>("CloneSystem")
+		.addBase<System>()
+		.addProperty("Rate", &CloneSystem::Rate)
+		.addProperty("Limit", &CloneSystem::Limit)
+		.addProperty("Count", &CloneSystem::Count);
 
-		type = Reflection::Add<TransformComponent>("TransformComponent");
-		type.addBase<Component>();
-		type.addProperty("Position", &TransformComponent::Position);
-		type.addProperty("Rotation", &TransformComponent::Rotation);
-	});
+	Reflection::Instance().add<Component>("Component").addBase<Object>();
 
-	//class EnTT;
-	//Register<EnTT> reg1([] {
-	//	//std::hash<std::string_view> hash{};
-	//	// auto factory = entt::reflect<Component>();
+	Reflection::Instance()
+		.add<AnimationComponent>("AnimationComponent")
+		.addBase<Component>()
+		.addMethod("Length", &AnimationComponent::setLength, &AnimationComponent::getLength)
+		.addMethod("Elapsed", &AnimationComponent::setElapsed, &AnimationComponent::getElapsed)
+		.addMethod("Speed", &AnimationComponent::setSpeed, &AnimationComponent::getSpeed);
 
-	//	//auto factory = entt::reflect<HealthComponent>(hash("HealthComponent"));
-	//	//factory.base<Component>();
-	//	//factory.data<&HealthComponent::Health>(hash("Health"));
-	//	//factory.data<&HealthComponent::HealthMax>(hash("HealthMax"));
+	Reflection::Instance()
+		.add<HealthComponent>("HealthComponent")
+		.addBase<Component>()
+		.addProperty("Health", &HealthComponent::Health)
+		.addProperty("HealthMax", &HealthComponent::HealthMax);
 
-	//	//auto type = entt::resolve<HealthComponent>();
-	//	//auto p = type.prop(hash("Health"));
+	Reflection::Instance().add<SelectionComponent>("SelectionComponent").addBase<Component>().addProperty("Selected", &SelectionComponent::Selected);
 
-	//	//HealthComponent c;
-	//	//entt::meta_handle h{c};
-	//	//h.type().prop(hash("Health")).value().cast<int>() = 3;
-	//});
+	Reflection::Instance()
+		.add<TransformComponent>("TransformComponent")
+		.addBase<Component>()
+		.addProperty("Position", &TransformComponent::Position)
+		.addProperty("Rotation", &TransformComponent::Rotation);
 }

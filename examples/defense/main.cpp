@@ -1,6 +1,5 @@
 #include <age/core/Configuration.h>
 #include <age/core/Engine.h>
-#include <age/core/Factory.h>
 #include <age/core/EngineState.h>
 #include <age/core/Parser.h>
 #include <age/entity/EntityDatabase.h>

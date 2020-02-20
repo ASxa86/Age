@@ -1,15 +1,15 @@
-#include <age/core/Properties.h>
+#include <age/core/Reflection.h>
 #include <age/core/qt/DelegateWidgetProperty.h>
 #include <age/core/qt/WidgetPropertyFactory.h>
 #include <QtWidgets/QLayout>
 
 using namespace age::core::qt;
 
-Q_DECLARE_METATYPE(age::core::Property*);
+Q_DECLARE_METATYPE(age::core::ReflProp*);
 
 DelegateWidgetProperty::DelegateWidgetProperty(QObject* parent) : QStyledItemDelegate(parent)
 {
-	qRegisterMetaType<age::core::Property*>();
+	qRegisterMetaType<age::core::ReflProp*>();
 }
 
 QString DelegateWidgetProperty::displayText(const QVariant& value, const QLocale&) const
@@ -19,7 +19,7 @@ QString DelegateWidgetProperty::displayText(const QVariant& value, const QLocale
 
 QWidget* DelegateWidgetProperty::createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index) const
 {
-	const auto property = index.data(Qt::UserRole).value<age::core::Property*>();
+	const auto property = index.data(Qt::UserRole).value<age::core::ReflProp*>();
 	const auto editor = WidgetPropertyFactory::Instance().create(property->getTypeInfo(), parent);
 
 	if(editor != nullptr)

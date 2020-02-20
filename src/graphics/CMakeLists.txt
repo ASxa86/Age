@@ -40,7 +40,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	InputComponent.cpp
 	KeyEvent.cpp
 	PlayerInputSystem.cpp
-	Plugin.cpp
+	Reflection.cpp
 )
 
 if(UNIX)

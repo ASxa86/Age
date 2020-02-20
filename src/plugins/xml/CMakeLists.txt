@@ -29,7 +29,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_sources(${PROJECT_NAME} PRIVATE
 	ParserXML.cpp
-	Plugin.cpp
+	Reflection.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

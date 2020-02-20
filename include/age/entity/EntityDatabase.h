@@ -6,6 +6,8 @@
 namespace age
 {
 	namespace entity
+
+
 	{
 		class Entity;
 

@@ -1,8 +1,8 @@
 #include <DialogComponents.h>
-#include <age/core/Factory.h>
+#include <ListWidgetComponents.h>
+#include <age/core/Reflection.h>
 #include <age/entity/Component.h>
 #include <age/entity/Entity.h>
-#include <ListWidgetComponents.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QPushButton>
 
@@ -22,7 +22,7 @@ DialogComponents::DialogComponents(age::entity::Entity* e, QWidget* parent) : QD
 
 		if(items.empty() == false)
 		{
-			auto c = Factory::Instance().create<Component>(items[0]->text().toStdString());
+			auto c = Reflection::Instance().create<Component>(items[0]->text().toStdString());
 			this->entity->addComponent(std::move(c));
 		}
 

@@ -8,10 +8,6 @@ using namespace age::entity;
 
 CloneSystem::CloneSystem()
 {
-	this->addProperty(this->Rate, "Rate");
-	this->addProperty(this->Limit, "Limit");
-	this->addProperty(this->Count, "Count");
-
 	this->addFixedFunction([this](auto x) { this->frame(x); });
 }
 
