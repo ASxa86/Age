@@ -6,6 +6,11 @@
 
 using namespace age::core;
 
+STATIC_INVOKE
+{
+	Reflection::Instance().add<Object>("Object").addMethod("ID", &Object::setID, &Object::getID);
+}
+
 ReflProp::ReflProp(const std::string& n) : Name{n}
 {
 }
@@ -69,6 +74,16 @@ bool ReflType::operator==(const ReflType& rhs) const
 	}
 
 	return this->index == rhs.index || equalsBaseType;
+}
+
+std::unique_ptr<Object> ReflType::create() const
+{
+	if(this->Creator != nullptr)
+	{
+		return this->Creator->create();
+	}
+
+	return nullptr;
 }
 
 Reflection& Reflection::Instance()
@@ -147,13 +162,25 @@ void Reflection::clear()
 	this->reflMap.clear();
 }
 
-std::unique_ptr<Object> Reflection::create(std::string_view x)
+std::unique_ptr<Object> Reflection::create(std::string_view x) const
 {
-	auto type = this->get(x);
+	const auto type = this->get(x);
 
 	if(type != nullptr)
 	{
-		return type->Creator->create();
+		return type->create();
+	}
+
+	return nullptr;
+}
+
+std::unique_ptr<Object> Reflection::create(const Object& x) const
+{
+	const auto type = this->get(typeid(x));
+
+	if(type != nullptr)
+	{
+		return type->create();
 	}
 
 	return nullptr;

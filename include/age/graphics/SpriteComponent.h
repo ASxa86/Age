@@ -25,14 +25,13 @@ namespace age
 			SpriteComponent();
 			~SpriteComponent();
 
-			void onStartup() override;
-
 			///
 			///	\brief Load a sprite or spriesheet file.
 			///
 			///	\param x The path to the sprite or spritesheet.
 			///
 			void loadFile(const std::filesystem::path& x);
+			const std::filesystem::path& getFile() const;
 
 			///
 			///	\brief Set the current frame of the sprite or spritesheet.
@@ -95,7 +94,7 @@ namespace age
 			sf::Sprite& getSprite();
 
 			/// Rotate the sprite with the given angle in degrees.
-			double Rotation;
+			double Rotation{};
 
 		protected:
 			///

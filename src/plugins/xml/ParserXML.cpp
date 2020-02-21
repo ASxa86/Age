@@ -26,7 +26,7 @@ namespace
 			}
 			else
 			{
-				std::cerr << "Object did not have property \"" << x.attribute("name").as_string() << "\"\n";
+				std::cerr << type->Name << " did not have property \"" << x.attribute("name").as_string() << "\"\n";
 			}
 		}
 
@@ -40,10 +40,13 @@ namespace
 		if(x.empty() == false)
 		{
 			const auto type = x.attribute("type").as_string();
+			const auto id = x.attribute("id").as_string();
 			obj = Reflection::Instance().create(type);
 
 			if(obj != nullptr)
 			{
+				obj->setID(id);
+
 				for(const auto& property : x.children("property"))
 				{
 					ParsePropertyTag(property, obj.get());
@@ -56,7 +59,7 @@ namespace
 			}
 			else
 			{
-				std::cerr << "Factory failed to construct " << type << "\n";
+				std::cerr << "[XML] Failed to construct " << type << "\n";
 			}
 		}
 

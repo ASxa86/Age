@@ -295,6 +295,8 @@ namespace age
 
 			bool operator==(const ReflType& rhs) const;
 
+			std::unique_ptr<Object> create() const;
+
 			std::string Name;
 			std::shared_ptr<ReflCreatorBase> Creator;
 
@@ -328,7 +330,8 @@ namespace age
 
 			void clear();
 
-			std::unique_ptr<Object> create(std::string_view x);
+			std::unique_ptr<Object> create(std::string_view x) const;
+			std::unique_ptr<Object> create(const Object& x) const;
 
 			template <typename T>
 			std::unique_ptr<T> create(std::string_view x)

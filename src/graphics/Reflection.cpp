@@ -32,7 +32,8 @@ STATIC_INVOKE
 		.addProperty("Size", &BoxSelectionComponent::Size)
 		.addProperty("FillColor", &BoxSelectionComponent::FillColor)
 		.addProperty("OutlineColor", &BoxSelectionComponent::OutlineColor)
-		.addProperty("OutlineThickness", &BoxSelectionComponent::OutlineThickness);
+		.addProperty("OutlineThickness", &BoxSelectionComponent::OutlineThickness)
+		.addProperty("Selected", &BoxSelectionComponent::Selected);
 
 	Reflection::Instance()
 		.add<SpriteComponent>("SpriteComponent")
@@ -40,5 +41,6 @@ STATIC_INVOKE
 		.addMethod("Frame", &SpriteComponent::setFrame, &SpriteComponent::getFrame)
 		.addMethod("VFrames", &SpriteComponent::setVFrames, &SpriteComponent::getVFrames)
 		.addMethod("HFrames", &SpriteComponent::setHFrames, &SpriteComponent::getHFrames)
-		.addProperty("Rotation", &SpriteComponent::Rotation);
+		.addProperty("Rotation", &SpriteComponent::Rotation)
+		.addMethod("File", &SpriteComponent::loadFile, &SpriteComponent::getFile);
 }

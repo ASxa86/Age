@@ -1,3 +1,4 @@
+#include <age/core/Reflection.h>
 #include <age/graphics/SpriteComponent.h>
 
 using namespace age::graphics;
@@ -10,18 +11,19 @@ SpriteComponent::~SpriteComponent()
 {
 }
 
-void SpriteComponent::onStartup()
-{
-	this->loadFile(this->file);
-}
-
 void SpriteComponent::loadFile(const std::filesystem::path& x)
 {
 	if(this->texture.loadFromFile(x.string()) == true)
 	{
+		this->file = x;
 		this->sprite.setTexture(this->texture, true);
 		this->updateTextureRect();
 	}
+}
+
+const std::filesystem::path& SpriteComponent::getFile() const
+{
+	return this->file;
 }
 
 void SpriteComponent::setFrame(unsigned int x)
@@ -67,6 +69,7 @@ sf::Sprite& SpriteComponent::getSprite()
 	return this->sprite;
 }
 
+#include <iostream>
 void SpriteComponent::updateTextureRect()
 {
 	const auto textureSize = this->texture.getSize();
@@ -77,4 +80,14 @@ void SpriteComponent::updateTextureRect()
 	const auto framePos = sf::Vector2i{px, py};
 	this->sprite.setTextureRect(sf::IntRect(framePos, frameSize));
 	this->sprite.setOrigin(frameSize.x / 2.0f, frameSize.y / 2.0f);
+
+	auto type = age::core::Reflection::Instance().get(*this);
+
+	if(this->sprite.getTexture() != nullptr)
+	{
+		for(auto p : type->getProperties())
+		{
+			std::cout << p->Name << ": " << p->getValue(*this) << "\n";
+		}
+	}
 }

@@ -48,6 +48,17 @@ namespace
 			return this->x;
 		}
 
+		void setXRef(const int& x)
+		{
+			this->x = x;
+		}
+
+		const int& getXRef() const
+		{
+			return this->x;
+		}
+
+		std::filesystem::path path;
 		int x{0};
 		Enum e{Enum::One};
 	};
@@ -82,6 +93,34 @@ TEST(TemplateProperty, GetValue)
 {
 	MyClass myClass;
 	TemplateProperty<int(MyClass::*)> property("x", &MyClass::x);
+
+	EXPECT_EQ("0", property.getValue(myClass));
+
+	myClass.x = 1;
+
+	EXPECT_EQ("1", property.getValue(myClass));
+
+	myClass.x = -1;
+
+	EXPECT_EQ("-1", property.getValue(myClass));
+}
+
+TEST(TemplateMethod, SetValueRef)
+{
+	MyClass myClass;
+	TemplateMethod<void (MyClass::*)(const int&), const int& (MyClass::*)() const> property("x", &MyClass::setXRef, &MyClass::getXRef);
+
+	EXPECT_TRUE(property.setValue(myClass, "1"));
+	EXPECT_EQ(1, myClass.x);
+
+	EXPECT_TRUE(property.setValue(myClass, "-1"));
+	EXPECT_EQ(-1, myClass.x);
+}
+
+TEST(TemplateProperty, GetValueRef)
+{
+	MyClass myClass;
+	TemplateMethod<void (MyClass::*)(const int&), const int& (MyClass::*)() const> property("x", &MyClass::setXRef, &MyClass::getXRef);
 
 	EXPECT_EQ("0", property.getValue(myClass));
 

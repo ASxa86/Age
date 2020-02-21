@@ -29,6 +29,7 @@ void CloneSystem::frame(std::chrono::microseconds x)
 				{
 					++this->Count;
 					this->elapsed -= this->Rate;
+
 					auto clone = age::core::Clone(entity);
 					std::unique_ptr<Entity> ce{dynamic_cast<Entity*>(clone.release())};
 					manager->addEntity(std::move(ce));

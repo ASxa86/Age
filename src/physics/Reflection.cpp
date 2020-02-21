@@ -14,7 +14,26 @@ STATIC_INVOKE
 {
 	Reflection::Instance().add<PhysicsSystem>("PhysicsSystem").addBase<age::entity::System>();
 	Reflection::Instance().add<PhysicsRenderSystem>("PhysicsRenderSystem").addBase<age::entity::System>();
-	Reflection::Instance().add<KinematicComponent>("KinematicComponent").addBase<age::entity::Component>();
+
+	Reflection::Instance()
+		.add<KinematicComponent>("KinematicComponent")
+		.addBase<age::entity::Component>()
+		.addProperty("BodyType", &KinematicComponent::BodyType)
+		.addProperty("LinearVelocity", &KinematicComponent::LinearVelocity)
+		.addProperty("CalculateHeading", &KinematicComponent::CalculateHeading);
+
 	Reflection::Instance().add<BoxCollisionComponent>("BoxCollisionComponent").addBase<age::entity::Component>();
-	Reflection::Instance().add<CircleCollisionComponent>("CircleCollisionComponent").addBase<age::entity::Component>();
+
+	Reflection::Instance()
+		.add<CollisionComponent>("CollisionComponent")
+		.addBase<age::entity::Component>()
+		.addProperty("Restitution", &CollisionComponent::Restitution)
+		.addProperty("Friction", &CollisionComponent::Friction)
+		.addProperty("Density", &CollisionComponent::Density)
+		.addProperty("IsSensor", &CollisionComponent::IsSensor);
+
+	Reflection::Instance()
+		.add<CircleCollisionComponent>("CircleCollisionComponent")
+		.addBase<CollisionComponent>()
+		.addProperty("Radius", &CircleCollisionComponent::Radius);
 }
