@@ -1,37 +1,34 @@
+#include <age/core/Reflection.h>
 #include <age/graphics/SpriteComponent.h>
 
 using namespace age::graphics;
 
 SpriteComponent::SpriteComponent() : frame{0}, vFrames{1}, hFrames{1}
 {
-	this->addProperty(this->file, "file");
-	this->addProperty(this->hFrames, "HFrames");
-	this->addProperty(this->vFrames, "VFrames");
-	this->addProperty(this->frame, "Frame");
-	this->addProperty(this->Rotation, "Rotation");
 }
 
 SpriteComponent::~SpriteComponent()
 {
 }
 
-void SpriteComponent::onStartup()
-{
-	this->loadFile(this->file);
-}
-
 void SpriteComponent::loadFile(const std::filesystem::path& x)
 {
 	if(this->texture.loadFromFile(x.string()) == true)
 	{
+		this->file = x;
 		this->sprite.setTexture(this->texture, true);
 		this->updateTextureRect();
 	}
 }
 
+const std::filesystem::path& SpriteComponent::getFile() const
+{
+	return this->file;
+}
+
 void SpriteComponent::setFrame(unsigned int x)
 {
-	this->frame = std::min(x, this->hFrames * this->vFrames);
+	this->frame = x;
 	this->updateTextureRect();
 }
 
@@ -42,7 +39,7 @@ unsigned int SpriteComponent::getFrame() const
 
 void SpriteComponent::setVFrames(unsigned int x)
 {
-	this->vFrames = std::min(x, this->getFrameCount());
+	this->vFrames = x;
 	this->updateTextureRect();
 }
 
@@ -75,9 +72,11 @@ sf::Sprite& SpriteComponent::getSprite()
 void SpriteComponent::updateTextureRect()
 {
 	const auto textureSize = this->texture.getSize();
-	const auto frameSize = sf::Vector2i{static_cast<int>(textureSize.x / this->hFrames), static_cast<int>(textureSize.y / this->vFrames)};
-	const auto px = static_cast<int>(frameSize.x * (this->frame % this->hFrames));
-	const auto py = static_cast<int>(frameSize.y * (this->frame / this->vFrames));
+	const auto vFrames = std::min(this->vFrames, this->getFrameCount());
+	const auto frame = std::min(this->frame, this->getFrameCount());
+	const auto frameSize = sf::Vector2i{static_cast<int>(textureSize.x / this->hFrames), static_cast<int>(textureSize.y / vFrames)};
+	const auto px = static_cast<int>(frameSize.x * (frame % this->hFrames));
+	const auto py = static_cast<int>(frameSize.y * (frame / vFrames));
 
 	const auto framePos = sf::Vector2i{px, py};
 	this->sprite.setTextureRect(sf::IntRect(framePos, frameSize));

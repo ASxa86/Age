@@ -1,21 +1,25 @@
-#include <age/core/MagicEnum.h>
-#include <age/core/Properties.h>
-#include <age/core/String.h>
 #include <age/core/qt/TableModelProperties.h>
+
+#include <age/core/Object.h>
+#include <age/utilities/MagicEnum.h>
+#include <age/core/Reflection.h>
+#include <age/utilities/String.h>
 
 using namespace age::core;
 using namespace age::core::qt;
+using namespace age::utilities;
 
-Q_DECLARE_METATYPE(age::core::Property*);
+Q_DECLARE_METATYPE(age::core::ReflProp*);
 
-TableModelProperties::TableModelProperties(age::core::Properties* x, QObject* parent) : QAbstractTableModel(parent), properties{x}
+TableModelProperties::TableModelProperties(age::core::Object* x, QObject* parent) : QAbstractTableModel(parent), object{x}
 {
-	qRegisterMetaType<age::core::Property*>();
+	qRegisterMetaType<age::core::ReflProp*>();
 }
 
 int TableModelProperties::rowCount(const QModelIndex&) const
 {
-	return static_cast<int>(this->properties->getProperties().size());
+	auto type = Reflection::Instance().get(*this->object);
+	return static_cast<int>(type->getProperties().size());
 }
 
 int TableModelProperties::columnCount(const QModelIndex&) const
@@ -32,7 +36,7 @@ QVariant TableModelProperties::headerData(int section, Qt::Orientation orientati
 		switch(orientation)
 		{
 			case Qt::Orientation::Horizontal:
-				data = QString::fromStdString(age::core::ToString(static_cast<Column>(section)));
+				data = QString::fromStdString(age::utilities::ToString(static_cast<Column>(section)));
 				break;
 
 			case Qt::Orientation::Vertical:
@@ -53,13 +57,14 @@ bool TableModelProperties::setData(const QModelIndex& index, const QVariant& val
 	{
 		if(role == Qt::EditRole)
 		{
-			const auto& props = this->properties->getProperties();
+			const auto type = Reflection::Instance().get(*this->object);
+			const auto props = type->getProperties();
 			const auto& prop = props[index.row()];
 
 			switch(static_cast<Column>(index.column()))
 			{
 				case Column::Value:
-					prop->setValue(value.toString().toStdString());
+					prop->setValue(*this->object, value.toString().toStdString());
 					break;
 
 				case Column::Name:
@@ -82,7 +87,8 @@ QVariant TableModelProperties::data(const QModelIndex& index, int role) const
 
 	if(index.isValid() == true)
 	{
-		const auto& props = this->properties->getProperties();
+		const auto type = Reflection::Instance().get(*this->object);
+		const auto props = type->getProperties();
 		const auto& prop = props[index.row()];
 
 		if(role == Qt::DisplayRole || role == Qt::EditRole)
@@ -90,11 +96,11 @@ QVariant TableModelProperties::data(const QModelIndex& index, int role) const
 			switch(static_cast<Column>(index.column()))
 			{
 				case Column::Name:
-					data = QString::fromStdString(prop->getName());
+					data = QString::fromStdString(prop->Name);
 					break;
 
 				case Column::Value:
-					data = QString::fromStdString(prop->getValue());
+					data = QString::fromStdString(prop->getValue(*this->object));
 					break;
 
 				default:
@@ -103,7 +109,7 @@ QVariant TableModelProperties::data(const QModelIndex& index, int role) const
 		}
 		else if(role == Qt::UserRole)
 		{
-			data = QVariant::fromValue(prop.get());
+			data = QVariant::fromValue(prop);
 		}
 	}
 

@@ -1,25 +1,11 @@
 #include <age/core/Object.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/Signal.h>
 #include <algorithm>
 #include <iostream>
 
 using namespace age::core;
 using namespace age::utilities;
 
-class Object::Impl
-{
-public:
-	std::vector<std::unique_ptr<Object>> children;
-	std::vector<ScopedConnection> connection;
-	Signal<Object*> onAddChild;
-	Signal<Object*> onRemoveChild;
-	std::string id;
-	Object* parent{nullptr};
-	Status status{Status::None};
-};
-
-Object::Object() : pimpl()
+Object::Object()
 {
 }
 
@@ -29,61 +15,61 @@ Object::~Object()
 
 void Object::setID(const std::string& x)
 {
-	this->pimpl->id = x;
+	this->id = x;
 }
 
 std::string Object::getID() const
 {
-	return this->pimpl->id;
+	return this->id;
 }
 
 void Object::startup()
 {
-	if(this->pimpl->status < Status::Startup)
+	if(this->status < Status::Startup)
 	{
-		for(auto& child : this->pimpl->children)
+		for(auto& child : this->children)
 		{
 			child->startup();
 		}
 
 		this->onStartup();
 
-		this->pimpl->status = Status::Startup;
+		this->status = Status::Startup;
 	}
 }
 
 void Object::shutdown()
 {
-	if(this->pimpl->status < Status::Shutdown)
+	if(this->status < Status::Shutdown)
 	{
-		for(auto& child : this->pimpl->children)
+		for(auto& child : this->children)
 		{
 			child->shutdown();
 		}
 
 		this->onShutdown();
 
-		this->pimpl->status = Status::Shutdown;
+		this->status = Status::Shutdown;
 	}
 }
 
 Object* Object::getParent() const
 {
-	return this->pimpl->parent;
+	return this->parent;
 }
 
 bool Object::addChild(std::unique_ptr<Object> x)
 {
 	if(x != nullptr)
 	{
-		const auto foundIt = std::find(std::begin(this->pimpl->children), std::end(this->pimpl->children), x);
+		const auto foundIt = std::find(std::begin(this->children), std::end(this->children), x);
 
-		if(foundIt == std::end(this->pimpl->children))
+		if(foundIt == std::end(this->children))
 		{
-			x->pimpl->parent = this;
-			this->pimpl->children.push_back(std::move(x));
-			this->pimpl->children.back()->startup();
-			this->pimpl->onAddChild(this->pimpl->children.back().get());
+			x->parent = this;
+			this->children.push_back(std::move(x));
+			this->children.back()->startup();
+			this->onAddChild(this->children.back().get());
 
 			return true;
 		}
@@ -94,9 +80,9 @@ bool Object::addChild(std::unique_ptr<Object> x)
 
 Object* Object::getChild(size_t x) const
 {
-	if(x < this->pimpl->children.size())
+	if(x < this->children.size())
 	{
-		return this->pimpl->children[x].get();
+		return this->children[x].get();
 	}
 
 	return nullptr;
@@ -105,9 +91,9 @@ Object* Object::getChild(size_t x) const
 std::vector<Object*> Object::getChildren(FindOption option) const
 {
 	std::vector<Object*> v;
-	v.reserve(this->pimpl->children.size());
+	v.reserve(this->children.size());
 
-	for(const auto& child : this->pimpl->children)
+	for(const auto& child : this->children)
 	{
 		v.push_back(child.get());
 
@@ -127,17 +113,17 @@ std::unique_ptr<Object> Object::remove()
 
 	if(parent != nullptr)
 	{
-		const auto begin = std::begin(parent->pimpl->children);
-		const auto end = std::end(parent->pimpl->children);
+		const auto begin = std::begin(parent->children);
+		const auto end = std::end(parent->children);
 
 		const auto removeIt = std::remove_if(begin, end, [this](auto& x) { return this == x.get(); });
 
 		if(removeIt != end)
 		{
 			auto ptr = std::move(*removeIt);
-			this->pimpl->onRemoveChild(ptr.get());
-			parent->pimpl->children.erase(removeIt, end);
-			this->pimpl->parent = nullptr;
+			this->onRemoveChild(ptr.get());
+			parent->children.erase(removeIt, end);
+			this->parent = nullptr;
 			return ptr;
 		}
 	}
@@ -147,17 +133,17 @@ std::unique_ptr<Object> Object::remove()
 
 ScopedConnection Object::addOnAddChild(std::function<void(Object*)> x)
 {
-	return this->pimpl->onAddChild.connect_scoped(x);
+	return this->onAddChild.connect_scoped(x);
 }
 
 ScopedConnection Object::addOnRemoveChild(std::function<void(Object*)> x)
 {
-	return this->pimpl->onRemoveChild.connect_scoped(x);
+	return this->onRemoveChild.connect_scoped(x);
 }
 
 void Object::track(ScopedConnection x)
 {
-	this->pimpl->connection.emplace_back(std::move(x));
+	this->connection.emplace_back(std::move(x));
 }
 
 void Object::onStartup()

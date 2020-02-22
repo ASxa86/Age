@@ -1,8 +1,8 @@
 #pragma once
 
-#include <age/core/MagicEnum.h>
 #include <age/core/TypeTraits.h>
-#include <age/core/export.h>
+#include <age/utilities/MagicEnum.h>
+#include <age/utilities/export.h>
 #include <array>
 #include <charconv>
 #include <chrono>
@@ -13,9 +13,9 @@
 
 namespace age
 {
-	namespace core
+	namespace utilities
 	{
-		AGE_CORE_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
+		AGE_UTILITIES_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
 
 		///
 		///	\brief Special ToString overload to support floating point precision and format.
@@ -28,7 +28,7 @@ namespace age
 		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
 		// AGE_CORE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10,
 		// 										  std::chars_format fmt = std::chars_format::fixed);
-		AGE_CORE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10);
+		AGE_UTILITIES_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10);
 
 		///
 		///	\brief Special ToString overload to support floating point precision and format.
@@ -41,7 +41,7 @@ namespace age
 		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
 		// AGE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10,
 		// 										  std::chars_format fmt = std::chars_format::fixed);
-		AGE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
+		AGE_UTILITIES_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
 
 		template <typename T>
 		std::string ToString([[maybe_unused]] const T& x)
@@ -56,11 +56,12 @@ namespace age
 			{
 				return x ? "true" : "false";
 			}
-			else if constexpr(std::is_same<std::filesystem::path, T>::value == true)
+			else if constexpr(std::is_same<std::filesystem::path, std::remove_reference<T>::type>::value == true)
 			{
 				return x.string();
 			}
-			else if constexpr(std::is_arithmetic<T>::value == true && std::is_floating_point<T>::value == false)
+			else if constexpr(std::is_arithmetic<std::remove_reference<T>::type>::value == true
+							  && std::is_floating_point<std::remove_reference<T>::type>::value == false)
 			{
 				std::array<char, 100> buffer{};
 				const auto [p, ec] = std::to_chars(buffer.data(), buffer.data() + buffer.size(), x);
@@ -72,7 +73,7 @@ namespace age
 
 				return {};
 			}
-			else if constexpr(std::is_enum<T>::value == true)
+			else if constexpr(std::is_enum<std::remove_reference<T>::type>::value == true)
 			{
 				return std::string(magic_enum::enum_name(x));
 			}
@@ -96,29 +97,35 @@ namespace age
 
 				return s + "}";
 			}
+			else if constexpr(std::is_same<std::string, std::remove_reference<T>::type>::value == true)
+			{
+				return x;
+			}
 		}
 
 		template <typename T>
-		T StringTo([[maybe_unused]] const std::string& x)
+		typename std::remove_reference<T>::type StringTo([[maybe_unused]] const std::string& x)
 		{
+			using TNoRef = typename std::remove_const<typename std::remove_reference<T>::type>::type;
+
 			if constexpr(std::is_same<std::chrono::microseconds, T>::value == true || std::is_same<std::chrono::milliseconds, T>::value == true
 						 || std::is_same<std::chrono::seconds, T>::value == true || std::is_same<std::chrono::minutes, T>::value == true
 						 || std::is_same<std::chrono::hours, T>::value == true)
 			{
-				return T{StringTo<typename T::rep>(x)};
+				return TNoRef{StringTo<typename T::rep>(x)};
 			}
 			else if constexpr(std::is_same<bool, T>::value == true)
 			{
 				return x == "true" ? true : false;
 			}
-			else if constexpr(std::is_same<std::filesystem::path, T>::value == true)
+			else if constexpr(std::is_same<std::filesystem::path, std::remove_reference<T>::type>::value == true)
 			{
 				return std::filesystem::path{x};
 			}
 			// AMS // 10/6/2019 // gcc v9.0.1 doesn't support charconv for floating point types.
 			else if constexpr(std::is_floating_point<T>::value == true)
 			{
-				T t{};
+				TNoRef t{};
 
 				if constexpr(std::is_same<T, float>::value == true)
 				{
@@ -145,9 +152,9 @@ namespace age
 
 				return t;
 			}
-			else if constexpr(std::is_arithmetic<T>::value == true)
+			else if constexpr(std::is_arithmetic<std::remove_reference<T>::type>::value == true)
 			{
-				T t{};
+				TNoRef t{};
 				const auto [p, ec] = std::from_chars(x.data(), x.data() + x.size(), t);
 
 				if(ec == std::errc())
@@ -157,17 +164,17 @@ namespace age
 
 				return t;
 			}
-			else if constexpr(std::is_enum<T>::value == true)
+			else if constexpr(std::is_enum<std::remove_reference<T>::type>::value == true)
 			{
 				return magic_enum::enum_cast<T>(x).value_or(T{});
 			}
 			else if constexpr(std::is_constructible<T, const std::string&>::value == true)
 			{
-				return T{x};
+				return TNoRef{x};
 			}
 			else if constexpr(age::core::is_array<T>::value == true)
 			{
-				T t{};
+				TNoRef t{};
 				const auto tokens = Split(x);
 				for(auto i = 0; i < t.size(); i++)
 				{
@@ -175,6 +182,10 @@ namespace age
 				}
 
 				return t;
+			}
+			else if constexpr(std::is_same<std::string, std::remove_reference<T>::type>::value == true)
+			{
+				return x;
 			}
 		}
 	}

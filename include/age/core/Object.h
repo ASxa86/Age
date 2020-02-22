@@ -1,20 +1,13 @@
 #pragma once
 
 #include <age/core/export.h>
-#include <age/utilities/Pimpl.h>
-#include <age/core/Properties.h>
-
+#include <age/utilities/Signal.h>
 #include <functional>
 #include <string>
 #include <vector>
 
 namespace age
 {
-	namespace utilities
-	{
-		class ScopedConnection;
-	}
-
 	namespace core
 	{
 		///
@@ -26,7 +19,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_CORE_EXPORT Object : public Properties
+		class AGE_CORE_EXPORT Object
 		{
 		public:
 			enum class FindOption : int
@@ -184,8 +177,13 @@ namespace age
 			virtual void onStartup();
 			virtual void onShutdown();
 
-			class Impl;
-			Pimpl<Impl> pimpl;
+			std::vector<std::unique_ptr<Object>> children;
+			std::vector<age::utilities::ScopedConnection> connection;
+			age::utilities::Signal<Object*> onAddChild;
+			age::utilities::Signal<Object*> onRemoveChild;
+			std::string id;
+			Object* parent{nullptr};
+			Status status{Status::None};
 		};
 	}
 }

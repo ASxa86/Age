@@ -1,6 +1,6 @@
 #include <age/core/Configuration.h>
-#include <age/core/Factory.h>
 #include <age/core/Object.h>
+#include <age/core/Reflection.h>
 #include <age/core/Utilities.h>
 
 double age::core::PixelsToMeters(unsigned int x)
@@ -10,14 +10,14 @@ double age::core::PixelsToMeters(unsigned int x)
 
 std::unique_ptr<age::core::Object> age::core::Clone(age::core::Object* x)
 {
-	auto clone = age::core::Factory::Instance().create(typeid(*x));
+	const auto type = age::core::Reflection::Instance().get(*x);
+	auto clone = type->create();
 
 	if(clone != nullptr)
 	{
-		for(const auto& property : x->getProperties())
+		for(const auto& property : type->getProperties())
 		{
-			auto p = clone->getProperty(property->getName());
-			p->setValue(property->getValue());
+			property->setValue(*clone, property->getValue(*x));
 		}
 
 		for(auto child : x->getChildren())

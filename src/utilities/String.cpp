@@ -1,8 +1,8 @@
-#include <age/core/String.h>
+#include <age/utilities/String.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/spirit/include/karma.hpp>
 
-std::vector<std::string> age::core::Split(std::string x, std::string tokens, std::array<char, 2> container)
+std::vector<std::string> age::utilities::Split(std::string x, std::string tokens, std::array<char, 2> container)
 {
 	std::vector<std::string> v;
 
@@ -85,7 +85,7 @@ namespace
 	};
 }
 
-std::string age::core::ToString(float x, int precision)
+std::string age::utilities::ToString(float x, int precision)
 {
 	using boost::spirit::ascii::space;
 	using boost::spirit::karma::generate;
@@ -99,7 +99,7 @@ std::string age::core::ToString(float x, int precision)
 	return s;
 }
 
-std::string age::core::ToString(double x, int precision)
+std::string age::utilities::ToString(double x, int precision)
 {
 	using boost::spirit::ascii::space;
 	using boost::spirit::karma::generate;

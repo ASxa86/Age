@@ -166,7 +166,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	KinematicComponent.cpp
 	PhysicsSystem.cpp
 	PhysicsRenderSystem.cpp
-	Plugin.cpp
+	Reflection.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -174,6 +174,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	age-math
 	age-terrain
 	age-graphics
+	age-utilities
 )
 
 if(MSVC)

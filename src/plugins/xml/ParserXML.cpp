@@ -1,11 +1,12 @@
-#include <age/core/Factory.h>
 #include <age/core/Object.h>
+#include <age/core/Reflection.h>
 #include <age/core/Utilities.h>
 #include <age/plugins/xml/ParserXML.h>
 #include <iostream>
 #include <pugixml.hpp>
 
 using namespace age::core;
+using namespace age::utilities;
 using namespace age::xml;
 
 namespace
@@ -14,17 +15,18 @@ namespace
 	{
 		if(x.empty() == false)
 		{
-			auto property = obj->getProperty(x.attribute("name").as_string());
+			auto type = Reflection::Instance().get(*obj);
+			auto prop = type->getProperty(x.attribute("name").as_string());
 
-			if(property != nullptr)
+			if(prop != nullptr)
 			{
 				const auto value = age::core::ResolvePath(x.attribute("value").as_string());
-				property->setValue(value);
+				prop->setValue(*obj, value);
 				return true;
 			}
 			else
 			{
-				std::cerr << "Object did not have property \"" << x.attribute("name").as_string() << "\"\n";
+				std::cerr << type->Name << " did not have property \"" << x.attribute("name").as_string() << "\"\n";
 			}
 		}
 
@@ -38,10 +40,13 @@ namespace
 		if(x.empty() == false)
 		{
 			const auto type = x.attribute("type").as_string();
-			obj = Factory::Instance().create(type);
+			const auto id = x.attribute("id").as_string();
+			obj = Reflection::Instance().create(type);
 
 			if(obj != nullptr)
 			{
+				obj->setID(id);
+
 				for(const auto& property : x.children("property"))
 				{
 					ParsePropertyTag(property, obj.get());
@@ -54,7 +59,7 @@ namespace
 			}
 			else
 			{
-				std::cerr << "Factory failed to construct " << type << "\n";
+				std::cerr << "[XML] Failed to construct " << type << "\n";
 			}
 		}
 

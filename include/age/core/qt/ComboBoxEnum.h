@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/core/MagicEnum.h>
+#include <age/utilities/MagicEnum.h>
 #include <QtWidgets/QComboBox>
 
 namespace age

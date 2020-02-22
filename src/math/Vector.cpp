@@ -1,4 +1,4 @@
-#include <age/core/String.h>
+#include <age/utilities/String.h>
 #include <age/math/Vector.h>
 #include <array>
 #include <cmath>
@@ -11,18 +11,18 @@ Vector::Vector(double x, double y) : X{x}, Y{y}
 
 Vector::Vector(const std::string& x)
 {
-	const auto tokens = age::core::Split(x);
+	const auto tokens = age::utilities::Split(x);
 
 	if(tokens.size() == 2)
 	{
-		this->X = age::core::StringTo<double>(tokens[0]);
-		this->Y = age::core::StringTo<double>(tokens[1]);
+		this->X = age::utilities::StringTo<double>(tokens[0]);
+		this->Y = age::utilities::StringTo<double>(tokens[1]);
 	}
 }
 
 Vector::operator std::string() const
 {
-	return "{" + age::core::ToString(this->X) + ", " + age::core::ToString(this->Y) + "}";
+	return "{" + age::utilities::ToString(this->X) + ", " + age::utilities::ToString(this->Y) + "}";
 }
 
 Vector Vector::operator+(const Vector& x) const

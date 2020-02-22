@@ -1,6 +1,6 @@
 #include <age/core/Parser.h>
 
-#include <age/core/Factory.h>
+#include <age/core/Reflection.h>
 #include <age/utilities/PimplImpl.h>
 
 using namespace age::core;
@@ -25,7 +25,7 @@ bool Parser::readFile(const std::filesystem::path&, Object*)
 
 bool age::core::ReadFile(const std::filesystem::path& x, Object* obj)
 {
-	const auto parser = Factory::Instance().create<Parser>(x.extension().string());
+	const auto parser = Reflection::Instance().create<Parser>(x.extension().string());
 
 	if(parser != nullptr)
 	{

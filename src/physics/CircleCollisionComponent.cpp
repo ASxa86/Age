@@ -4,5 +4,4 @@ using namespace age::physics;
 
 CircleCollisionComponent::CircleCollisionComponent() : CollisionComponent()
 {
-	this->addProperty(this->Radius, "Radius");
 }

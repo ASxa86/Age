@@ -1,7 +1,7 @@
 #include <age/core/qt/WidgetPropertyBool.h>
 
 #include <age/utilities/PimplImpl.h>
-#include <age/core/String.h>
+#include <age/utilities/String.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QComboBox>
 
@@ -18,8 +18,8 @@ WidgetPropertyBool::WidgetPropertyBool(QWidget* parent) : WidgetProperty(parent)
 	vLayout->setMargin(0);
 	vLayout->addWidget(this->pimpl->cbBool);
 
-	this->pimpl->cbBool->addItem(QString::fromStdString(age::core::ToString(true)), QVariant::fromValue(true));
-	this->pimpl->cbBool->addItem(QString::fromStdString(age::core::ToString(false)), QVariant::fromValue(false));
+	this->pimpl->cbBool->addItem(QString::fromStdString(age::utilities::ToString(true)), QVariant::fromValue(true));
+	this->pimpl->cbBool->addItem(QString::fromStdString(age::utilities::ToString(false)), QVariant::fromValue(false));
 	this->connect(this->pimpl->cbBool, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &WidgetProperty::editingFinished);
 }
 

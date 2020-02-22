@@ -7,7 +7,12 @@ using namespace age::entity;
 
 bool EntityDatabase::addEntity(std::unique_ptr<Entity> x)
 {
-	auto evt = std::make_unique<EntityEvent>(x.get(), EntityEvent::Type::EntityAdded);
-	age::core::EventQueue::Instance().sendEvent(std::move(evt));
-	return this->addChild(std::move(x));
+	if(x != nullptr)
+	{
+		auto evt = std::make_unique<EntityEvent>(x.get(), EntityEvent::Type::EntityAdded);
+		age::core::EventQueue::Instance().sendEvent(std::move(evt));
+		return this->addChild(std::move(x));
+	}
+
+	return false;
 }

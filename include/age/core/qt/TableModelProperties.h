@@ -7,7 +7,7 @@ namespace age
 {
 	namespace core
 	{
-		class Properties;
+		class Object;
 
 		namespace qt
 		{
@@ -22,7 +22,7 @@ namespace age
 					Value
 				};
 
-				TableModelProperties(age::core::Properties* x, QObject* parent = nullptr);
+				TableModelProperties(age::core::Object* x, QObject* parent = nullptr);
 
 				int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 				int columnCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -32,7 +32,7 @@ namespace age
 				Qt::ItemFlags flags(const QModelIndex& index) const override;
 
 			private:
-				age::core::Properties* properties{};
+				age::core::Object* object{};
 			};
 		}
 	}

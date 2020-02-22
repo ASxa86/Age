@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include <age/core/String.h>
+#include <age/utilities/String.h>
 
-using namespace age::core;
+using namespace age::utilities;
 
 namespace
 {
@@ -47,13 +47,13 @@ TEST(String, ToStringInt)
 TEST(String, ToStringFloat)
 {
 	constexpr float x = 1.0;
-	EXPECT_EQ("1", ToString(x));
+	EXPECT_EQ("1.0", ToString(x));
 }
 
 TEST(String, ToStringDouble)
 {
 	constexpr double x = 1.0;
-	EXPECT_EQ("1", ToString(x));
+	EXPECT_EQ("1.0", ToString(x));
 }
 
 TEST(String, ToStringEnum)

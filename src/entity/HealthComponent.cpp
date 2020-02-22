@@ -4,8 +4,6 @@ using namespace age::entity;
 
 HealthComponent::HealthComponent()
 {
-	this->addProperty(this->Health, "Health");
-	this->addProperty(this->HealthMax, "HealthMax");
 }
 
 double HealthComponent::getPercentage() const
