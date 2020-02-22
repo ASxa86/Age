@@ -2,6 +2,7 @@
 
 #include <age/core/Event.h>
 #include <age/core/Object.h>
+#include <age/utilities/Pimpl.h>
 #include <chrono>
 
 namespace age

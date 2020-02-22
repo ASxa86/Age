@@ -1,18 +1,13 @@
 #pragma once
 
 #include <age/core/export.h>
-#include <age/utilities/Pimpl.h>
+#include <age/utilities/Signal.h>
 #include <functional>
 #include <string>
 #include <vector>
 
 namespace age
 {
-	namespace utilities
-	{
-		class ScopedConnection;
-	}
-
 	namespace core
 	{
 		///
@@ -182,8 +177,13 @@ namespace age
 			virtual void onStartup();
 			virtual void onShutdown();
 
-			class Impl;
-			Pimpl<Impl> pimpl;
+			std::vector<std::unique_ptr<Object>> children;
+			std::vector<age::utilities::ScopedConnection> connection;
+			age::utilities::Signal<Object*> onAddChild;
+			age::utilities::Signal<Object*> onRemoveChild;
+			std::string id;
+			Object* parent{nullptr};
+			Status status{Status::None};
 		};
 	}
 }
