@@ -25,6 +25,10 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 set(AGE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${AGE_INCLUDE_DIR})
 
+if(AGE_ENABLE_BENCHMARKS)
+	add_subdirectory(benchmarks)
+endif()
+
 add_subdirectory(examples)
 add_subdirectory(src)
 add_subdirectory(tools)

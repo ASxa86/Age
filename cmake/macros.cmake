@@ -2,6 +2,7 @@ option(BUILD_SHARED_LIBS "Enable building as shared libraries." ON)
 option(AGE_ENABLE_WARNINGS_AS_ERRORS "Treat all compile warnings as errors." ON)
 option(AGE_ENABLE_QT "Enable building the AGE benchmark suite." ON)
 option(AGE_ENABLE_TESTS "Enable building test applications." ON)
+option(AGE_ENABLE_BENCHMARKS "Enable building benchmark applications." OFF)
 
 macro(AGE_COMPILE_OPTIONS)
 	if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)

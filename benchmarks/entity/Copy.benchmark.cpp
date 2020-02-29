@@ -1,6 +1,7 @@
 #include <celero/Celero.h>
 
-#include <age/entity/EntityManager.h>
+#include <age/entity/Entity.h>
+#include <age/entity/EntityDatabase.h>
 #include "Object.h"
 
 #ifdef WIN32
@@ -35,10 +36,10 @@ namespace
 
 	struct AgeEntityF : public celero::TestFixture
 	{
-		age::entity::EntityManager em;
-		age::entity::Entity value{em.create()};
-		age::entity::Entity copy{value};
-		age::entity::Entity& ref{value};
+		age::entity::EntityDatabase em;
+		age::entity::Entity* value{em.addEntity()};
+		age::entity::Entity* copy{value};
+		age::entity::Entity& ref{*value};
 	};
 
 	struct EntityXF : public celero::TestFixture
@@ -70,12 +71,12 @@ BENCHMARK_F(Copy, BaselineR, IntF, Samples, Iterations)
 
 BENCHMARK_F(Copy, AgeEntity, AgeEntityF, Samples, Iterations)
 {
-	celero::DoNotOptimizeAway(this->copy = this->value);
+	//celero::DoNotOptimizeAway(this->copy = this->value);
 }
 
 BENCHMARK_F(Copy, AgeEntityR, AgeEntityF, Samples, Iterations)
 {
-	celero::DoNotOptimizeAway(this->ref = this->value);
+	//celero::DoNotOptimizeAway(this->ref = *this->value);
 }
 
 BENCHMARK_F(Copy, EntityX, EntityXF, Samples, Iterations)
