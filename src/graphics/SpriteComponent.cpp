@@ -1,5 +1,8 @@
-#include <age/core/Reflection.h>
 #include <age/graphics/SpriteComponent.h>
+
+#include <age/core/Engine.h>
+#include <age/core/Reflection.h>
+#include <age/graphics/DatabaseTexture.h>
 
 using namespace age::graphics;
 
@@ -13,11 +16,19 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::loadFile(const std::filesystem::path& x)
 {
-	if(this->texture.loadFromFile(x.string()) == true)
+	this->file = x;
+
+	auto engine = this->getParent<age::core::Engine>(FindOption::Recursive);
+
+	if(engine != nullptr)
 	{
-		this->file = x;
-		this->sprite.setTexture(this->texture, true);
-		this->updateTextureRect();
+		auto dbTexture = engine->getChild<DatabaseTexture>();
+
+		if(dbTexture != nullptr)
+		{
+			this->sprite.setTexture(dbTexture->getTexture(x.string()), true);
+			this->updateTextureRect();
+		}
 	}
 }
 
@@ -64,21 +75,28 @@ unsigned int SpriteComponent::getFrameCount() const
 	return this->hFrames * this->vFrames;
 }
 
-sf::Sprite& SpriteComponent::getSprite()
+sf::Drawable& SpriteComponent::getDrawable()
 {
 	return this->sprite;
 }
 
+void SpriteComponent::onStartup()
+{
+	this->loadFile(this->file);
+}
+
 void SpriteComponent::updateTextureRect()
 {
-	const auto textureSize = this->texture.getSize();
+	const auto textureWidth = this->sprite.getTextureRect().width;
+	const auto textureHeight = this->sprite.getTextureRect().height;
 	const auto vFrames = std::min(this->vFrames, this->getFrameCount());
 	const auto frame = std::min(this->frame, this->getFrameCount());
-	const auto frameSize = sf::Vector2i{static_cast<int>(textureSize.x / this->hFrames), static_cast<int>(textureSize.y / vFrames)};
+	const auto frameSize = sf::Vector2i{static_cast<int>(textureWidth / this->hFrames), static_cast<int>(textureHeight / vFrames)};
 	const auto px = static_cast<int>(frameSize.x * (frame % this->hFrames));
 	const auto py = static_cast<int>(frameSize.y * (frame / vFrames));
 
 	const auto framePos = sf::Vector2i{px, py};
 	this->sprite.setTextureRect(sf::IntRect(framePos, frameSize));
 	this->sprite.setOrigin(frameSize.x / 2.0f, frameSize.y / 2.0f);
+	this->sprite.setRotation(static_cast<float>(this->Rotation));
 }

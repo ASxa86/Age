@@ -1,6 +1,6 @@
 #pragma once
 
-#include <age/entity/Component.h>
+#include <age/graphics/DrawableComponent.h>
 #include <age/graphics/export.h>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -19,7 +19,7 @@ namespace age
 		///
 		///	\author Aaron Shelley
 		///
-		class AGE_GRAPHICS_EXPORT SpriteComponent : public age::entity::Component
+		class AGE_GRAPHICS_EXPORT SpriteComponent : public age::graphics::DrawableComponent
 		{
 		public:
 			SpriteComponent();
@@ -91,19 +91,20 @@ namespace age
 			///
 			///	\return sf::Sprite& The reference to the internal sprite data.
 			///
-			sf::Sprite& getSprite();
+			virtual sf::Drawable& getDrawable() override;
 
 			/// Rotate the sprite with the given angle in degrees.
 			double Rotation{};
 
 		protected:
+			virtual void onStartup() override;
+
 			///
 			///	\brief Update the internal rectangle for the internal sprite data.
 			///
 			void updateTextureRect();
 
 		private:
-			sf::Texture texture;
 			sf::Sprite sprite;
 			std::filesystem::path file;
 			unsigned int frame;

@@ -1,8 +1,11 @@
 #include <age/core/Reflection.h>
 #include <age/graphics/BoxSelectionComponent.h>
+#include <age/graphics/DatabaseTexture.h>
+#include <age/graphics/DrawableComponent.h>
 #include <age/graphics/DrawableSystem.h>
 #include <age/graphics/Export.h>
 #include <age/graphics/HealthBarSystem.h>
+#include <age/graphics/RenderSystem.h>
 #include <age/graphics/SpriteComponent.h>
 #include <age/graphics/TileMapSystem.h>
 #include <age/graphics/Window.h>
@@ -14,8 +17,10 @@ using namespace age::graphics;
 STATIC_INVOKE
 {
 	Reflection::Instance().add<TileMapSystem>("TileMapSystem").addBase<age::entity::System>();
-
 	Reflection::Instance().add<DrawableSystem>("DrawableSystem").addBase<age::entity::System>();
+	Reflection::Instance().add<RenderSystem>("RenderSystem").addBase<age::entity::System>();
+
+	Reflection::Instance().add<DatabaseTexture>("DatabaseTexture").addBase<age::core::Object>();
 
 	Reflection::Instance()
 		.add<HealthBarSystem>("HealthBarSystem")

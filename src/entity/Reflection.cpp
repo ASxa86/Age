@@ -26,7 +26,7 @@ STATIC_INVOKE
 		.addProperty("Limit", &CloneSystem::Limit)
 		.addProperty("Count", &CloneSystem::Count);
 
-	Reflection::Instance().add<Component>("Component").addBase<Object>();
+	Reflection::Instance().add<Component>("Component").addBase<Object>().addProperty("Enabled", &Component::Enabled);
 
 	Reflection::Instance()
 		.add<AnimationComponent>("AnimationComponent")

@@ -1,12 +1,12 @@
 #include <age/graphics/DrawableSystem.h>
 
 #include <age/core/Configuration.h>
-#include <age/utilities/PimplImpl.h>
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
 #include <age/graphics/BoxSelectionComponent.h>
 #include <age/graphics/SpriteComponent.h>
+#include <age/utilities/PimplImpl.h>
 #include <SFML/Graphics.hpp>
 
 using namespace age::core;
@@ -44,45 +44,49 @@ DrawableSystem::~DrawableSystem()
 
 void DrawableSystem::render(sf::RenderTarget& target, std::chrono::microseconds /*x*/)
 {
-	const auto manager = this->getEntityDatabase();
+	//const auto manager = this->getEntityDatabase();
 
-	for(auto entity : manager->getChildren<Entity>())
-	{
-		auto s = entity->getChild<SpriteComponent>();
-		auto t = entity->getChild<TransformComponent>();
+	//for(auto entity : manager->getChildren<Entity>())
+	//{
+	//	auto s = entity->getChild<SpriteComponent>();
+	//	auto t = entity->getChild<TransformComponent>();
 
-		if(s != nullptr)
-		{
-			auto& sprite = s->getSprite();
-			sprite.setRotation(static_cast<float>(s->Rotation));
+	//	if(s != nullptr)
+	//	{
+	//		auto& sprite = s->getSprite();
+	//		sprite.setRotation(static_cast<float>(s->Rotation));
 
-			if(t != nullptr)
-			{
-				sprite.setPosition(FromVector(t->Position));
-				sprite.setRotation(sprite.getRotation() + static_cast<float>(t->Rotation));
-			}
+	//		if(t != nullptr)
+	//		{
+	//			sprite.setPosition(FromVector(t->Position));
+	//			sprite.setRotation(sprite.getRotation() + static_cast<float>(t->Rotation));
+	//		}
 
-			target.draw(sprite);
-		}
+	//		// Only draw sprites that are on screen.
+	//		if(sprite.getPosition().x < target.getSize().x)
+	//		{
+	//			target.draw(sprite);
+	//		}
+	//	}
 
-		auto bSelect = entity->getChild<BoxSelectionComponent>();
+	//	auto bSelect = entity->getChild<BoxSelectionComponent>();
 
-		if(bSelect != nullptr && bSelect->Selected == true)
-		{
-			auto& shape = bSelect->Shape;
-			shape.setFillColor(FromColor(bSelect->FillColor));
-			shape.setOutlineColor(FromColor(bSelect->OutlineColor));
-			shape.setOutlineThickness(static_cast<float>(bSelect->OutlineThickness));
-			shape.setSize(FromVector(bSelect->Size));
-			shape.setOrigin({shape.getSize().x / 2, shape.getSize().y / 2});
+	//	if(bSelect != nullptr && bSelect->Selected == true)
+	//	{
+	//		auto& shape = bSelect->Shape;
+	//		shape.setFillColor(FromColor(bSelect->FillColor));
+	//		shape.setOutlineColor(FromColor(bSelect->OutlineColor));
+	//		shape.setOutlineThickness(static_cast<float>(bSelect->OutlineThickness));
+	//		shape.setSize(FromVector(bSelect->Size));
+	//		shape.setOrigin({shape.getSize().x / 2, shape.getSize().y / 2});
 
-			if(t != nullptr)
-			{
-				shape.setPosition(FromVector(t->Position));
-				shape.setRotation(static_cast<float>(t->Rotation));
-			}
+	//		if(t != nullptr)
+	//		{
+	//			shape.setPosition(FromVector(t->Position));
+	//			shape.setRotation(static_cast<float>(t->Rotation));
+	//		}
 
-			target.draw(shape);
-		}
-	}
+	//		target.draw(shape);
+	//	}
+	//}
 }

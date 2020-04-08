@@ -35,7 +35,7 @@ namespace age
 			///	\param state The global render state. Generally contains scaling information from the Window parent.
 			///	\param x The frame rate in microseconds.
 			///
-			virtual void render(sf::RenderTarget& target, std::chrono::microseconds x) = 0;
+			virtual void render(sf::RenderTarget& target, std::chrono::microseconds x);
 		};
 	}
 }

@@ -27,12 +27,14 @@ void Object::startup()
 {
 	if(this->status < Status::Startup)
 	{
+		// I believe children should depend on parents being loaded but not the other way around?
+		// If this needs to change, be sure to comment why.
+		this->onStartup();
+
 		for(auto& child : this->children)
 		{
 			child->startup();
 		}
-
-		this->onStartup();
 
 		this->status = Status::Startup;
 	}
@@ -68,7 +70,12 @@ bool Object::addChild(std::unique_ptr<Object> x)
 		{
 			x->parent = this;
 			this->children.push_back(std::move(x));
-			this->children.back()->startup();
+
+			if(this->status >= Status::Startup)
+			{
+				this->children.back()->startup();
+			}
+
 			this->onAddChild(this->children.back().get());
 
 			return true;

@@ -13,6 +13,8 @@ message(STATUS "inc ${SFML_INCLUDE_DIR}")
 target_include_directories(${PROJECT_NAME} PUBLIC ${SFML_INCLUDE_DIR})
 
 target_sources(${PROJECT_NAME} PRIVATE
+	${AGE_INCLUDE_DIR}/age/graphics/DatabaseTexture.h
+	${AGE_INCLUDE_DIR}/age/graphics/DrawableComponent.h
 	${AGE_INCLUDE_DIR}/age/graphics/InputComponent.h
 	${AGE_INCLUDE_DIR}/age/graphics/KeyEvent.h
 	${AGE_INCLUDE_DIR}/age/graphics/PlayerInputSystem.h
@@ -28,6 +30,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	DatabaseTexture.cpp
+	DrawableComponent.cpp
 	RenderSystem.cpp
 	SpriteComponent.cpp
 	TextSystem.cpp
