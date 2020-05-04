@@ -8,6 +8,8 @@ using namespace age::graphics;
 
 SpriteComponent::SpriteComponent() : frame{0}, vFrames{1}, hFrames{1}
 {
+	this->UseRotation = true;
+	this->UsePosition = true;
 }
 
 SpriteComponent::~SpriteComponent()
@@ -75,9 +77,9 @@ unsigned int SpriteComponent::getFrameCount() const
 	return this->hFrames * this->vFrames;
 }
 
-sf::Drawable& SpriteComponent::getDrawable()
+const sf::Drawable* SpriteComponent::getDrawable()
 {
-	return this->sprite;
+	return &this->sprite;
 }
 
 void SpriteComponent::onStartup()

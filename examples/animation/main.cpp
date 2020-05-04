@@ -6,9 +6,9 @@
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
-#include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
+#include <age/graphics/RenderSystem.h>
 #include <age/graphics/SpriteComponent.h>
 #include <age/graphics/Window.h>
 
@@ -22,7 +22,7 @@ int main()
 	engine.addChild(std::make_unique<PlayerInputSystem>());
 	engine.addChild(std::make_unique<AnimationSystem>());
 	auto window = engine.addChild<Window>();
-	window->addChild(std::make_unique<DrawableSystem>());
+	window->addChild(std::make_unique<RenderSystem>());
 
 	auto manager = engine.addChild<EntityDatabase>();
 	auto entity = manager->addEntity();

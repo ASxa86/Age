@@ -91,7 +91,7 @@ namespace age
 			///
 			///	\return sf::Sprite& The reference to the internal sprite data.
 			///
-			virtual sf::Drawable& getDrawable() override;
+			virtual const sf::Drawable* getDrawable() override;
 
 			/// Rotate the sprite with the given angle in degrees.
 			double Rotation{};
