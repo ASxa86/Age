@@ -17,8 +17,8 @@ namespace age
 		///
 		struct BoxCollisionComponent final : public CollisionComponent
 		{
-			double Width;
-			double Height;
+			double Width{};
+			double Height{};
 		};
 	}
 }

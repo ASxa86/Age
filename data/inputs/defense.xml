@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <age>
+	<object type="DatabaseTexture"/>
+
 	<object type="EntityDatabase">
 		<object type="Entity">
 			<object type="TransformComponent">
@@ -55,17 +57,23 @@
 	<object type="PhysicsSystem"/>
 
 	<object type="CloneSystem">
-		<property name="Rate" value="1000000"/>
-		<property name="Limit" value="20"/>
+		<property name="Rate" value="500000"/>
+		<property name="Limit" value="400"/>
 
 		<object type="Entity">
+			<property name="reference" value="sprite"/>
+
 			<object type="TransformComponent">
 				<property name="Position" value="{0, 325}"/>
 			</object>
 
-			<object type="HealthComponent">
-				<property name="Health" value="50"/>
-				<property name="HealthMax" value="100"/>
+			<object type="ProgressBarComponent">
+				<property name="Value" value="50"/>
+				<property name="ValueMax" value="100"/>
+				<property name="Position" value="{-15, -30}"/>
+				<property name="Size" value="{30, 5}"/>
+				<property name="Color" value="{0, 255, 0, 255}"/>
+				<property name="RenderOrder" value="1"/>
 			</object>
 
 			<object type="KinematicComponent">
@@ -110,12 +118,7 @@
 
 	<object type="Window">
 		<object type="TileMapSystem"/>
-		<object type="DrawableSystem"/>
-		<object type="HealthBarSystem">
-			<property name="Offset" value="{-15, -30}"/>
-			<property name="Size" value="{30, 5}"/>
-			<property name="Color" value="{0, 255, 0, 255}"/>
-		</object>
+		<object type="RenderSystem"/>
 		<object type="PhysicsRenderSystem"/>
 	</object>
 </age>

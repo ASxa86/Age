@@ -23,6 +23,7 @@ namespace age
 
 		private:
 			friend class DrawableSystem;
+			friend class RenderSystem;
 			sf::RectangleShape Shape;
 		};
 	}

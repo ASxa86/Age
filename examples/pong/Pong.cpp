@@ -12,9 +12,9 @@
 #include <age/entity/Entity.h>
 #include <age/entity/EntityDatabase.h>
 #include <age/entity/TransformComponent.h>
-#include <age/graphics/DrawableSystem.h>
 #include <age/graphics/InputComponent.h>
 #include <age/graphics/PlayerInputSystem.h>
+#include <age/graphics/RenderSystem.h>
 #include <age/graphics/TextSystem.h>
 #include <age/graphics/Window.h>
 #include <age/physics/BoxCollisionComponent.h>
@@ -56,7 +56,7 @@ struct Pong::Impl
 Pong::Pong()
 {
 	auto window = this->pimpl->engine->addChild<Window>();
-	window->addChild(std::make_unique<DrawableSystem>());
+	window->addChild(std::make_unique<RenderSystem>());
 	window->addChild(std::make_unique<TextSystem>());
 	window->addChild(std::make_unique<PhysicsRenderSystem>());
 

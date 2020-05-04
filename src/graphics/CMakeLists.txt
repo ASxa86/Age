@@ -13,34 +13,38 @@ message(STATUS "inc ${SFML_INCLUDE_DIR}")
 target_include_directories(${PROJECT_NAME} PUBLIC ${SFML_INCLUDE_DIR})
 
 target_sources(${PROJECT_NAME} PRIVATE
+	${AGE_INCLUDE_DIR}/age/graphics/BoxSelectionComponent.h
+	${AGE_INCLUDE_DIR}/age/graphics/DatabaseTexture.h
+	${AGE_INCLUDE_DIR}/age/graphics/DrawableComponent.h
 	${AGE_INCLUDE_DIR}/age/graphics/InputComponent.h
 	${AGE_INCLUDE_DIR}/age/graphics/KeyEvent.h
 	${AGE_INCLUDE_DIR}/age/graphics/PlayerInputSystem.h
+	${AGE_INCLUDE_DIR}/age/graphics/ProgressBarComponent.h
 	${AGE_INCLUDE_DIR}/age/graphics/RenderSystem.h
 	${AGE_INCLUDE_DIR}/age/graphics/SpriteComponent.h
 	${AGE_INCLUDE_DIR}/age/graphics/TextSystem.h
 	${AGE_INCLUDE_DIR}/age/graphics/TileMapComponent.h
 	${AGE_INCLUDE_DIR}/age/graphics/TileMapSystem.h
+	${AGE_INCLUDE_DIR}/age/graphics/Utilities.h
 	${AGE_INCLUDE_DIR}/age/graphics/Window.h
-	${AGE_INCLUDE_DIR}/age/graphics/BoxSelectionComponent.h
-	${AGE_INCLUDE_DIR}/age/graphics/DrawableSystem.h
-	${AGE_INCLUDE_DIR}/age/graphics/HealthBarSystem.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+	BoxSelectionComponent.cpp
+	DatabaseTexture.cpp
+	DrawableComponent.cpp
+	InputComponent.cpp
+	KeyEvent.cpp
+	PlayerInputSystem.cpp
+	ProgressBarComponent.cpp
+	Reflection.cpp
 	RenderSystem.cpp
 	SpriteComponent.cpp
 	TextSystem.cpp
 	TileMapComponent.cpp
 	TileMapSystem.cpp
+	Utilities.cpp
 	Window.cpp
-	BoxSelectionComponent.cpp
-	DrawableSystem.cpp
-	HealthBarSystem.cpp
-	InputComponent.cpp
-	KeyEvent.cpp
-	PlayerInputSystem.cpp
-	Reflection.cpp
 )
 
 if(UNIX)

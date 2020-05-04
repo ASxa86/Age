@@ -10,6 +10,8 @@ namespace age
 		class AGE_ENTITY_EXPORT Component : public age::core::Object
 		{
 		public:
+			bool Enabled{true};
+
 		private:
 		};
 	}
