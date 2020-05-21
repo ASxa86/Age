@@ -47,5 +47,5 @@ install(EXPORT age-config DESTINATION ${CMAKE_INSTALL_DATAROOTDIR})
 # Installs include/ to <prefix>/include
 install(DIRECTORY include/age DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-# Installs hcl-config-version.cmake to <prefix>/share
+# Installs age-config-version.cmake to <prefix>/share
 install(FILES ${AGE_CONFIG_VERSION} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR})

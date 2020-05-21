@@ -76,7 +76,7 @@ macro(AGE_INCLUDE_QT)
 		Qt5::Core
 		Qt5::Gui
 		Qt5::Widgets
-	)	
+	)
 endmacro()
 
 macro(AGE_TEST)
@@ -88,12 +88,12 @@ macro(AGE_TEST)
 endmacro()
 
 macro(AGE_INCLUDE_GTEST)
-	find_package(GTest REQUIRED)
+	find_package(GTest CONFIG REQUIRED)
 
 	target_link_libraries(${PROJECT_NAME} PRIVATE
-		GTest::GTest
-		GTest::Main
-	)	
+		GTest::gtest
+		GTest::gtest_main
+	)
 endmacro()
 
 macro(AGE_INCLUDE_BOOST)
@@ -112,7 +112,7 @@ macro(AGE_ADD_LIBRARY)
 
 	set_target_properties(${PROJECT_NAME} PROPERTIES
 		FOLDER age
-	)	
+	)
 
 	AGE_COMPILE_OPTIONS()
 	AGE_WARNINGS_AS_ERRORS()
@@ -127,7 +127,7 @@ macro(AGE_ADD_TEST)
 
 	set_target_properties(${PROJECT_NAME} PROPERTIES
 		FOLDER tests
-	)	
+	)
 
 	AGE_COMPILE_OPTIONS()
 	AGE_WARNINGS_AS_ERRORS()
