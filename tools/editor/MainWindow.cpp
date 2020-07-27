@@ -3,11 +3,11 @@
 #include <Application.h>
 #include <DockWidgetComponent.h>
 #include <DockWidgetEntity.h>
-#include <age/core/Engine.h>
-#include <age/utilities/PimplImpl.h>
+#include <azule/core/Engine.h>
+#include <azule/utilities/PimplImpl.h>
 
-using namespace age;
-using namespace age::entity;
+using namespace azule;
+using namespace azule::entity;
 
 struct MainWindow::Impl
 {

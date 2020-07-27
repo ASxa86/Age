@@ -1,6 +1,6 @@
-#include <age/graphics/BoxSelectionComponent.h>
+#include <azule/graphics/BoxSelectionComponent.h>
 
-using namespace age::graphics;
+using namespace azule::graphics;
 
 BoxSelectionComponent::BoxSelectionComponent()
 {

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <age/utilities/Pimpl.h>
+#include <azule/utilities/Pimpl.h>
 #include <QtWidgets/QTreeWidget>
 #include <typeindex>
 
-namespace age
+namespace azule
 {
 	namespace entity
 	{
@@ -15,7 +15,7 @@ namespace age
 	///
 	///	\class TreeWidgetEntity
 	///
-	///	\brief A QTreeWidget used to list and select entities and components that exist within age::entity::EntityDatabase.
+	///	\brief A QTreeWidget used to list and select entities and components that exist within azule::entity::EntityDatabase.
 	///
 	///	\author Aaron Shelley
 	///
@@ -43,37 +43,37 @@ namespace age
 		///
 		///	Add a tree node to list and edit the given entity.
 		///
-		void addEntity(age::entity::Entity* x);
+		void addEntity(azule::entity::Entity* x);
 
 		///
 		///	Remove the associated tree tode for the given entity.
 		///
-		void removeEntity(age::entity::Entity* x);
+		void removeEntity(azule::entity::Entity* x);
 
 		///
 		///	Add a tree node to the list under the node associated with the given entity.
 		///
-		void addComponent(age::entity::Entity* x, age::entity::Component* c);
+		void addComponent(azule::entity::Entity* x, azule::entity::Component* c);
 
 		///
 		///	Add a tree node to the list under the given tree node.
 		///
-		void addComponent(QTreeWidgetItem* item, age::entity::Component* c);
+		void addComponent(QTreeWidgetItem* item, azule::entity::Component* c);
 
 		///
 		///	Remove the associated tree node for the given component type of the given entity.
 		///
-		void removeComponent(age::entity::Entity* x, age::entity::Component* c);
+		void removeComponent(azule::entity::Entity* x, azule::entity::Component* c);
 
 		///
 		///	Get the tree node associated with the given entity.
 		///
-		QTreeWidgetItem* findItem(age::entity::Entity* x);
+		QTreeWidgetItem* findItem(azule::entity::Entity* x);
 
 		///
 		///	Get the tree node associated with the given component type of the given entity.
 		///
-		QTreeWidgetItem* findItem(age::entity::Entity* x, age::entity::Component* c);
+		QTreeWidgetItem* findItem(azule::entity::Entity* x, azule::entity::Component* c);
 
 		///
 		///	Overload the default size hint to adjust the default size within an application.

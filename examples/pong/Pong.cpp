@@ -2,42 +2,42 @@
 
 #include <PaddleAIComponent.h>
 #include <PaddleAISystem.h>
-#include <age/audio/AudioEvent.h>
-#include <age/audio/AudioSystem.h>
-#include <age/core/Configuration.h>
-#include <age/core/Engine.h>
-#include <age/core/EngineState.h>
-#include <age/core/EventQueue.h>
-#include <age/core/Utilities.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/TransformComponent.h>
-#include <age/graphics/InputComponent.h>
-#include <age/graphics/PlayerInputSystem.h>
-#include <age/graphics/RenderSystem.h>
-#include <age/graphics/TextSystem.h>
-#include <age/graphics/Window.h>
-#include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/CircleCollisionComponent.h>
-#include <age/physics/CollisionEvent.h>
-#include <age/physics/EdgeCollisionComponent.h>
-#include <age/physics/KinematicComponent.h>
-#include <age/physics/PhysicsRenderSystem.h>
-#include <age/physics/PhysicsSystem.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/Signal.h>
+#include <azule/audio/AudioEvent.h>
+#include <azule/audio/AudioSystem.h>
+#include <azule/core/Configuration.h>
+#include <azule/core/Engine.h>
+#include <azule/core/EngineState.h>
+#include <azule/core/EventQueue.h>
+#include <azule/core/Utilities.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/graphics/InputComponent.h>
+#include <azule/graphics/PlayerInputSystem.h>
+#include <azule/graphics/RenderSystem.h>
+#include <azule/graphics/TextSystem.h>
+#include <azule/graphics/Window.h>
+#include <azule/physics/BoxCollisionComponent.h>
+#include <azule/physics/CircleCollisionComponent.h>
+#include <azule/physics/CollisionEvent.h>
+#include <azule/physics/EdgeCollisionComponent.h>
+#include <azule/physics/KinematicComponent.h>
+#include <azule/physics/PhysicsRenderSystem.h>
+#include <azule/physics/PhysicsSystem.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/utilities/Signal.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-using namespace age::audio;
-using namespace age::core;
-using namespace age::entity;
-using namespace age::math;
-using namespace age::graphics;
-using namespace age::physics;
-using namespace age::pong;
-using namespace age::utilities;
+using namespace azule::audio;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::math;
+using namespace azule::graphics;
+using namespace azule::physics;
+using namespace azule::pong;
+using namespace azule::utilities;
 
 struct Pong::Impl
 {

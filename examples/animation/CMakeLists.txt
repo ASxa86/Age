@@ -1,4 +1,4 @@
-project(age-animation)
+project(azule-animation)
 
 find_package(SFML 2 CONFIG REQUIRED COMPONENTS system graphics window)
 
@@ -17,7 +17,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE age-core age-entity age-math age-graphics)
+target_link_libraries(${PROJECT_NAME} PRIVATE azule-core azule-entity azule-math azule-graphics)
 
 if(UNIX)
 	target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -25,6 +25,6 @@ if(UNIX)
 	)
 endif()
 
-AGE_COMPILE_OPTIONS()
-AGE_WARNINGS_AS_ERRORS()
-AGE_INSTALL()
+AZULE_COMPILE_OPTIONS()
+AZULE_WARNINGS_AS_ERRORS()
+AZULE_INSTALL()

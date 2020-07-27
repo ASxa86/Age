@@ -1,21 +1,22 @@
-project(age-core)
+project(azule-core)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/core/ChildEvent.h
-	${AGE_INCLUDE_DIR}/age/core/Configuration.h
-	${AGE_INCLUDE_DIR}/age/core/Engine.h
-	${AGE_INCLUDE_DIR}/age/core/EngineState.h
-	${AGE_INCLUDE_DIR}/age/core/EngineStateEvent.h
-	${AGE_INCLUDE_DIR}/age/core/Event.h
-	${AGE_INCLUDE_DIR}/age/core/EventQueue.h
-	${AGE_INCLUDE_DIR}/age/core/Object.h
-	${AGE_INCLUDE_DIR}/age/core/Parser.h
-	${AGE_INCLUDE_DIR}/age/core/Processor.h
-	${AGE_INCLUDE_DIR}/age/core/Reflection.h
-	${AGE_INCLUDE_DIR}/age/core/Timer.h
-	${AGE_INCLUDE_DIR}/age/core/Utilities.h
+	${AZULE_INCLUDE_DIR}/azule/core/ChildEvent.h
+	${AZULE_INCLUDE_DIR}/azule/core/Configuration.h
+	${AZULE_INCLUDE_DIR}/azule/core/Engine.h
+	${AZULE_INCLUDE_DIR}/azule/core/EngineState.h
+	${AZULE_INCLUDE_DIR}/azule/core/EngineStateEvent.h
+	${AZULE_INCLUDE_DIR}/azule/core/Event.h
+	${AZULE_INCLUDE_DIR}/azule/core/EventQueue.h
+	${AZULE_INCLUDE_DIR}/azule/core/Object.h
+	${AZULE_INCLUDE_DIR}/azule/core/Parser.h
+	${AZULE_INCLUDE_DIR}/azule/core/Processor.h
+	${AZULE_INCLUDE_DIR}/azule/core/Reflection.h
+	${AZULE_INCLUDE_DIR}/azule/core/Timer.h
+	${AZULE_INCLUDE_DIR}/azule/core/TypeTraits.h
+	${AZULE_INCLUDE_DIR}/azule/core/Utilities.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -35,7 +36,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-utilities
+	azule-utilities
 )
 
-AGE_INCLUDE_BOOST()
+AZULE_INCLUDE_BOOST()

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <age/core/qt/WidgetPropertyFactory.h>
+#include <azule/core/qt/WidgetPropertyFactory.h>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
 

@@ -1,5 +1,5 @@
-#include <age/core/ChildEvent.h>
-#include <age/core/Object.h>
+#include <azule/core/ChildEvent.h>
+#include <azule/core/Object.h>
 #include <gtest/gtest.h>
 
 using namespace age::core;

@@ -1,14 +1,14 @@
 #include <PaddleAISystem.h>
 
 #include <PaddleAIComponent.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/TransformComponent.h>
-#include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/KinematicComponent.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/physics/BoxCollisionComponent.h>
+#include <azule/physics/KinematicComponent.h>
 
-using namespace age::entity;
-using namespace age::physics;
-using namespace age::pong;
+using namespace azule::entity;
+using namespace azule::physics;
+using namespace azule::pong;
 
 PaddleAISystem::PaddleAISystem()
 {

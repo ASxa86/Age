@@ -1,16 +1,16 @@
-project(age-core-qt)
+project(azule-core-qt)
 
 set(CMAKE_AUTOMOC ON)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/core/qt/ComboBoxEnum.h
-	${AGE_INCLUDE_DIR}/age/core/qt/DelegateWidgetProperty.h
-	${AGE_INCLUDE_DIR}/age/core/qt/TableModelProperties.h
-	${AGE_INCLUDE_DIR}/age/core/qt/WidgetProperty.h
-	${AGE_INCLUDE_DIR}/age/core/qt/WidgetPropertyBool.h
-	${AGE_INCLUDE_DIR}/age/core/qt/WidgetPropertyFactory.h
+	${AZULE_INCLUDE_DIR}/azule/core/qt/ComboBoxEnum.h
+	${AZULE_INCLUDE_DIR}/azule/core/qt/DelegateWidgetProperty.h
+	${AZULE_INCLUDE_DIR}/azule/core/qt/TableModelProperties.h
+	${AZULE_INCLUDE_DIR}/azule/core/qt/WidgetProperty.h
+	${AZULE_INCLUDE_DIR}/azule/core/qt/WidgetPropertyBool.h
+	${AZULE_INCLUDE_DIR}/azule/core/qt/WidgetPropertyFactory.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -24,9 +24,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-utilities
+	azule-core
+	azule-utilities
 )
 
-AGE_INCLUDE_QT()
-AGE_INCLUDE_BOOST()
+AZULE_INCLUDE_QT()
+AZULE_INCLUDE_BOOST()

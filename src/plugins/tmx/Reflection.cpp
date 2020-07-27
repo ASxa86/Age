@@ -1,9 +1,9 @@
-#include <age/core/Reflection.h>
-#include <age/plugins/tmx/ParserTMX.h>
-#include <age/utilities/StaticInvoke.h>
+#include <azule/core/Reflection.h>
+#include <azule/plugins/tmx/ParserTMX.h>
+#include <azule/utilities/StaticInvoke.h>
 
-using namespace age::core;
-using namespace age::tmx;
+using namespace azule::core;
+using namespace azule::tmx;
 
 STATIC_INVOKE
 {

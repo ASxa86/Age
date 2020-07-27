@@ -1,9 +1,9 @@
 #pragma once
 
-#include <age/entity/Entity.h>
+#include <azule/entity/Entity.h>
 #include <QtWidgets/QDialog>
 
-namespace age
+namespace azule
 {
 	///
 	///	\class DialogComponents
@@ -22,10 +22,10 @@ namespace age
 		///
 		///	\param e The entity to add a new component too.
 		///
-		DialogComponents(age::entity::Entity* e, QWidget* parent = nullptr);
+		DialogComponents(azule::entity::Entity* e, QWidget* parent = nullptr);
 		~DialogComponents();
 
 	private:
-		age::entity::Entity* entity;
+		azule::entity::Entity* entity;
 	};
 }

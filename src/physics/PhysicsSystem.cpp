@@ -1,26 +1,26 @@
-#include <age/physics/PhysicsSystem.h>
+#include <azule/physics/PhysicsSystem.h>
 
 #include <Box2D/Box2D.h>
-#include <age/core/EventQueue.h>
-#include <age/core/Timer.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/EntityEvent.h>
-#include <age/entity/TransformComponent.h>
-#include <age/math/Convert.h>
-#include <age/math/Functions.h>
-#include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/CircleCollisionComponent.h>
-#include <age/physics/CollisionEvent.h>
-#include <age/physics/EdgeCollisionComponent.h>
-#include <age/physics/KinematicComponent.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/Signal.h>
+#include <azule/core/EventQueue.h>
+#include <azule/core/Timer.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/EntityEvent.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/math/Convert.h>
+#include <azule/math/Functions.h>
+#include <azule/physics/BoxCollisionComponent.h>
+#include <azule/physics/CircleCollisionComponent.h>
+#include <azule/physics/CollisionEvent.h>
+#include <azule/physics/EdgeCollisionComponent.h>
+#include <azule/physics/KinematicComponent.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/utilities/Signal.h>
 
-using namespace age::core;
-using namespace age::entity;
-using namespace age::math;
-using namespace age::physics;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::math;
+using namespace azule::physics;
 
 class PhysicsSystem::Impl
 {
@@ -58,12 +58,12 @@ public:
 	{
 	}
 
-	static age::math::Vector ToVector(const b2Vec2& x)
+	static azule::math::Vector ToVector(const b2Vec2& x)
 	{
 		return {x.x, x.y};
 	}
 
-	static b2Vec2 FromVector(const age::math::Vector& x)
+	static b2Vec2 FromVector(const azule::math::Vector& x)
 	{
 		return {static_cast<float32>(x.X), static_cast<float32>(x.Y)};
 	}
@@ -343,7 +343,7 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 		}
 	}
 
-	const auto seconds = std::chrono::duration_cast<age::core::seconds>(x);
+	const auto seconds = std::chrono::duration_cast<azule::core::seconds>(x);
 	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
 
 	for(auto body = this->pimpl->world.GetBodyList(); body != nullptr; body = body->GetNext())

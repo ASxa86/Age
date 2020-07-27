@@ -3,9 +3,9 @@
 
 int main(int argc, char** argv)
 {
-	age::Application app(argc, argv);
+	azule::Application app(argc, argv);
 
-	age::MainWindow window;
+	azule::MainWindow window;
 	window.show();
 	return app.exec();
 }

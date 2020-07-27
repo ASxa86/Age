@@ -1,8 +1,8 @@
-#include <age/audio/AudioEvent.h>
+#include <azule/audio/AudioEvent.h>
 
-#include <age/utilities/PimplImpl.h>
+#include <azule/utilities/PimplImpl.h>
 
-using namespace age::audio;
+using namespace azule::audio;
 
 struct AudioEvent::Impl
 {

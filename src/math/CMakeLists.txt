@@ -1,12 +1,12 @@
-project(age-math)
+project(azule-math)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/math/Constants.h
-	${AGE_INCLUDE_DIR}/age/math/Convert.h
-	${AGE_INCLUDE_DIR}/age/math/Functions.h
-	${AGE_INCLUDE_DIR}/age/math/Vector.h
+	${AZULE_INCLUDE_DIR}/azule/math/Constants.h
+	${AZULE_INCLUDE_DIR}/azule/math/Convert.h
+	${AZULE_INCLUDE_DIR}/azule/math/Functions.h
+	${AZULE_INCLUDE_DIR}/azule/math/Vector.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -15,7 +15,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-utilities
+	azule-utilities
 )
 
-AGE_INCLUDE_BOOST()
+AZULE_INCLUDE_BOOST()

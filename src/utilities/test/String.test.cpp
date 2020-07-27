@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include <age/utilities/String.h>
+#include <azule/utilities/String.h>
 
-using namespace age::utilities;
+using namespace azule::utilities;
 
 namespace
 {

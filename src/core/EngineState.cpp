@@ -1,6 +1,6 @@
-#include <age/core/EngineState.h>
+#include <azule/core/EngineState.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 EngineState::EngineState(State x) : state{x}, simTime{0}, frameCount{0}
 {

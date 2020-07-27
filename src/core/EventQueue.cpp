@@ -1,14 +1,14 @@
-#include <age/core/EventQueue.h>
-#include <age/core/Object.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/Signal.h>
+#include <azule/core/EventQueue.h>
+#include <azule/core/Object.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/utilities/Signal.h>
 #include <mutex>
 #include <queue>
 #include <unordered_map>
 #include <vector>
 
-using namespace age::core;
-using namespace age::utilities;
+using namespace azule::core;
+using namespace azule::utilities;
 
 class EventQueue::Impl
 {

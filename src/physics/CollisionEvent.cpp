@@ -1,10 +1,10 @@
-#include <age/physics/CollisionEvent.h>
+#include <azule/physics/CollisionEvent.h>
 
-#include <age/utilities/PimplImpl.h>
-#include <age/entity/Entity.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/entity/Entity.h>
 
-using namespace age::entity;
-using namespace age::physics;
+using namespace azule::entity;
+using namespace azule::physics;
 
 class CollisionEvent::Impl
 {
@@ -17,7 +17,7 @@ public:
 	const Entity& entityB{};
 };
 
-CollisionEvent::CollisionEvent(const Entity& a, const Entity& b) : age::core::Event(), pimpl{a, b}
+CollisionEvent::CollisionEvent(const Entity& a, const Entity& b) : azule::core::Event(), pimpl{a, b}
 {
 }
 
@@ -25,12 +25,12 @@ CollisionEvent::~CollisionEvent()
 {
 }
 
-const age::entity::Entity& CollisionEvent::getEntityA()
+const azule::entity::Entity& CollisionEvent::getEntityA()
 {
 	return this->pimpl->entityA;
 }
 
-const age::entity::Entity& CollisionEvent::getEntityB()
+const azule::entity::Entity& CollisionEvent::getEntityB()
 {
 	return this->pimpl->entityB;
 }

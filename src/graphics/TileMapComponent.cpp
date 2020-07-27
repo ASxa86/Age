@@ -1,9 +1,9 @@
-#include <age/graphics/TileMapComponent.h>
+#include <azule/graphics/TileMapComponent.h>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-using namespace age::graphics;
+using namespace azule::graphics;
 
 TileMapComponent::TileMapComponent()
 {
@@ -13,7 +13,7 @@ TileMapComponent::~TileMapComponent()
 {
 }
 
-void TileMapComponent::loadTileMap(const age::terrain::TileMap& x)
+void TileMapComponent::loadTileMap(const azule::terrain::TileMap& x)
 {
 	for(const auto& layer : x.getLayers())
 	{

@@ -1,11 +1,11 @@
-#include <age/core/Configuration.h>
-#include <age/core/Engine.h>
-#include <age/core/EngineState.h>
-#include <age/core/Parser.h>
-#include <age/entity/EntityDatabase.h>
+#include <azule/core/Configuration.h>
+#include <azule/core/Engine.h>
+#include <azule/core/EngineState.h>
+#include <azule/core/Parser.h>
+#include <azule/entity/EntityDatabase.h>
 
-using namespace age::core;
-using namespace age::entity;
+using namespace azule::core;
+using namespace azule::entity;
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	engine->setEngineState(age::core::EngineState::State::StartUp);
+	engine->setEngineState(azule::core::EngineState::State::StartUp);
 
 	while(engine->getEngineState().getState() < EngineState::State::Shutdown)
 	{

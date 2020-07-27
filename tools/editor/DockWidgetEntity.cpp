@@ -2,11 +2,11 @@
 #include <DialogComponents.h>
 #include <DockWidgetEntity.h>
 #include <TreeWidgetEntity.h>
-#include <age/core/Engine.h>
-#include <age/entity/Component.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/utilities/PimplImpl.h>
+#include <azule/core/Engine.h>
+#include <azule/entity/Component.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/utilities/PimplImpl.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
@@ -15,11 +15,11 @@
 
 #include <iostream>
 
-using namespace age;
-using namespace age::entity;
+using namespace azule;
+using namespace azule::entity;
 
-Q_DECLARE_METATYPE(age::entity::Entity*)
-Q_DECLARE_METATYPE(age::entity::Component*)
+Q_DECLARE_METATYPE(azule::entity::Entity*)
+Q_DECLARE_METATYPE(azule::entity::Component*)
 
 struct DockWidgetEntity::Impl
 {
@@ -28,8 +28,8 @@ struct DockWidgetEntity::Impl
 
 DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 {
-	qRegisterMetaType<age::entity::Entity*>();
-	qRegisterMetaType<age::entity::Component*>();
+	qRegisterMetaType<azule::entity::Entity*>();
+	qRegisterMetaType<azule::entity::Component*>();
 
 	const auto widget = new QWidget();
 	const auto vLayout = new QVBoxLayout(widget);
@@ -71,14 +71,14 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 			{
 				case TreeWidgetEntity::ItemType::Entity:
 				{
-					auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity*>();
+					auto entity = item->data(0, Qt::UserRole).value<azule::entity::Entity*>();
 					entity->remove();
 				}
 				break;
 
 				case TreeWidgetEntity::ItemType::Component:
 				{
-					auto component = item->data(0, Qt::UserRole).value<age::entity::Component*>();
+					auto component = item->data(0, Qt::UserRole).value<azule::entity::Component*>();
 					component->remove();
 				}
 				break;
@@ -94,7 +94,7 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 		if(items.empty() == false)
 		{
 			const auto& item = items[0];
-			const auto entity = item->data(0, Qt::UserRole).value<age::entity::Entity*>();
+			const auto entity = item->data(0, Qt::UserRole).value<azule::entity::Entity*>();
 			const auto dlgComponents = new DialogComponents(entity);
 			dlgComponents->setModal(true);
 			dlgComponents->setAttribute(Qt::WA_DeleteOnClose);

@@ -1,6 +1,6 @@
-#include <age/terrain/TileSet.h>
+#include <azule/terrain/TileSet.h>
 
-using namespace age::terrain;
+using namespace azule::terrain;
 
 TileSet::TileSet() : source{}, name{}, tileCount{0}, columns{0}, tileWidth{0}, tileHeight{0}, spacing{0}
 {

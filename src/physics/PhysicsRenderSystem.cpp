@@ -1,17 +1,17 @@
-#include <age/core/Configuration.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/TransformComponent.h>
-#include <age/physics/BoxCollisionComponent.h>
-#include <age/physics/CircleCollisionComponent.h>
-#include <age/physics/EdgeCollisionComponent.h>
-#include <age/physics/PhysicsRenderSystem.h>
+#include <azule/core/Configuration.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/physics/BoxCollisionComponent.h>
+#include <azule/physics/CircleCollisionComponent.h>
+#include <azule/physics/EdgeCollisionComponent.h>
+#include <azule/physics/PhysicsRenderSystem.h>
 #include <SFML/Graphics.hpp>
 
-using namespace age::core;
-using namespace age::entity;
-using namespace age::physics;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::physics;
 
 struct PhysicsRenderSystem::Impl
 {

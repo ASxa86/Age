@@ -1,8 +1,8 @@
-#include <age/math/qt/WidgetVector.h>
+#include <azule/math/qt/WidgetVector.h>
 
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/String.h>
-#include <age/math/Vector.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/utilities/String.h>
+#include <azule/math/Vector.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QLabel>

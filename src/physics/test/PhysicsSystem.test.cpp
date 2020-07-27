@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
-#include <age/core/Engine.h>
-#include <age/core/EngineState.h>
-#include <age/entity/TransformComponent.h>
-#include <age/physics/PhysicsSystem.h>
+#include <azule/core/Engine.h>
+#include <azule/core/EngineState.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/physics/PhysicsSystem.h>
 
 TEST(PhysicsSystem, ComponentPool)
 {

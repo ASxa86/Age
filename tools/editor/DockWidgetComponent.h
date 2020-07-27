@@ -2,7 +2,7 @@
 
 #include <QtWidgets/QDockWidget>
 
-namespace age
+namespace azule
 {
 	class DockWidgetComponent : public QDockWidget
 	{

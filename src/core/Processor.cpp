@@ -1,7 +1,7 @@
-#include <age/core/Processor.h>
-#include <age/utilities/PimplImpl.h>
+#include <azule/core/Processor.h>
+#include <azule/utilities/PimplImpl.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 class Processor::Impl
 {

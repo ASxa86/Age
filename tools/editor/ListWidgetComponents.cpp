@@ -1,12 +1,12 @@
 #include <ListWidgetComponents.h>
-#include <age/core/Reflection.h>
-#include <age/entity/Component.h>
+#include <azule/core/Reflection.h>
+#include <azule/entity/Component.h>
 
-using namespace age;
+using namespace azule;
 
 ListWidgetComponents::ListWidgetComponents(QWidget* parent) : QListWidget(parent)
 {
-	const auto types = age::core::Reflection::Instance().getTypes(typeid(age::entity::Component));
+	const auto types = azule::core::Reflection::Instance().getTypes(typeid(azule::entity::Component));
 
 	for(auto type : types)
 	{

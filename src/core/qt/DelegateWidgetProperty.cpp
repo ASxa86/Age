@@ -1,6 +1,6 @@
-#include <age/core/Reflection.h>
-#include <age/core/qt/DelegateWidgetProperty.h>
-#include <age/core/qt/WidgetPropertyFactory.h>
+#include <azule/core/Reflection.h>
+#include <azule/core/qt/DelegateWidgetProperty.h>
+#include <azule/core/qt/WidgetPropertyFactory.h>
 #include <QtWidgets/QLayout>
 
 using namespace age::core::qt;

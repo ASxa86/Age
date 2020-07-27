@@ -1,4 +1,4 @@
-project(age-defense)
+project(azule-defense)
 
 add_executable(${PROJECT_NAME})
 
@@ -18,12 +18,12 @@ if(UNIX)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-graphics
-	age-navigation
-	age-physics
+	azule-core
+	azule-graphics
+	azule-navigation
+	azule-physics
 )
 
-AGE_COMPILE_OPTIONS()
-AGE_WARNINGS_AS_ERRORS()
-AGE_INSTALL()
+AZULE_COMPILE_OPTIONS()
+AZULE_WARNINGS_AS_ERRORS()
+AZULE_INSTALL()

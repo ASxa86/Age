@@ -1,8 +1,8 @@
-#include <age/entity/CloneSystem.h>
+#include <azule/entity/CloneSystem.h>
 
-#include <age/core/Utilities.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
+#include <azule/core/Utilities.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
 
 using namespace age::entity;
 

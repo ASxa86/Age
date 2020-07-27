@@ -1,9 +1,9 @@
-#include <age/core/Parser.h>
+#include <azule/core/Parser.h>
 
-#include <age/core/Reflection.h>
-#include <age/utilities/PimplImpl.h>
+#include <azule/core/Reflection.h>
+#include <azule/utilities/PimplImpl.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 struct Parser::Impl
 {
@@ -23,7 +23,7 @@ bool Parser::readFile(const std::filesystem::path&, Object*)
 	return false;
 }
 
-bool age::core::ReadFile(const std::filesystem::path& x, Object* obj)
+bool azule::core::ReadFile(const std::filesystem::path& x, Object* obj)
 {
 	const auto parser = Reflection::Instance().create<Parser>(x.extension().string());
 

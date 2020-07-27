@@ -1,4 +1,4 @@
-project(age-graphics)
+project(azule-graphics)
 
 ############################################
 #
@@ -6,27 +6,27 @@ project(age-graphics)
 #
 find_package(SFML 2 COMPONENTS system graphics window)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 set(SFML_INCLUDE_DIR ${SFML_DIR}/../../include)
 message(STATUS "inc ${SFML_INCLUDE_DIR}")
 target_include_directories(${PROJECT_NAME} PUBLIC ${SFML_INCLUDE_DIR})
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/graphics/BoxSelectionComponent.h
-	${AGE_INCLUDE_DIR}/age/graphics/DatabaseTexture.h
-	${AGE_INCLUDE_DIR}/age/graphics/DrawableComponent.h
-	${AGE_INCLUDE_DIR}/age/graphics/InputComponent.h
-	${AGE_INCLUDE_DIR}/age/graphics/KeyEvent.h
-	${AGE_INCLUDE_DIR}/age/graphics/PlayerInputSystem.h
-	${AGE_INCLUDE_DIR}/age/graphics/ProgressBarComponent.h
-	${AGE_INCLUDE_DIR}/age/graphics/RenderSystem.h
-	${AGE_INCLUDE_DIR}/age/graphics/SpriteComponent.h
-	${AGE_INCLUDE_DIR}/age/graphics/TextSystem.h
-	${AGE_INCLUDE_DIR}/age/graphics/TileMapComponent.h
-	${AGE_INCLUDE_DIR}/age/graphics/TileMapSystem.h
-	${AGE_INCLUDE_DIR}/age/graphics/Utilities.h
-	${AGE_INCLUDE_DIR}/age/graphics/Window.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/BoxSelectionComponent.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/DatabaseTexture.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/DrawableComponent.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/InputComponent.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/KeyEvent.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/PlayerInputSystem.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/ProgressBarComponent.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/RenderSystem.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/SpriteComponent.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/TextSystem.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/TileMapComponent.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/TileMapSystem.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/Utilities.h
+	${AZULE_INCLUDE_DIR}/azule/graphics/Window.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -54,11 +54,11 @@ if(UNIX)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-	age-core
-	age-entity
-	age-math
-	age-terrain
-	age-utilities
+	azule-core
+	azule-entity
+	azule-math
+	azule-terrain
+	azule-utilities
 	sfml-system
 	sfml-graphics
 	sfml-window

@@ -1,30 +1,30 @@
-#include <age/core/Reflection.h>
-#include <age/graphics/BoxSelectionComponent.h>
-#include <age/graphics/DatabaseTexture.h>
-#include <age/graphics/DrawableComponent.h>
-#include <age/graphics/Export.h>
-#include <age/graphics/ProgressBarComponent.h>
-#include <age/graphics/RenderSystem.h>
-#include <age/graphics/SpriteComponent.h>
-#include <age/graphics/TileMapSystem.h>
-#include <age/graphics/Window.h>
-#include <age/utilities/StaticInvoke.h>
+#include <azule/core/Reflection.h>
+#include <azule/graphics/BoxSelectionComponent.h>
+#include <azule/graphics/DatabaseTexture.h>
+#include <azule/graphics/DrawableComponent.h>
+#include <azule/graphics/Export.h>
+#include <azule/graphics/ProgressBarComponent.h>
+#include <azule/graphics/RenderSystem.h>
+#include <azule/graphics/SpriteComponent.h>
+#include <azule/graphics/TileMapSystem.h>
+#include <azule/graphics/Window.h>
+#include <azule/utilities/StaticInvoke.h>
 
-using namespace age::core;
-using namespace age::graphics;
+using namespace azule::core;
+using namespace azule::graphics;
 
 STATIC_INVOKE
 {
-	Reflection::Instance().add<TileMapSystem>("TileMapSystem").addBase<age::entity::System>();
-	Reflection::Instance().add<RenderSystem>("RenderSystem").addBase<age::entity::System>();
+	Reflection::Instance().add<TileMapSystem>("TileMapSystem").addBase<azule::entity::System>();
+	Reflection::Instance().add<RenderSystem>("RenderSystem").addBase<azule::entity::System>();
 
-	Reflection::Instance().add<DatabaseTexture>("DatabaseTexture").addBase<age::core::Object>();
+	Reflection::Instance().add<DatabaseTexture>("DatabaseTexture").addBase<azule::core::Object>();
 
 	Reflection::Instance().add<Window>("Window");
 
 	Reflection::Instance()
 		.add<DrawableComponent>("DrawableComponent")
-		.addBase<age::entity::Component>()
+		.addBase<azule::entity::Component>()
 		.addProperty("UseRotation", &DrawableComponent::UseRotation)
 		.addProperty("UsePosition", &DrawableComponent::UsePosition)
 		.addProperty("RenderOrder", &DrawableComponent::RenderOrder);

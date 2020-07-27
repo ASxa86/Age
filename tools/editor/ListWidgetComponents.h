@@ -2,7 +2,7 @@
 
 #include <QtWidgets/QListWidget>
 
-namespace age
+namespace azule
 {
 	///
 	///	\class ListWidgetComponents

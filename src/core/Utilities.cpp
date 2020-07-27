@@ -1,16 +1,16 @@
-#include <age/core/Configuration.h>
-#include <age/core/Object.h>
-#include <age/core/Reflection.h>
-#include <age/core/Utilities.h>
+#include <azule/core/Configuration.h>
+#include <azule/core/Object.h>
+#include <azule/core/Reflection.h>
+#include <azule/core/Utilities.h>
 
-double age::core::PixelsToMeters(unsigned int x)
+double azule::core::PixelsToMeters(unsigned int x)
 {
-	return static_cast<double>(x) / static_cast<double>(age::core::Configuration::Instance().getPixelsPerMeter());
+	return static_cast<double>(x) / static_cast<double>(azule::core::Configuration::Instance().getPixelsPerMeter());
 }
 
-std::unique_ptr<age::core::Object> age::core::Clone(age::core::Object* x)
+std::unique_ptr<azule::core::Object> azule::core::Clone(azule::core::Object* x)
 {
-	const auto type = age::core::Reflection::Instance().get(*x);
+	const auto type = azule::core::Reflection::Instance().get(*x);
 	auto clone = type->create();
 
 	if(clone != nullptr)
@@ -22,14 +22,14 @@ std::unique_ptr<age::core::Object> age::core::Clone(age::core::Object* x)
 
 		for(auto child : x->getChildren())
 		{
-			clone->addChild(age::core::Clone(child));
+			clone->addChild(azule::core::Clone(child));
 		}
 	}
 
 	return clone;
 }
 
-std::string age::core::ResolvePath(std::string x)
+std::string azule::core::ResolvePath(std::string x)
 {
 	if(x.empty() == false)
 	{

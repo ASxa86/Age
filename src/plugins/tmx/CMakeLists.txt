@@ -1,4 +1,4 @@
-project(age-plugins-tmx)
+project(azule-plugins-tmx)
 
 ############################################
 #
@@ -6,7 +6,7 @@ project(age-plugins-tmx)
 #
 find_package(PugiXML)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	FOLDER plugins
@@ -24,7 +24,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/plugins/tmx/ParserTMX.h
+	${AZULE_INCLUDE_DIR}/azule/plugins/tmx/ParserTMX.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -33,9 +33,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-entity
-	age-graphics
-	age-terrain
+	azule-entity
+	azule-graphics
+	azule-terrain
 	pugixml
 	# pugixml::pugixml
 )

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <age/utilities/Pimpl.h>
-#include <age/entity/Component.h>
+#include <azule/utilities/Pimpl.h>
+#include <azule/entity/Component.h>
 #include <QtWidgets/QApplication>
 
-namespace age
+namespace azule
 {
 	namespace core
 	{
@@ -36,10 +36,10 @@ namespace age
 		///
 		///	Get the core game engine for the application.
 		///
-		age::core::Engine& getEngine();
+		azule::core::Engine& getEngine();
 
 	signals:
-		void componentSelected(age::entity::Component*);
+		void componentSelected(azule::entity::Component*);
 
 	private:
 		struct Impl;

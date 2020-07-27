@@ -1,6 +1,6 @@
-#include <age/entity/Animation.h>
+#include <azule/entity/Animation.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 Animation::Animation() : channels{}
 {

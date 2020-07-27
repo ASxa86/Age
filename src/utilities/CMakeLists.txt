@@ -1,18 +1,18 @@
-project(age-utilities)
+project(azule-utilities)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 if(UNIX)
 	target_link_libraries(${PROJECT_NAME} PUBLIC dl stdc++fs)
 endif()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/utilities/Pimpl.h
-	${AGE_INCLUDE_DIR}/age/utilities/PimplImpl.h
-	${AGE_INCLUDE_DIR}/age/utilities/SharedLibrary.h
-	${AGE_INCLUDE_DIR}/age/utilities/Signal.h
-	${AGE_INCLUDE_DIR}/age/utilities/StaticInvoke.h
-	${AGE_INCLUDE_DIR}/age/utilities/String.h
+	${AZULE_INCLUDE_DIR}/azule/utilities/Pimpl.h
+	${AZULE_INCLUDE_DIR}/azule/utilities/PimplImpl.h
+	${AZULE_INCLUDE_DIR}/azule/utilities/SharedLibrary.h
+	${AZULE_INCLUDE_DIR}/azule/utilities/Signal.h
+	${AZULE_INCLUDE_DIR}/azule/utilities/StaticInvoke.h
+	${AZULE_INCLUDE_DIR}/azule/utilities/String.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -23,4 +23,4 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
 )
 
-AGE_INCLUDE_BOOST()
+AZULE_INCLUDE_BOOST()

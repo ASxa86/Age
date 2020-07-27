@@ -1,14 +1,14 @@
-#include <age/core/Engine.h>
+#include <azule/core/Engine.h>
 
-#include <age/core/EngineState.h>
-#include <age/core/EngineStateEvent.h>
-#include <age/core/EventQueue.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/core/Processor.h>
-#include <age/core/Timer.h>
+#include <azule/core/EngineState.h>
+#include <azule/core/EngineStateEvent.h>
+#include <azule/core/EventQueue.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/core/Processor.h>
+#include <azule/core/Timer.h>
 #include <thread>
 
-using namespace age::core;
+using namespace azule::core;
 
 class Engine::Impl
 {

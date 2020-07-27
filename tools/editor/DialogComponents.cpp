@@ -1,16 +1,16 @@
 #include <DialogComponents.h>
 #include <ListWidgetComponents.h>
-#include <age/core/Reflection.h>
-#include <age/entity/Component.h>
-#include <age/entity/Entity.h>
+#include <azule/core/Reflection.h>
+#include <azule/entity/Component.h>
+#include <azule/entity/Entity.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QPushButton>
 
-using namespace age;
-using namespace age::core;
-using namespace age::entity;
+using namespace azule;
+using namespace azule::core;
+using namespace azule::entity;
 
-DialogComponents::DialogComponents(age::entity::Entity* e, QWidget* parent) : QDialog(parent), entity{e}
+DialogComponents::DialogComponents(azule::entity::Entity* e, QWidget* parent) : QDialog(parent), entity{e}
 {
 	const auto vLayout = new QVBoxLayout(this);
 	const auto lwComponents = new ListWidgetComponents();

@@ -1,4 +1,4 @@
-project(age-physics)
+project(azule-physics)
 
 ###############################################
 #
@@ -145,18 +145,18 @@ add_library(${PROJECT_NAME} ${BOX2D_SRC} ${BOX2D_H})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-	FOLDER age
+	FOLDER azule
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/physics/BoxCollisionComponent.h
-	${AGE_INCLUDE_DIR}/age/physics/CircleCollisionComponent.h
-	${AGE_INCLUDE_DIR}/age/physics/CollisionEvent.h
-	${AGE_INCLUDE_DIR}/age/physics/CollisionComponent.h
-	${AGE_INCLUDE_DIR}/age/physics/EdgeCollisionComponent.h
-	${AGE_INCLUDE_DIR}/age/physics/KinematicComponent.h
-	${AGE_INCLUDE_DIR}/age/physics/PhysicsSystem.h
-	${AGE_INCLUDE_DIR}/age/physics/PhysicsRenderSystem.h
+	${AZULE_INCLUDE_DIR}/azule/physics/BoxCollisionComponent.h
+	${AZULE_INCLUDE_DIR}/azule/physics/CircleCollisionComponent.h
+	${AZULE_INCLUDE_DIR}/azule/physics/CollisionEvent.h
+	${AZULE_INCLUDE_DIR}/azule/physics/CollisionComponent.h
+	${AZULE_INCLUDE_DIR}/azule/physics/EdgeCollisionComponent.h
+	${AZULE_INCLUDE_DIR}/azule/physics/KinematicComponent.h
+	${AZULE_INCLUDE_DIR}/azule/physics/PhysicsSystem.h
+	${AZULE_INCLUDE_DIR}/azule/physics/PhysicsRenderSystem.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -170,11 +170,11 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-entity
-	age-math
-	age-terrain
-	age-graphics
-	age-utilities
+	azule-entity
+	azule-math
+	azule-terrain
+	azule-graphics
+	azule-utilities
 )
 
 if(MSVC)
@@ -189,9 +189,9 @@ if(MSVC)
 	source_group("Source Files\\Box2D\\Rope" FILES ${TARGET_SRC_BOX2D_ROPE})
 endif()
 
-AGE_COMPILE_OPTIONS()
-AGE_WARNINGS_AS_ERRORS()
-AGE_EXPORTS()
-AGE_TEST()
-AGE_QT()
-AGE_INSTALL()
+AZULE_COMPILE_OPTIONS()
+AZULE_WARNINGS_AS_ERRORS()
+AZULE_EXPORTS()
+AZULE_TEST()
+AZULE_QT()
+AZULE_INSTALL()

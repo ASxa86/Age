@@ -1,9 +1,9 @@
-#include <age/utilities/String.h>
-#include <age/math/Vector.h>
+#include <azule/utilities/String.h>
+#include <azule/math/Vector.h>
 #include <array>
 #include <cmath>
 
-using namespace age::math;
+using namespace azule::math;
 
 Vector::Vector(double x, double y) : X{x}, Y{y}
 {
@@ -11,18 +11,18 @@ Vector::Vector(double x, double y) : X{x}, Y{y}
 
 Vector::Vector(const std::string& x)
 {
-	const auto tokens = age::utilities::Split(x);
+	const auto tokens = azule::utilities::Split(x);
 
 	if(tokens.size() == 2)
 	{
-		this->X = age::utilities::StringTo<double>(tokens[0]);
-		this->Y = age::utilities::StringTo<double>(tokens[1]);
+		this->X = azule::utilities::StringTo<double>(tokens[0]);
+		this->Y = azule::utilities::StringTo<double>(tokens[1]);
 	}
 }
 
 Vector::operator std::string() const
 {
-	return "{" + age::utilities::ToString(this->X) + ", " + age::utilities::ToString(this->Y) + "}";
+	return "{" + azule::utilities::ToString(this->X) + ", " + azule::utilities::ToString(this->Y) + "}";
 }
 
 Vector Vector::operator+(const Vector& x) const
@@ -115,7 +115,7 @@ double Vector::normalize()
 	return mag;
 }
 
-double age::math::distance(const Vector& a, const Vector& b)
+double azule::math::distance(const Vector& a, const Vector& b)
 {
 	return std::sqrt(std::pow(b.X - a.X, 2.0) + std::pow(b.Y - a.Y, 2.0));
 }

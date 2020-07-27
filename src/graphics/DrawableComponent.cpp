@@ -1,6 +1,6 @@
-#include <age/graphics/DrawableComponent.h>
+#include <azule/graphics/DrawableComponent.h>
 
-using namespace age::graphics;
+using namespace azule::graphics;
 
 const sf::Drawable* DrawableComponent::getDrawable()
 {

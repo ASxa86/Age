@@ -1,13 +1,13 @@
-#include <age/core/Object.h>
-#include <age/core/Reflection.h>
-#include <age/core/Utilities.h>
-#include <age/plugins/xml/ParserXML.h>
+#include <azule/core/Object.h>
+#include <azule/core/Reflection.h>
+#include <azule/core/Utilities.h>
+#include <azule/plugins/xml/ParserXML.h>
 #include <iostream>
 #include <pugixml.hpp>
 
-using namespace age::core;
-using namespace age::utilities;
-using namespace age::xml;
+using namespace azule::core;
+using namespace azule::utilities;
+using namespace azule::xml;
 
 namespace
 {
@@ -20,7 +20,7 @@ namespace
 
 			if(prop != nullptr)
 			{
-				const auto value = age::core::ResolvePath(x.attribute("value").as_string());
+				const auto value = azule::core::ResolvePath(x.attribute("value").as_string());
 				prop->setValue(*obj, value);
 				return true;
 			}
@@ -82,7 +82,7 @@ bool ParserXML::readFile(const std::filesystem::path& x, Object* obj)
 		pugi::xml_document doc;
 		if(doc.load_file(x.c_str()).status == pugi::xml_parse_status::status_ok)
 		{
-			auto root = doc.child("age");
+			auto root = doc.child("azule");
 
 			if(root.empty() == false)
 			{

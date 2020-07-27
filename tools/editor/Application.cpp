@@ -1,15 +1,15 @@
 #include <Application.h>
-#include <age/core/Engine.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
+#include <azule/core/Engine.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
 
-using namespace age;
-using namespace age::entity;
+using namespace azule;
+using namespace azule::entity;
 
 struct Application::Impl
 {
-	age::core::Engine engine;
+	azule::core::Engine engine;
 };
 
 Application::Application(int argc, char** argv) : QApplication(argc, argv), pimpl()
@@ -27,7 +27,7 @@ Application* Application::Instance()
 	return static_cast<Application*>(QCoreApplication::instance());
 }
 
-age::core::Engine& Application::getEngine()
+azule::core::Engine& Application::getEngine()
 {
 	return this->pimpl->engine;
 }

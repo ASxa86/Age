@@ -1,10 +1,10 @@
-#include <age/graphics/SpriteComponent.h>
+#include <azule/graphics/SpriteComponent.h>
 
-#include <age/core/Engine.h>
-#include <age/core/Reflection.h>
-#include <age/graphics/DatabaseTexture.h>
+#include <azule/core/Engine.h>
+#include <azule/core/Reflection.h>
+#include <azule/graphics/DatabaseTexture.h>
 
-using namespace age::graphics;
+using namespace azule::graphics;
 
 SpriteComponent::SpriteComponent() : frame{0}, vFrames{1}, hFrames{1}
 {
@@ -20,7 +20,7 @@ void SpriteComponent::loadFile(const std::filesystem::path& x)
 {
 	this->file = x;
 
-	auto engine = this->getParent<age::core::Engine>(FindOption::Recursive);
+	auto engine = this->getParent<azule::core::Engine>(FindOption::Recursive);
 
 	if(engine != nullptr)
 	{

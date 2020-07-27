@@ -1,7 +1,7 @@
-#include <age/physics/CollisionComponent.h>
+#include <azule/physics/CollisionComponent.h>
 
-using namespace age::physics;
+using namespace azule::physics;
 
-CollisionComponent::CollisionComponent() : age::entity::Component()
+CollisionComponent::CollisionComponent() : azule::entity::Component()
 {
 }

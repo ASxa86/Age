@@ -1,12 +1,12 @@
-#include <age/audio/AudioSystem.h>
+#include <azule/audio/AudioSystem.h>
 
-#include <age/audio/AudioEvent.h>
-#include <age/core/EventQueue.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/Signal.h>
+#include <azule/audio/AudioEvent.h>
+#include <azule/core/EventQueue.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/utilities/Signal.h>
 #include <SFML/Audio/Sound.hpp>
 
-using namespace age::audio;
+using namespace azule::audio;
 
 struct AudioSystem::Impl
 {
@@ -23,10 +23,10 @@ AudioSystem::~AudioSystem()
 
 void AudioSystem::onStartup()
 {
-	this->track(age::core::EventQueue::Instance().addEventHandler([this](auto x) { this->onEvent(x); }));
+	this->track(azule::core::EventQueue::Instance().addEventHandler([this](auto x) { this->onEvent(x); }));
 }
 
-void AudioSystem::onEvent(age::core::Event* x)
+void AudioSystem::onEvent(azule::core::Event* x)
 {
 	auto event = dynamic_cast<AudioEvent*>(x);
 

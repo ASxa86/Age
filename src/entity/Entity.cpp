@@ -1,9 +1,9 @@
-#include <age/core/EventQueue.h>
-#include <age/entity/Component.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityEvent.h>
+#include <azule/core/EventQueue.h>
+#include <azule/entity/Component.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityEvent.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 Entity::Entity()
 {
@@ -13,6 +13,6 @@ bool Entity::addComponent(std::unique_ptr<Component> x)
 {
 	auto evt = std::make_unique<EntityEvent>(this, EntityEvent::Type::ComponentAdded);
 	evt->Component = x.get();
-	age::core::EventQueue::Instance().sendEvent(std::move(evt));
+	azule::core::EventQueue::Instance().sendEvent(std::move(evt));
 	return this->addChild(std::move(x));
 }

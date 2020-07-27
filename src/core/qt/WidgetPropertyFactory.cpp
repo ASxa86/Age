@@ -1,8 +1,8 @@
-#include <age/core/qt/WidgetPropertyFactory.h>
+#include <azule/core/qt/WidgetPropertyFactory.h>
 
-#include <age/core/Configuration.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/SharedLibrary.h>
+#include <azule/core/Configuration.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/utilities/SharedLibrary.h>
 #include <QtWidgets/QWidget>
 #include <atomic>
 #include <iostream>

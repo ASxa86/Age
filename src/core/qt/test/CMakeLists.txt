@@ -1,6 +1,6 @@
-project(age-core-qt-test)
+project(azule-core-qt-test)
 
-AGE_ADD_TEST()
+AZULE_ADD_TEST()
 
 target_sources(${PROJECT_NAME} PRIVATE
 	ComboBoxEnum.test.cpp
@@ -9,7 +9,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core-qt
+	azule-core-qt
 )
 
-AGE_INCLUDE_QT()
+AZULE_INCLUDE_QT()

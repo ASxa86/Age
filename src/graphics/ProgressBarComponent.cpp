@@ -1,8 +1,8 @@
-#include <age/graphics/ProgressBarComponent.h>
+#include <azule/graphics/ProgressBarComponent.h>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <age/graphics/Utilities.h>
+#include <azule/graphics/Utilities.h>
 
-using namespace age::graphics;
+using namespace azule::graphics;
 
 void ProgressBarComponent::ProgressBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

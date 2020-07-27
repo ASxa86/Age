@@ -1,10 +1,10 @@
-#include <age/core/Engine.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/System.h>
+#include <azule/core/Engine.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/System.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
-System::System() : age::core::Processor()
+System::System() : azule::core::Processor()
 {
 }
 
@@ -14,7 +14,7 @@ System::~System()
 
 EntityDatabase* System::getEntityDatabase() const
 {
-	const auto parent = this->getParent<age::core::Engine>(FindOption::Recursive);
+	const auto parent = this->getParent<azule::core::Engine>(FindOption::Recursive);
 
 	if(parent != nullptr)
 	{

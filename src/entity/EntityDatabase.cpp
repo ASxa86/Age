@@ -1,16 +1,16 @@
-#include <age/core/EventQueue.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/EntityEvent.h>
+#include <azule/core/EventQueue.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/EntityEvent.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 bool EntityDatabase::addEntity(std::unique_ptr<Entity> x)
 {
 	if(x != nullptr)
 	{
 		auto evt = std::make_unique<EntityEvent>(x.get(), EntityEvent::Type::EntityAdded);
-		age::core::EventQueue::Instance().sendEvent(std::move(evt));
+		azule::core::EventQueue::Instance().sendEvent(std::move(evt));
 		return this->addChild(std::move(x));
 	}
 

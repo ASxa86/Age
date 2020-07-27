@@ -1,6 +1,6 @@
-#include <age/physics/KinematicComponent.h>
+#include <azule/physics/KinematicComponent.h>
 
-using namespace age::physics;
+using namespace azule::physics;
 
 KinematicComponent::KinematicComponent() : Component()
 {

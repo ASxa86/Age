@@ -1,9 +1,9 @@
-#include <age/core/qt/TableModelProperties.h>
+#include <azule/core/qt/TableModelProperties.h>
 
-#include <age/core/Object.h>
-#include <age/utilities/MagicEnum.h>
-#include <age/core/Reflection.h>
-#include <age/utilities/String.h>
+#include <azule/core/Object.h>
+#include <azule/utilities/MagicEnum.h>
+#include <azule/core/Reflection.h>
+#include <azule/utilities/String.h>
 
 using namespace age::core;
 using namespace age::core::qt;

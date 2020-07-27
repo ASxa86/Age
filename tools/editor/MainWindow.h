@@ -1,9 +1,9 @@
 #pragma once
 
-#include <age/utilities/Pimpl.h>
+#include <azule/utilities/Pimpl.h>
 #include <QtWidgets/QMainWindow>
 
-namespace age
+namespace azule
 {
 	///
 	///	\class MainWindow

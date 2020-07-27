@@ -1,3 +1,3 @@
-if(AGE_ENABLE_QT)
+if(AZULE_ENABLE_QT)
 	add_subdirectory(editor)
 endif()

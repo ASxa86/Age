@@ -1,4 +1,4 @@
-project(age-pong)
+project(azule-pong)
 
 find_package(SFML 2 COMPONENTS system graphics window)
 
@@ -31,17 +31,17 @@ if(UNIX)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-audio
-	age-entity
-	age-graphics
-	age-math
-	age-physics
+	azule-audio
+	azule-entity
+	azule-graphics
+	azule-math
+	azule-physics
 	sfml-system
 	sfml-graphics
 	sfml-window
 )
 
 
-AGE_COMPILE_OPTIONS()
-AGE_WARNINGS_AS_ERRORS()
-AGE_INSTALL()
+AZULE_COMPILE_OPTIONS()
+AZULE_WARNINGS_AS_ERRORS()
+AZULE_INSTALL()

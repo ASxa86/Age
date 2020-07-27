@@ -1,6 +1,6 @@
-project(age-core-test)
+project(azule-core-test)
 
-AGE_ADD_TEST()
+AZULE_ADD_TEST()
 
 target_sources(${PROJECT_NAME} PRIVATE
 	Engine.test.cpp
@@ -11,6 +11,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-utilities
+	azule-core
+	azule-utilities
 )

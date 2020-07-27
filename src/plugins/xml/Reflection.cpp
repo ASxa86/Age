@@ -1,9 +1,9 @@
-#include <age/core/Reflection.h>
-#include <age/plugins/xml/ParserXML.h>
-#include <age/utilities/StaticInvoke.h>
+#include <azule/core/Reflection.h>
+#include <azule/plugins/xml/ParserXML.h>
+#include <azule/utilities/StaticInvoke.h>
 
-using namespace age::core;
-using namespace age::xml;
+using namespace azule::core;
+using namespace azule::xml;
 
 STATIC_INVOKE
 {

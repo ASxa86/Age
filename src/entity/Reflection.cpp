@@ -1,14 +1,14 @@
-#include <age/core/Reflection.h>
-#include <age/entity/AnimationComponent.h>
-#include <age/entity/CloneSystem.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/SelectionComponent.h>
-#include <age/entity/TransformComponent.h>
-#include <age/utilities/StaticInvoke.h>
+#include <azule/core/Reflection.h>
+#include <azule/entity/AnimationComponent.h>
+#include <azule/entity/CloneSystem.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/SelectionComponent.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/utilities/StaticInvoke.h>
 
-using namespace age::core;
-using namespace age::entity;
+using namespace azule::core;
+using namespace azule::entity;
 
 STATIC_INVOKE
 {

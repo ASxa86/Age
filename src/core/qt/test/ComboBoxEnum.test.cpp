@@ -1,4 +1,4 @@
-#include <age/core/qt/ComboBoxEnum.h>
+#include <azule/core/qt/ComboBoxEnum.h>
 #include <gtest/gtest.h>
 
 namespace

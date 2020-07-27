@@ -1,6 +1,6 @@
-#include <age/entity/AnimationComponent.h>
+#include <azule/entity/AnimationComponent.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 AnimationComponent::AnimationComponent() : currentAnimation{nullptr}, elapsed{0}, length{0}, speed{1.0}, isPlaying{false}
 {

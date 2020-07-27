@@ -2,6 +2,6 @@
 
 int main()
 {
-	age::pong::Pong pong;
+	azule::pong::Pong pong;
 	return pong.run();
 }

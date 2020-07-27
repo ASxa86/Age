@@ -1,20 +1,20 @@
-project(age-entity)
+project(azule-entity)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/entity/Animation.h
-	${AGE_INCLUDE_DIR}/age/entity/AnimationChannel.h
-	${AGE_INCLUDE_DIR}/age/entity/AnimationComponent.h
-	${AGE_INCLUDE_DIR}/age/entity/AnimationSystem.h
-	${AGE_INCLUDE_DIR}/age/entity/CloneSystem.h
-	${AGE_INCLUDE_DIR}/age/entity/Component.h
-	${AGE_INCLUDE_DIR}/age/entity/Entity.h
-	${AGE_INCLUDE_DIR}/age/entity/EntityDatabase.h
-	${AGE_INCLUDE_DIR}/age/entity/EntityEvent.h
-	${AGE_INCLUDE_DIR}/age/entity/SelectionComponent.h
-	${AGE_INCLUDE_DIR}/age/entity/System.h
-	${AGE_INCLUDE_DIR}/age/entity/TransformComponent.h
+	${AZULE_INCLUDE_DIR}/azule/entity/Animation.h
+	${AZULE_INCLUDE_DIR}/azule/entity/AnimationChannel.h
+	${AZULE_INCLUDE_DIR}/azule/entity/AnimationComponent.h
+	${AZULE_INCLUDE_DIR}/azule/entity/AnimationSystem.h
+	${AZULE_INCLUDE_DIR}/azule/entity/CloneSystem.h
+	${AZULE_INCLUDE_DIR}/azule/entity/Component.h
+	${AZULE_INCLUDE_DIR}/azule/entity/Entity.h
+	${AZULE_INCLUDE_DIR}/azule/entity/EntityDatabase.h
+	${AZULE_INCLUDE_DIR}/azule/entity/EntityEvent.h
+	${AZULE_INCLUDE_DIR}/azule/entity/SelectionComponent.h
+	${AZULE_INCLUDE_DIR}/azule/entity/System.h
+	${AZULE_INCLUDE_DIR}/azule/entity/TransformComponent.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -34,9 +34,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-math
-	age-utilities
+	azule-core
+	azule-math
+	azule-utilities
 )
 
 find_package(EnTT CONFIG REQUIRED)
@@ -45,4 +45,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	EnTT::EnTT
 )
 
-AGE_INCLUDE_BOOST()
+AZULE_INCLUDE_BOOST()

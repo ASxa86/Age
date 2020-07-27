@@ -1,11 +1,11 @@
-project(age-math-qt)
+project(azule-math-qt)
 
 set(CMAKE_AUTOMOC ON)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/math/qt/WidgetVector.h
+	${AZULE_INCLUDE_DIR}/azule/math/qt/WidgetVector.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -14,8 +14,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core-qt
-	age-math
+	azule-core-qt
+	azule-math
 )
 
-AGE_INCLUDE_QT()
+AZULE_INCLUDE_QT()

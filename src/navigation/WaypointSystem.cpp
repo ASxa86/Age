@@ -1,14 +1,14 @@
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/TransformComponent.h>
-#include <age/navigation/WaypointComponent.h>
-#include <age/navigation/WaypointSystem.h>
-#include <age/physics/KinematicComponent.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/navigation/WaypointComponent.h>
+#include <azule/navigation/WaypointSystem.h>
+#include <azule/physics/KinematicComponent.h>
 
-using namespace age::entity;
-using namespace age::math;
-using namespace age::navigation;
-using namespace age::physics;
+using namespace azule::entity;
+using namespace azule::math;
+using namespace azule::navigation;
+using namespace azule::physics;
 
 WaypointSystem::WaypointSystem() : System()
 {

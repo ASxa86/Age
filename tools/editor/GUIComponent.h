@@ -1,9 +1,9 @@
 #pragma once
 
-#include <age/entity/Component.h>
+#include <azule/entity/Component.h>
 #include <string>
 
-namespace age
+namespace azule
 {
 	///
 	///	\class GUIComponent
@@ -14,7 +14,7 @@ namespace age
 	///
 	///	\date March 9, 2019
 	///
-	struct GUIComponent : public age::entity::Component
+	struct GUIComponent : public azule::entity::Component
 	{
 		std::string ID;
 	};

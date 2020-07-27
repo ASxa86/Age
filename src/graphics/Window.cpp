@@ -1,30 +1,30 @@
-#include <age/graphics/Window.h>
+#include <azule/graphics/Window.h>
 
-#include <age/core/Configuration.h>
-#include <age/core/Engine.h>
-#include <age/core/EngineState.h>
-#include <age/core/EventQueue.h>
-#include <age/utilities/PimplImpl.h>
-#include <age/core/Timer.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/TransformComponent.h>
-#include <age/graphics/KeyEvent.h>
-#include <age/graphics/RenderSystem.h>
+#include <azule/core/Configuration.h>
+#include <azule/core/Engine.h>
+#include <azule/core/EngineState.h>
+#include <azule/core/EventQueue.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/core/Timer.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/graphics/KeyEvent.h>
+#include <azule/graphics/RenderSystem.h>
 #include <SFML/Graphics.hpp>
 #include <iomanip>
 #include <numeric>
 #include <sstream>
 
-using namespace age::core;
-using namespace age::entity;
-using namespace age::graphics;
-using namespace age::math;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::graphics;
+using namespace azule::math;
 
 class Window::Impl
 {
 public:
 	Impl(unsigned int width, unsigned int height)
-		: settings{0, 0, 8}, window{sf::VideoMode{width, height}, "AGE", sf::Style::Close | sf::Style::Resize, settings}
+		: settings{0, 0, 8}, window{sf::VideoMode{width, height}, "Azule", sf::Style::Close | sf::Style::Resize, settings}
 	{
 		this->window.setVerticalSyncEnabled(false);
 		this->window.setFramerateLimit(0);
@@ -107,7 +107,7 @@ void Window::render(std::chrono::microseconds x)
 
 		// FPS
 		static double elapsed = 0.0;
-		const auto delta = std::chrono::duration_cast<age::core::seconds>(this->pimpl->timer.reset());
+		const auto delta = std::chrono::duration_cast<azule::core::seconds>(this->pimpl->timer.reset());
 		elapsed += delta.count();
 
 		if(elapsed >= 0.5)

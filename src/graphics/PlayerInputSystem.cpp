@@ -1,16 +1,16 @@
-#include <age/core/Engine.h>
-#include <age/core/EventQueue.h>
-#include <age/utilities/Signal.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/graphics/InputComponent.h>
-#include <age/graphics/KeyEvent.h>
-#include <age/graphics/PlayerInputSystem.h>
+#include <azule/core/Engine.h>
+#include <azule/core/EventQueue.h>
+#include <azule/utilities/Signal.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/graphics/InputComponent.h>
+#include <azule/graphics/KeyEvent.h>
+#include <azule/graphics/PlayerInputSystem.h>
 #include <SFML/Window.hpp>
 
-using namespace age::core;
-using namespace age::entity;
-using namespace age::graphics;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::graphics;
 
 PlayerInputSystem::PlayerInputSystem() : System()
 {
@@ -26,7 +26,7 @@ void PlayerInputSystem::onStartup()
 	this->track(EventQueue::Instance().addEventHandler([this](auto x) { this->event(x); }));
 }
 
-void PlayerInputSystem::event(age::core::Event* x)
+void PlayerInputSystem::event(azule::core::Event* x)
 {
 	const auto keyEvent = dynamic_cast<KeyEvent*>(x);
 

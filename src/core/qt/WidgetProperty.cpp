@@ -1,4 +1,4 @@
-#include <age/core/qt/WidgetProperty.h>
+#include <azule/core/qt/WidgetProperty.h>
 
 using namespace age::core::qt;
 

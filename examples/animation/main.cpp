@@ -1,20 +1,20 @@
-#include <age/core/Configuration.h>
-#include <age/core/Engine.h>
-#include <age/core/EngineState.h>
-#include <age/entity/AnimationComponent.h>
-#include <age/entity/AnimationSystem.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/TransformComponent.h>
-#include <age/graphics/InputComponent.h>
-#include <age/graphics/PlayerInputSystem.h>
-#include <age/graphics/RenderSystem.h>
-#include <age/graphics/SpriteComponent.h>
-#include <age/graphics/Window.h>
+#include <azule/core/Configuration.h>
+#include <azule/core/Engine.h>
+#include <azule/core/EngineState.h>
+#include <azule/entity/AnimationComponent.h>
+#include <azule/entity/AnimationSystem.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/TransformComponent.h>
+#include <azule/graphics/InputComponent.h>
+#include <azule/graphics/PlayerInputSystem.h>
+#include <azule/graphics/RenderSystem.h>
+#include <azule/graphics/SpriteComponent.h>
+#include <azule/graphics/Window.h>
 
-using namespace age::core;
-using namespace age::entity;
-using namespace age::graphics;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::graphics;
 
 int main()
 {

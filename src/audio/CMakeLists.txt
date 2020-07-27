@@ -1,4 +1,4 @@
-project(age-audio)
+project(azule-audio)
 
 ############################################
 #
@@ -6,11 +6,11 @@ project(age-audio)
 #
 find_package(SFML 2 CONFIG COMPONENTS audio)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/audio/AudioEvent.h
-	${AGE_INCLUDE_DIR}/age/audio/AudioSystem.h
+	${AZULE_INCLUDE_DIR}/azule/audio/AudioEvent.h
+	${AZULE_INCLUDE_DIR}/azule/audio/AudioSystem.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -19,7 +19,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-	age-core
-	age-entity
+	azule-core
+	azule-entity
 	sfml-audio
 )

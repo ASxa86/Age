@@ -1,6 +1,6 @@
-project(age-utilities-test)
+project(azule-utilities-test)
 
-AGE_ADD_TEST()
+AZULE_ADD_TEST()
 
 target_sources(${PROJECT_NAME} PRIVATE
 	SharedLibrary.test.cpp
@@ -8,5 +8,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-utilities
+	azule-utilities
 )

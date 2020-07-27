@@ -1,17 +1,17 @@
-#include <age/graphics/TextSystem.h>
+#include <azule/graphics/TextSystem.h>
 
-#include <age/utilities/PimplImpl.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/entity/TransformComponent.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/entity/TransformComponent.h>
 #include <SFML/Graphics.hpp>
 
-using namespace age::entity;
-using namespace age::graphics;
-using namespace age::math;
+using namespace azule::entity;
+using namespace azule::graphics;
+using namespace azule::math;
 
 namespace
 {
-	sf::Vector2f FromVector(const age::math::Vector& x)
+	sf::Vector2f FromVector(const azule::math::Vector& x)
 	{
 		return {static_cast<float>(x.X), static_cast<float>(x.Y)};
 	}

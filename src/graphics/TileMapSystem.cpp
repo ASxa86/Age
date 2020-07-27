@@ -1,12 +1,12 @@
-#include <age/graphics/TileMapSystem.h>
+#include <azule/graphics/TileMapSystem.h>
 
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/graphics/TileMapComponent.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/graphics/TileMapComponent.h>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-using namespace age::entity;
-using namespace age::graphics;
+using namespace azule::entity;
+using namespace azule::graphics;
 
 TileMapSystem::TileMapSystem()
 {

@@ -1,7 +1,7 @@
-#include <age/entity/Entity.h>
-#include <age/entity/EntityEvent.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityEvent.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 EntityEvent::EntityEvent(Entity* e, Type t) : entity{e}, type{t}
 {

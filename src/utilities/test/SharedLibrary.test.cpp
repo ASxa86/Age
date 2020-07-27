@@ -1,7 +1,7 @@
-#include <age/utilities/SharedLibrary.h>
+#include <azule/utilities/SharedLibrary.h>
 #include <gtest/gtest.h>
 
-using namespace age::utilities;
+using namespace azule::utilities;
 
 constexpr std::string_view LibraryName{"D:/age/build/bin/Debug/age-utilitiesd.dll"};
 

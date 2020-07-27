@@ -1,11 +1,11 @@
-#include <age/entity/AnimationSystem.h>
+#include <azule/entity/AnimationSystem.h>
 
-#include <age/core/Timer.h>
-#include <age/entity/AnimationComponent.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
+#include <azule/core/Timer.h>
+#include <azule/entity/AnimationComponent.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 AnimationSystem::AnimationSystem() : System()
 {
@@ -30,7 +30,7 @@ void AnimationSystem::frame(std::chrono::microseconds x)
 
 			if(a->getIsPlaying() == true && animation != nullptr)
 			{
-				const auto delta = age::core::seconds{std::chrono::duration_cast<age::core::seconds>(x).count() * a->getSpeed()};
+				const auto delta = azule::core::seconds{std::chrono::duration_cast<azule::core::seconds>(x).count() * a->getSpeed()};
 				a->setElapsed(a->getElapsed() + std::chrono::duration_cast<std::chrono::microseconds>(delta));
 
 				if(a->getElapsed() > a->getLength())

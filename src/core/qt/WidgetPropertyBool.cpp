@@ -1,7 +1,7 @@
-#include <age/core/qt/WidgetPropertyBool.h>
+#include <azule/core/qt/WidgetPropertyBool.h>
 
-#include <age/utilities/PimplImpl.h>
-#include <age/utilities/String.h>
+#include <azule/utilities/PimplImpl.h>
+#include <azule/utilities/String.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QComboBox>
 

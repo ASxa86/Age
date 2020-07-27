@@ -1,4 +1,4 @@
-project(age-tilemap)
+project(azule-tilemap)
 
 find_package(SFML 2 COMPONENTS system graphics window)
 
@@ -16,11 +16,11 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-graphics
+	azule-core
+	azule-graphics
 	sfml-graphics
 )
 
-AGE_COMPILE_OPTIONS()
-AGE_WARNINGS_AS_ERRORS()
-AGE_INSTALL()
+AZULE_COMPILE_OPTIONS()
+AZULE_WARNINGS_AS_ERRORS()
+AZULE_INSTALL()

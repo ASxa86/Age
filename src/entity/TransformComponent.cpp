@@ -1,6 +1,6 @@
-#include <age/entity/TransformComponent.h>
+#include <azule/entity/TransformComponent.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 TransformComponent::TransformComponent() : Component()
 {

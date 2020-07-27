@@ -1,12 +1,12 @@
-project(age-terrain)
+project(azule-terrain)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/terrain/TileMap.h
-	${AGE_INCLUDE_DIR}/age/terrain/TileMapLayer.h
-	${AGE_INCLUDE_DIR}/age/terrain/TileSet.h
-	${AGE_INCLUDE_DIR}/age/terrain/TileSource.h
+	${AZULE_INCLUDE_DIR}/azule/terrain/TileMap.h
+	${AZULE_INCLUDE_DIR}/azule/terrain/TileMapLayer.h
+	${AZULE_INCLUDE_DIR}/azule/terrain/TileSet.h
+	${AZULE_INCLUDE_DIR}/azule/terrain/TileSource.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -17,6 +17,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-math
+	azule-core
+	azule-math
 )

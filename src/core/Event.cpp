@@ -1,6 +1,6 @@
-#include <age/core/Event.h>
+#include <azule/core/Event.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 Event::Event()
 {

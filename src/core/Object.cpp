@@ -1,9 +1,9 @@
-#include <age/core/Object.h>
+#include <azule/core/Object.h>
 #include <algorithm>
 #include <iostream>
 
-using namespace age::core;
-using namespace age::utilities;
+using namespace azule::core;
+using namespace azule::utilities;
 
 Object::Object()
 {

@@ -1,16 +1,16 @@
-#include <age/core/Configuration.h>
-#include <age/core/Engine.h>
-#include <age/core/EngineState.h>
-#include <age/core/Parser.h>
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/graphics/TileMapSystem.h>
-#include <age/graphics/Window.h>
+#include <azule/core/Configuration.h>
+#include <azule/core/Engine.h>
+#include <azule/core/EngineState.h>
+#include <azule/core/Parser.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/graphics/TileMapSystem.h>
+#include <azule/graphics/Window.h>
 #include <iostream>
 
-using namespace age::core;
-using namespace age::entity;
-using namespace age::graphics;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::graphics;
 
 int main()
 {

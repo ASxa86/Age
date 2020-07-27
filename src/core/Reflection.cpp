@@ -1,10 +1,10 @@
-#include <age/core/Configuration.h>
-#include <age/core/Reflection.h>
-#include <age/utilities/StaticInvoke.h>
+#include <azule/core/Configuration.h>
+#include <azule/core/Reflection.h>
+#include <azule/utilities/StaticInvoke.h>
 #include <algorithm>
 #include <iostream>
 
-using namespace age::core;
+using namespace azule::core;
 
 STATIC_INVOKE
 {
@@ -129,10 +129,10 @@ Reflection& Reflection::Instance()
 		{
 			const auto filename = filepath.filename().string();
 
-			const std::string agePlugin = "age-";
+			const std::string agePlugin = "azule-";
 			if(filename.compare(0, agePlugin.size(), agePlugin) == 0)
 			{
-				age::utilities::SharedLibrary library(filepath);
+				azule::utilities::SharedLibrary library(filepath);
 
 				if(library.loaded() == true)
 				{

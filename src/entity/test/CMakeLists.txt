@@ -1,8 +1,8 @@
-project(age-entity-test)
+project(azule-entity-test)
 
 find_package(EnTT)
 
-AGE_ADD_TEST()
+AZULE_ADD_TEST()
 
 target_sources(${PROJECT_NAME} PRIVATE
 	ComponentPool.test.cpp
@@ -11,7 +11,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-entity
+	azule-core
+	azule-entity
 	EnTT::EnTT
 )

@@ -1,18 +1,18 @@
-#include <age/plugins/tmx/ParserTMX.h>
+#include <azule/plugins/tmx/ParserTMX.h>
 
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
-#include <age/graphics/TileMapComponent.h>
-#include <age/terrain/TileMap.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
+#include <azule/graphics/TileMapComponent.h>
+#include <azule/terrain/TileMap.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <charconv>
 #include <pugixml.hpp>
 
-using namespace age::core;
-using namespace age::entity;
-using namespace age::graphics;
-using namespace age::tmx;
+using namespace azule::core;
+using namespace azule::entity;
+using namespace azule::graphics;
+using namespace azule::tmx;
 
 ParserTMX::ParserTMX()
 {
@@ -35,7 +35,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 			for(const auto& map : doc.children("map"))
 			{
 				auto entity = manager->addEntity();
-				age::terrain::TileMap tileMap;
+				azule::terrain::TileMap tileMap;
 				tileMap.setWidth(map.attribute("width").as_int());
 				tileMap.setHeight(map.attribute("height").as_int());
 				tileMap.setTileWidth(map.attribute("tilewidth").as_int());
@@ -43,7 +43,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 
 				for(const auto& tileset : map.children("tileset"))
 				{
-					age::terrain::TileSet tileSet;
+					azule::terrain::TileSet tileSet;
 					tileSet.setTileOffset(tileset.attribute("firstgid").as_int());
 					tileSet.setName(tileset.attribute("name").as_string());
 					tileSet.setTileWidth(tileset.attribute("tilewidth").as_int());
@@ -56,7 +56,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 
 					if(image.empty() == false)
 					{
-						age::terrain::TileSource source;
+						azule::terrain::TileSource source;
 						source.setFileName(x.parent_path() / image.attribute("source").as_string());
 						source.setWidth(image.attribute("width").as_int());
 						source.setHeight(image.attribute("height").as_int());
@@ -68,7 +68,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 
 				for(const auto& layer : map.children("layer"))
 				{
-					age::terrain::TileMapLayer mapLayer;
+					azule::terrain::TileMapLayer mapLayer;
 					mapLayer.setName(layer.attribute("name").as_string());
 					mapLayer.setWidth(layer.attribute("width").as_int());
 					mapLayer.setHeight(layer.attribute("height").as_int());

@@ -1,10 +1,10 @@
-#include <age/utilities/SharedLibrary.h>
+#include <azule/utilities/SharedLibrary.h>
 
 #ifdef WIN32
 #include <Windows.h>
 #endif
 
-using namespace age::utilities;
+using namespace azule::utilities;
 
 SharedLibrary::~SharedLibrary()
 {

@@ -1,7 +1,7 @@
-#include <age/core/Timer.h>
-#include <age/utilities/PimplImpl.h>
+#include <azule/core/Timer.h>
+#include <azule/utilities/PimplImpl.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 class Timer::Impl
 {

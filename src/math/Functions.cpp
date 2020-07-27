@@ -1,10 +1,10 @@
-#include <age/math/Functions.h>
+#include <azule/math/Functions.h>
 
-#include <age/math/Convert.h>
-#include <age/math/Vector.h>
+#include <azule/math/Convert.h>
+#include <azule/math/Vector.h>
 #include <cmath>
 
-double age::math::VectorAngle(const age::math::Vector& x)
+double azule::math::VectorAngle(const azule::math::Vector& x)
 {
 	if(x.magnitude() > 0.0)
 	{
@@ -23,7 +23,7 @@ double age::math::VectorAngle(const age::math::Vector& x)
 	return 0.0;
 }
 
-double age::math::Constrain(double x, double min, double max)
+double azule::math::Constrain(double x, double min, double max)
 {
 	if(x < min || x > max)
 	{

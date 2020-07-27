@@ -1,8 +1,8 @@
 #include <PaddleAIComponent.h>
-#include <age/entity/Entity.h>
+#include <azule/entity/Entity.h>
 
-using namespace age::entity;
-using namespace age::pong;
+using namespace azule::entity;
+using namespace azule::pong;
 
 PaddleAIComponent::PaddleAIComponent() : ball{}
 {

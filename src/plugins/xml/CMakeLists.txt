@@ -1,4 +1,4 @@
-project(age-plugins-xml)
+project(azule-plugins-xml)
 
 ############################################
 #
@@ -6,7 +6,7 @@ project(age-plugins-xml)
 #
 find_package(PugiXML)
 
-AGE_ADD_LIBRARY()
+AZULE_ADD_LIBRARY()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	FOLDER plugins
@@ -24,7 +24,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AGE_INCLUDE_DIR}/age/plugins/xml/ParserXML.h
+	${AZULE_INCLUDE_DIR}/azule/plugins/xml/ParserXML.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -33,7 +33,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
+	azule-core
 	pugixml
 	# pugixml::pugixml
 )

@@ -1,6 +1,6 @@
-#include <age/entity/SelectionComponent.h>
+#include <azule/entity/SelectionComponent.h>
 
-using namespace age::entity;
+using namespace azule::entity;
 
 SelectionComponent::SelectionComponent()
 {

@@ -1,6 +1,6 @@
-#include <age/terrain/TileMapLayer.h>
+#include <azule/terrain/TileMapLayer.h>
 
-using namespace age::terrain;
+using namespace azule::terrain;
 
 TileMapLayer::TileMapLayer() : indices{}, name{}, width{0}, height{0}
 {

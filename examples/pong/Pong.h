@@ -1,8 +1,8 @@
 #pragma once
 
-#include <age/core/Engine.h>
+#include <azule/core/Engine.h>
 
-namespace age
+namespace azule
 {
 	namespace pong
 	{

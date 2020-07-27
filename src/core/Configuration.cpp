@@ -1,6 +1,6 @@
-#include <age/core/Configuration.h>
+#include <azule/core/Configuration.h>
 
-#include <age/utilities/PimplImpl.h>
+#include <azule/utilities/PimplImpl.h>
 #include <mutex>
 
 #ifdef WIN32
@@ -10,12 +10,12 @@
 #include <unistd.h>
 #endif
 
-using namespace age::core;
+using namespace azule::core;
 
-const std::string Configuration::PathDataAlias = "$AGE_DATA";
-const std::string Configuration::PathMapsAlias = "$AGE_MAPS";
-const std::string Configuration::PathBinAlias = "$AGE_BIN";
-const std::string Configuration::PathRootAlias = "$AGE_ROOT";
+const std::string Configuration::PathDataAlias = "$AZULE_DATA";
+const std::string Configuration::PathMapsAlias = "$AZULE_MAPS";
+const std::string Configuration::PathBinAlias = "$AZULE_BIN";
+const std::string Configuration::PathRootAlias = "$AZULE_ROOT";
 
 struct Configuration::Impl
 {
@@ -28,7 +28,7 @@ struct Configuration::Impl
 	unsigned int pixelsPerMeter{32};
 };
 
-const Configuration& age::core::Configuration::Instance()
+const Configuration& azule::core::Configuration::Instance()
 {
 	static Configuration singleton;
 

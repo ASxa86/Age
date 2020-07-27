@@ -1,8 +1,8 @@
 #pragma once
 
-#include <age/entity/System.h>
+#include <azule/entity/System.h>
 
-namespace age
+namespace azule
 {
 	namespace pong
 	{
@@ -15,7 +15,7 @@ namespace age
 		///
 		///	\date July 29, 2018
 		///
-		class PaddleAISystem : public age::entity::System
+		class PaddleAISystem : public azule::entity::System
 		{
 		public:
 			PaddleAISystem();

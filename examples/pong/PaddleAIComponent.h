@@ -1,9 +1,9 @@
 #pragma once
 
-#include <age/entity/Component.h>
-#include <age/entity/Entity.h>
+#include <azule/entity/Component.h>
+#include <azule/entity/Entity.h>
 
-namespace age
+namespace azule
 {
 	namespace pong
 	{
@@ -16,7 +16,7 @@ namespace age
 		///
 		///	\date July 29, 2018
 		///
-		class PaddleAIComponent : public age::entity::Component
+		class PaddleAIComponent : public azule::entity::Component
 		{
 		public:
 			PaddleAIComponent();
@@ -25,11 +25,11 @@ namespace age
 			///
 			///	\brief Set the ball that this paddle is to track and play against.
 			///
-			void setBall(age::entity::Entity x);
-			const age::entity::Entity& getBall() const;
+			void setBall(azule::entity::Entity x);
+			const azule::entity::Entity& getBall() const;
 
 		private:
-			age::entity::Entity ball;
+			azule::entity::Entity ball;
 		};
 	}
 }

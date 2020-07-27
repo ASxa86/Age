@@ -1,6 +1,6 @@
-#include <age/graphics/DatabaseTexture.h>
+#include <azule/graphics/DatabaseTexture.h>
 
-using namespace age::graphics;
+using namespace azule::graphics;
 
 sf::Texture& DatabaseTexture::getTexture(const std::string& x)
 {

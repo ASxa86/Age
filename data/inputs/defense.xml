@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
-<age>
+<azule>
 	<object type="DatabaseTexture"/>
 
 	<object type="EntityDatabase">
@@ -30,7 +30,7 @@
 			</object>
 
 			<object type="SpriteComponent">
-				<property name="File" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
+				<property name="File" value="$AZULE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
 				<property name="Frame" value="135"/>
@@ -44,7 +44,7 @@
 			</object>
 
 			<object type="SpriteComponent">
-				<property name="File" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
+				<property name="File" value="$AZULE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
 				<property name="Frame" value="136"/>
@@ -83,7 +83,7 @@
 			</object>
 
 			<object type="SpriteComponent" id="Cloned">
-				<property name="File" value="$AGE_MAPS/towerDefense_tilesheet.png"/>
+				<property name="File" value="$AZULE_MAPS/towerDefense_tilesheet.png"/>
 				<property name="HFrames" value="23"/>
 				<property name="VFrames" value="13"/>
 				<property name="Frame" value="130"/>
@@ -121,4 +121,4 @@
 		<object type="RenderSystem"/>
 		<object type="PhysicsRenderSystem"/>
 	</object>
-</age>
+</azule>
