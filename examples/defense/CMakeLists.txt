@@ -1,0 +1,29 @@
+project(age-defense)
+
+add_executable(${PROJECT_NAME})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER examples
+)
+
+target_sources(${PROJECT_NAME} PRIVATE
+	main.cpp
+)
+
+if(UNIX)
+	target_link_libraries(${PROJECT_NAME} PUBLIC
+		${CMAKE_DL_LIBS}
+		GL
+	)
+endif()
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+	age-core
+	age-graphics
+	age-navigation
+	age-physics
+)
+
+AGE_COMPILE_OPTIONS()
+AGE_WARNINGS_AS_ERRORS()
+AGE_INSTALL()

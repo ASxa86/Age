@@ -1,0 +1,41 @@
+project(age-plugins-tmx)
+
+############################################
+#
+#	FindPugi
+#
+find_package(PugiXML)
+
+AGE_ADD_LIBRARY()
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER plugins
+	ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/Debug/plugins"
+	LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Debug/plugins"
+	RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/plugins"
+
+	ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/Release/plugins"
+	LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Release/plugins"
+	RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/plugins"
+
+	ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/RelWithDebInfo/plugins"
+	LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/RelWithDebInfo/plugins"
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/RelWithDebInfo/plugins"
+)
+
+target_sources(${PROJECT_NAME} PRIVATE
+	${AGE_INCLUDE_DIR}/age/plugins/tmx/ParserTMX.h
+)
+
+target_sources(${PROJECT_NAME} PRIVATE
+	ParserTMX.cpp
+	Reflection.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+	age-entity
+	age-graphics
+	age-terrain
+	pugixml
+	# pugixml::pugixml
+)
