@@ -1,8 +1,8 @@
-# AGE
+# azule
 
 ## Overview
 
-Aaron's (Another) Game Engine is a general game engine for building 2D and maybe 3D software games, simulations, and applications.
+A game engine designed for study and exploration of modern software design techniques.
 
 ## Quick Start
 
