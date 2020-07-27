@@ -2,6 +2,7 @@
 
 #include <age/math/export.h>
 #include <array>
+#include <string>
 
 namespace age
 {
