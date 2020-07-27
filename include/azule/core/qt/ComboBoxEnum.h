@@ -3,7 +3,7 @@
 #include <azule/utilities/MagicEnum.h>
 #include <QtWidgets/QComboBox>
 
-namespace age
+namespace azule
 {
 	namespace core
 	{

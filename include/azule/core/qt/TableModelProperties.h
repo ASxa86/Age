@@ -3,7 +3,7 @@
 #include <azule/core/qt/export.h>
 #include <QtCore/QAbstractTableModel>
 
-namespace age
+namespace azule
 {
 	namespace core
 	{
@@ -22,7 +22,7 @@ namespace age
 					Value
 				};
 
-				TableModelProperties(age::core::Object* x, QObject* parent = nullptr);
+				TableModelProperties(azule::core::Object* x, QObject* parent = nullptr);
 
 				int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 				int columnCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -32,7 +32,7 @@ namespace age
 				Qt::ItemFlags flags(const QModelIndex& index) const override;
 
 			private:
-				age::core::Object* object{};
+				azule::core::Object* object{};
 			};
 		}
 	}

@@ -2,7 +2,7 @@
 #include <azule/core/Object.h>
 #include <gtest/gtest.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 class ObjectOne : public Object
 {

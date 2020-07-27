@@ -3,7 +3,7 @@
 #include <azule/core/qt/export.h>
 #include <QtWidgets/QStyledItemDelegate>
 
-namespace age
+namespace azule
 {
 	namespace core
 	{

@@ -4,7 +4,7 @@
 #include <QtWidgets/QWidget>
 #include <string>
 
-namespace age
+namespace azule
 {
 	namespace core
 	{

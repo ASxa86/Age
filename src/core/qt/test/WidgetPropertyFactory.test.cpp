@@ -4,7 +4,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
 
-using namespace age::core::qt;
+using namespace azule::core::qt;
 
 namespace
 {

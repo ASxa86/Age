@@ -1,6 +1,6 @@
 #include <azule/core/qt/WidgetProperty.h>
 
-using namespace age::core::qt;
+using namespace azule::core::qt;
 
 WidgetProperty::WidgetProperty(QWidget* parent) : QWidget(parent)
 {

@@ -2,7 +2,7 @@
 #include <azule/core/qt/WidgetPropertyBool.h>
 #include <azule/core/qt/WidgetPropertyFactory.h>
 
-using namespace age::core::qt;
+using namespace azule::core::qt;
 
 AZULE_CORE_QT_EXPORT_C void FactoryRegisterQt()
 {

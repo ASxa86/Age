@@ -1,7 +1,7 @@
 #include <azule/core/EventQueue.h>
 #include <gtest/gtest.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 TEST(EventQueue, connect)
 {

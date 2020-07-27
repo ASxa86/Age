@@ -1,7 +1,7 @@
 #include <azule/math/Vector.h>
 #include <gtest/gtest.h>
 
-using namespace age::math;
+using namespace azule::math;
 
 TEST(Vector, Constructor)
 {

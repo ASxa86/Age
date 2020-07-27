@@ -1,7 +1,7 @@
 #include <azule/core/Engine.h>
 #include <gtest/gtest.h>
 
-using namespace age::core;
+using namespace azule::core;
 
 TEST(Engine, Constructor)
 {

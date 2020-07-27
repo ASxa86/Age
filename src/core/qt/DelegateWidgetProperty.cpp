@@ -3,13 +3,13 @@
 #include <azule/core/qt/WidgetPropertyFactory.h>
 #include <QtWidgets/QLayout>
 
-using namespace age::core::qt;
+using namespace azule::core::qt;
 
-Q_DECLARE_METATYPE(age::core::ReflProp*);
+Q_DECLARE_METATYPE(azule::core::ReflProp*);
 
 DelegateWidgetProperty::DelegateWidgetProperty(QObject* parent) : QStyledItemDelegate(parent)
 {
-	qRegisterMetaType<age::core::ReflProp*>();
+	qRegisterMetaType<azule::core::ReflProp*>();
 }
 
 QString DelegateWidgetProperty::displayText(const QVariant& value, const QLocale&) const
@@ -19,7 +19,7 @@ QString DelegateWidgetProperty::displayText(const QVariant& value, const QLocale
 
 QWidget* DelegateWidgetProperty::createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index) const
 {
-	const auto property = index.data(Qt::UserRole).value<age::core::ReflProp*>();
+	const auto property = index.data(Qt::UserRole).value<azule::core::ReflProp*>();
 	const auto editor = WidgetPropertyFactory::Instance().create(property->getTypeInfo(), parent);
 
 	if(editor != nullptr)

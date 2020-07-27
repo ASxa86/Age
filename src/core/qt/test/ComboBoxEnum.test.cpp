@@ -13,7 +13,7 @@ namespace
 
 TEST(ComboBoxEnum, TestEnum)
 {
-	age::core::qt::ComboBoxEnum<TestEnum> cbEnum;
+	azule::core::qt::ComboBoxEnum<TestEnum> cbEnum;
 	EXPECT_EQ(cbEnum.count(), 3);
 	EXPECT_EQ(cbEnum.getCurrentEnum(), TestEnum::One);
 	EXPECT_EQ(cbEnum.currentText().toStdString(), "One");

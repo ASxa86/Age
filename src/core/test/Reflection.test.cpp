@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <functional>
 
-using namespace age::core;
+using namespace azule::core;
 
 namespace
 {

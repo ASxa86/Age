@@ -8,8 +8,8 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 
-using namespace age::core::qt;
-using namespace age::math::qt;
+using namespace azule::core::qt;
+using namespace azule::math::qt;
 
 struct WidgetVector::Impl
 {
@@ -42,12 +42,12 @@ WidgetVector::~WidgetVector()
 
 void WidgetVector::setValue(const std::string& x)
 {
-	const auto vector = age::utilities::StringTo<Vector>(x);
+	const auto vector = azule::utilities::StringTo<Vector>(x);
 	this->pimpl->sbxX->setValue(vector.X);
 	this->pimpl->sbxY->setValue(vector.Y);
 }
 
 std::string WidgetVector::getValue() const
 {
-	return age::utilities::ToString(Vector{this->pimpl->sbxX->value(), this->pimpl->sbxY->value()});
+	return azule::utilities::ToString(Vector{this->pimpl->sbxX->value(), this->pimpl->sbxY->value()});
 }

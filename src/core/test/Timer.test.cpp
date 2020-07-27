@@ -3,7 +3,7 @@
 #include<gtest/gtest.h>
 #include <thread>
 
-using namespace age::core;
+using namespace azule::core;
 
 TEST(Timer, reset)
 {
@@ -38,10 +38,10 @@ TEST(Timer, reset)
 TEST(Timer, seconds)
 {
 	const auto us = std::chrono::microseconds(10000);
-	const auto seconds = std::chrono::duration_cast<age::core::seconds>(us);
+	const auto seconds = std::chrono::duration_cast<azule::core::seconds>(us);
 	EXPECT_EQ(0.01, seconds.count());
 
 	const auto us16 = std::chrono::microseconds(16667);
-	const auto seconds16 = std::chrono::duration_cast<age::core::seconds>(us16);
+	const auto seconds16 = std::chrono::duration_cast<azule::core::seconds>(us16);
 	EXPECT_EQ(0.016667, seconds16.count());
 }

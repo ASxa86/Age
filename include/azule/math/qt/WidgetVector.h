@@ -5,7 +5,7 @@
 #include <azule/math/qt/export.h>
 #include <QtWidgets/QWidget>
 
-namespace age
+namespace azule
 {
 	namespace math
 	{
@@ -14,13 +14,13 @@ namespace age
 			///
 			///	\class WidgetVector
 			///
-			///	\brief A property widget for editing an age::math::Vector property.
+			///	\brief A property widget for editing an azule::math::Vector property.
 			///
 			///	\date March 15, 2019
 			///
 			///	\author Aaron Shelley
 			///
-			class AZULE_MATH_QT_EXPORT WidgetVector : public age::core::qt::WidgetProperty
+			class AZULE_MATH_QT_EXPORT WidgetVector : public azule::core::qt::WidgetProperty
 			{
 				Q_OBJECT
 

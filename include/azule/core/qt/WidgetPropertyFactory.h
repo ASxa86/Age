@@ -7,7 +7,7 @@
 
 class QWidget;
 
-namespace age
+namespace azule
 {
 	namespace core
 	{

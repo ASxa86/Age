@@ -4,9 +4,9 @@
 #include <azule/math/Vector.h>
 #include <azule/math/qt/WidgetVector.h>
 
-using namespace age::core::qt;
+using namespace azule::core::qt;
 
 AZULE_MATH_QT_EXPORT_C void FactoryRegisterQt()
 {
-	WidgetPropertyFactory::RegisterType<age::math::qt::WidgetVector, age::math::Vector>();
+	WidgetPropertyFactory::RegisterType<azule::math::qt::WidgetVector, azule::math::Vector>();
 }

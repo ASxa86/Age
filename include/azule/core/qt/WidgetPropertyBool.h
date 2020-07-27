@@ -3,7 +3,7 @@
 #include <azule/utilities/Pimpl.h>
 #include <azule/core/qt/WidgetProperty.h>
 
-namespace age
+namespace azule
 {
 	namespace core
 	{

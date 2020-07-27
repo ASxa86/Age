@@ -8,8 +8,8 @@
 #include <iostream>
 #include <map>
 
-using namespace age::core::qt;
-using namespace age::utilities;
+using namespace azule::core::qt;
+using namespace azule::utilities;
 
 CreatorBase::~CreatorBase()
 {
