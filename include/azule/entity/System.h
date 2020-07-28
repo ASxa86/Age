@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/core/Processor.h>
-#include <azule/entity/export.h>
+#include <azule/export.h>
 #include <chrono>
 
 namespace azule
@@ -19,7 +19,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT System : public azule::core::Processor
+		class AZULE_EXPORT System : public azule::core::Processor
 		{
 		public:
 			System();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/utilities/export.h>
+#include <azule/export.h>
 #include <filesystem>
 #include <functional>
 
@@ -19,7 +19,7 @@ namespace azule
 		///
 		///	\date February 8, 2020
 		///
-		class AZULE_UTILITIES_EXPORT SharedLibrary
+		class AZULE_EXPORT SharedLibrary
 		{
 		public:
 			SharedLibrary() = default;

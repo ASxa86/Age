@@ -15,7 +15,7 @@ namespace azule
 		///
 		///	\date February 26, 2019
 		///
-		struct AZULE_PHYSICS_EXPORT CircleCollisionComponent final : public CollisionComponent
+		struct AZULE_EXPORT CircleCollisionComponent final : public CollisionComponent
 		{
 			CircleCollisionComponent();
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/entity/export.h>
+#include <azule/export.h>
 #include <algorithm>
 #include <chrono>
 #include <functional>
@@ -20,7 +20,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT Channel
+		class AZULE_EXPORT Channel
 		{
 		public:
 			enum class Shape : uint8_t

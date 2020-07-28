@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/Component.h>
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 #include <SFML/Graphics/Drawable.hpp>
 
 namespace azule
@@ -17,7 +17,7 @@ namespace azule
 		///
 		///	\date May 3, 2020
 		///
-		class AZULE_GRAPHICS_EXPORT DrawableComponent : public azule::entity::Component
+		class AZULE_EXPORT DrawableComponent : public azule::entity::Component
 		{
 		public:
 			virtual const sf::Drawable* getDrawable();

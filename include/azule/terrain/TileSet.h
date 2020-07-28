@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/terrain/export.h>
+#include <azule/export.h>
 #include <azule/terrain/TileSource.h>
 #include <filesystem>
 
@@ -17,7 +17,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_TERRAIN_EXPORT TileSet
+		class AZULE_EXPORT TileSet
 		{
 		public:
 			TileSet();

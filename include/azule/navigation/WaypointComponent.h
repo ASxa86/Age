@@ -2,7 +2,7 @@
 
 #include <azule/entity/Component.h>
 #include <azule/math/Vector.h>
-#include <azule/navigation/export.h>
+#include <azule/export.h>
 #include <vector>
 
 namespace azule
@@ -22,7 +22,7 @@ namespace azule
 		///
 		///	\brief A single waypoint that is used to determine where to move the entity to.
 		///
-		class AZULE_NAVIGATION_EXPORT Waypoint : public azule::core::Object
+		class AZULE_EXPORT Waypoint : public azule::core::Object
 		{
 		public:
 			Waypoint();
@@ -47,7 +47,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		struct AZULE_NAVIGATION_EXPORT WaypointComponent : public azule::entity::Component
+		struct AZULE_EXPORT WaypointComponent : public azule::entity::Component
 		{
 			WaypointComponent();
 

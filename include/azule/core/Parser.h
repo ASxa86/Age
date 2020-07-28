@@ -20,7 +20,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT Parser : public Object
+		class AZULE_EXPORT Parser : public Object
 		{
 		public:
 			Parser();
@@ -41,6 +41,6 @@ namespace azule
 		///
 		///	\brief Function for generically loading file formats into the given object.
 		///
-		AZULE_CORE_EXPORT bool ReadFile(const std::filesystem::path& x, Object* obj);
+		AZULE_EXPORT bool ReadFile(const std::filesystem::path& x, Object* obj);
 	}
 }

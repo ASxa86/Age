@@ -64,7 +64,7 @@ namespace azule
 		///
 		///	\date February 17, 2020
 		///
-		class AZULE_CORE_EXPORT ReflProp
+		class AZULE_EXPORT ReflProp
 		{
 		public:
 			ReflProp(const std::string& n);
@@ -265,7 +265,7 @@ namespace azule
 		///
 		///	\date February 17, 2020
 		///
-		class AZULE_CORE_EXPORT ReflType
+		class AZULE_EXPORT ReflType
 		{
 		public:
 			ReflType();
@@ -317,7 +317,7 @@ namespace azule
 		///
 		///	\date February 17, 2020
 		///
-		class AZULE_CORE_EXPORT Reflection
+		class AZULE_EXPORT Reflection
 		{
 		public:
 			Reflection(const Reflection&) = delete;

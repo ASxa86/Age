@@ -2,7 +2,7 @@
 
 #include <azule/core/Event.h>
 #include <azule/utilities/Pimpl.h>
-#include <azule/entity/export.h>
+#include <azule/export.h>
 #include <any>
 #include <typeindex>
 
@@ -22,7 +22,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT EntityEvent : public azule::core::Event
+		class AZULE_EXPORT EntityEvent : public azule::core::Event
 		{
 		public:
 			enum class Type : uint8_t

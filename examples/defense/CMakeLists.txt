@@ -18,10 +18,7 @@ if(UNIX)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	azule-core
-	azule-graphics
-	azule-navigation
-	azule-physics
+	azule
 )
 
 AZULE_COMPILE_OPTIONS()

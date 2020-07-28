@@ -15,7 +15,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT CloneSystem : public System
+		class AZULE_EXPORT CloneSystem : public System
 		{
 		public:
 			CloneSystem();

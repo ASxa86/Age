@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/core/Object.h>
-#include <azule/entity/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
@@ -11,7 +11,7 @@ namespace azule
 	{
 		class Entity;
 
-		class AZULE_ENTITY_EXPORT EntityDatabase : public azule::core::Object
+		class AZULE_EXPORT EntityDatabase : public azule::core::Object
 		{
 		public:
 			bool addEntity(std::unique_ptr<azule::entity::Entity> x);

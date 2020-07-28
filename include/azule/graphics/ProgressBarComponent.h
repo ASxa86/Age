@@ -8,7 +8,7 @@ namespace azule
 {
 	namespace graphics
 	{
-		class AZULE_GRAPHICS_EXPORT ProgressBarComponent : public DrawableComponent
+		class AZULE_EXPORT ProgressBarComponent : public DrawableComponent
 		{
 		public:
 			struct ProgressBar : sf::Drawable

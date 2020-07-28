@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/audio/export.h>
+#include <azule/export.h>
 #include <azule/entity/System.h>
 
 namespace azule
@@ -21,7 +21,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_AUDIO_EXPORT AudioSystem : public azule::entity::System
+		class AZULE_EXPORT AudioSystem : public azule::entity::System
 		{
 		public:
 			AudioSystem();

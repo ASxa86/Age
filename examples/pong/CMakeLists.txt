@@ -31,11 +31,7 @@ if(UNIX)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	azule-audio
-	azule-entity
-	azule-graphics
-	azule-math
-	azule-physics
+	azule
 	sfml-system
 	sfml-graphics
 	sfml-window

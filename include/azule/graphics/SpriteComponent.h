@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/graphics/DrawableComponent.h>
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <filesystem>
@@ -19,7 +19,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_GRAPHICS_EXPORT SpriteComponent : public azule::graphics::DrawableComponent
+		class AZULE_EXPORT SpriteComponent : public azule::graphics::DrawableComponent
 		{
 		public:
 			SpriteComponent();

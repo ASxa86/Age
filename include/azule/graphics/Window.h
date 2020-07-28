@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/core/Processor.h>
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
@@ -18,7 +18,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_GRAPHICS_EXPORT Window : public azule::core::Processor
+		class AZULE_EXPORT Window : public azule::core::Processor
 		{
 		public:
 			Window(unsigned int width = 1280, unsigned int height = 720);

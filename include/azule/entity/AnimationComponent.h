@@ -2,7 +2,7 @@
 
 #include <azule/entity/Animation.h>
 #include <azule/entity/Component.h>
-#include <azule/entity/export.h>
+#include <azule/export.h>
 #include <deque>
 
 namespace azule
@@ -18,7 +18,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT AnimationComponent : public Component
+		class AZULE_EXPORT AnimationComponent : public Component
 		{
 		public:
 			AnimationComponent();

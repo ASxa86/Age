@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/math/export.h>
+#include <azule/export.h>
 #include <algorithm>
 
 namespace azule
@@ -9,8 +9,8 @@ namespace azule
 	{
 		class Vector;
 
-		AZULE_MATH_EXPORT double VectorAngle(const Vector& x);
-		AZULE_MATH_EXPORT double Constrain(double x, double min, double max);
+		AZULE_EXPORT double VectorAngle(const Vector& x);
+		AZULE_EXPORT double Constrain(double x, double min, double max);
 
 		constexpr double Clamp(double x, double min, double max)
 		{

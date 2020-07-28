@@ -2,7 +2,7 @@
 
 #include <azule/core/Event.h>
 #include <azule/utilities/Pimpl.h>
-#include <azule/physics/export.h>
+#include <azule/export.h>
 #include <vector>
 
 namespace azule
@@ -23,7 +23,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_PHYSICS_EXPORT CollisionEvent : public azule::core::Event
+		class AZULE_EXPORT CollisionEvent : public azule::core::Event
 		{
 		public:
 			///

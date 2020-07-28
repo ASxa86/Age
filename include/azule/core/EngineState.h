@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/core/export.h>
+#include <azule/export.h>
 #include <chrono>
 #include <cstdint>
 
@@ -17,7 +17,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT EngineState
+		class AZULE_EXPORT EngineState
 		{
 		public:
 			///

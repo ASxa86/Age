@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/Component.h>
-#include <azule/entity/export.h>
+#include <azule/export.h>
 #include <azule/math/Vector.h>
 
 namespace azule
@@ -17,7 +17,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		struct AZULE_ENTITY_EXPORT TransformComponent : public Component
+		struct AZULE_EXPORT TransformComponent : public Component
 		{
 			TransformComponent();
 

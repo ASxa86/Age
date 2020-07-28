@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/graphics/RenderSystem.h>
-#include <azule/physics/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
@@ -16,7 +16,7 @@ namespace azule
 		///
 		///	\date July 26, 2018
 		///
-		class AZULE_PHYSICS_EXPORT PhysicsRenderSystem : public azule::graphics::RenderSystem
+		class AZULE_EXPORT PhysicsRenderSystem : public azule::graphics::RenderSystem
 		{
 		public:
 			PhysicsRenderSystem();

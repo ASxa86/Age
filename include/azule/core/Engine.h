@@ -24,7 +24,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT Engine : public Object
+		class AZULE_EXPORT Engine : public Object
 		{
 		public:
 			Engine();

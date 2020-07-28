@@ -13,7 +13,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_GRAPHICS_EXPORT TextSystem : public RenderSystem
+		class AZULE_EXPORT TextSystem : public RenderSystem
 		{
 		public:
 			TextSystem();

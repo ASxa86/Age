@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/Component.h>
-#include <azule/physics/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
@@ -16,7 +16,7 @@ namespace azule
 		///
 		///	\date February 26, 2019
 		///
-		struct AZULE_PHYSICS_EXPORT CollisionComponent : public azule::entity::Component
+		struct AZULE_EXPORT CollisionComponent : public azule::entity::Component
 		{
 			CollisionComponent();
 

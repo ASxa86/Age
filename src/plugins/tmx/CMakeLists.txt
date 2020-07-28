@@ -33,9 +33,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	azule-entity
-	azule-graphics
-	azule-terrain
+	azule
 	pugixml
 	# pugixml::pugixml
 )

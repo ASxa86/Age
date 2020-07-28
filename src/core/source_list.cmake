@@ -1,8 +1,4 @@
-project(azule-core)
-
-AZULE_ADD_LIBRARY()
-
-target_sources(${PROJECT_NAME} PRIVATE
+set(CORE_H_LIST
 	${AZULE_INCLUDE_DIR}/azule/core/ChildEvent.h
 	${AZULE_INCLUDE_DIR}/azule/core/Configuration.h
 	${AZULE_INCLUDE_DIR}/azule/core/Engine.h
@@ -19,24 +15,23 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${AZULE_INCLUDE_DIR}/azule/core/Utilities.h
 )
 
-target_sources(${PROJECT_NAME} PRIVATE
-	ChildEvent.cpp
-	Configuration.cpp
-	Engine.cpp
-	EngineState.cpp
-	EngineStateEvent.cpp
-	Event.cpp
-	EventQueue.cpp
-	Object.cpp
-	Parser.cpp
-	Processor.cpp
-	Reflection.cpp
-	Timer.cpp
-	Utilities.cpp
+set(CORE_SRC_LIST
+	core/ChildEvent.cpp
+	core/Configuration.cpp
+	core/Engine.cpp
+	core/EngineState.cpp
+	core/EngineStateEvent.cpp
+	core/Event.cpp
+	core/EventQueue.cpp
+	core/Object.cpp
+	core/Parser.cpp
+	core/Processor.cpp
+	core/Reflection.cpp
+	core/Timer.cpp
+	core/Utilities.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-	azule-utilities
-)
-
-AZULE_INCLUDE_BOOST()
+if(MSVC)
+	source_group("Header Files\\core" FILES ${CORE_H_LIST})
+	source_group("Source Files\\core" FILES ${CORE_SRC_LIST})
+endif()

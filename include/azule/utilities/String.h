@@ -2,7 +2,7 @@
 
 #include <azule/core/TypeTraits.h>
 #include <azule/utilities/MagicEnum.h>
-#include <azule/utilities/export.h>
+#include <azule/export.h>
 #include <array>
 #include <charconv>
 #include <chrono>
@@ -15,7 +15,7 @@ namespace azule
 {
 	namespace utilities
 	{
-		AZULE_UTILITIES_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
+		AZULE_EXPORT std::vector<std::string> Split(std::string x, std::string tokens = " \t\n,", std::array<char, 2> container = {'{', '}'});
 
 		///
 		///	\brief Special ToString overload to support floating point precision and format.
@@ -26,9 +26,9 @@ namespace azule
 		///
 
 		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
-		// AZULE_CORE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10,
+		// AZULE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10,
 		// 										  std::chars_format fmt = std::chars_format::fixed);
-		AZULE_UTILITIES_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10);
+		AZULE_EXPORT std::string ToString(float x, int precision = std::numeric_limits<float>::max_digits10);
 
 		///
 		///	\brief Special ToString overload to support floating point precision and format.
@@ -39,9 +39,9 @@ namespace azule
 		///
 
 		// AMS // 10/6/2019 // Unsupported by gcc v9.0.1
-		// AZULE_CORE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10,
+		// AZULE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10,
 		// 										  std::chars_format fmt = std::chars_format::fixed);
-		AZULE_UTILITIES_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
+		AZULE_EXPORT std::string ToString(double x, int precision = std::numeric_limits<double>::max_digits10);
 
 		template <typename T>
 		std::string ToString([[maybe_unused]] const T& x)

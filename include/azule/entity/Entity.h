@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/core/Object.h>
-#include <azule/entity/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
@@ -21,7 +21,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT Entity : public azule::core::Object
+		class AZULE_EXPORT Entity : public azule::core::Object
 		{
 		public:
 			Entity();

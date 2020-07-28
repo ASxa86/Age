@@ -1,7 +1,7 @@
 #pragma once
 
-#include <azule/audio/export.h>
 #include <azule/core/Event.h>
+#include <azule/export.h>
 #include <azule/utilities/Pimpl.h>
 
 namespace sf
@@ -25,7 +25,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_AUDIO_EXPORT AudioEvent : public azule::core::Event
+		class AZULE_EXPORT AudioEvent : public azule::core::Event
 		{
 		public:
 			///

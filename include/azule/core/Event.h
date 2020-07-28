@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/core/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
@@ -15,7 +15,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT Event
+		class AZULE_EXPORT Event
 		{
 		public:
 			Event();

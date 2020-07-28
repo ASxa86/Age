@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/core/export.h>
+#include <azule/export.h>
 #include <azule/utilities/Pimpl.h>
 #include <chrono>
 
@@ -22,7 +22,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT Timer
+		class AZULE_EXPORT Timer
 		{
 		public:
 			Timer();

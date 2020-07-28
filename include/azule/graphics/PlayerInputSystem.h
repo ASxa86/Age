@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/System.h>
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
@@ -24,7 +24,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_GRAPHICS_EXPORT PlayerInputSystem : public azule::entity::System
+		class AZULE_EXPORT PlayerInputSystem : public azule::entity::System
 		{
 		public:
 			PlayerInputSystem();

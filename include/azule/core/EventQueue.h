@@ -25,7 +25,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT EventQueue
+		class AZULE_EXPORT EventQueue
 		{
 		public:
 			~EventQueue();

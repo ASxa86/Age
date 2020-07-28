@@ -2,7 +2,7 @@
 
 #include <azule/entity/Component.h>
 #include <azule/entity/EntityDatabase.h>
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 #include <SFML/Window/Keyboard.hpp>
 #include <functional>
 #include <vector>
@@ -23,7 +23,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_GRAPHICS_EXPORT InputComponent : public azule::entity::Component
+		class AZULE_EXPORT InputComponent : public azule::entity::Component
 		{
 		public:
 			InputComponent();

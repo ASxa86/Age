@@ -1,13 +1,13 @@
 #pragma once
 
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 #include <azule/graphics/RenderSystem.h>
 
 namespace azule
 {
 	namespace graphics
 	{
-		class AZULE_GRAPHICS_EXPORT TileMapSystem : public RenderSystem
+		class AZULE_EXPORT TileMapSystem : public RenderSystem
 		{
 		public:
 			TileMapSystem();

@@ -8,7 +8,7 @@ namespace azule
 	{
 		class Object;
 
-		class AZULE_CORE_EXPORT ChildEvent : public Event
+		class AZULE_EXPORT ChildEvent : public Event
 		{
 		public:
 			ChildEvent(Object* parent, Object* child);

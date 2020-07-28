@@ -17,7 +17,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE azule-core azule-entity azule-math azule-graphics)
+target_link_libraries(${PROJECT_NAME} PRIVATE azule)
 
 if(UNIX)
 	target_link_libraries(${PROJECT_NAME} PRIVATE

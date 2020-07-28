@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/terrain/export.h>
+#include <azule/export.h>
 #include <string>
 #include <vector>
 
@@ -17,7 +17,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_TERRAIN_EXPORT TileMapLayer
+		class AZULE_EXPORT TileMapLayer
 		{
 		public:
 			TileMapLayer();

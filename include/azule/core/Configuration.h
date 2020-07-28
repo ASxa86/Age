@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/core/export.h>
+#include <azule/export.h>
 #include <azule/utilities/Pimpl.h>
 #include <filesystem>
 #include <string>
@@ -18,7 +18,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT Configuration
+		class AZULE_EXPORT Configuration
 		{
 		public:
 			~Configuration();

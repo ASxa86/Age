@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/math/export.h>
+#include <azule/export.h>
 #include <array>
 #include <string>
 
@@ -17,7 +17,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_MATH_EXPORT Vector
+		class AZULE_EXPORT Vector
 		{
 		public:
 			Vector(double x = 0.0, double y = 0.0);
@@ -59,6 +59,6 @@ namespace azule
 			double Y;
 		};
 
-		AZULE_MATH_EXPORT double distance(const Vector& a, const Vector& b);
+		AZULE_EXPORT double distance(const Vector& a, const Vector& b);
 	}
 }

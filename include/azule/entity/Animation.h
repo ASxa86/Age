@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/AnimationChannel.h>
-#include <azule/entity/export.h>
+#include <azule/export.h>
 #include <memory>
 
 namespace azule
@@ -17,7 +17,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT Animation
+		class AZULE_EXPORT Animation
 		{
 		public:
 			Animation();

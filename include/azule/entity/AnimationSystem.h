@@ -15,7 +15,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_ENTITY_EXPORT AnimationSystem : public System
+		class AZULE_EXPORT AnimationSystem : public System
 		{
 		public:
 			AnimationSystem();

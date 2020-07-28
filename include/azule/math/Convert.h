@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/math/Constants.h>
-#include <azule/math/export.h>
+#include <azule/export.h>
 
 namespace azule
 {

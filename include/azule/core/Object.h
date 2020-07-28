@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/core/export.h>
+#include <azule/export.h>
 #include <azule/utilities/Signal.h>
 #include <functional>
 #include <string>
@@ -19,7 +19,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT Object
+		class AZULE_EXPORT Object
 		{
 		public:
 			enum class FindOption : int

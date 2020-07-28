@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/Component.h>
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 #include <azule/terrain/TileMap.h>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -11,7 +11,7 @@ namespace azule
 {
 	namespace graphics
 	{
-		class AZULE_GRAPHICS_EXPORT TileMapComponent : public azule::entity::Component, public sf::Drawable
+		class AZULE_EXPORT TileMapComponent : public azule::entity::Component, public sf::Drawable
 		{
 		public:
 			TileMapComponent();

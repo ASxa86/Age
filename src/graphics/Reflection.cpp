@@ -2,7 +2,7 @@
 #include <azule/graphics/BoxSelectionComponent.h>
 #include <azule/graphics/DatabaseTexture.h>
 #include <azule/graphics/DrawableComponent.h>
-#include <azule/graphics/Export.h>
+#include <azule/export.h>
 #include <azule/graphics/ProgressBarComponent.h>
 #include <azule/graphics/RenderSystem.h>
 #include <azule/graphics/SpriteComponent.h>

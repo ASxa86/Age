@@ -2,13 +2,13 @@
 
 #include <azule/entity/Component.h>
 #include <azule/math/Vector.h>
-#include <azule/physics/export.h>
+#include <azule/export.h>
 
 namespace azule
 {
 	namespace physics
 	{
-		struct AZULE_PHYSICS_EXPORT KinematicComponent : public azule::entity::Component
+		struct AZULE_EXPORT KinematicComponent : public azule::entity::Component
 		{
 			///
 			///	\enum BodyType

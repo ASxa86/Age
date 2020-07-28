@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/SelectionComponent.h>
-#include <azule/graphics/export.h>
+#include <azule/export.h>
 #include <azule/math/Vector.h>
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -11,7 +11,7 @@ namespace azule
 	{
 		class DrawableSystem;
 
-		class AZULE_GRAPHICS_EXPORT BoxSelectionComponent : public azule::entity::SelectionComponent
+		class AZULE_EXPORT BoxSelectionComponent : public azule::entity::SelectionComponent
 		{
 		public:
 			BoxSelectionComponent();

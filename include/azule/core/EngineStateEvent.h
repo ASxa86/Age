@@ -16,7 +16,7 @@ namespace azule
 		///
 		///	\author Aaron Shelley
 		///
-		class AZULE_CORE_EXPORT EngineStateEvent : public Event
+		class AZULE_EXPORT EngineStateEvent : public Event
 		{
 		public:
 			///

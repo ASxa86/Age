@@ -4,7 +4,7 @@
 #include <azule/physics/KinematicComponent.h>
 #include <azule/physics/PhysicsRenderSystem.h>
 #include <azule/physics/PhysicsSystem.h>
-#include <azule/physics/export.h>
+#include <azule/export.h>
 #include <azule/utilities/StaticInvoke.h>
 
 using namespace azule::core;

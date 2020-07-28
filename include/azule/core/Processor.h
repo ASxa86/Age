@@ -8,7 +8,7 @@ namespace azule
 {
 	namespace core
 	{
-		class AZULE_CORE_EXPORT Processor : public Object
+		class AZULE_EXPORT Processor : public Object
 		{
 		public:
 			Processor();

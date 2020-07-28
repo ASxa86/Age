@@ -1,8 +1,4 @@
-project(azule-entity)
-
-AZULE_ADD_LIBRARY()
-
-target_sources(${PROJECT_NAME} PRIVATE
+set(ENTITY_H_LIST
 	${AZULE_INCLUDE_DIR}/azule/entity/Animation.h
 	${AZULE_INCLUDE_DIR}/azule/entity/AnimationChannel.h
 	${AZULE_INCLUDE_DIR}/azule/entity/AnimationComponent.h
@@ -17,32 +13,23 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${AZULE_INCLUDE_DIR}/azule/entity/TransformComponent.h
 )
 
-target_sources(${PROJECT_NAME} PRIVATE
-	Animation.cpp
-	AnimationChannel.cpp
-	AnimationComponent.cpp
-	AnimationSystem.cpp
-	CloneSystem.cpp
-	Component.cpp
-	Entity.cpp
-	EntityDatabase.cpp
-	EntityEvent.cpp
-	Reflection.cpp
-	SelectionComponent.cpp
-	System.cpp
-	TransformComponent.cpp
+set(ENTITY_SRC_LIST
+	entity/Animation.cpp
+	entity/AnimationChannel.cpp
+	entity/AnimationComponent.cpp
+	entity/AnimationSystem.cpp
+	entity/CloneSystem.cpp
+	entity/Component.cpp
+	entity/Entity.cpp
+	entity/EntityDatabase.cpp
+	entity/EntityEvent.cpp
+	entity/Reflection.cpp
+	entity/SelectionComponent.cpp
+	entity/System.cpp
+	entity/TransformComponent.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-	azule-core
-	azule-math
-	azule-utilities
-)
-
-find_package(EnTT CONFIG REQUIRED)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE
-	EnTT::EnTT
-)
-
-AZULE_INCLUDE_BOOST()
+if(MSVC)
+	source_group("Header Files\\entity" FILES ${ENTITY_H_LIST})
+	source_group("Source Files\\entity" FILES ${ENTITY_SRC_LIST})
+endif()
