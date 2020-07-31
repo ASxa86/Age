@@ -1,6 +1,6 @@
 #include <azule/terrain/TileSource.h>
 
-using namespace azule::terrain;
+using namespace azule;
 
 TileSource::TileSource()
 {

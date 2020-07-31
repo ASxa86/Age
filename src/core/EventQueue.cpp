@@ -7,8 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
-using namespace azule::core;
-using namespace azule::utilities;
+using namespace azule;
+using namespace azule;
 
 class EventQueue::Impl
 {

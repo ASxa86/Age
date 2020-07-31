@@ -17,10 +17,10 @@
 #include <azule/utilities/PimplImpl.h>
 #include <azule/utilities/Signal.h>
 
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::math;
-using namespace azule::physics;
+using namespace azule;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
 class PhysicsSystem::Impl
 {
@@ -58,12 +58,12 @@ public:
 	{
 	}
 
-	static azule::math::Vector ToVector(const b2Vec2& x)
+	static azule::Vector ToVector(const b2Vec2& x)
 	{
 		return {x.x, x.y};
 	}
 
-	static b2Vec2 FromVector(const azule::math::Vector& x)
+	static b2Vec2 FromVector(const azule::Vector& x)
 	{
 		return {static_cast<float32>(x.X), static_cast<float32>(x.Y)};
 	}
@@ -343,7 +343,7 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 		}
 	}
 
-	const auto seconds = std::chrono::duration_cast<azule::core::seconds>(x);
+	const auto seconds = std::chrono::duration_cast<azule::seconds>(x);
 	this->pimpl->world.Step(static_cast<float32>(seconds.count()), 6, 2);
 
 	for(auto body = this->pimpl->world.GetBodyList(); body != nullptr; body = body->GetNext())

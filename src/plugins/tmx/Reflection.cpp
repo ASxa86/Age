@@ -2,7 +2,7 @@
 #include <azule/plugins/tmx/ParserTMX.h>
 #include <azule/utilities/StaticInvoke.h>
 
-using namespace azule::core;
+using namespace azule;
 using namespace azule::tmx;
 
 STATIC_INVOKE

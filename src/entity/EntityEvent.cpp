@@ -1,7 +1,7 @@
 #include <azule/entity/Entity.h>
 #include <azule/entity/EntityEvent.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 EntityEvent::EntityEvent(Entity* e, Type t) : entity{e}, type{t}
 {

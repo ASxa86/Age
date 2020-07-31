@@ -4,7 +4,7 @@
 #include <azule/core/Reflection.h>
 #include <azule/graphics/DatabaseTexture.h>
 
-using namespace azule::graphics;
+using namespace azule;
 
 SpriteComponent::SpriteComponent() : frame{0}, vFrames{1}, hFrames{1}
 {
@@ -20,7 +20,7 @@ void SpriteComponent::loadFile(const std::filesystem::path& x)
 {
 	this->file = x;
 
-	auto engine = this->getParent<azule::core::Engine>(FindOption::Recursive);
+	auto engine = this->getParent<azule::Engine>(FindOption::Recursive);
 
 	if(engine != nullptr)
 	{

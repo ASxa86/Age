@@ -12,9 +12,9 @@
 #include <azule/graphics/SpriteComponent.h>
 #include <azule/graphics/Window.h>
 
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::graphics;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
 int main()
 {

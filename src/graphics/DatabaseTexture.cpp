@@ -1,6 +1,6 @@
 #include <azule/graphics/DatabaseTexture.h>
 
-using namespace azule::graphics;
+using namespace azule;
 
 sf::Texture& DatabaseTexture::getTexture(const std::string& x)
 {

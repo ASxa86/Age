@@ -5,33 +5,30 @@
 
 namespace azule
 {
-	namespace physics
+	///
+	///	\class PhysicsSystem
+	///
+	///	\brief This system runs on a fixed time step to provide deterministic physics.
+	///
+	///	\date June 11, 2017
+	///
+	///	\author Aaron Shelley
+	///
+	class AZULE_EXPORT PhysicsSystem : public azule::System
 	{
-		///
-		///	\class PhysicsSystem
-		///
-		///	\brief This system runs on a fixed time step to provide deterministic physics.
-		///
-		///	\date June 11, 2017
-		///
-		///	\author Aaron Shelley
-		///
-		class AZULE_EXPORT PhysicsSystem : public azule::entity::System
-		{
-		public:
-			PhysicsSystem();
-			~PhysicsSystem() override;
+	public:
+		PhysicsSystem();
+		~PhysicsSystem() override;
 
-			void onStartup() override;
+		void onStartup() override;
 
-			///
-			///	Updates entity transformations using physics.
-			///
-			void frame(std::chrono::microseconds x);
+		///
+		///	Updates entity transformations using physics.
+		///
+		void frame(std::chrono::microseconds x);
 
-		private:
-			class Impl;
-			Pimpl<Impl> pimpl;
-		};
-	}
+	private:
+		class Impl;
+		Pimpl<Impl> pimpl;
+	};
 }

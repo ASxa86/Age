@@ -1,16 +1,16 @@
 #include <azule/navigation/WaypointComponent.h>
 
-using namespace azule::navigation;
+using namespace azule;
 
 Waypoint::Waypoint()
 {
 }
 
-WaypointComponent::WaypointComponent() : azule::entity::Component()
+WaypointComponent::WaypointComponent() : azule::Component()
 {
 }
 
-bool WaypointComponent::addWaypoint(std::unique_ptr<azule::navigation::Waypoint> x)
+bool WaypointComponent::addWaypoint(std::unique_ptr<azule::Waypoint> x)
 {
 	return this->addChild(std::move(x));
 }

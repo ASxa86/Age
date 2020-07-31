@@ -8,9 +8,9 @@
 #include <azule/graphics/PlayerInputSystem.h>
 #include <SFML/Window.hpp>
 
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::graphics;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
 PlayerInputSystem::PlayerInputSystem() : System()
 {
@@ -26,7 +26,7 @@ void PlayerInputSystem::onStartup()
 	this->track(EventQueue::Instance().addEventHandler([this](auto x) { this->event(x); }));
 }
 
-void PlayerInputSystem::event(azule::core::Event* x)
+void PlayerInputSystem::event(azule::Event* x)
 {
 	const auto keyEvent = dynamic_cast<KeyEvent*>(x);
 

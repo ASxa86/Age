@@ -5,7 +5,7 @@
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QComboBox>
 
-using namespace azule::core::qt;
+using namespace azule::qt;
 
 struct WidgetPropertyBool::Impl
 {
@@ -18,8 +18,8 @@ WidgetPropertyBool::WidgetPropertyBool(QWidget* parent) : WidgetProperty(parent)
 	vLayout->setMargin(0);
 	vLayout->addWidget(this->pimpl->cbBool);
 
-	this->pimpl->cbBool->addItem(QString::fromStdString(azule::utilities::ToString(true)), QVariant::fromValue(true));
-	this->pimpl->cbBool->addItem(QString::fromStdString(azule::utilities::ToString(false)), QVariant::fromValue(false));
+	this->pimpl->cbBool->addItem(QString::fromStdString(azule::ToString(true)), QVariant::fromValue(true));
+	this->pimpl->cbBool->addItem(QString::fromStdString(azule::ToString(false)), QVariant::fromValue(false));
 	this->connect(this->pimpl->cbBool, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &WidgetProperty::editingFinished);
 }
 

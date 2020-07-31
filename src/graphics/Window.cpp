@@ -15,10 +15,10 @@
 #include <numeric>
 #include <sstream>
 
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::graphics;
-using namespace azule::math;
+using namespace azule;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
 class Window::Impl
 {
@@ -107,7 +107,7 @@ void Window::render(std::chrono::microseconds x)
 
 		// FPS
 		static double elapsed = 0.0;
-		const auto delta = std::chrono::duration_cast<azule::core::seconds>(this->pimpl->timer.reset());
+		const auto delta = std::chrono::duration_cast<azule::seconds>(this->pimpl->timer.reset());
 		elapsed += delta.count();
 
 		if(elapsed >= 0.5)

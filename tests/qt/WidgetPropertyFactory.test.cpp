@@ -4,7 +4,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
 
-using namespace azule::core::qt;
+using namespace azule::qt;
 
 namespace
 {

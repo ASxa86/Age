@@ -1,7 +1,7 @@
 #include <azule/core/Engine.h>
 #include <gtest/gtest.h>
 
-using namespace azule::core;
+using namespace azule;
 
 TEST(Engine, Constructor)
 {

@@ -4,22 +4,19 @@
 
 namespace azule
 {
-	namespace physics
+	///
+	///	\struct CircleCollisionComponent
+	///
+	///	\brief Define the size of a circle used to determine collision with other collision components.
+	///
+	///	\author Aaron Shelley
+	///
+	///	\date February 26, 2019
+	///
+	struct AZULE_EXPORT CircleCollisionComponent final : public CollisionComponent
 	{
-		///
-		///	\struct CircleCollisionComponent
-		///
-		///	\brief Define the size of a circle used to determine collision with other collision components.
-		///
-		///	\author Aaron Shelley
-		///
-		///	\date February 26, 2019
-		///
-		struct AZULE_EXPORT CircleCollisionComponent final : public CollisionComponent
-		{
-			CircleCollisionComponent();
+		CircleCollisionComponent();
 
-			double Radius;
-		};
-	}
+		double Radius;
+	};
 }

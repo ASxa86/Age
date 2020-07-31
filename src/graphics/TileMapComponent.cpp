@@ -3,7 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-using namespace azule::graphics;
+using namespace azule;
 
 TileMapComponent::TileMapComponent()
 {
@@ -13,7 +13,7 @@ TileMapComponent::~TileMapComponent()
 {
 }
 
-void TileMapComponent::loadTileMap(const azule::terrain::TileMap& x)
+void TileMapComponent::loadTileMap(const azule::TileMap& x)
 {
 	for(const auto& layer : x.getLayers())
 	{

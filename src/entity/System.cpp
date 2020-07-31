@@ -2,9 +2,9 @@
 #include <azule/entity/EntityDatabase.h>
 #include <azule/entity/System.h>
 
-using namespace azule::entity;
+using namespace azule;
 
-System::System() : azule::core::Processor()
+System::System() : azule::Processor()
 {
 }
 
@@ -14,7 +14,7 @@ System::~System()
 
 EntityDatabase* System::getEntityDatabase() const
 {
-	const auto parent = this->getParent<azule::core::Engine>(FindOption::Recursive);
+	const auto parent = this->getParent<azule::Engine>(FindOption::Recursive);
 
 	if(parent != nullptr)
 	{

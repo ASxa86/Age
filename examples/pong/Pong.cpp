@@ -30,14 +30,14 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-using namespace azule::audio;
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::math;
-using namespace azule::graphics;
-using namespace azule::physics;
+using namespace azule;
+using namespace azule;
+using namespace azule;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 using namespace azule::pong;
-using namespace azule::utilities;
+using namespace azule;
 
 struct Pong::Impl
 {

@@ -6,16 +6,13 @@
 
 namespace azule
 {
-	namespace entity
-	{
-		class Component;
-		class Entity;
-	}
+	class Component;
+	class Entity;
 
 	///
 	///	\class TreeWidgetEntity
 	///
-	///	\brief A QTreeWidget used to list and select entities and components that exist within azule::entity::EntityDatabase.
+	///	\brief A QTreeWidget used to list and select entities and components that exist within azule::EntityDatabase.
 	///
 	///	\author Aaron Shelley
 	///
@@ -43,37 +40,37 @@ namespace azule
 		///
 		///	Add a tree node to list and edit the given entity.
 		///
-		void addEntity(azule::entity::Entity* x);
+		void addEntity(azule::Entity* x);
 
 		///
 		///	Remove the associated tree tode for the given entity.
 		///
-		void removeEntity(azule::entity::Entity* x);
+		void removeEntity(azule::Entity* x);
 
 		///
 		///	Add a tree node to the list under the node associated with the given entity.
 		///
-		void addComponent(azule::entity::Entity* x, azule::entity::Component* c);
+		void addComponent(azule::Entity* x, azule::Component* c);
 
 		///
 		///	Add a tree node to the list under the given tree node.
 		///
-		void addComponent(QTreeWidgetItem* item, azule::entity::Component* c);
+		void addComponent(QTreeWidgetItem* item, azule::Component* c);
 
 		///
 		///	Remove the associated tree node for the given component type of the given entity.
 		///
-		void removeComponent(azule::entity::Entity* x, azule::entity::Component* c);
+		void removeComponent(azule::Entity* x, azule::Component* c);
 
 		///
 		///	Get the tree node associated with the given entity.
 		///
-		QTreeWidgetItem* findItem(azule::entity::Entity* x);
+		QTreeWidgetItem* findItem(azule::Entity* x);
 
 		///
 		///	Get the tree node associated with the given component type of the given entity.
 		///
-		QTreeWidgetItem* findItem(azule::entity::Entity* x, azule::entity::Component* c);
+		QTreeWidgetItem* findItem(azule::Entity* x, azule::Component* c);
 
 		///
 		///	Overload the default size hint to adjust the default size within an application.

@@ -3,14 +3,14 @@
 #include <azule/core/Reflection.h>
 #include <azule/core/Utilities.h>
 
-double azule::core::PixelsToMeters(unsigned int x)
+double azule::PixelsToMeters(unsigned int x)
 {
-	return static_cast<double>(x) / static_cast<double>(azule::core::Configuration::Instance().getPixelsPerMeter());
+	return static_cast<double>(x) / static_cast<double>(azule::Configuration::Instance().getPixelsPerMeter());
 }
 
-std::unique_ptr<azule::core::Object> azule::core::Clone(azule::core::Object* x)
+std::unique_ptr<azule::Object> azule::Clone(azule::Object* x)
 {
-	const auto type = azule::core::Reflection::Instance().get(*x);
+	const auto type = azule::Reflection::Instance().get(*x);
 	auto clone = type->create();
 
 	if(clone != nullptr)
@@ -22,14 +22,14 @@ std::unique_ptr<azule::core::Object> azule::core::Clone(azule::core::Object* x)
 
 		for(auto child : x->getChildren())
 		{
-			clone->addChild(azule::core::Clone(child));
+			clone->addChild(azule::Clone(child));
 		}
 	}
 
 	return clone;
 }
 
-std::string azule::core::ResolvePath(std::string x)
+std::string azule::ResolvePath(std::string x)
 {
 	if(x.empty() == false)
 	{

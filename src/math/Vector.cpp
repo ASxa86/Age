@@ -3,7 +3,7 @@
 #include <array>
 #include <cmath>
 
-using namespace azule::math;
+using namespace azule;
 
 Vector::Vector(double x, double y) : X{x}, Y{y}
 {
@@ -11,18 +11,18 @@ Vector::Vector(double x, double y) : X{x}, Y{y}
 
 Vector::Vector(const std::string& x)
 {
-	const auto tokens = azule::utilities::Split(x);
+	const auto tokens = azule::Split(x);
 
 	if(tokens.size() == 2)
 	{
-		this->X = azule::utilities::StringTo<double>(tokens[0]);
-		this->Y = azule::utilities::StringTo<double>(tokens[1]);
+		this->X = azule::StringTo<double>(tokens[0]);
+		this->Y = azule::StringTo<double>(tokens[1]);
 	}
 }
 
 Vector::operator std::string() const
 {
-	return "{" + azule::utilities::ToString(this->X) + ", " + azule::utilities::ToString(this->Y) + "}";
+	return "{" + azule::ToString(this->X) + ", " + azule::ToString(this->Y) + "}";
 }
 
 Vector Vector::operator+(const Vector& x) const
@@ -115,7 +115,7 @@ double Vector::normalize()
 	return mag;
 }
 
-double azule::math::distance(const Vector& a, const Vector& b)
+double azule::distance(const Vector& a, const Vector& b)
 {
 	return std::sqrt(std::pow(b.X - a.X, 2.0) + std::pow(b.Y - a.Y, 2.0));
 }

@@ -4,7 +4,7 @@
 #include <Windows.h>
 #endif
 
-using namespace azule::utilities;
+using namespace azule;
 
 SharedLibrary::~SharedLibrary()
 {

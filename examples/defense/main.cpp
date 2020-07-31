@@ -4,8 +4,8 @@
 #include <azule/core/Parser.h>
 #include <azule/entity/EntityDatabase.h>
 
-using namespace azule::core;
-using namespace azule::entity;
+using namespace azule;
+using namespace azule;
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	engine->setEngineState(azule::core::EngineState::State::StartUp);
+	engine->setEngineState(azule::EngineState::State::StartUp);
 
 	while(engine->getEngineState().getState() < EngineState::State::Shutdown)
 	{

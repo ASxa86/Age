@@ -2,7 +2,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <azule/graphics/Utilities.h>
 
-using namespace azule::graphics;
+using namespace azule;
 
 void ProgressBarComponent::ProgressBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

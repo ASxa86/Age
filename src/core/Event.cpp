@@ -1,6 +1,6 @@
 #include <azule/core/Event.h>
 
-using namespace azule::core;
+using namespace azule;
 
 Event::Event()
 {

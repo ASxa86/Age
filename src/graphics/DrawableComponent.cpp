@@ -1,6 +1,6 @@
 #include <azule/graphics/DrawableComponent.h>
 
-using namespace azule::graphics;
+using namespace azule;
 
 const sf::Drawable* DrawableComponent::getDrawable()
 {

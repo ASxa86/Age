@@ -13,7 +13,7 @@ namespace
 
 TEST(ComboBoxEnum, TestEnum)
 {
-	azule::core::qt::ComboBoxEnum<TestEnum> cbEnum;
+	azule::qt::ComboBoxEnum<TestEnum> cbEnum;
 	EXPECT_EQ(cbEnum.count(), 3);
 	EXPECT_EQ(cbEnum.getCurrentEnum(), TestEnum::One);
 	EXPECT_EQ(cbEnum.currentText().toStdString(), "One");

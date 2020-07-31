@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <functional>
 
-using namespace azule::core;
+using namespace azule;
 
 namespace
 {

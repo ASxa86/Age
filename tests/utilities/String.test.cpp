@@ -2,7 +2,7 @@
 
 #include <azule/utilities/String.h>
 
-using namespace azule::utilities;
+using namespace azule;
 
 namespace
 {

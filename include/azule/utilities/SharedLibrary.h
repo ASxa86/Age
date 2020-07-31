@@ -6,83 +6,80 @@
 
 namespace azule
 {
-	namespace utilities
+	///
+	///	\class SharedLibrary
+	///
+	///	\brief Modeled after boost's boost::dll::shared_library.
+	///
+	///	This class uses RAII to load and keep loaded a shared library.
+	///
+	///	\author Aaron Shelley
+	///
+	///	\date February 8, 2020
+	///
+	class AZULE_EXPORT SharedLibrary
 	{
+	public:
+		SharedLibrary() = default;
+		SharedLibrary(const std::filesystem::path& x);
+		~SharedLibrary();
+
 		///
-		///	\class SharedLibrary
+		///	\brief Performing a copy will increment a reference count to this library.
 		///
-		///	\brief Modeled after boost's boost::dll::shared_library.
+		///	Once all copies have been destroyed, the library will be unloaded.
 		///
-		///	This class uses RAII to load and keep loaded a shared library.
+		SharedLibrary(const SharedLibrary& x);
+
 		///
-		///	\author Aaron Shelley
+		///	\brief Performing a copy will increment a reference count to this library.
 		///
-		///	\date February 8, 2020
+		///	Once all copies have been destroyed, the library will be unloaded.
 		///
-		class AZULE_EXPORT SharedLibrary
-		{
-		public:
-			SharedLibrary() = default;
-			SharedLibrary(const std::filesystem::path& x);
-			~SharedLibrary();
+		SharedLibrary& operator=(const SharedLibrary& x);
 
-			///
-			///	\brief Performing a copy will increment a reference count to this library.
-			///
-			///	Once all copies have been destroyed, the library will be unloaded.
-			///
-			SharedLibrary(const SharedLibrary& x);
+		///
+		///	Loads a library by specified path with a specified mode.
+		///
+		///	Note that if some library is already loaded in this instance, load will
+		///	call unload() and then load the new provided library.
+		///
+		///	\param x Library file name.
+		///	\return true if the library was successfully loaded.
+		///
+		[[maybe_unused]] bool load(const std::filesystem::path& x);
 
-			///
-			///	\brief Performing a copy will increment a reference count to this library.
-			///
-			///	Once all copies have been destroyed, the library will be unloaded.
-			///
-			SharedLibrary& operator=(const SharedLibrary& x);
+		///
+		///	\brief Unloads a shared library.
+		///
+		///	If library was loaded multiple times by different instances,
+		///	the actual DLL / DSO won't be unloaded until there is at least
+		///	one instance that references the DLL / DSO.
+		///
+		void unload();
 
-			///
-			///	Loads a library by specified path with a specified mode.
-			///
-			///	Note that if some library is already loaded in this instance, load will
-			///	call unload() and then load the new provided library.
-			///
-			///	\param x Library file name.
-			///	\return true if the library was successfully loaded.
-			///
-			[[maybe_unused]] bool load(const std::filesystem::path& x);
+		///
+		///	\brief Check if the library is loaded.
+		///
+		///	\return true if the library was succesfully loaded.
+		///
+		bool loaded() const;
 
-			///
-			///	\brief Unloads a shared library.
-			///
-			///	If library was loaded multiple times by different instances,
-			///	the actual DLL / DSO won't be unloaded until there is at least
-			///	one instance that references the DLL / DSO.
-			///
-			void unload();
+		///
+		///	\brief Get a function symbol within the library for a give symbol name.
+		///
+		///	\param x The symbol name to look up in the library.
+		///	\return std::function<void()> if the given symbol name exists.
+		///
+		std::function<void()> symbol(const std::string& x) const;
 
-			///
-			///	\brief Check if the library is loaded.
-			///
-			///	\return true if the library was succesfully loaded.
-			///
-			bool loaded() const;
+		///
+		///	\return Returns the file path to the loaded library.
+		///
+		std::filesystem::path location() const;
 
-			///
-			///	\brief Get a function symbol within the library for a give symbol name.
-			///
-			///	\param x The symbol name to look up in the library.
-			///	\return std::function<void()> if the given symbol name exists.
-			///
-			std::function<void()> symbol(const std::string& x) const;
-
-			///
-			///	\return Returns the file path to the loaded library.
-			///
-			std::filesystem::path location() const;
-
-		private:
-			std::filesystem::path loc;
-			void* handle{nullptr};
-		};
-	}
+	private:
+		std::filesystem::path loc;
+		void* handle{nullptr};
+	};
 }

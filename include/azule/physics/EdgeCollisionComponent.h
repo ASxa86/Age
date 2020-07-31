@@ -5,21 +5,18 @@
 
 namespace azule
 {
-	namespace physics
+	///
+	///	\struct EdgeCollisionComponent
+	///
+	///	\brief Define an edge used to determine collision with other collision components.
+	///
+	///	\author Aaron Shelley
+	///
+	///	\date February 26, 2019
+	///
+	struct EdgeCollisionComponent final : public CollisionComponent
 	{
-		///
-		///	\struct EdgeCollisionComponent
-		///
-		///	\brief Define an edge used to determine collision with other collision components.
-		///
-		///	\author Aaron Shelley
-		///
-		///	\date February 26, 2019
-		///
-		struct EdgeCollisionComponent final : public CollisionComponent
-		{
-			azule::math::Vector Vertex1;
-			azule::math::Vector Vertex2;
-		};
-	}
+		azule::Vector Vertex1;
+		azule::Vector Vertex2;
+	};
 }

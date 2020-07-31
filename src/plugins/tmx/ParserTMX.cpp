@@ -9,9 +9,9 @@
 #include <charconv>
 #include <pugixml.hpp>
 
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::graphics;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 using namespace azule::tmx;
 
 ParserTMX::ParserTMX()
@@ -35,7 +35,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 			for(const auto& map : doc.children("map"))
 			{
 				auto entity = manager->addEntity();
-				azule::terrain::TileMap tileMap;
+				azule::TileMap tileMap;
 				tileMap.setWidth(map.attribute("width").as_int());
 				tileMap.setHeight(map.attribute("height").as_int());
 				tileMap.setTileWidth(map.attribute("tilewidth").as_int());
@@ -43,7 +43,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 
 				for(const auto& tileset : map.children("tileset"))
 				{
-					azule::terrain::TileSet tileSet;
+					azule::TileSet tileSet;
 					tileSet.setTileOffset(tileset.attribute("firstgid").as_int());
 					tileSet.setName(tileset.attribute("name").as_string());
 					tileSet.setTileWidth(tileset.attribute("tilewidth").as_int());
@@ -56,7 +56,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 
 					if(image.empty() == false)
 					{
-						azule::terrain::TileSource source;
+						azule::TileSource source;
 						source.setFileName(x.parent_path() / image.attribute("source").as_string());
 						source.setWidth(image.attribute("width").as_int());
 						source.setHeight(image.attribute("height").as_int());
@@ -68,7 +68,7 @@ bool ParserTMX::readFile(const std::filesystem::path& x, Object* obj)
 
 				for(const auto& layer : map.children("layer"))
 				{
-					azule::terrain::TileMapLayer mapLayer;
+					azule::TileMapLayer mapLayer;
 					mapLayer.setName(layer.attribute("name").as_string());
 					mapLayer.setWidth(layer.attribute("width").as_int());
 					mapLayer.setHeight(layer.attribute("height").as_int());

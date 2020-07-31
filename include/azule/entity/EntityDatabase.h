@@ -5,35 +5,30 @@
 
 namespace azule
 {
-	namespace entity
+	class Entity;
 
-
+	class AZULE_EXPORT EntityDatabase : public azule::Object
 	{
-		class Entity;
+	public:
+		bool addEntity(std::unique_ptr<azule::Entity> x);
 
-		class AZULE_EXPORT EntityDatabase : public azule::core::Object
+		template <typename T = Entity>
+		[[maybe_unused]] T* addEntity()
 		{
-		public:
-			bool addEntity(std::unique_ptr<azule::entity::Entity> x);
+			static_assert(std::is_base_of<azule::Entity, T>::value == true, "T must derive from azule::Entity.");
 
-			template <typename T = Entity>
-			[[maybe_unused]] T* addEntity()
+			auto child = std::make_unique<T>();
+			const auto p = child.get();
+
+			if(this->addEntity(std::move(child)) == true)
 			{
-				static_assert(std::is_base_of<azule::entity::Entity, T>::value == true, "T must derive from azule::entity::Entity.");
-
-				auto child = std::make_unique<T>();
-				const auto p = child.get();
-
-				if(this->addEntity(std::move(child)) == true)
-				{
-					return p;
-				}
-
-				return nullptr;
+				return p;
 			}
 
-		private:
-			using Object::addChild;
-		};
-	}
+			return nullptr;
+		}
+
+	private:
+		using Object::addChild;
+	};
 }

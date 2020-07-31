@@ -2,7 +2,7 @@
 #include <azule/math/Vector.h>
 #include <gtest/gtest.h>
 
-using namespace azule::math;
+using namespace azule;
 
 TEST(Functions, VectorAngle)
 {

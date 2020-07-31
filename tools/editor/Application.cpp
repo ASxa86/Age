@@ -5,11 +5,11 @@
 #include <azule/entity/EntityDatabase.h>
 
 using namespace azule;
-using namespace azule::entity;
+using namespace azule;
 
 struct Application::Impl
 {
-	azule::core::Engine engine;
+	azule::Engine engine;
 };
 
 Application::Application(int argc, char** argv) : QApplication(argc, argv), pimpl()
@@ -27,7 +27,7 @@ Application* Application::Instance()
 	return static_cast<Application*>(QCoreApplication::instance());
 }
 
-azule::core::Engine& Application::getEngine()
+azule::Engine& Application::getEngine()
 {
 	return this->pimpl->engine;
 }

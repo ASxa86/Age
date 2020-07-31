@@ -1,7 +1,7 @@
 #include <azule/core/Timer.h>
 #include <azule/utilities/PimplImpl.h>
 
-using namespace azule::core;
+using namespace azule;
 
 class Timer::Impl
 {

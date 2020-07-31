@@ -1,6 +1,6 @@
 #include <azule/core/EngineStateEvent.h>
 
-using namespace azule::core;
+using namespace azule;
 
 EngineStateEvent::EngineStateEvent(const EngineState& x) : engineState{x}
 {

@@ -22,10 +22,10 @@ namespace azule
 		///
 		///	\param e The entity to add a new component too.
 		///
-		DialogComponents(azule::entity::Entity* e, QWidget* parent = nullptr);
+		DialogComponents(azule::Entity* e, QWidget* parent = nullptr);
 		~DialogComponents();
 
 	private:
-		azule::entity::Entity* entity;
+		azule::Entity* entity;
 	};
 }

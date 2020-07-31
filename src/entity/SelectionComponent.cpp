@@ -1,6 +1,6 @@
 #include <azule/entity/SelectionComponent.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 SelectionComponent::SelectionComponent()
 {

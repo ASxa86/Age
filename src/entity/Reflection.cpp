@@ -7,8 +7,8 @@
 #include <azule/entity/TransformComponent.h>
 #include <azule/utilities/StaticInvoke.h>
 
-using namespace azule::core;
-using namespace azule::entity;
+using namespace azule;
+using namespace azule;
 
 STATIC_INVOKE
 {

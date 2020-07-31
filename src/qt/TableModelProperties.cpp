@@ -5,15 +5,15 @@
 #include <azule/core/Reflection.h>
 #include <azule/utilities/String.h>
 
-using namespace azule::core;
-using namespace azule::core::qt;
-using namespace azule::utilities;
+using namespace azule;
+using namespace azule::qt;
+using namespace azule;
 
-Q_DECLARE_METATYPE(azule::core::ReflProp*);
+Q_DECLARE_METATYPE(azule::ReflProp*);
 
-TableModelProperties::TableModelProperties(azule::core::Object* x, QObject* parent) : QAbstractTableModel(parent), object{x}
+TableModelProperties::TableModelProperties(azule::Object* x, QObject* parent) : QAbstractTableModel(parent), object{x}
 {
-	qRegisterMetaType<azule::core::ReflProp*>();
+	qRegisterMetaType<azule::ReflProp*>();
 }
 
 int TableModelProperties::rowCount(const QModelIndex&) const
@@ -36,7 +36,7 @@ QVariant TableModelProperties::headerData(int section, Qt::Orientation orientati
 		switch(orientation)
 		{
 			case Qt::Orientation::Horizontal:
-				data = QString::fromStdString(azule::utilities::ToString(static_cast<Column>(section)));
+				data = QString::fromStdString(azule::ToString(static_cast<Column>(section)));
 				break;
 
 			case Qt::Orientation::Vertical:

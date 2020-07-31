@@ -1,6 +1,6 @@
 #include <azule/terrain/TileMap.h>
 
-using namespace azule::terrain;
+using namespace azule;
 
 TileMap::TileMap() : layers{}, width{}, height{}, tileWidth{}, tileHeight{}
 {

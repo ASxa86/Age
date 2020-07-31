@@ -1,6 +1,6 @@
 #include <azule/core/EngineState.h>
 
-using namespace azule::core;
+using namespace azule;
 
 EngineState::EngineState(State x) : state{x}, simTime{0}, frameCount{0}
 {

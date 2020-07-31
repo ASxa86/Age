@@ -2,7 +2,7 @@
 #include <azule/core/Object.h>
 #include <gtest/gtest.h>
 
-using namespace azule::core;
+using namespace azule;
 
 class ObjectOne : public Object
 {

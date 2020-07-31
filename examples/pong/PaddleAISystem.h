@@ -15,7 +15,7 @@ namespace azule
 		///
 		///	\date July 29, 2018
 		///
-		class PaddleAISystem : public azule::entity::System
+		class PaddleAISystem : public azule::System
 		{
 		public:
 			PaddleAISystem();

@@ -3,8 +3,8 @@
 #include <azule/utilities/PimplImpl.h>
 #include <azule/entity/Entity.h>
 
-using namespace azule::entity;
-using namespace azule::physics;
+using namespace azule;
+using namespace azule;
 
 class CollisionEvent::Impl
 {
@@ -17,7 +17,7 @@ public:
 	const Entity& entityB{};
 };
 
-CollisionEvent::CollisionEvent(const Entity& a, const Entity& b) : azule::core::Event(), pimpl{a, b}
+CollisionEvent::CollisionEvent(const Entity& a, const Entity& b) : azule::Event(), pimpl{a, b}
 {
 }
 
@@ -25,12 +25,12 @@ CollisionEvent::~CollisionEvent()
 {
 }
 
-const azule::entity::Entity& CollisionEvent::getEntityA()
+const azule::Entity& CollisionEvent::getEntityA()
 {
 	return this->pimpl->entityA;
 }
 
-const azule::entity::Entity& CollisionEvent::getEntityB()
+const azule::Entity& CollisionEvent::getEntityB()
 {
 	return this->pimpl->entityB;
 }

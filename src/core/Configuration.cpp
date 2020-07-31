@@ -10,7 +10,7 @@
 #include <unistd.h>
 #endif
 
-using namespace azule::core;
+using namespace azule;
 
 const std::string Configuration::PathDataAlias = "$AZULE_DATA";
 const std::string Configuration::PathMapsAlias = "$AZULE_MAPS";
@@ -28,7 +28,7 @@ struct Configuration::Impl
 	unsigned int pixelsPerMeter{32};
 };
 
-const Configuration& azule::core::Configuration::Instance()
+const Configuration& azule::Configuration::Instance()
 {
 	static Configuration singleton;
 

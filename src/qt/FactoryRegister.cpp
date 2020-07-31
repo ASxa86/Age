@@ -2,7 +2,7 @@
 #include  <azule/qt/WidgetPropertyBool.h>
 #include  <azule/qt/WidgetPropertyFactory.h>
 
-using namespace azule::core::qt;
+using namespace azule::qt;
 
 AZULE_QT_EXPORT_C void FactoryRegisterQt()
 {

@@ -2,7 +2,7 @@
 
 #include <azule/utilities/PimplImpl.h>
 
-using namespace azule::audio;
+using namespace azule;
 
 struct AudioEvent::Impl
 {

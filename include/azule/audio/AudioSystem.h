@@ -1,39 +1,33 @@
 #pragma once
 
-#include <azule/export.h>
 #include <azule/entity/System.h>
+#include <azule/export.h>
 
 namespace azule
 {
-	namespace core
+	class Event;
+
+	///
+	///	\class AudioSystem
+	///
+	///	\brief Handles playing event driven audio.
+	///
+	///	\date July 8, 2018
+	///
+	///	\author Aaron Shelley
+	///
+	class AZULE_EXPORT AudioSystem : public azule::System
 	{
-		class Event;
-	}
+	public:
+		AudioSystem();
+		~AudioSystem();
 
-	namespace audio
-	{
-		///
-		///	\class AudioSystem
-		///
-		///	\brief Handles playing event driven audio.
-		///
-		///	\date July 8, 2018
-		///
-		///	\author Aaron Shelley
-		///
-		class AZULE_EXPORT AudioSystem : public azule::entity::System
-		{
-		public:
-			AudioSystem();
-			~AudioSystem();
+	protected:
+		virtual void onStartup() override;
+		virtual void onEvent(azule::Event* x);
 
-		protected:
-			virtual void onStartup() override;
-			virtual void onEvent(azule::core::Event* x);
-
-		private:
-			struct Impl;
-			Pimpl<Impl> pimpl;
-		};
-	}
+	private:
+		struct Impl;
+		Pimpl<Impl> pimpl;
+	};
 }

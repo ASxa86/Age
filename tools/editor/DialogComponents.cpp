@@ -7,10 +7,10 @@
 #include <QtWidgets/QPushButton>
 
 using namespace azule;
-using namespace azule::core;
-using namespace azule::entity;
+using namespace azule;
+using namespace azule;
 
-DialogComponents::DialogComponents(azule::entity::Entity* e, QWidget* parent) : QDialog(parent), entity{e}
+DialogComponents::DialogComponents(azule::Entity* e, QWidget* parent) : QDialog(parent), entity{e}
 {
 	const auto vLayout = new QVBoxLayout(this);
 	const auto lwComponents = new ListWidgetComponents();

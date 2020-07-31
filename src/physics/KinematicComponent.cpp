@@ -1,6 +1,6 @@
 #include <azule/physics/KinematicComponent.h>
 
-using namespace azule::physics;
+using namespace azule;
 
 KinematicComponent::KinematicComponent() : Component()
 {

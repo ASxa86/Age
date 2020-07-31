@@ -1,6 +1,6 @@
 #include <azule/entity/TransformComponent.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 TransformComponent::TransformComponent() : Component()
 {

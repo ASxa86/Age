@@ -3,14 +3,14 @@
 #include <azule/entity/EntityDatabase.h>
 #include <azule/entity/EntityEvent.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 bool EntityDatabase::addEntity(std::unique_ptr<Entity> x)
 {
 	if(x != nullptr)
 	{
 		auto evt = std::make_unique<EntityEvent>(x.get(), EntityEvent::Type::EntityAdded);
-		azule::core::EventQueue::Instance().sendEvent(std::move(evt));
+		azule::EventQueue::Instance().sendEvent(std::move(evt));
 		return this->addChild(std::move(x));
 	}
 

@@ -1,7 +1,7 @@
 #include <azule/core/Processor.h>
 #include <azule/utilities/PimplImpl.h>
 
-using namespace azule::core;
+using namespace azule;
 
 class Processor::Impl
 {

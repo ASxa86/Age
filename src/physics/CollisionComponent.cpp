@@ -1,7 +1,7 @@
 #include <azule/physics/CollisionComponent.h>
 
-using namespace azule::physics;
+using namespace azule;
 
-CollisionComponent::CollisionComponent() : azule::entity::Component()
+CollisionComponent::CollisionComponent() : azule::Component()
 {
 }

@@ -16,7 +16,7 @@ namespace azule
 		///
 		///	\date July 29, 2018
 		///
-		class PaddleAIComponent : public azule::entity::Component
+		class PaddleAIComponent : public azule::Component
 		{
 		public:
 			PaddleAIComponent();
@@ -25,11 +25,11 @@ namespace azule
 			///
 			///	\brief Set the ball that this paddle is to track and play against.
 			///
-			void setBall(azule::entity::Entity x);
-			const azule::entity::Entity& getBall() const;
+			void setBall(azule::Entity x);
+			const azule::Entity& getBall() const;
 
 		private:
-			azule::entity::Entity ball;
+			azule::Entity ball;
 		};
 	}
 }

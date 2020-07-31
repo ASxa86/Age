@@ -7,81 +7,78 @@
 
 namespace azule
 {
-	namespace core
+	///
+	///	\class Configuration
+	///
+	///	\brief Global configuration settings for AGE.
+	///
+	///	\date July 8, 2018
+	///
+	///	\author Aaron Shelley
+	///
+	class AZULE_EXPORT Configuration
 	{
+	public:
+		~Configuration();
+		Configuration(const Configuration&) = delete;
+		Configuration& operator=(const Configuration&) = delete;
+
+		static const std::string PathDataAlias;
+		static const std::string PathMapsAlias;
+		static const std::string PathBinAlias;
+		static const std::string PathRootAlias;
+
 		///
-		///	\class Configuration
+		///	Singleton
+		///	Loads configuration files and finds relative data paths.
 		///
-		///	\brief Global configuration settings for AGE.
+		static const Configuration& Instance();
+
 		///
-		///	\date July 8, 2018
+		///	Get the root install path of the age engine.
 		///
-		///	\author Aaron Shelley
+		std::filesystem::path getPathRoot() const;
+
 		///
-		class AZULE_EXPORT Configuration
-		{
-		public:
-			~Configuration();
-			Configuration(const Configuration&) = delete;
-			Configuration& operator=(const Configuration&) = delete;
+		///	Get the full path to AGE's data directory.
+		///
+		std::filesystem::path getPathData() const;
 
-			static const std::string PathDataAlias;
-			static const std::string PathMapsAlias;
-			static const std::string PathBinAlias;
-			static const std::string PathRootAlias;
+		///
+		///	Get the full path to AGE's maps directory.
+		///
+		std::filesystem::path getPathMaps() const;
 
-			///
-			///	Singleton
-			///	Loads configuration files and finds relative data paths.
-			///
-			static const Configuration& Instance();
+		///
+		///	Get the full path to AGE's bin directory.
+		///
+		std::filesystem::path getPathBin() const;
 
-			///
-			///	Get the root install path of the age engine.
-			///
-			std::filesystem::path getPathRoot() const;
+		///
+		///	Get the full path to AGE's plugin directory.
+		///
+		std::filesystem::path getPathPlugins() const;
 
-			///
-			///	Get the full path to AGE's data directory.
-			///
-			std::filesystem::path getPathData() const;
+		///
+		///	Get the full path to an AGE directory referenced by the given path ID.
+		///
+		std::filesystem::path getPath(std::string_view x) const;
 
-			///
-			///	Get the full path to AGE's maps directory.
-			///
-			std::filesystem::path getPathMaps() const;
+		///
+		///	Set the pixels per meter unit scaling for drawable objects.
+		///	(32 pixels per meter)
+		///
+		void setPixelsPerMeter(unsigned int x);
 
-			///
-			///	Get the full path to AGE's bin directory.
-			///
-			std::filesystem::path getPathBin() const;
+		///
+		///	Get the pixels per meter unit scaling.
+		///
+		unsigned int getPixelsPerMeter() const;
 
-			///
-			///	Get the full path to AGE's plugin directory.
-			///
-			std::filesystem::path getPathPlugins() const;
+	private:
+		Configuration();
 
-			///
-			///	Get the full path to an AGE directory referenced by the given path ID.
-			///
-			std::filesystem::path getPath(std::string_view x) const;
-
-			///
-			///	Set the pixels per meter unit scaling for drawable objects.
-			///	(32 pixels per meter)
-			///
-			void setPixelsPerMeter(unsigned int x);
-
-			///
-			///	Get the pixels per meter unit scaling.
-			///
-			unsigned int getPixelsPerMeter() const;
-
-		private:
-			Configuration();
-
-			struct Impl;
-			Pimpl<Impl> pimpl;
-		};
-	}
+		struct Impl;
+		Pimpl<Impl> pimpl;
+	};
 }

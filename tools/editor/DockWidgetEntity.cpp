@@ -16,10 +16,10 @@
 #include <iostream>
 
 using namespace azule;
-using namespace azule::entity;
+using namespace azule;
 
-Q_DECLARE_METATYPE(azule::entity::Entity*)
-Q_DECLARE_METATYPE(azule::entity::Component*)
+Q_DECLARE_METATYPE(azule::Entity*)
+Q_DECLARE_METATYPE(azule::Component*)
 
 struct DockWidgetEntity::Impl
 {
@@ -28,8 +28,8 @@ struct DockWidgetEntity::Impl
 
 DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 {
-	qRegisterMetaType<azule::entity::Entity*>();
-	qRegisterMetaType<azule::entity::Component*>();
+	qRegisterMetaType<azule::Entity*>();
+	qRegisterMetaType<azule::Component*>();
 
 	const auto widget = new QWidget();
 	const auto vLayout = new QVBoxLayout(widget);
@@ -71,14 +71,14 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 			{
 				case TreeWidgetEntity::ItemType::Entity:
 				{
-					auto entity = item->data(0, Qt::UserRole).value<azule::entity::Entity*>();
+					auto entity = item->data(0, Qt::UserRole).value<azule::Entity*>();
 					entity->remove();
 				}
 				break;
 
 				case TreeWidgetEntity::ItemType::Component:
 				{
-					auto component = item->data(0, Qt::UserRole).value<azule::entity::Component*>();
+					auto component = item->data(0, Qt::UserRole).value<azule::Component*>();
 					component->remove();
 				}
 				break;
@@ -94,7 +94,7 @@ DockWidgetEntity::DockWidgetEntity(QWidget* parent) : QDockWidget(parent)
 		if(items.empty() == false)
 		{
 			const auto& item = items[0];
-			const auto entity = item->data(0, Qt::UserRole).value<azule::entity::Entity*>();
+			const auto entity = item->data(0, Qt::UserRole).value<azule::Entity*>();
 			const auto dlgComponents = new DialogComponents(entity);
 			dlgComponents->setModal(true);
 			dlgComponents->setAttribute(Qt::WA_DeleteOnClose);

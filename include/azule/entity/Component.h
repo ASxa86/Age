@@ -5,14 +5,11 @@
 
 namespace azule
 {
-	namespace entity
+	class AZULE_EXPORT Component : public azule::Object
 	{
-		class AZULE_EXPORT Component : public azule::core::Object
-		{
-		public:
-			bool Enabled{true};
+	public:
+		bool Enabled{true};
 
-		private:
-		};
-	}
+	private:
+	};
 }

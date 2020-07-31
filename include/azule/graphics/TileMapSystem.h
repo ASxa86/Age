@@ -5,15 +5,12 @@
 
 namespace azule
 {
-	namespace graphics
+	class AZULE_EXPORT TileMapSystem : public RenderSystem
 	{
-		class AZULE_EXPORT TileMapSystem : public RenderSystem
-		{
-		public:
-			TileMapSystem();
-			~TileMapSystem();
+	public:
+		TileMapSystem();
+		~TileMapSystem();
 
-			void render(sf::RenderTarget& target, std::chrono::microseconds x) override;
-		};
-	}
+		void render(sf::RenderTarget& target, std::chrono::microseconds x) override;
+	};
 }

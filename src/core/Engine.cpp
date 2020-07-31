@@ -8,7 +8,7 @@
 #include <azule/core/Timer.h>
 #include <thread>
 
-using namespace azule::core;
+using namespace azule;
 
 class Engine::Impl
 {

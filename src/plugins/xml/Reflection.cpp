@@ -2,7 +2,7 @@
 #include <azule/plugins/xml/ParserXML.h>
 #include <azule/utilities/StaticInvoke.h>
 
-using namespace azule::core;
+using namespace azule;
 using namespace azule::xml;
 
 STATIC_INVOKE

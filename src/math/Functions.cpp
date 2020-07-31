@@ -4,7 +4,7 @@
 #include <azule/math/Vector.h>
 #include <cmath>
 
-double azule::math::VectorAngle(const azule::math::Vector& x)
+double azule::VectorAngle(const azule::Vector& x)
 {
 	if(x.magnitude() > 0.0)
 	{
@@ -23,7 +23,7 @@ double azule::math::VectorAngle(const azule::math::Vector& x)
 	return 0.0;
 }
 
-double azule::math::Constrain(double x, double min, double max)
+double azule::Constrain(double x, double min, double max)
 {
 	if(x < min || x > max)
 	{

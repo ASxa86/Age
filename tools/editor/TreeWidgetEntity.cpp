@@ -14,12 +14,12 @@
 #include <QtCore/QSize>
 
 using namespace azule;
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::utilities;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
-Q_DECLARE_METATYPE(azule::entity::Entity*)
-Q_DECLARE_METATYPE(azule::entity::Component*)
+Q_DECLARE_METATYPE(azule::Entity*)
+Q_DECLARE_METATYPE(azule::Component*)
 
 struct TreeWidgetEntity::Impl
 {
@@ -29,8 +29,8 @@ struct TreeWidgetEntity::Impl
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
 	Reflection::Instance().add<azule::GUIComponent>("GUIComponent");
-	qRegisterMetaType<azule::entity::Entity*>();
-	qRegisterMetaType<azule::entity::Component*>();
+	qRegisterMetaType<azule::Entity*>();
+	qRegisterMetaType<azule::Component*>();
 
 	this->pimpl->connection = EventQueue::Instance().addEventHandler([this](Event* x) {
 		auto evt = dynamic_cast<EntityEvent*>(x);
@@ -64,7 +64,7 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 	this->connect(this, &QTreeWidget::itemChanged, this, [this](QTreeWidgetItem* item) {
 		if(item->type() == ItemType::Entity)
 		{
-			auto entity = item->data(0, Qt::UserRole).value<azule::entity::Entity*>();
+			auto entity = item->data(0, Qt::UserRole).value<azule::Entity*>();
 
 			if(entity != nullptr)
 			{
@@ -77,7 +77,7 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 	this->connect(this, &QTreeWidget::itemClicked, this, [this](QTreeWidgetItem* item) {
 		if(item->type() == ItemType::Component)
 		{
-			auto component = item->data(0, Qt::UserRole).value<azule::entity::Component*>();
+			auto component = item->data(0, Qt::UserRole).value<azule::Component*>();
 			Application::Instance()->componentSelected(component);
 		}
 	});
@@ -86,7 +86,7 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 
 	if(manager != nullptr)
 	{
-		const auto& entities = manager->getChildren<azule::entity::Entity>();
+		const auto& entities = manager->getChildren<azule::Entity>();
 
 		for(const auto& entity : entities)
 		{
@@ -99,7 +99,7 @@ TreeWidgetEntity::~TreeWidgetEntity()
 {
 }
 
-void TreeWidgetEntity::addEntity(azule::entity::Entity* x)
+void TreeWidgetEntity::addEntity(azule::Entity* x)
 {
 	// Block the item changed signal until after we've fully added the entity node along with
 	// its component nodes.
@@ -110,7 +110,7 @@ void TreeWidgetEntity::addEntity(azule::entity::Entity* x)
 	item->setIcon(0, QIcon(":icons/pawn.png"));
 	item->setFlags(item->flags() | Qt::ItemFlag::ItemIsEditable);
 
-	auto components = x->getChildren<azule::entity::Component>();
+	auto components = x->getChildren<azule::Component>();
 
 	for(const auto& component : components)
 	{
@@ -118,12 +118,12 @@ void TreeWidgetEntity::addEntity(azule::entity::Entity* x)
 	}
 }
 
-void TreeWidgetEntity::removeEntity(azule::entity::Entity* x)
+void TreeWidgetEntity::removeEntity(azule::Entity* x)
 {
 	delete this->findItem(x);
 }
 
-void TreeWidgetEntity::addComponent(azule::entity::Entity* e, azule::entity::Component* c)
+void TreeWidgetEntity::addComponent(azule::Entity* e, azule::Component* c)
 {
 	auto item = this->findItem(e);
 
@@ -133,7 +133,7 @@ void TreeWidgetEntity::addComponent(azule::entity::Entity* e, azule::entity::Com
 	}
 }
 
-void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, azule::entity::Component* c)
+void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, azule::Component* c)
 {
 	const auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
 	auto type = Reflection::Instance().get(typeid(*c));
@@ -142,18 +142,18 @@ void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, azule::entity::Compon
 	item->setExpanded(true);
 }
 
-void TreeWidgetEntity::removeComponent(azule::entity::Entity* e, azule::entity::Component* c)
+void TreeWidgetEntity::removeComponent(azule::Entity* e, azule::Component* c)
 {
 	delete this->findItem(e, c);
 }
 
-QTreeWidgetItem* TreeWidgetEntity::findItem(azule::entity::Entity* x)
+QTreeWidgetItem* TreeWidgetEntity::findItem(azule::Entity* x)
 {
 	for(auto i = 0; i < this->topLevelItemCount(); i++)
 	{
 		auto item = this->topLevelItem(i);
 
-		if(item->data(0, Qt::UserRole).value<azule::entity::Entity*>() == x)
+		if(item->data(0, Qt::UserRole).value<azule::Entity*>() == x)
 		{
 			return item;
 		}
@@ -162,7 +162,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(azule::entity::Entity* x)
 	return nullptr;
 }
 
-QTreeWidgetItem* TreeWidgetEntity::findItem(azule::entity::Entity* e, azule::entity::Component* c)
+QTreeWidgetItem* TreeWidgetEntity::findItem(azule::Entity* e, azule::Component* c)
 {
 	auto item = this->findItem(e);
 

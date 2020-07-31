@@ -8,16 +8,16 @@
 #include <azule/utilities/PimplImpl.h>
 #include <SFML/Graphics.hpp>
 
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::graphics;
-using namespace azule::math;
+using namespace azule;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
-using namespace azule::graphics;
+using namespace azule;
 
 namespace
 {
-	sf::Vector2f FromVector(const azule::math::Vector& x)
+	sf::Vector2f FromVector(const azule::Vector& x)
 	{
 		return {static_cast<float>(x.X), static_cast<float>(x.Y)};
 	}

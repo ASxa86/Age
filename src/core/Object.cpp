@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <iostream>
 
-using namespace azule::core;
-using namespace azule::utilities;
+using namespace azule;
+using namespace azule;
 
 Object::Object()
 {

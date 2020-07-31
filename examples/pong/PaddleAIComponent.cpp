@@ -1,7 +1,7 @@
 #include <PaddleAIComponent.h>
 #include <azule/entity/Entity.h>
 
-using namespace azule::entity;
+using namespace azule;
 using namespace azule::pong;
 
 PaddleAIComponent::PaddleAIComponent() : ball{}

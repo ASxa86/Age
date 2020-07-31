@@ -7,7 +7,7 @@ namespace azule
 {
 	namespace tmx
 	{
-		class AZULE_PLUGINS_TMX_EXPORT ParserTMX : public azule::core::Parser
+		class AZULE_PLUGINS_TMX_EXPORT ParserTMX : public azule::Parser
 		{
 		public:
 			ParserTMX();

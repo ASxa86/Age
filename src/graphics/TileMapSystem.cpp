@@ -5,8 +5,8 @@
 #include <azule/graphics/TileMapComponent.h>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-using namespace azule::entity;
-using namespace azule::graphics;
+using namespace azule;
+using namespace azule;
 
 TileMapSystem::TileMapSystem()
 {

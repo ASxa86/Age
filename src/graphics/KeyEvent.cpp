@@ -1,7 +1,7 @@
 #include <azule/graphics/KeyEvent.h>
 #include <azule/utilities/PimplImpl.h>
 
-using namespace azule::graphics;
+using namespace azule;
 
 class KeyEvent::Impl
 {
@@ -16,7 +16,7 @@ public:
 	Type type;
 };
 
-KeyEvent::KeyEvent(sf::Keyboard::Key key, Type type) : azule::core::Event(), pimpl(key, type)
+KeyEvent::KeyEvent(sf::Keyboard::Key key, Type type) : azule::Event(), pimpl(key, type)
 {
 }
 

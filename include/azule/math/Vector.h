@@ -6,59 +6,56 @@
 
 namespace azule
 {
-	namespace math
+	///
+	///	\class Vector
+	///
+	///	\brief This class represents a vector.
+	///
+	///	\date June 20, 2017
+	///
+	///	\author Aaron Shelley
+	///
+	class AZULE_EXPORT Vector
 	{
+	public:
+		Vector(double x = 0.0, double y = 0.0);
+		Vector(const std::string& x);
+		operator std::string() const;
 		///
-		///	\class Vector
+		///	Operator overloads.
 		///
-		///	\brief This class represents a vector.
+		Vector operator+(const Vector& x) const;
+		Vector& operator+=(const Vector& x);
+		Vector operator-(const Vector& x) const;
+		Vector& operator-=(const Vector& x);
+
 		///
-		///	\date June 20, 2017
+		///	Dot product.
 		///
-		///	\author Aaron Shelley
+		double operator*(const Vector& x) const;
+
 		///
-		class AZULE_EXPORT Vector
-		{
-		public:
-			Vector(double x = 0.0, double y = 0.0);
-			Vector(const std::string& x);
-			operator std::string() const;
-			///
-			///	Operator overloads.
-			///
-			Vector operator+(const Vector& x) const;
-			Vector& operator+=(const Vector& x);
-			Vector operator-(const Vector& x) const;
-			Vector& operator-=(const Vector& x);
+		///	Comparator operator overloads
+		///
+		bool operator==(const Vector& x) const;
+		bool operator!=(const Vector& x) const;
+		bool operator<(const Vector& x) const;
+		bool operator>(const Vector& x) const;
 
-			///
-			///	Dot product.
-			///
-			double operator*(const Vector& x) const;
+		///
+		///	Scalar operator overloads.
+		///
+		Vector operator*(double x) const;
+		Vector& operator*=(double x);
+		Vector operator/(double x) const;
+		Vector& operator/=(double x);
 
-			///
-			///	Comparator operator overloads
-			///
-			bool operator==(const Vector& x) const;
-			bool operator!=(const Vector& x) const;
-			bool operator<(const Vector& x) const;
-			bool operator>(const Vector& x) const;
+		double magnitude() const;
+		double normalize();
 
-			///
-			///	Scalar operator overloads.
-			///
-			Vector operator*(double x) const;
-			Vector& operator*=(double x);
-			Vector operator/(double x) const;
-			Vector& operator/=(double x);
+		double X;
+		double Y;
+	};
 
-			double magnitude() const;
-			double normalize();
-
-			double X;
-			double Y;
-		};
-
-		AZULE_EXPORT double distance(const Vector& a, const Vector& b);
-	}
+	AZULE_EXPORT double distance(const Vector& a, const Vector& b);
 }

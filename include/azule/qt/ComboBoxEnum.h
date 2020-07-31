@@ -5,34 +5,31 @@
 
 namespace azule
 {
-	namespace core
+	namespace qt
 	{
-		namespace qt
+		template <typename T>
+		class ComboBoxEnum : public QComboBox
 		{
-			template <typename T>
-			class ComboBoxEnum : public QComboBox
+		public:
+			ComboBoxEnum(QWidget* parent = nullptr) : QComboBox(parent)
 			{
-			public:
-				ComboBoxEnum(QWidget* parent = nullptr) : QComboBox(parent)
-				{
-					const auto entries = magic_enum::enum_entries<T>();
+				const auto entries = magic_enum::enum_entries<T>();
 
-					for(const auto& [value, name] : entries)
-					{
-						this->addItem(QString::fromStdString(std::string(name)), static_cast<int>(value));
-					}
-				}
-
-				void setCurrentEnum(T x)
+				for(const auto& [value, name] : entries)
 				{
-					this->setCurrentIndex(this->findData(static_cast<int>(x)));
+					this->addItem(QString::fromStdString(std::string(name)), static_cast<int>(value));
 				}
+			}
 
-				T getCurrentEnum() const
-				{
-					return static_cast<T>(this->currentData().toInt());
-				}
-			};
-		}
+			void setCurrentEnum(T x)
+			{
+				this->setCurrentIndex(this->findData(static_cast<int>(x)));
+			}
+
+			T getCurrentEnum() const
+			{
+				return static_cast<T>(this->currentData().toInt());
+			}
+		};
 	}
 }

@@ -7,26 +7,26 @@
 #include <azule/export.h>
 #include <azule/utilities/StaticInvoke.h>
 
-using namespace azule::core;
-using namespace azule::physics;
+using namespace azule;
+using namespace azule;
 
 STATIC_INVOKE
 {
-	Reflection::Instance().add<PhysicsSystem>("PhysicsSystem").addBase<azule::entity::System>();
-	Reflection::Instance().add<PhysicsRenderSystem>("PhysicsRenderSystem").addBase<azule::entity::System>();
+	Reflection::Instance().add<PhysicsSystem>("PhysicsSystem").addBase<azule::System>();
+	Reflection::Instance().add<PhysicsRenderSystem>("PhysicsRenderSystem").addBase<azule::System>();
 
 	Reflection::Instance()
 		.add<KinematicComponent>("KinematicComponent")
-		.addBase<azule::entity::Component>()
+		.addBase<azule::Component>()
 		.addProperty("BodyType", &KinematicComponent::BodyType)
 		.addProperty("LinearVelocity", &KinematicComponent::LinearVelocity)
 		.addProperty("CalculateHeading", &KinematicComponent::CalculateHeading);
 
-	Reflection::Instance().add<BoxCollisionComponent>("BoxCollisionComponent").addBase<azule::entity::Component>();
+	Reflection::Instance().add<BoxCollisionComponent>("BoxCollisionComponent").addBase<azule::Component>();
 
 	Reflection::Instance()
 		.add<CollisionComponent>("CollisionComponent")
-		.addBase<azule::entity::Component>()
+		.addBase<azule::Component>()
 		.addProperty("Restitution", &CollisionComponent::Restitution)
 		.addProperty("Friction", &CollisionComponent::Friction)
 		.addProperty("Density", &CollisionComponent::Density)

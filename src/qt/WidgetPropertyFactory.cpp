@@ -8,8 +8,8 @@
 #include <iostream>
 #include <map>
 
-using namespace azule::core::qt;
-using namespace azule::utilities;
+using namespace azule::qt;
+using namespace azule;
 
 CreatorBase::~CreatorBase()
 {

@@ -7,7 +7,7 @@ namespace azule
 {
 	namespace xml
 	{
-		class AZULE_PLUGINS_XML_EXPORT ParserXML : public azule::core::Parser
+		class AZULE_PLUGINS_XML_EXPORT ParserXML : public azule::Parser
 		{
 		public:
 			ParserXML();

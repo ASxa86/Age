@@ -5,8 +5,8 @@
 #include <iostream>
 #include <pugixml.hpp>
 
-using namespace azule::core;
-using namespace azule::utilities;
+using namespace azule;
+using namespace azule;
 using namespace azule::xml;
 
 namespace
@@ -20,7 +20,7 @@ namespace
 
 			if(prop != nullptr)
 			{
-				const auto value = azule::core::ResolvePath(x.attribute("value").as_string());
+				const auto value = azule::ResolvePath(x.attribute("value").as_string());
 				prop->setValue(*obj, value);
 				return true;
 			}

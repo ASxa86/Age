@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 
-using namespace azule::core;
+using namespace azule;
 
 STATIC_INVOKE
 {
@@ -132,7 +132,7 @@ Reflection& Reflection::Instance()
 			const std::string agePlugin = "azule-";
 			if(filename.compare(0, agePlugin.size(), agePlugin) == 0)
 			{
-				azule::utilities::SharedLibrary library(filepath);
+				azule::SharedLibrary library(filepath);
 
 				if(library.loaded() == true)
 				{

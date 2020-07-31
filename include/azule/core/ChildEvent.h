@@ -4,22 +4,19 @@
 
 namespace azule
 {
-	namespace core
+	class Object;
+
+	class AZULE_EXPORT ChildEvent : public Event
 	{
-		class Object;
+	public:
+		ChildEvent(Object* parent, Object* child);
+		~ChildEvent() override;
 
-		class AZULE_EXPORT ChildEvent : public Event
-		{
-		public:
-			ChildEvent(Object* parent, Object* child);
-			~ChildEvent() override;
+		Object* getParent() const;
+		Object* getChild() const;
 
-			Object* getParent() const;
-			Object* getChild() const;
-
-		private:
-			Object* parent;
-			Object* child;
-		};
-	}
+	private:
+		Object* parent;
+		Object* child;
+	};
 }

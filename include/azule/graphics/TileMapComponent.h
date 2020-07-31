@@ -9,19 +9,16 @@
 
 namespace azule
 {
-	namespace graphics
+	class AZULE_EXPORT TileMapComponent : public azule::Component, public sf::Drawable
 	{
-		class AZULE_EXPORT TileMapComponent : public azule::entity::Component, public sf::Drawable
-		{
-		public:
-			TileMapComponent();
-			~TileMapComponent();
+	public:
+		TileMapComponent();
+		~TileMapComponent();
 
-			void loadTileMap(const azule::terrain::TileMap& x);
+		void loadTileMap(const azule::TileMap& x);
 
-		private:
-			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-			std::vector<std::pair<sf::Texture, sf::VertexArray>> layers;
-		};
-	}
+	private:
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+		std::vector<std::pair<sf::Texture, sf::VertexArray>> layers;
+	};
 }

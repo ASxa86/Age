@@ -6,8 +6,8 @@
 #include <azule/physics/BoxCollisionComponent.h>
 #include <azule/physics/KinematicComponent.h>
 
-using namespace azule::entity;
-using namespace azule::physics;
+using namespace azule;
+using namespace azule;
 using namespace azule::pong;
 
 PaddleAISystem::PaddleAISystem()

@@ -6,15 +6,12 @@
 
 namespace azule
 {
-	namespace graphics
+	class DatabaseTexture : public azule::Object
 	{
-		class DatabaseTexture : public azule::core::Object
-		{
-		public:
-			sf::Texture& getTexture(const std::string& x);
+	public:
+		sf::Texture& getTexture(const std::string& x);
 
-		private:
-			std::unordered_map<std::string, sf::Texture> textures;
-		};
-	}
+	private:
+		std::unordered_map<std::string, sf::Texture> textures;
+	};
 }

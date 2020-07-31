@@ -7,7 +7,7 @@
 #include <azule/utilities/PimplImpl.h>
 
 using namespace azule;
-using namespace azule::entity;
+using namespace azule;
 
 struct MainWindow::Impl
 {

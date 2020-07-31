@@ -5,7 +5,7 @@
 #include <azule/entity/Entity.h>
 #include <azule/entity/EntityDatabase.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 AnimationSystem::AnimationSystem() : System()
 {
@@ -30,7 +30,7 @@ void AnimationSystem::frame(std::chrono::microseconds x)
 
 			if(a->getIsPlaying() == true && animation != nullptr)
 			{
-				const auto delta = azule::core::seconds{std::chrono::duration_cast<azule::core::seconds>(x).count() * a->getSpeed()};
+				const auto delta = azule::seconds{std::chrono::duration_cast<azule::seconds>(x).count() * a->getSpeed()};
 				a->setElapsed(a->getElapsed() + std::chrono::duration_cast<std::chrono::microseconds>(delta));
 
 				if(a->getElapsed() > a->getLength())

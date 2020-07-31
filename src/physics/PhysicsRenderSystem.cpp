@@ -9,9 +9,9 @@
 #include <azule/physics/PhysicsRenderSystem.h>
 #include <SFML/Graphics.hpp>
 
-using namespace azule::core;
-using namespace azule::entity;
-using namespace azule::physics;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
 struct PhysicsRenderSystem::Impl
 {

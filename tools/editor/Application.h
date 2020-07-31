@@ -1,15 +1,12 @@
 #pragma once
 
-#include <azule/utilities/Pimpl.h>
 #include <azule/entity/Component.h>
+#include <azule/utilities/Pimpl.h>
 #include <QtWidgets/QApplication>
 
 namespace azule
 {
-	namespace core
-	{
-		class Engine;
-	}
+	class Engine;
 
 	///
 	///	\class Application
@@ -36,10 +33,10 @@ namespace azule
 		///
 		///	Get the core game engine for the application.
 		///
-		azule::core::Engine& getEngine();
+		azule::Engine& getEngine();
 
 	signals:
-		void componentSelected(azule::entity::Component*);
+		void componentSelected(azule::Component*);
 
 	private:
 		struct Impl;

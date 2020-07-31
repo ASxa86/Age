@@ -7,10 +7,7 @@
 
 namespace azule
 {
-	namespace graphics
-	{
-		AZULE_EXPORT azule::math::Vector ToVector(const sf::Vector2f& x);
-		AZULE_EXPORT sf::Vector2f FromVector(const azule::math::Vector& x);
-		AZULE_EXPORT sf::Color FromColor(const std::array<int, 4>& x);
-	}
+	AZULE_EXPORT azule::Vector ToVector(const sf::Vector2f& x);
+	AZULE_EXPORT sf::Vector2f FromVector(const azule::Vector& x);
+	AZULE_EXPORT sf::Color FromColor(const std::array<int, 4>& x);
 }

@@ -1,6 +1,6 @@
 #include <azule/core/ChildEvent.h>
 
-using namespace azule::core;
+using namespace azule;
 
 ChildEvent::ChildEvent(Object* parent, Object* child) : Event(), parent{parent}, child{child}
 {

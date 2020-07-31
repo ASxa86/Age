@@ -2,7 +2,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/spirit/include/karma.hpp>
 
-std::vector<std::string> azule::utilities::Split(std::string x, std::string tokens, std::array<char, 2> container)
+std::vector<std::string> azule::Split(std::string x, std::string tokens, std::array<char, 2> container)
 {
 	std::vector<std::string> v;
 
@@ -22,7 +22,7 @@ std::vector<std::string> azule::utilities::Split(std::string x, std::string toke
 }
 
 // AMS // 10/6/2019 // Unsupported by gcc v9.0.1
-// std::string azule::core::ToString(float x, int precision, std::chars_format fmt)
+// std::string azule::ToString(float x, int precision, std::chars_format fmt)
 // {
 // 	// Defined a buffer size that can support std::numeric_limits<float>::max() with max precision std::numeric_limits<float>::maxdigits10.
 // 	std::array<char, 64> buffer{};
@@ -38,7 +38,7 @@ std::vector<std::string> azule::utilities::Split(std::string x, std::string toke
 // }
 
 // AMS // 10/6/2019 // Unsupported by gcc v9.0.1
-// std::string azule::core::ToString(double x, int precision, std::chars_format fmt)
+// std::string azule::ToString(double x, int precision, std::chars_format fmt)
 // {
 // 	// Defined a buffer size that can support std::numeric_limits<double>::max() with max precision std::numeric_limits<double>::maxdigits10.
 // 	std::array<char, 512> buffer{};
@@ -85,7 +85,7 @@ namespace
 	};
 }
 
-std::string azule::utilities::ToString(float x, int precision)
+std::string azule::ToString(float x, int precision)
 {
 	using boost::spirit::ascii::space;
 	using boost::spirit::karma::generate;
@@ -99,7 +99,7 @@ std::string azule::utilities::ToString(float x, int precision)
 	return s;
 }
 
-std::string azule::utilities::ToString(double x, int precision)
+std::string azule::ToString(double x, int precision)
 {
 	using boost::spirit::ascii::space;
 	using boost::spirit::karma::generate;

@@ -4,7 +4,7 @@
 #include <azule/entity/Entity.h>
 #include <azule/entity/EntityDatabase.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 CloneSystem::CloneSystem()
 {
@@ -30,7 +30,7 @@ void CloneSystem::frame(std::chrono::microseconds x)
 					++this->Count;
 					this->elapsed -= this->Rate;
 
-					auto clone = azule::core::Clone(entity);
+					auto clone = azule::Clone(entity);
 					std::unique_ptr<Entity> ce{dynamic_cast<Entity*>(clone.release())};
 					manager->addEntity(std::move(ce));
 				}

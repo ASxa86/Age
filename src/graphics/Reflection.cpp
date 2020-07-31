@@ -10,21 +10,21 @@
 #include <azule/graphics/Window.h>
 #include <azule/utilities/StaticInvoke.h>
 
-using namespace azule::core;
-using namespace azule::graphics;
+using namespace azule;
+using namespace azule;
 
 STATIC_INVOKE
 {
-	Reflection::Instance().add<TileMapSystem>("TileMapSystem").addBase<azule::entity::System>();
-	Reflection::Instance().add<RenderSystem>("RenderSystem").addBase<azule::entity::System>();
+	Reflection::Instance().add<TileMapSystem>("TileMapSystem").addBase<azule::System>();
+	Reflection::Instance().add<RenderSystem>("RenderSystem").addBase<azule::System>();
 
-	Reflection::Instance().add<DatabaseTexture>("DatabaseTexture").addBase<azule::core::Object>();
+	Reflection::Instance().add<DatabaseTexture>("DatabaseTexture").addBase<azule::Object>();
 
 	Reflection::Instance().add<Window>("Window");
 
 	Reflection::Instance()
 		.add<DrawableComponent>("DrawableComponent")
-		.addBase<azule::entity::Component>()
+		.addBase<azule::Component>()
 		.addProperty("UseRotation", &DrawableComponent::UseRotation)
 		.addProperty("UsePosition", &DrawableComponent::UsePosition)
 		.addProperty("RenderOrder", &DrawableComponent::RenderOrder);

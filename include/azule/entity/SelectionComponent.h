@@ -4,14 +4,11 @@
 
 namespace azule
 {
-	namespace entity
+	class AZULE_EXPORT SelectionComponent : public Component
 	{
-		class AZULE_EXPORT SelectionComponent : public Component
-		{
-		public:
-			SelectionComponent();
+	public:
+		SelectionComponent();
 
-			bool Selected{false};
-		};
-	}
+		bool Selected{false};
+	};
 }

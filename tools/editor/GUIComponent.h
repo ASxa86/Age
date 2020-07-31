@@ -14,7 +14,7 @@ namespace azule
 	///
 	///	\date March 9, 2019
 	///
-	struct GUIComponent : public azule::entity::Component
+	struct GUIComponent : public azule::Component
 	{
 		std::string ID;
 	};

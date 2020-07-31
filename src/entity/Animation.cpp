@@ -1,6 +1,6 @@
 #include <azule/entity/Animation.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 Animation::Animation() : channels{}
 {

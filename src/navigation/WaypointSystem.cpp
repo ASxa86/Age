@@ -5,10 +5,10 @@
 #include <azule/navigation/WaypointSystem.h>
 #include <azule/physics/KinematicComponent.h>
 
-using namespace azule::entity;
-using namespace azule::math;
-using namespace azule::navigation;
-using namespace azule::physics;
+using namespace azule;
+using namespace azule;
+using namespace azule;
+using namespace azule;
 
 WaypointSystem::WaypointSystem() : System()
 {

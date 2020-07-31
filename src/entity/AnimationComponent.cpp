@@ -1,6 +1,6 @@
 #include <azule/entity/AnimationComponent.h>
 
-using namespace azule::entity;
+using namespace azule;
 
 AnimationComponent::AnimationComponent() : currentAnimation{nullptr}, elapsed{0}, length{0}, speed{1.0}, isPlaying{false}
 {

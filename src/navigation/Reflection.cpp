@@ -4,8 +4,8 @@
 #include <azule/navigation/WaypointSystem.h>
 #include <azule/utilities/StaticInvoke.h>
 
-using namespace azule::core;
-using namespace azule::navigation;
+using namespace azule;
+using namespace azule;
 
 STATIC_INVOKE
 {
@@ -15,7 +15,7 @@ STATIC_INVOKE
 
 	Reflection::Instance()
 		.add<WaypointComponent>("WaypointComponent")
-		.addBase<azule::entity::Component>()
+		.addBase<azule::Component>()
 		.addProperty("CurrentWaypoint", &WaypointComponent::CurrentWaypoint)
 		.addProperty("Loop", &WaypointComponent::Loop);
 }

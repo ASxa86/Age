@@ -6,26 +6,23 @@
 
 namespace azule
 {
-	namespace core
+	class AZULE_EXPORT Processor : public Object
 	{
-		class AZULE_EXPORT Processor : public Object
-		{
-		public:
-			Processor();
-			virtual ~Processor();
+	public:
+		Processor();
+		virtual ~Processor();
 
-			void fixed(std::chrono::microseconds x);
-			void variable(std::chrono::microseconds x);
-			void render(std::chrono::microseconds x);
+		void fixed(std::chrono::microseconds x);
+		void variable(std::chrono::microseconds x);
+		void render(std::chrono::microseconds x);
 
-		protected:
-			void addFixedFunction(const std::function<void(std::chrono::microseconds)>& x);
-			void addVariableFunction(const std::function<void(std::chrono::microseconds)>& x);
-			void addRenderFunction(const std::function<void(std::chrono::microseconds)>& x);
+	protected:
+		void addFixedFunction(const std::function<void(std::chrono::microseconds)>& x);
+		void addVariableFunction(const std::function<void(std::chrono::microseconds)>& x);
+		void addRenderFunction(const std::function<void(std::chrono::microseconds)>& x);
 
-		private:
-			class Impl;
-			Pimpl<Impl> pimpl;
-		};
-	}
+	private:
+		class Impl;
+		Pimpl<Impl> pimpl;
+	};
 }
