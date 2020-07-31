@@ -1,7 +1,7 @@
 #include <Application.h>
 #include <DockWidgetComponent.h>
-#include <azule/core/qt/DelegateWidgetProperty.h>
-#include <azule/core/qt/TableModelProperties.h>
+#include  <azule/qt/DelegateWidgetProperty.h>
+#include  <azule/qt/TableModelProperties.h>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTableView>
 

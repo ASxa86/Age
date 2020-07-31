@@ -60,32 +60,6 @@ macro(AZULE_INSTALL)
 	)
 endmacro()
 
-macro(AZULE_QT)
-	if(AZULE_ENABLE_QT)
-		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/qt)
-			add_subdirectory(qt)
-		endif()
-	endif()
-endmacro()
-
-macro(AZULE_INCLUDE_QT)
-	find_package(Qt5 COMPONENTS Core Gui Widgets)
-
-	target_link_libraries(${PROJECT_NAME} PRIVATE
-		Qt5::Core
-		Qt5::Gui
-		Qt5::Widgets
-	)
-endmacro()
-
-macro(AZULE_TEST)
-	if(AZULE_ENABLE_TESTS)
-		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test)
-			add_subdirectory(test)
-		endif()
-	endif()
-endmacro()
-
 macro(AZULE_INCLUDE_GTEST)
 	find_package(GTest CONFIG REQUIRED)
 
@@ -93,17 +67,6 @@ macro(AZULE_INCLUDE_GTEST)
 		GTest::gtest
 		GTest::gtest_main
 	)
-endmacro()
-
-macro(AZULE_INCLUDE_BOOST)
-	find_package(Boost COMPONENTS system filesystem)
-
-	target_link_libraries(${PROJECT_NAME} PRIVATE
-		Boost::system
-		Boost::filesystem
-	)
-
-	target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIR})
 endmacro()
 
 macro(AZULE_ADD_LIBRARY)
@@ -116,8 +79,6 @@ macro(AZULE_ADD_LIBRARY)
 	AZULE_COMPILE_OPTIONS()
 	AZULE_WARNINGS_AS_ERRORS()
 	AZULE_EXPORTS()
-	AZULE_TEST()
-	AZULE_QT()
 	AZULE_INSTALL()
 endmacro()
 

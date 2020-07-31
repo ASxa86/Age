@@ -29,6 +29,10 @@ if(AZULE_ENABLE_BENCHMARKS)
 	add_subdirectory(benchmarks)
 endif()
 
+if(AZULE_ENABLE_TESTS)
+	add_subdirectory(tests)
+endif()
+
 add_subdirectory(examples)
 add_subdirectory(src)
 add_subdirectory(tools)

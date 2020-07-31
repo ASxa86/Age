@@ -1,5 +1,3 @@
-add_subdirectory(plugins)
-
 project(azule)
 
 include(audio/source_list.cmake)
@@ -45,3 +43,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 	sfml-graphics
 	sfml-window
 )
+
+add_subdirectory(plugins)
+add_subdirectory(qt)
