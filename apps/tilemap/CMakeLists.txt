@@ -4,10 +4,6 @@ find_package(SFML 2 COMPONENTS system graphics window)
 
 add_executable(${PROJECT_NAME})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-	FOLDER examples
-)
-
 target_sources(${PROJECT_NAME} PRIVATE
 )
 

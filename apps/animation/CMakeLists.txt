@@ -6,10 +6,6 @@ add_executable(${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${SFML_INCLUDE_DIR})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-	FOLDER examples
-)
-
 target_sources(${PROJECT_NAME} PRIVATE
 )
 

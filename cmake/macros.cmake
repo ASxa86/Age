@@ -72,10 +72,6 @@ endmacro()
 macro(AZULE_ADD_LIBRARY)
 	add_library(${PROJECT_NAME})
 
-	set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER azule
-	)
-
 	AZULE_COMPILE_OPTIONS()
 	AZULE_WARNINGS_AS_ERRORS()
 	AZULE_EXPORTS()
@@ -84,10 +80,6 @@ endmacro()
 
 macro(AZULE_ADD_TEST)
 	add_executable(${PROJECT_NAME})
-
-	set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER tests
-	)
 
 	AZULE_COMPILE_OPTIONS()
 	AZULE_WARNINGS_AS_ERRORS()

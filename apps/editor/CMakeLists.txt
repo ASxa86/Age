@@ -4,11 +4,9 @@ set(CMAKE_AUTOMOC ON)
 
 add_executable(${PROJECT_NAME})
 
-qt5_add_resources(QT_RESOURCES ${CMAKE_SOURCE_DIR}/data/icons.qrc)
+find_package(Qt5 COMPONENTS Core Gui Widgets)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-	FOLDER tools
-)
+qt5_add_resources(QT_RESOURCES ${CMAKE_SOURCE_DIR}/data/icons.qrc)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -34,8 +32,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	main.cpp
 	${QT_RESOURCES}
 )
-
-find_package(Qt5 COMPONENTS Core Gui Widgets)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	azule

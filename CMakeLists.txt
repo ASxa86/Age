@@ -33,9 +33,8 @@ if(AZULE_ENABLE_TESTS)
 	add_subdirectory(tests)
 endif()
 
-add_subdirectory(examples)
+add_subdirectory(apps)
 add_subdirectory(src)
-add_subdirectory(tools)
 
 ################################################################
 #
