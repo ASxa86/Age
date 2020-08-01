@@ -1,8 +1,8 @@
 set(MATH_H_LIST
-	${AZULE_INCLUDE_DIR}/azule/math/Constants.h
-	${AZULE_INCLUDE_DIR}/azule/math/Convert.h
-	${AZULE_INCLUDE_DIR}/azule/math/Functions.h
-	${AZULE_INCLUDE_DIR}/azule/math/Vector.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Constants.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Convert.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Functions.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Vector.h
 )
 
 set(MATH_SRC_LIST

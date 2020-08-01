@@ -3,10 +3,10 @@ project(azule-math)
 AZULE_ADD_LIBRARY()
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AZULE_INCLUDE_DIR}/azule/math/Constants.h
-	${AZULE_INCLUDE_DIR}/azule/math/Convert.h
-	${AZULE_INCLUDE_DIR}/azule/math/Functions.h
-	${AZULE_INCLUDE_DIR}/azule/math/Vector.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Constants.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Convert.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Functions.h
+	${PROJECT_INCLUDE_DIR}/azule/math/Vector.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE

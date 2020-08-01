@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/core/Event.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/utilities/Pimpl.h>
 #include <vector>
 

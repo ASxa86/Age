@@ -1,6 +1,6 @@
 set(AUDIO_H_LIST
-	${AZULE_INCLUDE_DIR}/azule/audio/AudioEvent.h
-	${AZULE_INCLUDE_DIR}/azule/audio/AudioSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/audio/AudioEvent.h
+	${PROJECT_INCLUDE_DIR}/azule/audio/AudioSystem.h
 )
 
 set(AUDIO_SRC_LIST

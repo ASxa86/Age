@@ -1,6 +1,6 @@
 project(test-azule-qt)
 
-AZULE_ADD_TEST()
+add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
 	ComboBoxEnum.test.cpp
@@ -8,7 +8,14 @@ target_sources(${PROJECT_NAME} PRIVATE
 	WidgetPropertyFactory.test.cpp
 )
 
+find_package(GTest CONFIG REQUIRED)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	azule
 	azule-qt
+	GTest::gtest
+	GTest::gtest_main
 )
+
+project_install_target()
+project_compile_options()

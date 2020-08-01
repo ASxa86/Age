@@ -2,7 +2,7 @@
 
 #include <azule/entity/Component.h>
 #include <azule/entity/EntityDatabase.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <SFML/Window/Keyboard.hpp>
 #include <functional>
 #include <vector>

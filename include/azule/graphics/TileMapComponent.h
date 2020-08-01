@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/Component.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/terrain/TileMap.h>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Texture.hpp>

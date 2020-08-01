@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/utilities/Pimpl.h>
 #include <filesystem>
 #include <string>

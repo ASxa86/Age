@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/core/Object.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 
 namespace azule
 {

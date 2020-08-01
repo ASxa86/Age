@@ -1,10 +1,10 @@
 set(UTILITIES_H_LIST
-	${AZULE_INCLUDE_DIR}/azule/utilities/Pimpl.h
-	${AZULE_INCLUDE_DIR}/azule/utilities/PimplImpl.h
-	${AZULE_INCLUDE_DIR}/azule/utilities/SharedLibrary.h
-	${AZULE_INCLUDE_DIR}/azule/utilities/Signal.h
-	${AZULE_INCLUDE_DIR}/azule/utilities/StaticInvoke.h
-	${AZULE_INCLUDE_DIR}/azule/utilities/String.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/Pimpl.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/PimplImpl.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/SharedLibrary.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/Signal.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/StaticInvoke.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/String.h
 )
 
 set(UTILITIES_SRC_LIST

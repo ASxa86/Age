@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/graphics/RenderSystem.h>
 
 namespace azule

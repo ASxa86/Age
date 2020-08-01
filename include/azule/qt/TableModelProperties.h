@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/qt/export.h>
+#include <azule/qt/export.hxx>
 #include <QtCore/QAbstractTableModel>
 
 namespace azule

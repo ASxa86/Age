@@ -2,7 +2,7 @@
 
 #include <azule/entity/Animation.h>
 #include <azule/entity/Component.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <deque>
 
 namespace azule

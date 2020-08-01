@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/qt/WidgetProperty.h>
-#include <azule/qt/export.h>
+#include <azule/qt/export.hxx>
 #include <azule/utilities/Pimpl.h>
 #include <QtWidgets/QWidget>
 

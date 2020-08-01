@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/graphics/DrawableComponent.h>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>

@@ -1,5 +1,5 @@
 #include <azule/core/Reflection.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/navigation/WaypointComponent.h>
 #include <azule/navigation/WaypointSystem.h>
 #include <azule/utilities/StaticInvoke.h>

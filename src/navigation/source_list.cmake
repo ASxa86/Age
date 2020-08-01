@@ -1,6 +1,6 @@
 set(NAVIGATION_H_LIST
-	${AZULE_INCLUDE_DIR}/azule/navigation/WaypointComponent.h
-	${AZULE_INCLUDE_DIR}/azule/navigation/WaypointSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/navigation/WaypointComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/navigation/WaypointSystem.h
 )
 
 set(NAVIGATION_SRC_LIST

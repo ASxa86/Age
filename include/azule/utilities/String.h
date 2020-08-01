@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/core/TypeTraits.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/utilities/MagicEnum.h>
 #include <array>
 #include <charconv>

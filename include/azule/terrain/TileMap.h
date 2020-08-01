@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/terrain/TileMapLayer.h>
 #include <azule/terrain/TileSet.h>
 #include <filesystem>

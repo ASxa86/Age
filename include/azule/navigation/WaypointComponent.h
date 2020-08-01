@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/entity/Component.h>
-#include <azule/export.h>
+#include <azule/export.hxx>
 #include <azule/math/Vector.h>
 #include <vector>
 

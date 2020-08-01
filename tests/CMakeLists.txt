@@ -1,6 +1,6 @@
 project(test-azule)
 
-AZULE_ADD_TEST()
+add_executable(${PROJECT_NAME})
 
 include(core/source_list.cmake)
 include(entity/source_list.cmake)
@@ -21,8 +21,15 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${UTILITIES_SRC_LIST}
 )
 
+find_package(GTest CONFIG REQUIRED)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	azule
+	GTest::gtest
+	GTest::gtest_main
 )
+
+project_install_target()
+project_compile_options()
 
 add_subdirectory(qt)

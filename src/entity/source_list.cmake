@@ -1,16 +1,16 @@
 set(ENTITY_H_LIST
-	${AZULE_INCLUDE_DIR}/azule/entity/Animation.h
-	${AZULE_INCLUDE_DIR}/azule/entity/AnimationChannel.h
-	${AZULE_INCLUDE_DIR}/azule/entity/AnimationComponent.h
-	${AZULE_INCLUDE_DIR}/azule/entity/AnimationSystem.h
-	${AZULE_INCLUDE_DIR}/azule/entity/CloneSystem.h
-	${AZULE_INCLUDE_DIR}/azule/entity/Component.h
-	${AZULE_INCLUDE_DIR}/azule/entity/Entity.h
-	${AZULE_INCLUDE_DIR}/azule/entity/EntityDatabase.h
-	${AZULE_INCLUDE_DIR}/azule/entity/EntityEvent.h
-	${AZULE_INCLUDE_DIR}/azule/entity/SelectionComponent.h
-	${AZULE_INCLUDE_DIR}/azule/entity/System.h
-	${AZULE_INCLUDE_DIR}/azule/entity/TransformComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/Animation.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/AnimationChannel.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/AnimationComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/AnimationSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/CloneSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/Component.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/Entity.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/EntityDatabase.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/EntityEvent.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/SelectionComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/System.h
+	${PROJECT_INCLUDE_DIR}/azule/entity/TransformComponent.h
 )
 
 set(ENTITY_SRC_LIST

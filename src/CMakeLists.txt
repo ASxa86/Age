@@ -10,7 +10,7 @@ include(physics/source_list.cmake)
 include(terrain/source_list.cmake)
 include(utilities/source_list.cmake)
 
-AZULE_ADD_LIBRARY()
+add_library(${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/physics)
 
@@ -43,6 +43,10 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 	sfml-graphics
 	sfml-window
 )
+
+project_gen_export()
+project_install_target()
+project_compile_options()
 
 add_subdirectory(plugins)
 add_subdirectory(qt)

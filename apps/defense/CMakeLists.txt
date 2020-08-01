@@ -17,6 +17,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	azule
 )
 
-AZULE_COMPILE_OPTIONS()
-AZULE_WARNINGS_AS_ERRORS()
-AZULE_INSTALL()
+project_install_target()
+project_compile_options()

@@ -6,10 +6,10 @@ project(azule-plugins-xml)
 #
 find_package(PugiXML)
 
-AZULE_ADD_LIBRARY()
+add_library(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
-	${AZULE_INCLUDE_DIR}/azule/plugins/xml/ParserXML.h
+	${PROJECT_INCLUDE_DIR}/azule/plugins/xml/ParserXML.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -22,3 +22,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	pugixml
 	# pugixml::pugixml
 )
+
+project_install_target()
+project_compile_options()

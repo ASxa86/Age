@@ -1,18 +1,18 @@
 set(GRAPHICS_H_LIST
-	${AZULE_INCLUDE_DIR}/azule/graphics/BoxSelectionComponent.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/DatabaseTexture.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/DrawableComponent.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/InputComponent.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/KeyEvent.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/PlayerInputSystem.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/ProgressBarComponent.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/RenderSystem.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/SpriteComponent.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/TextSystem.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/TileMapComponent.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/TileMapSystem.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/Utilities.h
-	${AZULE_INCLUDE_DIR}/azule/graphics/Window.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/BoxSelectionComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/DatabaseTexture.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/DrawableComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/InputComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/KeyEvent.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/PlayerInputSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/ProgressBarComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/RenderSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/SpriteComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/TextSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/TileMapComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/TileMapSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/Utilities.h
+	${PROJECT_INCLUDE_DIR}/azule/graphics/Window.h
 )
 
 set(GRAPHICS_SRC_LIST

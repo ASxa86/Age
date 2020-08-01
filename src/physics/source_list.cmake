@@ -134,14 +134,14 @@ set(BOX2D_SRC
 )
 
 set(PHYSICS_H_LIST
-	${AZULE_INCLUDE_DIR}/azule/physics/BoxCollisionComponent.h
-	${AZULE_INCLUDE_DIR}/azule/physics/CircleCollisionComponent.h
-	${AZULE_INCLUDE_DIR}/azule/physics/CollisionEvent.h
-	${AZULE_INCLUDE_DIR}/azule/physics/CollisionComponent.h
-	${AZULE_INCLUDE_DIR}/azule/physics/EdgeCollisionComponent.h
-	${AZULE_INCLUDE_DIR}/azule/physics/KinematicComponent.h
-	${AZULE_INCLUDE_DIR}/azule/physics/PhysicsSystem.h
-	${AZULE_INCLUDE_DIR}/azule/physics/PhysicsRenderSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/BoxCollisionComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/CircleCollisionComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/CollisionEvent.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/CollisionComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/EdgeCollisionComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/KinematicComponent.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/PhysicsSystem.h
+	${PROJECT_INCLUDE_DIR}/azule/physics/PhysicsRenderSystem.h
 	${BOX2D_H}
 )
 

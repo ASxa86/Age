@@ -38,5 +38,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	azule-qt
 )
 
-AZULE_COMPILE_OPTIONS()
-AZULE_WARNINGS_AS_ERRORS()
+project_install_target()
+project_compile_options()
