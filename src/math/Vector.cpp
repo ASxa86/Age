@@ -9,22 +9,6 @@ Vector::Vector(double x, double y) : X{x}, Y{y}
 {
 }
 
-Vector::Vector(const std::string& x)
-{
-	const auto tokens = azule::Split(x);
-
-	if(tokens.size() == 2)
-	{
-		this->X = azule::StringTo<double>(tokens[0]);
-		this->Y = azule::StringTo<double>(tokens[1]);
-	}
-}
-
-Vector::operator std::string() const
-{
-	return "{" + azule::ToString(this->X) + ", " + azule::ToString(this->Y) + "}";
-}
-
 Vector Vector::operator+(const Vector& x) const
 {
 	return Vector{this->X + x.X, this->Y + x.Y};
@@ -118,4 +102,16 @@ double Vector::normalize()
 double azule::distance(const Vector& a, const Vector& b)
 {
 	return std::sqrt(std::pow(b.X - a.X, 2.0) + std::pow(b.Y - a.Y, 2.0));
+}
+
+void azule::to_json(nlohmann::json& j, const Vector& x)
+{
+	j["x"] = x.X;
+	j["y"] = x.Y;
+}
+
+void azule::from_json(const nlohmann::json& j, Vector& x)
+{
+	j["x"].get_to(x.X);
+	j["y"].get_to(x.Y);
 }

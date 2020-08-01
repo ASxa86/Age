@@ -6,22 +6,22 @@
 	<object type="EntityDatabase">
 		<object type="Entity">
 			<object type="TransformComponent">
-				<property name="Position" value="{32, 224}"/>
+				<property name="Position" value="{&quot;x&quot;: 32, &quot;y&quot;: 224}"/>
 			</object>
 
 			<object type="BoxSelectionComponent">
 				<property name="Selected" value="true"/>
-				<property name="Size" value="{48, 50}"/>
+				<property name="Size" value="{&quot;x&quot;: 48, &quot;y&quot;: 50}"/>
 				<property name="OutlineThickness" value="2.0"/>
-				<property name="OutlineColor" value="{255, 0, 0, 255}"/>
-				<property name="FillColor" value="{255, 0, 0, 150}"/>
+				<property name="OutlineColor" value="[255, 0, 0, 255]"/>
+				<property name="FillColor" value="[255, 0, 0, 150]"/>
 			</object>
 		</object>
 
 		<!-- Tower -->
 		<object type="Entity">
 			<object type="TransformComponent">
-				<property name="Position" value="{160, 224}"/>
+				<property name="Position" value="{&quot;x&quot;: 160, &quot;y&quot;: 224}"/>
 			</object>
 
 			<object type="CircleCollisionComponent">
@@ -40,7 +40,7 @@
 
 		<object type="Entity">
 			<object type="TransformComponent">
-				<property name="Position" value="{200, 270}"/>
+				<property name="Position" value="{&quot;x&quot;: 200, &quot;y&quot;: 270}"/>
 			</object>
 
 			<object type="SpriteComponent">
@@ -64,21 +64,21 @@
 			<property name="reference" value="sprite"/>
 
 			<object type="TransformComponent">
-				<property name="Position" value="{0, 325}"/>
+				<property name="Position" value="{&quot;x&quot;: 0, &quot;y&quot;: 325}"/>
 			</object>
 
 			<object type="ProgressBarComponent">
 				<property name="Value" value="50"/>
 				<property name="ValueMax" value="100"/>
-				<property name="Position" value="{-15, -30}"/>
-				<property name="Size" value="{30, 5}"/>
-				<property name="Color" value="{0, 255, 0, 255}"/>
+				<property name="Position" value="{&quot;x&quot;: -15, &quot;y&quot;: -30}"/>
+				<property name="Size" value="{&quot;x&quot;: 30, &quot;y&quot;: 5}"/>
+				<property name="Color" value="[0, 255, 0, 255]"/>
 				<property name="RenderOrder" value="1"/>
 			</object>
 
 			<object type="KinematicComponent">
 				<property name="BodyType" value="Kinematic"/>
-				<property name="LinearVelocity" value="{50.0, 0.0}"/>
+				<property name="LinearVelocity" value="{&quot;x&quot;: 50.0, &quot;y&quot;: 0.0}"/>
 				<property name="CalculateHeading" value="true"/>
 			</object>
 
@@ -92,25 +92,25 @@
 
 			<object type="WaypointComponent">
 				<object type="Waypoint">
-					<property name="Position" value="{325, 325}"/>
+					<property name="Position" value="{&quot;x&quot;: 325, &quot;y&quot;: 325}"/>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{325, 125}"/>
+					<property name="Position" value="{&quot;x&quot;: 325, &quot;y&quot;: 125}"/>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{505, 125}"/>
+					<property name="Position" value="{&quot;x&quot;: 505, &quot;y&quot;: 125}"/>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{505, 575}"/>
+					<property name="Position" value="{&quot;x&quot;: 505, &quot;y&quot;: 575}"/>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{775, 575}"/>
+					<property name="Position" value="{&quot;x&quot;: 775, &quot;y&quot;: 575}"/>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{775, 325}"/>
+					<property name="Position" value="{&quot;x&quot;: 775, &quot;y&quot;: 325}"/>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{850, 325}"/>
+					<property name="Position" value="{&quot;x&quot;: 850, &quot;y&quot;: 325}"/>
 				</object>
 			</object>
 		</object>

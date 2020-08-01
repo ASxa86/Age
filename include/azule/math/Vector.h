@@ -1,8 +1,8 @@
 #pragma once
 
-#include <azule/export.hxx>
 #include <array>
-#include <string>
+#include <azule/export.hxx>
+#include <nlohmann/json.hpp>
 
 namespace azule
 {
@@ -19,8 +19,6 @@ namespace azule
 	{
 	public:
 		Vector(double x = 0.0, double y = 0.0);
-		Vector(const std::string& x);
-		operator std::string() const;
 		///
 		///	Operator overloads.
 		///
@@ -58,4 +56,6 @@ namespace azule
 	};
 
 	AZULE_EXPORT double distance(const Vector& a, const Vector& b);
+	AZULE_EXPORT void to_json(nlohmann::json& j, const Vector& x);
+	AZULE_EXPORT void from_json(const nlohmann::json& j, Vector& x);
 }

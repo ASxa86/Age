@@ -1,6 +1,7 @@
 set(UTILITIES_H_LIST
 	${PROJECT_INCLUDE_DIR}/azule/utilities/Pimpl.h
 	${PROJECT_INCLUDE_DIR}/azule/utilities/PimplImpl.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/TypeTraits.h
 	${PROJECT_INCLUDE_DIR}/azule/utilities/SharedLibrary.h
 	${PROJECT_INCLUDE_DIR}/azule/utilities/Signal.h
 	${PROJECT_INCLUDE_DIR}/azule/utilities/StaticInvoke.h

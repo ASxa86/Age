@@ -110,26 +110,3 @@ TEST(String, StringToEnumNested)
 	const std::string x = "One";
 	EXPECT_EQ(TestClass::TestEnum::One, StringTo<TestClass::TestEnum>(x));
 }
-
-TEST(String, Split)
-{
-	std::string test = "{0, 1}";
-	auto results = Split(test);
-	EXPECT_EQ(results.size(), size_t{2});
-	EXPECT_EQ(results[0], "0");
-	EXPECT_EQ(results[1], "1");
-
-	test = "{ 0 , 1 }";
-	results = Split(test);
-
-	EXPECT_EQ(results.size(), size_t{2});
-	EXPECT_EQ(results[0], "0");
-	EXPECT_EQ(results[1], "1");
-
-	test = "{	0	 ,		1	}";
-	results = Split(test);
-
-	EXPECT_EQ(results.size(), size_t{2});
-	EXPECT_EQ(results[0], "0");
-	EXPECT_EQ(results[1], "1");
-}

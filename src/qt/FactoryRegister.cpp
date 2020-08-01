@@ -1,4 +1,4 @@
-#include  <azule/qt/export.h>
+#include  <azule/qt/export.hxx>
 #include  <azule/qt/WidgetPropertyBool.h>
 #include  <azule/qt/WidgetPropertyFactory.h>
 

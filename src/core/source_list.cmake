@@ -11,7 +11,6 @@ set(CORE_H_LIST
 	${PROJECT_INCLUDE_DIR}/azule/core/Processor.h
 	${PROJECT_INCLUDE_DIR}/azule/core/Reflection.h
 	${PROJECT_INCLUDE_DIR}/azule/core/Timer.h
-	${PROJECT_INCLUDE_DIR}/azule/core/TypeTraits.h
 	${PROJECT_INCLUDE_DIR}/azule/core/Utilities.h
 )
 

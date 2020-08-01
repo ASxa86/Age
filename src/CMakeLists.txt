@@ -36,12 +36,14 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 find_package(SFML 2 CONFIG COMPONENTS audio system graphics window)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
 	sfml-audio
 	sfml-system
 	sfml-graphics
 	sfml-window
+	nlohmann_json
 )
 
 project_gen_export()
