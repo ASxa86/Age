@@ -1,0 +1,923 @@
+<?xml version="1.0"?>
+<azule>
+	<object type="class azule::Engine">
+		<property name="ID"></property>
+		<object type="class azule::DatabaseTexture">
+			<property name="ID"></property>
+		</object>
+		<object type="class azule::EntityDatabase">
+			<property name="ID"></property>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":32.0,"y":224.0}</property>
+					<property name="Rotation">0.0</property>
+				</object>
+				<object type="class azule::BoxSelectionComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">false</property>
+					<property name="RenderOrder">1</property>
+					<property name="Size">{"x":48.0,"y":50.0}</property>
+					<property name="FillColor">[255,0,0,150]</property>
+					<property name="OutlineColor">[255,0,0,255]</property>
+					<property name="OutlineThickness">2.0</property>
+					<property name="Selected">true</property>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":160.0,"y":224.0}</property>
+					<property name="Rotation">0.0</property>
+				</object>
+				<object type="struct azule::CircleCollisionComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Restitution">0.0</property>
+					<property name="Friction">0.0</property>
+					<property name="Density">0.0</property>
+					<property name="IsSensor">true</property>
+					<property name="Radius">100.0</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">135</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">135.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":200.0,"y":270.0}</property>
+					<property name="Rotation">0.0</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">136</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">135.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="class azule::TileMapComponent" />
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":246.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":221.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":196.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":171.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":146.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":121.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":96.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":71.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":46.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":21.0,"y":325.0}</property>
+					<property name="Rotation">90.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">true</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+		</object>
+		<object type="class azule::WaypointSystem" />
+		<object type="class azule::PhysicsSystem">
+			<property name="ID"></property>
+		</object>
+		<object type="class azule::CloneSystem">
+			<property name="ID"></property>
+			<property name="Rate">500000</property>
+			<property name="Limit">400</property>
+			<property name="Count">14</property>
+			<object type="class azule::Entity">
+				<property name="ID"></property>
+				<object type="struct azule::TransformComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="Position">{"x":0.0,"y":325.0}</property>
+					<property name="Rotation">0.0</property>
+				</object>
+				<object type="class azule::ProgressBarComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">false</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">1</property>
+					<property name="Value">50</property>
+					<property name="ValueMax">100</property>
+					<property name="Size">{"x":30.0,"y":5.0}</property>
+					<property name="Color">[0,255,0,255]</property>
+					<property name="Position">{"x":-15.0,"y":-30.0}</property>
+				</object>
+				<object type="struct azule::KinematicComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="BodyType">Kinematic</property>
+					<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+					<property name="CalculateHeading">true</property>
+				</object>
+				<object type="class azule::SpriteComponent">
+					<property name="ID">Cloned</property>
+					<property name="Enabled">true</property>
+					<property name="UseRotation">true</property>
+					<property name="UsePosition">true</property>
+					<property name="RenderOrder">0</property>
+					<property name="Frame">130</property>
+					<property name="VFrames">13</property>
+					<property name="HFrames">23</property>
+					<property name="Rotation">-90.0</property>
+					<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
+				</object>
+				<object type="struct azule::WaypointComponent">
+					<property name="ID"></property>
+					<property name="Enabled">true</property>
+					<property name="CurrentWaypoint">0</property>
+					<property name="Loop">false</property>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":325.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":125.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":505.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":575.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":775.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+					<object type="class azule::Waypoint">
+						<property name="Position">{"x":850.0,"y":325.0}</property>
+						<property name="Active">false</property>
+					</object>
+				</object>
+			</object>
+		</object>
+		<object type="class azule::Window">
+			<object type="class azule::TileMapSystem">
+				<property name="ID"></property>
+			</object>
+			<object type="class azule::RenderSystem">
+				<property name="ID"></property>
+			</object>
+			<object type="class azule::PhysicsRenderSystem">
+				<property name="ID"></property>
+			</object>
+		</object>
+	</object>
+</azule>

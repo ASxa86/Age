@@ -1,124 +1,176 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-
+<?xml version="1.0"?>
 <azule>
-	<object type="DatabaseTexture"/>
-
+	<object type="DatabaseTexture">
+		<property name="ID"></property>
+	</object>
 	<object type="EntityDatabase">
+		<property name="ID"></property>
 		<object type="Entity">
+			<property name="ID"></property>
 			<object type="TransformComponent">
-				<property name="Position" value="{&quot;x&quot;: 32, &quot;y&quot;: 224}"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="Position">{"x":32.0,"y":224.0}</property>
+				<property name="Rotation">0.0</property>
 			</object>
-
 			<object type="BoxSelectionComponent">
-				<property name="Selected" value="true"/>
-				<property name="Size" value="{&quot;x&quot;: 48, &quot;y&quot;: 50}"/>
-				<property name="OutlineThickness" value="2.0"/>
-				<property name="OutlineColor" value="[255, 0, 0, 255]"/>
-				<property name="FillColor" value="[255, 0, 0, 150]"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="UseRotation">false</property>
+				<property name="UsePosition">false</property>
+				<property name="RenderOrder">1</property>
+				<property name="Size">{"x":48.0,"y":50.0}</property>
+				<property name="FillColor">[255,0,0,150]</property>
+				<property name="OutlineColor">[255,0,0,255]</property>
+				<property name="OutlineThickness">2.0</property>
+				<property name="Selected">true</property>
 			</object>
 		</object>
-
-		<!-- Tower -->
 		<object type="Entity">
+			<property name="ID"></property>
 			<object type="TransformComponent">
-				<property name="Position" value="{&quot;x&quot;: 160, &quot;y&quot;: 224}"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="Position">{"x":160.0,"y":224.0}</property>
+				<property name="Rotation">0.0</property>
 			</object>
-
 			<object type="CircleCollisionComponent">
-				<property name="Radius" value="100.0"/>
-				<property name="IsSensor" value="true"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="Restitution">0.0</property>
+				<property name="Friction">0.0</property>
+				<property name="Density">0.0</property>
+				<property name="IsSensor">true</property>
+				<property name="Radius">100.0</property>
 			</object>
-
 			<object type="SpriteComponent">
-				<property name="File" value="$AZULE_MAPS/towerDefense_tilesheet.png"/>
-				<property name="HFrames" value="23"/>
-				<property name="VFrames" value="13"/>
-				<property name="Frame" value="135"/>
-				<property name="Rotation" value="135.0"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="UseRotation">true</property>
+				<property name="UsePosition">true</property>
+				<property name="RenderOrder">0</property>
+				<property name="Frame">135</property>
+				<property name="VFrames">13</property>
+				<property name="HFrames">23</property>
+				<property name="Rotation">135.0</property>
+				<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
 			</object>
 		</object>
-
 		<object type="Entity">
+			<property name="ID"></property>
 			<object type="TransformComponent">
-				<property name="Position" value="{&quot;x&quot;: 200, &quot;y&quot;: 270}"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="Position">{"x":200.0,"y":270.0}</property>
+				<property name="Rotation">0.0</property>
 			</object>
-
 			<object type="SpriteComponent">
-				<property name="File" value="$AZULE_MAPS/towerDefense_tilesheet.png"/>
-				<property name="HFrames" value="23"/>
-				<property name="VFrames" value="13"/>
-				<property name="Frame" value="136"/>
-				<property name="Rotation" value="135.0"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="UseRotation">true</property>
+				<property name="UsePosition">true</property>
+				<property name="RenderOrder">0</property>
+				<property name="Frame">136</property>
+				<property name="VFrames">13</property>
+				<property name="HFrames">23</property>
+				<property name="Rotation">135.0</property>
+				<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
 			</object>
 		</object>
 	</object>
-
-	<object type="WaypointSystem"/>
-	<object type="PhysicsSystem"/>
-
+	<object type="WaypointSystem" />
+	<object type="PhysicsSystem">
+		<property name="ID"></property>
+	</object>
 	<object type="CloneSystem">
-		<property name="Rate" value="500000"/>
-		<property name="Limit" value="400"/>
-
+		<property name="ID"></property>
+		<property name="Rate">500000</property>
+		<property name="Limit">400</property>
+		<property name="Count">4</property>
 		<object type="Entity">
-			<property name="reference" value="sprite"/>
-
+			<property name="ID"></property>
 			<object type="TransformComponent">
-				<property name="Position" value="{&quot;x&quot;: 0, &quot;y&quot;: 325}"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="Position">{"x":0.0,"y":325.0}</property>
+				<property name="Rotation">0.0</property>
 			</object>
-
 			<object type="ProgressBarComponent">
-				<property name="Value" value="50"/>
-				<property name="ValueMax" value="100"/>
-				<property name="Position" value="{&quot;x&quot;: -15, &quot;y&quot;: -30}"/>
-				<property name="Size" value="{&quot;x&quot;: 30, &quot;y&quot;: 5}"/>
-				<property name="Color" value="[0, 255, 0, 255]"/>
-				<property name="RenderOrder" value="1"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="UseRotation">false</property>
+				<property name="UsePosition">true</property>
+				<property name="RenderOrder">1</property>
+				<property name="Value">50</property>
+				<property name="ValueMax">100</property>
+				<property name="Size">{"x":30.0,"y":5.0}</property>
+				<property name="Color">[0,255,0,255]</property>
+				<property name="Position">{"x":-15.0,"y":-30.0}</property>
 			</object>
-
 			<object type="KinematicComponent">
-				<property name="BodyType" value="Kinematic"/>
-				<property name="LinearVelocity" value="{&quot;x&quot;: 50.0, &quot;y&quot;: 0.0}"/>
-				<property name="CalculateHeading" value="true"/>
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="BodyType">Kinematic</property>
+				<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
+				<property name="CalculateHeading">true</property>
 			</object>
-
-			<object type="SpriteComponent" id="Cloned">
-				<property name="File" value="$AZULE_MAPS/towerDefense_tilesheet.png"/>
-				<property name="HFrames" value="23"/>
-				<property name="VFrames" value="13"/>
-				<property name="Frame" value="130"/>
-				<property name="Rotation" value="-90.0"/>
+			<object type="SpriteComponent">
+				<property name="ID">Cloned</property>
+				<property name="Enabled">true</property>
+				<property name="UseRotation">true</property>
+				<property name="UsePosition">true</property>
+				<property name="RenderOrder">0</property>
+				<property name="Frame">130</property>
+				<property name="VFrames">13</property>
+				<property name="HFrames">23</property>
+				<property name="Rotation">-90.0</property>
+				<property name="File">D:\dev\azule\data\maps/towerDefense_tilesheet.png</property>
 			</object>
-
 			<object type="WaypointComponent">
+				<property name="ID"></property>
+				<property name="Enabled">true</property>
+				<property name="CurrentWaypoint">0</property>
+				<property name="Loop">false</property>
 				<object type="Waypoint">
-					<property name="Position" value="{&quot;x&quot;: 325, &quot;y&quot;: 325}"/>
+					<property name="Position">{"x":325.0,"y":325.0}</property>
+					<property name="Active">false</property>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{&quot;x&quot;: 325, &quot;y&quot;: 125}"/>
+					<property name="Position">{"x":325.0,"y":125.0}</property>
+					<property name="Active">false</property>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{&quot;x&quot;: 505, &quot;y&quot;: 125}"/>
+					<property name="Position">{"x":505.0,"y":125.0}</property>
+					<property name="Active">false</property>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{&quot;x&quot;: 505, &quot;y&quot;: 575}"/>
+					<property name="Position">{"x":505.0,"y":575.0}</property>
+					<property name="Active">false</property>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{&quot;x&quot;: 775, &quot;y&quot;: 575}"/>
+					<property name="Position">{"x":775.0,"y":575.0}</property>
+					<property name="Active">false</property>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{&quot;x&quot;: 775, &quot;y&quot;: 325}"/>
+					<property name="Position">{"x":775.0,"y":325.0}</property>
+					<property name="Active">false</property>
 				</object>
 				<object type="Waypoint">
-					<property name="Position" value="{&quot;x&quot;: 850, &quot;y&quot;: 325}"/>
+					<property name="Position">{"x":850.0,"y":325.0}</property>
+					<property name="Active">false</property>
 				</object>
 			</object>
 		</object>
 	</object>
-
 	<object type="Window">
-		<object type="TileMapSystem"/>
-		<object type="RenderSystem"/>
-		<object type="PhysicsRenderSystem"/>
+		<object type="TileMapSystem">
+			<property name="ID"></property>
+		</object>
+		<object type="RenderSystem">
+			<property name="ID"></property>
+		</object>
+		<object type="PhysicsRenderSystem">
+			<property name="ID"></property>
+		</object>
 	</object>
 </azule>

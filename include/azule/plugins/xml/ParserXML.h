@@ -13,6 +13,7 @@ namespace azule
 			~ParserXML();
 
 			bool readFile(const std::filesystem::path& x, Object* obj) override;
+			bool writeFile(const Object& obj, const std::filesystem::path& x) override;
 		};
 	}
 }

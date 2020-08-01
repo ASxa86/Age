@@ -20,7 +20,7 @@ namespace
 
 			if(prop != nullptr)
 			{
-				const auto value = azule::ResolvePath(x.attribute("value").as_string());
+				const auto value = azule::ResolvePath(x.text().as_string());
 				prop->setValue(*obj, value);
 				return true;
 			}
@@ -101,4 +101,42 @@ bool ParserXML::readFile(const std::filesystem::path& x, Object* obj)
 	std::cerr << "Failed to load " << x << "\n";
 
 	return false;
+}
+
+bool ParserXML::writeFile(const Object& obj, const std::filesystem::path& x)
+{
+	pugi::xml_document doc;
+	auto node = doc.append_child("azule");
+
+	const std::function<void(pugi::xml_node, const Object&)> appenObject = [&appenObject](pugi::xml_node node, const Object& x) {
+		auto node_object = node.append_child("object");
+		auto node_object_attrb = node_object.append_attribute("type");
+		node_object_attrb.set_value(typeid(x).name());
+
+		auto type = Reflection::Instance().get(x);
+
+		if(type != nullptr)
+		{
+			const auto& properties = type->getProperties();
+
+			for(auto&& property : properties)
+			{
+				auto node_property = node_object.append_child("property");
+				node_property.append_attribute("name") = property->Name.c_str();
+
+				const auto value = property->getValue(const_cast<Object&>(x));
+				node_property.text() = value.c_str();
+			}
+
+			for(auto child : x.getChildren())
+			{
+				appenObject(node_object, *child);
+			}
+		}
+	};
+
+	appenObject(node, obj);
+
+	doc.save_file(x.c_str());
+	return true;
 }

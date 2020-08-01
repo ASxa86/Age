@@ -1,4 +1,5 @@
 #include <azule/core/Configuration.h>
+#include <azule/core/Engine.h>
 #include <azule/core/Reflection.h>
 #include <azule/utilities/StaticInvoke.h>
 #include <algorithm>
@@ -9,6 +10,7 @@ using namespace azule;
 STATIC_INVOKE
 {
 	Reflection::Instance().add<Object>("Object").addMethod("ID", &Object::setID, &Object::getID);
+	Reflection::Instance().add<Engine>("Engine").addBase<Object>();
 }
 
 ReflProp::ReflProp(const std::string& n) : Name{n}

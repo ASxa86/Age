@@ -30,5 +30,7 @@ int main()
 		engine->frame();
 	}
 
+	WriteFile(*engine, Configuration::Instance().getPathData() / "temp.xml");
+
 	return EXIT_SUCCESS;
 }

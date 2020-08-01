@@ -30,6 +30,7 @@ namespace azule
 		///	\param obj The object to load data into. This parameter is optional, if no object is given, the parser may return its own object.
 		///
 		virtual bool readFile(const std::filesystem::path& x, Object* obj);
+		virtual bool writeFile(const Object& obj, const std::filesystem::path& x);
 
 	private:
 		struct Impl;
@@ -40,4 +41,5 @@ namespace azule
 	///	\brief Function for generically loading file formats into the given object.
 	///
 	AZULE_EXPORT bool ReadFile(const std::filesystem::path& x, Object* obj);
+	AZULE_EXPORT bool WriteFile(const Object& obj, const std::filesystem::path& xj);
 }
