@@ -38,14 +38,14 @@ void PaddleAISystem::frame(std::chrono::microseconds)
 
 			k->LinearVelocity = {0.0, 0.0};
 
-			const auto top = t->Position.Y - b->Height / 2.0;
-			const auto bottom = t->Position.Y + b->Height / 2.0;
+			const auto top = t->Position.y - b->Height / 2.0;
+			const auto bottom = t->Position.y + b->Height / 2.0;
 
-			if(bc->Position.Y > bottom)
+			if(bc->Position.y > bottom)
 			{
 				k->LinearVelocity = {0.0, 30.0};
 			}
-			else if(bc->Position.Y < top)
+			else if(bc->Position.y < top)
 			{
 				k->LinearVelocity = {0.0, -30.0};
 			}

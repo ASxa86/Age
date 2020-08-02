@@ -19,7 +19,7 @@ namespace azule
 	{
 		TransformComponent();
 
-		azule::Vector Position{};
+		glm::vec2 Position{};
 		double Rotation{};
 	};
 }

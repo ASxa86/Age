@@ -3,8 +3,8 @@
 #include <azule/core/EngineState.h>
 #include <azule/core/Parser.h>
 #include <azule/entity/EntityDatabase.h>
+#include <iostream>
 
-using namespace azule;
 using namespace azule;
 
 int main()
@@ -29,8 +29,6 @@ int main()
 	{
 		engine->frame();
 	}
-
-	WriteFile(*engine, Configuration::Instance().getPathData() / "temp.xml");
 
 	return EXIT_SUCCESS;
 }

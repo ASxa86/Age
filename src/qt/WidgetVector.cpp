@@ -42,12 +42,12 @@ WidgetVector::~WidgetVector()
 
 void WidgetVector::setValue(const std::string& x)
 {
-	const auto vector = azule::StringTo<Vector>(x);
-	this->pimpl->sbxX->setValue(vector.X);
-	this->pimpl->sbxY->setValue(vector.Y);
+	const auto vector = azule::StringTo<glm::vec2>(x);
+	this->pimpl->sbxX->setValue(vector.x);
+	this->pimpl->sbxY->setValue(vector.y);
 }
 
 std::string WidgetVector::getValue() const
 {
-	return azule::ToString(Vector{this->pimpl->sbxX->value(), this->pimpl->sbxY->value()});
+	return azule::ToString(glm::vec2{this->pimpl->sbxX->value(), this->pimpl->sbxY->value()});
 }

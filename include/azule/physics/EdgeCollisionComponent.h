@@ -16,7 +16,7 @@ namespace azule
 	///
 	struct EdgeCollisionComponent final : public CollisionComponent
 	{
-		azule::Vector Vertex1;
-		azule::Vector Vertex2;
+		glm::vec2 Vertex1;
+		glm::vec2 Vertex2;
 	};
 }

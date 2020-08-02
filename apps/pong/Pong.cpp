@@ -90,12 +90,12 @@ Pong::Pong()
 	auto input = paddle->addComponent<InputComponent>();
 	input->addKeyBinding(sf::Keyboard::Key::Up, [](Entity& e, bool isPressed) {
 		auto k = e.getChild<KinematicComponent>();
-		k->LinearVelocity.Y = isPressed == true ? -20.0f : 0.0f;
+		k->LinearVelocity.y = isPressed == true ? -20.0f : 0.0f;
 	});
 
 	input->addKeyBinding(sf::Keyboard::Key::Down, [](Entity& e, bool isPressed) {
 		auto k = e.getChild<KinematicComponent>();
-		k->LinearVelocity.Y = isPressed == true ? 20.0f : 0.0f;
+		k->LinearVelocity.y = isPressed == true ? 20.0f : 0.0f;
 	});
 
 	// Player 2
@@ -203,7 +203,7 @@ Pong::Pong()
 	// score2->addComponent<std::shared_ptr<sf::Text>>(text2);
 	auto st2 = score2->addComponent<TransformComponent>();
 
-	st2->Position = {window->getWidth() - st1->Position.X, 100};
+	st2->Position = {window->getWidth() - st1->Position.y, 100};
 
 	auto& config = Configuration::Instance();
 	this->pimpl->soundBuffer.loadFromFile((config.getPathData() / "audio/ball.wav").string());
@@ -242,7 +242,7 @@ Pong::Pong()
 			{
 				// ball->getChild<sf::Sound>()->play();
 				auto v = ball->getChild<KinematicComponent>()->LinearVelocity;
-				ball->getChild<KinematicComponent>()->LinearVelocity = {v.X * 1.1f, v.Y * 1.1f};
+				ball->getChild<KinematicComponent>()->LinearVelocity = {v.x * 1.1f, v.y * 1.1f};
 			}
 		}
 	});

@@ -58,14 +58,14 @@ public:
 	{
 	}
 
-	static azule::Vector ToVector(const b2Vec2& x)
+	static glm::vec2 ToVector(const b2Vec2& x)
 	{
 		return {x.x, x.y};
 	}
 
-	static b2Vec2 FromVector(const azule::Vector& x)
+	static b2Vec2 FromVector(const glm::vec2& x)
 	{
-		return {static_cast<float32>(x.X), static_cast<float32>(x.Y)};
+		return {static_cast<float32>(x.x), static_cast<float32>(x.y)};
 	}
 
 	b2Body* getOrCreateBody(Entity* x)
@@ -367,7 +367,7 @@ void PhysicsSystem::frame(std::chrono::microseconds x)
 
 			if(k->CalculateHeading == true)
 			{
-				t->Rotation = VectorAngle({k->LinearVelocity.X, -k->LinearVelocity.Y});
+				t->Rotation = VectorAngle({k->LinearVelocity.x, -k->LinearVelocity.y});
 			}
 		}
 	}

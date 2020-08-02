@@ -14,7 +14,7 @@ namespace azule
 	public:
 		BoxSelectionComponent();
 
-		azule::Vector Size{};
+		glm::vec2 Size{};
 		std::array<int, 4> FillColor{};
 		std::array<int, 4> OutlineColor{};
 		double OutlineThickness{};

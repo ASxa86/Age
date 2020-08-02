@@ -7,7 +7,7 @@
 
 namespace azule
 {
-	AZULE_EXPORT azule::Vector ToVector(const sf::Vector2f& x);
-	AZULE_EXPORT sf::Vector2f FromVector(const azule::Vector& x);
+	AZULE_EXPORT glm::vec2 ToVector(const sf::Vector2f& x);
+	AZULE_EXPORT sf::Vector2f FromVector(const glm::vec2& x);
 	AZULE_EXPORT sf::Color FromColor(const std::array<int, 4>& x);
 }

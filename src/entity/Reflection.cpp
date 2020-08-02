@@ -8,7 +8,6 @@
 #include <azule/utilities/StaticInvoke.h>
 
 using namespace azule;
-using namespace azule;
 
 STATIC_INVOKE
 {

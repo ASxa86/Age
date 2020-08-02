@@ -22,7 +22,7 @@ namespace azule
 		///
 		///	The position to drive the entity toward.
 		///
-		azule::Vector Position{};
+		glm::vec2 Position{};
 
 		///
 		///	Mark this waypoint as being processed by the WaypointSystem.

@@ -48,7 +48,7 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 			if(e->getChild<TransformComponent>() != nullptr)
 			{
 				const auto& t = e->getChild<TransformComponent>();
-				rect.setPosition({static_cast<float>(t->Position.X), static_cast<float>(t->Position.Y)});
+				rect.setPosition({static_cast<float>(t->Position.x), static_cast<float>(t->Position.y)});
 			}
 
 			target.draw(rect, this->pimpl->state);
@@ -70,7 +70,7 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 			if(e->getChild<TransformComponent>() != nullptr)
 			{
 				const auto& t = e->getChild<TransformComponent>();
-				circle.setPosition({static_cast<float>(t->Position.X), static_cast<float>(t->Position.Y)});
+				circle.setPosition({static_cast<float>(t->Position.x), static_cast<float>(t->Position.y)});
 			}
 
 			//target.draw(circle, this->pimpl->state);
@@ -84,8 +84,8 @@ void PhysicsRenderSystem::render(sf::RenderTarget& target, std::chrono::microsec
 			sf::VertexArray array;
 			array.setPrimitiveType(sf::PrimitiveType::Lines);
 
-			array.append(sf::Vertex({static_cast<float>(edge->Vertex1.X), static_cast<float>(edge->Vertex1.Y)}, sf::Color::Green));
-			array.append(sf::Vertex({static_cast<float>(edge->Vertex2.X), static_cast<float>(edge->Vertex2.Y)}, sf::Color::Green));
+			array.append(sf::Vertex({static_cast<float>(edge->Vertex1.x), static_cast<float>(edge->Vertex1.y)}, sf::Color::Green));
+			array.append(sf::Vertex({static_cast<float>(edge->Vertex2.x), static_cast<float>(edge->Vertex2.y)}, sf::Color::Green));
 			target.draw(array, this->pimpl->state);
 		}
 	}

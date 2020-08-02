@@ -1,13 +1,12 @@
 #pragma once
 
-#include <azule/export.hxx>
+#include <azule/math/Vector.h>
 #include <algorithm>
+#include <azule/export.hxx>
 
 namespace azule
 {
-	class Vector;
-
-	AZULE_EXPORT double VectorAngle(const Vector& x);
+	AZULE_EXPORT double VectorAngle(const glm::vec2& x);
 	AZULE_EXPORT double Constrain(double x, double min, double max);
 
 	constexpr double Clamp(double x, double min, double max)

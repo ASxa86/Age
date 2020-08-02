@@ -1,13 +1,13 @@
 #include <azule/graphics/Utilities.h>
 
-azule::Vector azule::ToVector(const sf::Vector2f& x)
+glm::vec2 azule::ToVector(const sf::Vector2f& x)
 {
 	return {x.x, x.y};
 }
 
-sf::Vector2f azule::FromVector(const azule::Vector& x)
+sf::Vector2f azule::FromVector(const glm::vec2& x)
 {
-	return {static_cast<float>(x.X), static_cast<float>(x.Y)};
+	return {static_cast<float>(x.x), static_cast<float>(x.y)};
 }
 
 sf::Color azule::FromColor(const std::array<int, 4>& x)

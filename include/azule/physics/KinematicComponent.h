@@ -36,7 +36,7 @@ namespace azule
 		KinematicComponent();
 
 		/// The component velocity to describe an entity.
-		azule::Vector LinearVelocity{};
+		glm::vec2 LinearVelocity{};
 
 		/// The body type to describe this an entity.
 		Type BodyType;

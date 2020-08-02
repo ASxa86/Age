@@ -11,9 +11,9 @@ using namespace azule;
 
 namespace
 {
-	sf::Vector2f FromVector(const azule::Vector& x)
+	sf::Vector2f FromVector(const glm::vec2& x)
 	{
-		return {static_cast<float>(x.X), static_cast<float>(x.Y)};
+		return {static_cast<float>(x.x), static_cast<float>(x.y)};
 	}
 }
 

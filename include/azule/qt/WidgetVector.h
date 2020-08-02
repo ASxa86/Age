@@ -12,7 +12,7 @@ namespace azule
 		///
 		///	\class WidgetVector
 		///
-		///	\brief A property widget for editing an azule::Vector property.
+		///	\brief A property widget for editing an glm::vec2 property.
 		///
 		///	\date March 15, 2019
 		///

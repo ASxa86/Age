@@ -49,7 +49,7 @@ void WaypointSystem::frame(std::chrono::microseconds)
 					// but this tolerance check currently seems to work->
 					constexpr auto tolerance = 1.0;
 
-					if((currentPosition - currentWaypoint->Position).magnitude() < tolerance)
+					if(glm::length(currentPosition - currentWaypoint->Position) < tolerance)
 					{
 						// Deactivate the current waypoint only if we can progress to the next waypoint.
 						// This will prevent calculating a new velocity if we've reached the last waypoint.
@@ -74,10 +74,10 @@ void WaypointSystem::frame(std::chrono::microseconds)
 					currentWaypoint->Active = true;
 
 					const auto& velocity = k->LinearVelocity;
-					const auto totalVelocity = velocity.magnitude();
+					const auto totalVelocity = glm::length(velocity);
 
 					auto direction = (currentWaypoint->Position - currentPosition);
-					direction.normalize();
+					direction = glm::normalize(direction);
 					const auto newVelocity = direction * totalVelocity;
 					k->LinearVelocity = newVelocity;
 				}

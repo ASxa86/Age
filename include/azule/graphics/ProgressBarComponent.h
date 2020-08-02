@@ -20,8 +20,8 @@ namespace azule
 		virtual const sf::Drawable* getDrawable() override;
 
 		std::array<int, 4> Color{};
-		azule::Vector Position{};
-		azule::Vector Size{};
+		glm::vec2 Position{};
+		glm::vec2 Size{};
 		int Value{0};
 		int ValueMax{100};
 
