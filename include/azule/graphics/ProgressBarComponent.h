@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/graphics/DrawableComponent.h>
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <SFML/Graphics/RectangleShape.hpp>
 
 namespace azule

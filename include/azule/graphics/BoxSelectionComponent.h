@@ -2,7 +2,7 @@
 
 #include <azule/entity/SelectionComponent.h>
 #include <azule/export.hxx>
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <SFML/Graphics/RectangleShape.hpp>
 
 namespace azule

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <azule/physics/CollisionComponent.h>
 
 namespace azule

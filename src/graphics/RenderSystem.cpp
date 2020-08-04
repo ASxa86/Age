@@ -41,7 +41,7 @@ void RenderSystem::render(sf::RenderTarget& target, std::chrono::microseconds x)
 	{
 		for(auto drawable : entity->getChildren<DrawableComponent>())
 		{
-			drawables.push_back(drawable);
+			drawables.push_back(drawable.get());
 		}
 	}
 

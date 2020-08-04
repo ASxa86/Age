@@ -1,4 +1,4 @@
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 
 void glm::to_json(nlohmann::json& j, const glm::vec2& x)
 {

@@ -23,7 +23,6 @@ set(GRAPHICS_SRC_LIST
 	graphics/KeyEvent.cpp
 	graphics/PlayerInputSystem.cpp
 	graphics/ProgressBarComponent.cpp
-	graphics/Reflection.cpp
 	graphics/RenderSystem.cpp
 	graphics/SpriteComponent.cpp
 	graphics/TextSystem.cpp

@@ -1,15 +1,15 @@
-#include <azule/core/Reflection.h>
-#include  <azule/qt/DelegateWidgetProperty.h>
-#include  <azule/qt/WidgetPropertyFactory.h>
+#include <azule/qt/DelegateWidgetProperty.h>
+#include <azule/qt/WidgetPropertyFactory.h>
+#include <azule/reflection/Property.h>
 #include <QtWidgets/QLayout>
 
 using namespace azule::qt;
 
-Q_DECLARE_METATYPE(azule::ReflProp*);
+Q_DECLARE_METATYPE(azule::Property*);
 
 DelegateWidgetProperty::DelegateWidgetProperty(QObject* parent) : QStyledItemDelegate(parent)
 {
-	qRegisterMetaType<azule::ReflProp*>();
+	qRegisterMetaType<azule::Property*>();
 }
 
 QString DelegateWidgetProperty::displayText(const QVariant& value, const QLocale&) const
@@ -19,7 +19,7 @@ QString DelegateWidgetProperty::displayText(const QVariant& value, const QLocale
 
 QWidget* DelegateWidgetProperty::createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index) const
 {
-	const auto property = index.data(Qt::UserRole).value<azule::ReflProp*>();
+	const auto property = index.data(Qt::UserRole).value<azule::Property*>();
 	const auto editor = WidgetPropertyFactory::Instance().create(property->getTypeInfo(), parent);
 
 	if(editor != nullptr)

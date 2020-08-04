@@ -55,16 +55,18 @@ struct Pong::Impl
 
 Pong::Pong()
 {
-	auto window = this->pimpl->engine->addChild<Window>();
+	auto window = std::make_shared<Window>();
 	window->addChild(std::make_unique<RenderSystem>());
 	window->addChild(std::make_unique<TextSystem>());
 	window->addChild(std::make_unique<PhysicsRenderSystem>());
+	this->pimpl->engine->addChild(window);
 
-	auto manager = this->pimpl->engine->addChild<EntityDatabase>();
-	this->pimpl->engine->addChild(std::make_unique<PlayerInputSystem>());
-	this->pimpl->engine->addChild(std::make_unique<AudioSystem>());
-	this->pimpl->engine->addChild(std::make_unique<PaddleAISystem>());
-	this->pimpl->engine->addChild(std::make_unique<PhysicsSystem>());
+	auto manager = std::make_shared<EntityDatabase>();
+	this->pimpl->engine->addChild(manager);
+	this->pimpl->engine->addChild(std::make_shared<PlayerInputSystem>());
+	this->pimpl->engine->addChild(std::make_shared<AudioSystem>());
+	this->pimpl->engine->addChild(std::make_shared<PaddleAISystem>());
+	this->pimpl->engine->addChild(std::make_shared<PhysicsSystem>());
 
 	const auto metersW = static_cast<float>(PixelsToMeters(window->getWidth()));
 	const auto metersH = static_cast<float>(PixelsToMeters(window->getHeight()));

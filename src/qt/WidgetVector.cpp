@@ -2,7 +2,7 @@
 
 #include <azule/utilities/PimplImpl.h>
 #include <azule/utilities/String.h>
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QLabel>

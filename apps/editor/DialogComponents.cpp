@@ -1,13 +1,11 @@
 #include <DialogComponents.h>
 #include <ListWidgetComponents.h>
-#include <azule/core/Reflection.h>
 #include <azule/entity/Component.h>
 #include <azule/entity/Entity.h>
+#include <azule/core/ObjectFactory.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QPushButton>
 
-using namespace azule;
-using namespace azule;
 using namespace azule;
 
 DialogComponents::DialogComponents(azule::Entity* e, QWidget* parent) : QDialog(parent), entity{e}
@@ -22,8 +20,8 @@ DialogComponents::DialogComponents(azule::Entity* e, QWidget* parent) : QDialog(
 
 		if(items.empty() == false)
 		{
-			auto c = Reflection::Instance().create<Component>(items[0]->text().toStdString());
-			this->entity->addComponent(std::move(c));
+			auto c = ObjectFactory::Instance().create<Component>(items[0]->text().toStdString());
+			this->entity->addComponent(c);
 		}
 
 		this->close();

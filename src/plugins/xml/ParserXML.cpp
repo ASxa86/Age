@@ -1,5 +1,5 @@
 #include <azule/core/Object.h>
-#include <azule/core/Reflection.h>
+#include <azule/core/ObjectFactory.h>
 #include <azule/core/Utilities.h>
 #include <azule/plugins/xml/ParserXML.h>
 #include <iostream>
@@ -15,33 +15,32 @@ namespace
 	{
 		if(x.empty() == false)
 		{
-			auto type = Reflection::Instance().get(*obj);
-			auto prop = type->getProperty(x.attribute("name").as_string());
+			auto prop = obj->getProperty(x.attribute("name").as_string());
 
 			if(prop != nullptr)
 			{
 				const auto value = azule::ResolvePath(x.text().as_string());
-				prop->setValue(*obj, value);
+				prop->setValueString(value);
 				return true;
 			}
 			else
 			{
-				std::cerr << type->Name << " did not have property \"" << x.attribute("name").as_string() << "\"\n";
+				std::cerr << obj->getID() << " did not have property \"" << x.attribute("name").as_string() << "\"\n";
 			}
 		}
 
 		return false;
 	}
 
-	std::unique_ptr<Object> ParseObjectTag(const pugi::xml_node& x)
+	std::shared_ptr<Object> ParseObjectTag(const pugi::xml_node& x)
 	{
-		std::unique_ptr<Object> obj;
+		std::shared_ptr<Object> obj;
 
 		if(x.empty() == false)
 		{
 			const auto type = x.attribute("type").as_string();
 			const auto id = x.attribute("id").as_string();
-			obj = Reflection::Instance().create(type);
+			obj = ObjectFactory::Instance().create(type);
 
 			if(obj != nullptr)
 			{
@@ -113,25 +112,20 @@ bool ParserXML::writeFile(const Object& obj, const std::filesystem::path& x)
 		auto node_object_attrb = node_object.append_attribute("type");
 		node_object_attrb.set_value(typeid(x).name());
 
-		auto type = Reflection::Instance().get(x);
+		const auto& properties = x.getProperties();
 
-		if(type != nullptr)
+		for(auto&& property : properties)
 		{
-			const auto& properties = type->getProperties();
+			auto node_property = node_object.append_child("property");
+			node_property.append_attribute("name") = property->getName().data();
 
-			for(auto&& property : properties)
-			{
-				auto node_property = node_object.append_child("property");
-				node_property.append_attribute("name") = property->Name.c_str();
+			const auto value = property->getValueString();
+			node_property.text() = value.c_str();
+		}
 
-				const auto value = property->getValue(const_cast<Object&>(x));
-				node_property.text() = value.c_str();
-			}
-
-			for(auto child : x.getChildren())
-			{
-				appenObject(node_object, *child);
-			}
+		for(auto child : x.getChildren())
+		{
+			appenObject(node_object, *child);
 		}
 	};
 

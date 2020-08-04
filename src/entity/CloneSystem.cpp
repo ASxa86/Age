@@ -30,8 +30,8 @@ void CloneSystem::frame(std::chrono::microseconds x)
 					++this->Count;
 					this->elapsed -= this->Rate;
 
-					auto clone = azule::Clone(entity);
-					std::unique_ptr<Entity> ce{dynamic_cast<Entity*>(clone.release())};
+					auto clone = azule::Clone(entity.get());
+					auto ce = std::dynamic_pointer_cast<Entity>(clone);
 					manager->addEntity(std::move(ce));
 				}
 			}

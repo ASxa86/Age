@@ -15,12 +15,15 @@ using namespace azule;
 int main()
 {
 	Engine engine;
-	auto manager = engine.addChild<EntityDatabase>();
-	auto window = engine.addChild<Window>();
+	auto manager = std::make_shared<EntityDatabase>();
+	auto window = std::make_shared<Window>();
 	window->addChild(std::make_unique<TileMapSystem>());
 
+	engine.addChild(manager);
+	engine.addChild(window);
+
 	const auto testTMX = Configuration::Instance().getPathMaps() / "test.tmx";
-	if(ReadFile(testTMX, manager) == false)
+	if(ReadFile(testTMX, manager.get()) == false)
 	{
 		std::cerr << "Failed to load " << testTMX << "\n";
 	}

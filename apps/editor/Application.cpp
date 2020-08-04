@@ -14,7 +14,8 @@ struct Application::Impl
 
 Application::Application(int argc, char** argv) : QApplication(argc, argv), pimpl()
 {
-	auto manager = this->pimpl->engine.addChild<EntityDatabase>();
+	auto manager = std::make_shared<EntityDatabase>();
+	this->pimpl->engine.addChild(manager);
 	manager->addEntity();
 }
 

@@ -2,7 +2,7 @@
 
 #include <azule/entity/Component.h>
 #include <azule/export.hxx>
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 
 namespace azule
 {

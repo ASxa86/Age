@@ -306,7 +306,7 @@ void PhysicsSystem::onStartup()
 	{
 		for(auto e : manager->getChildren<Entity>())
 		{
-			processEntity(e);
+			processEntity(e.get());
 		}
 	}
 }

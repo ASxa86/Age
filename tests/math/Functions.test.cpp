@@ -1,5 +1,5 @@
 #include <azule/math/Functions.h>
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <gtest/gtest.h>
 
 using namespace azule;

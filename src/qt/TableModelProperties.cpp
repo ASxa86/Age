@@ -1,25 +1,24 @@
-#include  <azule/qt/TableModelProperties.h>
+#include <azule/qt/TableModelProperties.h>
 
 #include <azule/core/Object.h>
+#include <azule/reflection/Property.h>
 #include <azule/utilities/MagicEnum.h>
-#include <azule/core/Reflection.h>
 #include <azule/utilities/String.h>
 
 using namespace azule;
 using namespace azule::qt;
 using namespace azule;
 
-Q_DECLARE_METATYPE(azule::ReflProp*);
+Q_DECLARE_METATYPE(azule::Property*);
 
 TableModelProperties::TableModelProperties(azule::Object* x, QObject* parent) : QAbstractTableModel(parent), object{x}
 {
-	qRegisterMetaType<azule::ReflProp*>();
+	qRegisterMetaType<azule::Property*>();
 }
 
 int TableModelProperties::rowCount(const QModelIndex&) const
 {
-	auto type = Reflection::Instance().get(*this->object);
-	return static_cast<int>(type->getProperties().size());
+	return static_cast<int>(this->object->getProperties().size());
 }
 
 int TableModelProperties::columnCount(const QModelIndex&) const
@@ -57,14 +56,13 @@ bool TableModelProperties::setData(const QModelIndex& index, const QVariant& val
 	{
 		if(role == Qt::EditRole)
 		{
-			const auto type = Reflection::Instance().get(*this->object);
-			const auto props = type->getProperties();
+			const auto& props = this->object->getProperties();
 			const auto& prop = props[index.row()];
 
 			switch(static_cast<Column>(index.column()))
 			{
 				case Column::Value:
-					prop->setValue(*this->object, value.toString().toStdString());
+					prop->setValueString(value.toString().toStdString());
 					break;
 
 				case Column::Name:
@@ -87,8 +85,7 @@ QVariant TableModelProperties::data(const QModelIndex& index, int role) const
 
 	if(index.isValid() == true)
 	{
-		const auto type = Reflection::Instance().get(*this->object);
-		const auto props = type->getProperties();
+		const auto& props = this->object->getProperties();
 		const auto& prop = props[index.row()];
 
 		if(role == Qt::DisplayRole || role == Qt::EditRole)
@@ -96,11 +93,11 @@ QVariant TableModelProperties::data(const QModelIndex& index, int role) const
 			switch(static_cast<Column>(index.column()))
 			{
 				case Column::Name:
-					data = QString::fromStdString(prop->Name);
+					data = QString(prop->getName().data());
 					break;
 
 				case Column::Value:
-					data = QString::fromStdString(prop->getValue(*this->object));
+					data = QString::fromStdString(prop->getValueString());
 					break;
 
 				default:
@@ -109,7 +106,7 @@ QVariant TableModelProperties::data(const QModelIndex& index, int role) const
 		}
 		else if(role == Qt::UserRole)
 		{
-			data = QVariant::fromValue(prop);
+			data = QVariant::fromValue(prop.get());
 		}
 	}
 

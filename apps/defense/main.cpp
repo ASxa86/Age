@@ -2,6 +2,7 @@
 #include <azule/core/Engine.h>
 #include <azule/core/EngineState.h>
 #include <azule/core/Parser.h>
+#include <azule/reflection/Properties.h>
 #include <azule/entity/EntityDatabase.h>
 #include <iostream>
 
@@ -18,7 +19,7 @@ int main()
 
 	auto manager = engine->getChild<EntityDatabase>();
 
-	if(ReadFile(Configuration::Instance().getPathMaps() / "defense_level1.tmx", manager) == false)
+	if(ReadFile(Configuration::Instance().getPathMaps() / "defense_level1.tmx", manager.get()) == false)
 	{
 		return EXIT_FAILURE;
 	}

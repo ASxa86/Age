@@ -7,6 +7,8 @@ using namespace azule;
 
 Object::Object()
 {
+	this->addProperty("id", this->id);
+	this->addProperty("status", this->status);
 }
 
 Object::~Object()
@@ -55,12 +57,12 @@ void Object::shutdown()
 	}
 }
 
-Object* Object::getParent() const
+std::shared_ptr<Object> Object::getParent() const
 {
-	return this->parent;
+	return this->parent.lock();
 }
 
-bool Object::addChild(std::unique_ptr<Object> x)
+bool Object::addChild(std::shared_ptr<Object> x)
 {
 	if(x != nullptr)
 	{
@@ -68,7 +70,7 @@ bool Object::addChild(std::unique_ptr<Object> x)
 
 		if(foundIt == std::end(this->children))
 		{
-			x->parent = this;
+			x->parent = this->weak_from_this();
 			this->children.push_back(std::move(x));
 
 			if(this->status >= Status::Startup)
@@ -85,24 +87,24 @@ bool Object::addChild(std::unique_ptr<Object> x)
 	return false;
 }
 
-Object* Object::getChild(size_t x) const
+std::shared_ptr<Object> Object::getChild(size_t x) const
 {
 	if(x < this->children.size())
 	{
-		return this->children[x].get();
+		return this->children[x];
 	}
 
 	return nullptr;
 }
 
-std::vector<Object*> Object::getChildren(FindOption option) const
+std::vector<std::shared_ptr<Object>> Object::getChildren(FindOption option) const
 {
-	std::vector<Object*> v;
+	std::vector<std::shared_ptr<Object>> v;
 	v.reserve(this->children.size());
 
 	for(const auto& child : this->children)
 	{
-		v.push_back(child.get());
+		v.push_back(child);
 
 		if(option == FindOption::Recursive)
 		{
@@ -114,7 +116,7 @@ std::vector<Object*> Object::getChildren(FindOption option) const
 	return v;
 }
 
-std::unique_ptr<Object> Object::remove()
+bool Object::remove()
 {
 	const auto parent = this->getParent();
 
@@ -130,12 +132,12 @@ std::unique_ptr<Object> Object::remove()
 			auto ptr = std::move(*removeIt);
 			this->onRemoveChild(ptr.get());
 			parent->children.erase(removeIt, end);
-			this->parent = nullptr;
-			return ptr;
+			this->parent.reset();
+			return true;
 		}
 	}
 
-	return nullptr;
+	return false;
 }
 
 ScopedConnection Object::addOnAddChild(std::function<void(Object*)> x)

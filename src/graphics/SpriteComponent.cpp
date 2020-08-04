@@ -1,7 +1,6 @@
 #include <azule/graphics/SpriteComponent.h>
 
 #include <azule/core/Engine.h>
-#include <azule/core/Reflection.h>
 #include <azule/graphics/DatabaseTexture.h>
 
 using namespace azule;

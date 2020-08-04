@@ -18,7 +18,7 @@ EntityDatabase* System::getEntityDatabase() const
 
 	if(parent != nullptr)
 	{
-		return parent->getChild<EntityDatabase>();
+		return parent->getChild<EntityDatabase>().get();
 	}
 
 	return nullptr;

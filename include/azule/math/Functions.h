@@ -1,6 +1,6 @@
 #pragma once
 
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <algorithm>
 #include <azule/export.hxx>
 

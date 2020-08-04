@@ -1,7 +1,7 @@
 #include <azule/math/Functions.h>
 
 #include <azule/math/Convert.h>
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <cmath>
 
 double azule::VectorAngle(const glm::vec2& x)

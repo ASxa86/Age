@@ -5,13 +5,13 @@
 
 using namespace azule;
 
-bool EntityDatabase::addEntity(std::unique_ptr<Entity> x)
+bool EntityDatabase::addEntity(std::shared_ptr<Entity> x)
 {
 	if(x != nullptr)
 	{
 		auto evt = std::make_unique<EntityEvent>(x.get(), EntityEvent::Type::EntityAdded);
 		azule::EventQueue::Instance().sendEvent(std::move(evt));
-		return this->addChild(std::move(x));
+		return this->addChild(x);
 	}
 
 	return false;

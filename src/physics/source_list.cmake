@@ -152,7 +152,6 @@ set(PHYSICS_SRC_LIST
 	physics/KinematicComponent.cpp
 	physics/PhysicsSystem.cpp
 	physics/PhysicsRenderSystem.cpp
-	physics/Reflection.cpp
 	${BOX2D_SRC}
 )
 

@@ -4,7 +4,6 @@ set(NAVIGATION_H_LIST
 )
 
 set(NAVIGATION_SRC_LIST
-	navigation/Reflection.cpp
 	navigation/WaypointComponent.cpp
 	navigation/WaypointSystem.cpp
 )

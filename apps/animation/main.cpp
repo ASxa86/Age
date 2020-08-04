@@ -19,13 +19,16 @@ using namespace azule;
 int main()
 {
 	Engine engine;
-	engine.addChild(std::make_unique<PlayerInputSystem>());
-	engine.addChild(std::make_unique<AnimationSystem>());
-	auto window = engine.addChild<Window>();
+	engine.addChild(std::make_shared<PlayerInputSystem>());
+	engine.addChild(std::make_shared<AnimationSystem>());
+	auto window = std::make_shared<Window>();
 	window->addChild(std::make_unique<RenderSystem>());
 
-	auto manager = engine.addChild<EntityDatabase>();
-	auto entity = manager->addEntity();
+	auto manager = std::make_shared<EntityDatabase>();
+	engine.addChild(manager);
+	engine.addChild(window);
+	auto entity = std::make_shared<Entity>();
+	manager->addEntity(entity);
 
 	EngineState state;
 	state.setState(EngineState::State::StartUp);

@@ -1,6 +1,5 @@
 #include <azule/core/Parser.h>
-
-#include <azule/core/Reflection.h>
+#include <azule/core/ObjectFactory.h>
 #include <azule/utilities/PimplImpl.h>
 
 using namespace azule;
@@ -30,7 +29,7 @@ bool Parser::writeFile(const Object& obj, const std::filesystem::path& x)
 
 bool azule::ReadFile(const std::filesystem::path& x, Object* obj)
 {
-	const auto parser = Reflection::Instance().create<Parser>(x.extension().string());
+	const auto parser = ObjectFactory::Instance().create<Parser>(x.extension().string());
 
 	if(parser != nullptr)
 	{
@@ -42,7 +41,7 @@ bool azule::ReadFile(const std::filesystem::path& x, Object* obj)
 
 bool azule::WriteFile(const Object& obj, const std::filesystem::path& x)
 {
-	const auto parser = Reflection::Instance().create<Parser>(x.extension().string());
+	const auto parser = ObjectFactory::Instance().create<Parser>(x.extension().string());
 
 	if (parser != nullptr)
 	{

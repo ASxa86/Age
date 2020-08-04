@@ -5,7 +5,6 @@ set(CORE_SRC_LIST
 	core/Engine.test.cpp
 	core/Object.test.cpp
 	core/Observer.test.cpp
-	core/Reflection.test.cpp
 	core/Timer.test.cpp
 )
 

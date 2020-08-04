@@ -4,7 +4,7 @@
 #include <GUIComponent.h>
 #include <azule/core/Engine.h>
 #include <azule/core/EventQueue.h>
-#include <azule/core/Reflection.h>
+#include <azule/core/ObjectFactory.h>
 #include <azule/entity/Component.h>
 #include <azule/entity/Entity.h>
 #include <azule/entity/EntityDatabase.h>
@@ -13,9 +13,6 @@
 #include <azule/utilities/Signal.h>
 #include <QtCore/QSize>
 
-using namespace azule;
-using namespace azule;
-using namespace azule;
 using namespace azule;
 
 Q_DECLARE_METATYPE(azule::Entity*)
@@ -28,7 +25,8 @@ struct TreeWidgetEntity::Impl
 
 TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 {
-	Reflection::Instance().add<azule::GUIComponent>("GUIComponent");
+	ObjectFactoryRegister(azule::GUIComponent);
+
 	qRegisterMetaType<azule::Entity*>();
 	qRegisterMetaType<azule::Component*>();
 
@@ -90,7 +88,7 @@ TreeWidgetEntity::TreeWidgetEntity(QWidget* parent) : QTreeWidget(parent)
 
 		for(const auto& entity : entities)
 		{
-			this->addEntity(entity);
+			this->addEntity(entity.get());
 		}
 	}
 }
@@ -114,7 +112,7 @@ void TreeWidgetEntity::addEntity(azule::Entity* x)
 
 	for(const auto& component : components)
 	{
-		this->addComponent(item, component);
+		this->addComponent(item, component.get());
 	}
 }
 
@@ -136,8 +134,7 @@ void TreeWidgetEntity::addComponent(azule::Entity* e, azule::Component* c)
 void TreeWidgetEntity::addComponent(QTreeWidgetItem* item, azule::Component* c)
 {
 	const auto componentItem = new QTreeWidgetItem(item, ItemType::Component);
-	auto type = Reflection::Instance().get(typeid(*c));
-	componentItem->setText(0, QString::fromStdString(type->Name));
+	componentItem->setText(0, QString::fromStdString(c->getID()));
 	componentItem->setData(0, Qt::UserRole, QVariant::fromValue(c));
 	item->setExpanded(true);
 }
@@ -172,9 +169,7 @@ QTreeWidgetItem* TreeWidgetEntity::findItem(azule::Entity* e, azule::Component* 
 		{
 			auto child = item->child(i);
 
-			auto type = Reflection::Instance().get(typeid(*c));
-
-			if(child->text(0) == QString::fromStdString(type->Name))
+			if(child->text(0) == QString::fromStdString(c->getID()))
 			{
 				return child;
 			}

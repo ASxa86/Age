@@ -7,6 +7,7 @@ include(graphics/source_list.cmake)
 include(math/source_list.cmake)
 include(navigation/source_list.cmake)
 include(physics/source_list.cmake)
+include(reflection/source_list.cmake)
 include(terrain/source_list.cmake)
 include(utilities/source_list.cmake)
 
@@ -31,6 +32,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${PHYSICS_SRC_LIST}
 	${TERRAIN_H_LIST}
 	${TERRAIN_SRC_LIST}
+	${REFLECTION_H_LIST}
+	${REFLECTION_SRC_LIST}
 	${UTILITIES_H_LIST}
 	${UTILITIES_SRC_LIST}
 )

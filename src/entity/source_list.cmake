@@ -23,7 +23,6 @@ set(ENTITY_SRC_LIST
 	entity/Entity.cpp
 	entity/EntityDatabase.cpp
 	entity/EntityEvent.cpp
-	entity/Reflection.cpp
 	entity/SelectionComponent.cpp
 	entity/System.cpp
 	entity/TransformComponent.cpp

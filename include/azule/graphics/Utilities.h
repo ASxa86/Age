@@ -1,7 +1,7 @@
 #pragma once
 
 #include <azule/export.hxx>
-#include <azule/math/Vector.h>
+#include <azule/math/GLM.h>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 

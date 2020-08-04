@@ -1,17 +1,16 @@
 #include <ListWidgetComponents.h>
-#include <azule/core/Reflection.h>
 #include <azule/entity/Component.h>
 
 using namespace azule;
 
 ListWidgetComponents::ListWidgetComponents(QWidget* parent) : QListWidget(parent)
 {
-	const auto types = azule::Reflection::Instance().getTypes(typeid(azule::Component));
+	//const auto types = azule::Reflection::Instance().getTypes(typeid(azule::Component));
 
-	for(auto type : types)
-	{
-		this->addItem(QString::fromStdString(type->Name));
-	}
+	//for(auto type : types)
+	//{
+	//	this->addItem(QString::fromStdString(type->Name));
+	//}
 }
 
 ListWidgetComponents::~ListWidgetComponents()

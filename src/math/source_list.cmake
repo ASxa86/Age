@@ -2,12 +2,12 @@ set(MATH_H_LIST
 	${PROJECT_INCLUDE_DIR}/azule/math/Constants.h
 	${PROJECT_INCLUDE_DIR}/azule/math/Convert.h
 	${PROJECT_INCLUDE_DIR}/azule/math/Functions.h
-	${PROJECT_INCLUDE_DIR}/azule/math/Vector.h
+	${PROJECT_INCLUDE_DIR}/azule/math/GLM.h
 )
 
 set(MATH_SRC_LIST
 	math/Functions.cpp
-	math/Vector.cpp
+	math/GLM.cpp
 )
 
 if(MSVC)
