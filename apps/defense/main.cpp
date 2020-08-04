@@ -3,6 +3,7 @@
 #include <azule/core/EngineState.h>
 #include <azule/core/Parser.h>
 #include <azule/reflection/Properties.h>
+#include <azule/core/PluginLoader.h>
 #include <azule/entity/EntityDatabase.h>
 #include <iostream>
 
@@ -10,7 +11,8 @@ using namespace azule;
 
 int main()
 {
-	const auto engine = std::make_unique<Engine>();
+	PluginLoader plugins;
+	const auto engine = std::make_shared<Engine>();
 
 	if(ReadFile(Configuration::Instance().getPathData() / "inputs/defense.xml", engine.get()) == false)
 	{

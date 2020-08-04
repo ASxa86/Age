@@ -20,13 +20,16 @@ void TileMapSystem::render(sf::RenderTarget& target, std::chrono::microseconds)
 {
 	const auto manager = this->getEntityDatabase();
 
-	for(auto entity : manager->getChildren<Entity>())
+	if(manager != nullptr)
 	{
-		auto tileMap = entity->getChild<TileMapComponent>();
-
-		if(tileMap != nullptr)
+		for(auto entity : manager->getChildren<Entity>())
 		{
-			target.draw(*tileMap);
+			auto tileMap = entity->getChild<TileMapComponent>();
+
+			if(tileMap != nullptr)
+			{
+				target.draw(*tileMap);
+			}
 		}
 	}
 }
