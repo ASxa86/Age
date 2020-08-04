@@ -36,6 +36,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${REFLECTION_SRC_LIST}
 	${UTILITIES_H_LIST}
 	${UTILITIES_SRC_LIST}
+	FactoryRegister.cpp
 )
 
 find_package(SFML 2 CONFIG COMPONENTS audio system graphics window)

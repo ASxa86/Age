@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <azule>
-	<object type="DatabaseTexture">
+	<object type="azule::DatabaseTexture">
 		<property name="ID"></property>
 	</object>
-	<object type="EntityDatabase">
+	<object type="azule::EntityDatabase">
 		<property name="ID"></property>
-		<object type="Entity">
+		<object type="azule::Entity">
 			<property name="ID"></property>
-			<object type="TransformComponent">
+			<object type="azule::TransformComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="Position">{"x":32.0,"y":224.0}</property>
 				<property name="Rotation">0.0</property>
 			</object>
-			<object type="BoxSelectionComponent">
+			<object type="azule::BoxSelectionComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="UseRotation">false</property>
@@ -26,15 +26,15 @@
 				<property name="Selected">true</property>
 			</object>
 		</object>
-		<object type="Entity">
+		<object type="azule::Entity">
 			<property name="ID"></property>
-			<object type="TransformComponent">
+			<object type="azule::TransformComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="Position">{"x":160.0,"y":224.0}</property>
 				<property name="Rotation">0.0</property>
 			</object>
-			<object type="CircleCollisionComponent">
+			<object type="azule::CircleCollisionComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="Restitution">0.0</property>
@@ -43,7 +43,7 @@
 				<property name="IsSensor">true</property>
 				<property name="Radius">100.0</property>
 			</object>
-			<object type="SpriteComponent">
+			<object type="azule::SpriteComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="UseRotation">true</property>
@@ -56,15 +56,15 @@
 				<property name="File">$AZULE_MAPS/towerDefense_tilesheet.png</property>
 			</object>
 		</object>
-		<object type="Entity">
+		<object type="azule::Entity">
 			<property name="ID"></property>
-			<object type="TransformComponent">
+			<object type="azule::TransformComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="Position">{"x":200.0,"y":270.0}</property>
 				<property name="Rotation">0.0</property>
 			</object>
-			<object type="SpriteComponent">
+			<object type="azule::SpriteComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="UseRotation">true</property>
@@ -78,24 +78,24 @@
 			</object>
 		</object>
 	</object>
-	<object type="WaypointSystem" />
-	<object type="PhysicsSystem">
+	<object type="azule::WaypointSystem" />
+	<object type="azule::PhysicsSystem">
 		<property name="ID"></property>
 	</object>
-	<object type="CloneSystem">
+	<object type="azule::CloneSystem">
 		<property name="ID"></property>
 		<property name="Rate">500000</property>
 		<property name="Limit">400</property>
 		<property name="Count">4</property>
-		<object type="Entity">
+		<object type="azule::Entity">
 			<property name="ID"></property>
-			<object type="TransformComponent">
+			<object type="azule::TransformComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="Position">{"x":0.0,"y":325.0}</property>
 				<property name="Rotation">0.0</property>
 			</object>
-			<object type="ProgressBarComponent">
+			<object type="azule::ProgressBarComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="UseRotation">false</property>
@@ -107,14 +107,14 @@
 				<property name="Color">[0,255,0,255]</property>
 				<property name="Position">{"x":-15.0,"y":-30.0}</property>
 			</object>
-			<object type="KinematicComponent">
+			<object type="azule::KinematicComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="BodyType">Kinematic</property>
 				<property name="LinearVelocity">{"x":50.0,"y":0.0}</property>
 				<property name="CalculateHeading">true</property>
 			</object>
-			<object type="SpriteComponent">
+			<object type="azule::SpriteComponent">
 				<property name="ID">Cloned</property>
 				<property name="Enabled">true</property>
 				<property name="UseRotation">true</property>
@@ -126,50 +126,50 @@
 				<property name="Rotation">-90.0</property>
 				<property name="File">$AZULE_MAPS/towerDefense_tilesheet.png</property>
 			</object>
-			<object type="WaypointComponent">
+			<object type="azule::WaypointComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
 				<property name="CurrentWaypoint">0</property>
 				<property name="Loop">false</property>
-				<object type="Waypoint">
+				<object type="azule::Waypoint">
 					<property name="Position">{"x":325.0,"y":325.0}</property>
 					<property name="Active">false</property>
 				</object>
-				<object type="Waypoint">
+				<object type="azule::Waypoint">
 					<property name="Position">{"x":325.0,"y":125.0}</property>
 					<property name="Active">false</property>
 				</object>
-				<object type="Waypoint">
+				<object type="azule::Waypoint">
 					<property name="Position">{"x":505.0,"y":125.0}</property>
 					<property name="Active">false</property>
 				</object>
-				<object type="Waypoint">
+				<object type="azule::Waypoint">
 					<property name="Position">{"x":505.0,"y":575.0}</property>
 					<property name="Active">false</property>
 				</object>
-				<object type="Waypoint">
+				<object type="azule::Waypoint">
 					<property name="Position">{"x":775.0,"y":575.0}</property>
 					<property name="Active">false</property>
 				</object>
-				<object type="Waypoint">
+				<object type="azule::Waypoint">
 					<property name="Position">{"x":775.0,"y":325.0}</property>
 					<property name="Active">false</property>
 				</object>
-				<object type="Waypoint">
+				<object type="azule::Waypoint">
 					<property name="Position">{"x":850.0,"y":325.0}</property>
 					<property name="Active">false</property>
 				</object>
 			</object>
 		</object>
 	</object>
-	<object type="Window">
-		<object type="TileMapSystem">
+	<object type="azule::Window">
+		<object type="azule::TileMapSystem">
 			<property name="ID"></property>
 		</object>
-		<object type="RenderSystem">
+		<object type="azule::RenderSystem">
 			<property name="ID"></property>
 		</object>
-		<object type="PhysicsRenderSystem">
+		<object type="azule::PhysicsRenderSystem">
 			<property name="ID"></property>
 		</object>
 	</object>
