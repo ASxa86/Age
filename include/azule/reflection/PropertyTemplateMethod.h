@@ -1,7 +1,7 @@
 #pragma once
 
-#include <azule/utilities/String.h>
 #include <azule/reflection/Property.h>
+#include <azule/utilities/String.h>
 #include <functional>
 
 namespace azule
@@ -15,42 +15,45 @@ namespace azule
 	///
 	///	\date February 17, 2020
 	///
-	template <typename Arg, typename Return>
+	template <typename T>
 	class PropertyTemplateMethod : public Property
 	{
 	public:
-		PropertyTemplateMethod(std::string_view n, std::function<void(Arg)> w, std::function<Return()> r)
-			: Property{n}, writer{std::move(w)}, reader{std::move(r)}
+		using Writer = std::function<void(T)>;
+		using Reader = std::function<T()>;
+		// using Type = typename azule::function_t<&Writer::operator()>::arg_type;
+
+		PropertyTemplateMethod(std::string_view n, Writer w, Reader r) : Property{n}, writer{std::move(w)}, reader{std::move(r)}
 		{
 		}
 
 		void setValue(std::any value) override
 		{
-			this->writer(std::any_cast<Arg>(value));
+			this->writer(std::any_cast<T>(value));
 		}
 
-		std::any getValue(std::any x) const override
+		std::any getValue() const override
 		{
 			return this->reader();
 		}
 
-		virtual void setValueString(std::string_view x) override
+		void setValueString(std::string_view x) override
 		{
-			this->writer(azule::StringTo<Arg>(x));
+			this->writer(azule::StringTo<T>(x));
 		}
 
-		virtual std::string getValueString() const override
+		std::string getValueString() const override
 		{
 			return azule::ToString(this->reader());
 		}
 
-		virtual const std::type_info& getTypeInfo() const noexcept override
+		const std::type_info& getTypeInfo() const noexcept override
 		{
-			return typeid(Arg);
+			return typeid(T);
 		}
 
 	private:
-		std::function<void(Arg)> writer;
-		std::function<Return()> reader;
+		Writer writer;
+		Reader reader;
 	};
 }

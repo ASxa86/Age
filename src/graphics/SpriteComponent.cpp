@@ -7,6 +7,20 @@ using namespace azule;
 
 SpriteComponent::SpriteComponent() : frame{0}, vFrames{1}, hFrames{1}
 {
+	this->addProperty("UseRotation", this->UseRotation);
+	this->addProperty("UsePosition", this->UsePosition);
+	this->addProperty("Rotation", this->Rotation);
+	this->addProperty("Enabled", this->Enabled);
+	this->addProperty("RenderOrder", this->RenderOrder);
+	this->addProperty<std::filesystem::path>(
+		"File", [this](const auto& x) { this->loadFile(x); }, [this] { return this->getFile(); });
+	this->addProperty<unsigned int>(
+		"Frame", [this](auto x) { this->setFrame(x); }, [this] { return this->getFrame(); });
+	this->addProperty<unsigned int>(
+		"VFrames", [this](auto x) { this->setVFrames(x); }, [this] { return this->getVFrames(); });
+	this->addProperty<unsigned int>(
+		"HFrames", [this](auto x) { this->setHFrames(x); }, [this] { return this->getHFrames(); });
+
 	this->UseRotation = true;
 	this->UsePosition = true;
 }

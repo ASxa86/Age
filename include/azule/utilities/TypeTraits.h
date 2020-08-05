@@ -41,4 +41,15 @@ namespace azule
 	struct is_duration<std::chrono::duration<Rep, Period>> : std::true_type
 	{
 	};
+
+	// https://stackoverflow.com/questions/22632236/how-is-possible-to-deduce-function-argument-type-in-c
+	template <typename T>
+	struct function_t;
+
+	template <typename R, typename T>
+	struct function_t<R (*)(T)>
+	{
+		using arg_type = T;
+		using ret_type = R;
+	};
 }

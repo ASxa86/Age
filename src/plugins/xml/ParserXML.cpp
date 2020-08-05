@@ -39,12 +39,12 @@ namespace
 		if(x.empty() == false)
 		{
 			const auto type = x.attribute("type").as_string();
-			const auto id = x.attribute("id").as_string();
+			//const auto id = x.attribute("id").as_string();
 			obj = ObjectFactory::Instance().create(type);
 
 			if(obj != nullptr)
 			{
-				obj->setID(id);
+				obj->setID(type);
 
 				for(const auto& property : x.children("property"))
 				{

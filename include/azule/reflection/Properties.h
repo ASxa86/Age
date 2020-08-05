@@ -21,10 +21,10 @@ namespace azule
 			this->properties.push_back(std::make_unique<PropertyTemplateMember<T>>(name, p));
 		}
 
-		template <typename Arg, typename Return>
-		void addProperty(std::string_view name, std::function<void(Arg)> writer, std::function<Return()> reader)
+		template <typename T>
+		void addProperty(std::string_view name, std::function<void(T)> writer, std::function<T()> reader)
 		{
-			this->properties.push_back(std::make_unique<PropertyTemplateMethod<Arg, Return>>(name, std::move(writer), std::move(reader)));
+			this->properties.push_back(std::make_unique<PropertyTemplateMethod<T>>(name, std::move(writer), std::move(reader)));
 		}
 
 		Property* getProperty(std::string_view name) const noexcept;
