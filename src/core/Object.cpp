@@ -7,7 +7,7 @@ using namespace azule;
 
 Object::Object()
 {
-	this->addProperty("id", this->id);
+	this->addProperty("ID", this->id);
 	this->addProperty("status", this->status);
 }
 

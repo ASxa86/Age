@@ -20,8 +20,7 @@ find_package(EnTT)
 set(ENTITYX_LIBRARIES debug ${ENTITYX_LIBRARY_DEBUG} optimized ${ENTITYX_LIBRARY})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-	age-core
-	age-entity
+	azule
 	celero
 	${ENTITYX_LIBRARIES}
 	EnTT::EnTT

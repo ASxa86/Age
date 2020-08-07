@@ -1,7 +1,7 @@
 #include <celero/Celero.h>
 
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
 #include "Object.h"
 
 #ifdef WIN32
@@ -36,10 +36,10 @@ namespace
 
 	struct AgeEntityF : public celero::TestFixture
 	{
-		age::entity::EntityDatabase em;
-		age::entity::Entity* value{em.addEntity()};
-		age::entity::Entity* copy{value};
-		age::entity::Entity& ref{*value};
+		azule::EntityDatabase em;
+		azule::Entity* value{em.addEntity()};
+		azule::Entity* copy{value};
+		azule::Entity& ref{*value};
 	};
 
 	struct EntityXF : public celero::TestFixture

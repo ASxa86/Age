@@ -16,9 +16,6 @@
 			<object type="azule::BoxSelectionComponent">
 				<property name="ID"></property>
 				<property name="Enabled">true</property>
-				<property name="UseRotation">false</property>
-				<property name="UsePosition">false</property>
-				<property name="RenderOrder">1</property>
 				<property name="Size">{"x":48.0,"y":50.0}</property>
 				<property name="FillColor">[255,0,0,150]</property>
 				<property name="OutlineColor">[255,0,0,255]</property>

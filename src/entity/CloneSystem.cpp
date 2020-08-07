@@ -8,6 +8,10 @@ using namespace azule;
 
 CloneSystem::CloneSystem()
 {
+	this->addProperty("Rate", this->Rate);
+	this->addProperty("Limit", this->Limit);
+	this->addProperty("Count", this->Count);
+
 	this->addFixedFunction([this](auto x) { this->frame(x); });
 }
 

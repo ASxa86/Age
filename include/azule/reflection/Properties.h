@@ -27,6 +27,13 @@ namespace azule
 			this->properties.push_back(std::make_unique<PropertyTemplateMethod<T>>(name, std::move(writer), std::move(reader)));
 		}
 
+		template <typename Writer, typename Reader>
+		void addProperty(std::string_view name, Writer writer, Reader reader)
+		{
+			using Type = decltype(reader());
+			this->addProperty<Type>(name, std::move(writer), std::move(reader));
+		}
+
 		Property* getProperty(std::string_view name) const noexcept;
 
 		const std::vector<std::unique_ptr<Property>>& getProperties() const noexcept;

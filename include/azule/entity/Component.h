@@ -8,6 +8,7 @@ namespace azule
 	class AZULE_EXPORT Component : public azule::Object
 	{
 	public:
+		Component();
 		bool Enabled{true};
 
 	private:

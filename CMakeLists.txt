@@ -23,7 +23,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set(PROJECT_ROOT_NAME azule)
-project({PROJECT_ROOT_NAME})
+project(${PROJECT_ROOT_NAME})
 
 option(BUILD_BENCHMARKS "Enable building the benchmark suite. Require Celero." ON)
 option(BUILD_TESTS "Enable building the test suite. Requires GTest." ON)
@@ -32,6 +32,7 @@ option(BUILD_SHARED_LIBS "Enable building ${PROJECT_NAME} as shared libraries." 
 
 set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${PROJECT_INCLUDE_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 if(BUILD_BENCHMARKS)
 	add_subdirectory(benchmarks)

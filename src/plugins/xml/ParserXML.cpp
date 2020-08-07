@@ -15,7 +15,8 @@ namespace
 	{
 		if(x.empty() == false)
 		{
-			auto prop = obj->getProperty(x.attribute("name").as_string());
+			std::string name = x.attribute("name").as_string();
+			auto prop = obj->getProperty(name);
 
 			if(prop != nullptr)
 			{
@@ -38,22 +39,23 @@ namespace
 
 		if(x.empty() == false)
 		{
-			const auto type = x.attribute("type").as_string();
-			//const auto id = x.attribute("id").as_string();
+			const std::string type = x.attribute("type").as_string();
+			// const auto id = x.attribute("id").as_string();
 			obj = ObjectFactory::Instance().create(type);
 
 			if(obj != nullptr)
 			{
 				obj->setID(type);
 
-				for(const auto& property : x.children("property"))
-				{
-					ParsePropertyTag(property, obj.get());
-				}
-
 				for(const auto& child : x.children("object"))
 				{
-					obj->addChild(ParseObjectTag(child));
+					auto childObj = ParseObjectTag(child);
+					obj->addChild(childObj);
+
+					for(const auto& property : x.children("property"))
+					{
+						ParsePropertyTag(property, obj.get());
+					}
 				}
 			}
 			else

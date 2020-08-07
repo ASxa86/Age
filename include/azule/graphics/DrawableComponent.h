@@ -18,6 +18,8 @@ namespace azule
 	class AZULE_EXPORT DrawableComponent : public azule::Component
 	{
 	public:
+		DrawableComponent();
+
 		virtual const sf::Drawable* getDrawable();
 
 		///

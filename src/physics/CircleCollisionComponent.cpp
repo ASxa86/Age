@@ -4,4 +4,5 @@ using namespace azule;
 
 CircleCollisionComponent::CircleCollisionComponent() : CollisionComponent()
 {
+	this->addProperty("Radius", this->Radius);
 }

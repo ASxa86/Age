@@ -4,6 +4,15 @@
 
 using namespace azule;
 
+ProgressBarComponent::ProgressBarComponent()
+{
+	this->addProperty("Color", this->Color);
+	this->addProperty("Position", this->Position);
+	this->addProperty("Size", this->Size);
+	this->addProperty("Value", this->Value);
+	this->addProperty("ValueMax", this->ValueMax);
+}
+
 void ProgressBarComponent::ProgressBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(this->fill, states);

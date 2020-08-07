@@ -16,6 +16,8 @@ namespace azule
 			sf::RectangleShape outline;
 		};
 
+		ProgressBarComponent();
+
 		double getPercentage() const;
 		virtual const sf::Drawable* getDrawable() override;
 

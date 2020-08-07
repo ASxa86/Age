@@ -4,4 +4,5 @@ using namespace azule;
 
 SelectionComponent::SelectionComponent()
 {
+	this->addProperty("Selected", this->Selected);
 }

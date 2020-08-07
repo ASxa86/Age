@@ -1,7 +1,7 @@
 #include <celero/Celero.h>
 
-#include <age/entity/Entity.h>
-#include <age/entity/EntityDatabase.h>
+#include <azule/entity/Entity.h>
+#include <azule/entity/EntityDatabase.h>
 #include "Object.h"
 
 #ifdef WIN32
@@ -73,7 +73,7 @@ namespace
 		virtual void setUp(const celero::TestFixture::ExperimentValue&) override
 		{
 			// Clear the previous entities
-			this->em = std::make_unique<age::entity::EntityDatabase>();
+			this->em = std::make_unique<azule::EntityDatabase>();
 
 			for(auto i = 0; i < IterationCount; ++i)
 			{
@@ -81,7 +81,7 @@ namespace
 			}
 		}
 
-		std::unique_ptr<age::entity::EntityDatabase> em;
+		std::unique_ptr<azule::EntityDatabase> em;
 	};
 
 	struct EntityXF : public celero::TestFixture
