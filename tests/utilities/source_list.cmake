@@ -4,6 +4,7 @@ set(UTILITIES_H_LIST
 set(UTILITIES_SRC_LIST
 	utilities/SharedLibrary.test.cpp
 	utilities/String.test.cpp
+	utilities/TypeName.test.cpp
 )
 
 if(MSVC)

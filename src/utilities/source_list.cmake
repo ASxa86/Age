@@ -6,11 +6,13 @@ set(UTILITIES_H_LIST
 	${PROJECT_INCLUDE_DIR}/azule/utilities/Signal.h
 	${PROJECT_INCLUDE_DIR}/azule/utilities/StaticInvoke.h
 	${PROJECT_INCLUDE_DIR}/azule/utilities/String.h
+	${PROJECT_INCLUDE_DIR}/azule/utilities/TypeName.h
 )
 
 set(UTILITIES_SRC_LIST
 	utilities/SharedLibrary.cpp
 	utilities/String.cpp
+	utilities/TypeName.cpp
 )
 
 if(MSVC)

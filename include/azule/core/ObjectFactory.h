@@ -1,6 +1,7 @@
 #pragma once
 
 #include <azule/core/Object.h>
+#include <azule/utilities/TypeName.h>
 #include <map>
 #include <typeindex>
 
@@ -48,11 +49,11 @@ namespace azule
 		static ObjectFactory& Instance();
 
 		template <typename T>
-		void registerType(std::string_view x, std::string_view alias = {})
+		void registerType(std::string_view alias = {})
 		{
 			static_assert(std::is_base_of<Object, T>::value == true, "T must derive from cormyr::Object.");
 
-			auto type = std::make_unique<impl::Type>(typeid(T), x);
+			auto type = std::make_unique<impl::Type>(typeid(T), TypeName<T>());
 			type->creator = std::make_unique<impl::Creator<T>>();
 			type->alias = alias;
 			this->types.push_back(std::move(type));
@@ -72,6 +73,3 @@ namespace azule
 		std::vector<std::unique_ptr<impl::Type>> types;
 	};
 }
-
-#define ObjectFactoryRegister(T) azule::ObjectFactory::Instance().registerType<T>(#T)
-#define ObjectFactoryRegisterAlias(T, Alias) azule::ObjectFactory::Instance().registerType<T>(#T, Alias)
