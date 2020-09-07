@@ -15,13 +15,10 @@ namespace azule
 	///
 	///	\date February 17, 2020
 	///
-	//template <typename Writer, typename Reader>
 	template <typename T>
 	class PropertyTemplateMethod : public Property
 	{
 	public:
-		// using Type = typename azule::function_t<&Writer::operator()>::arg_type;
-		//using T = typename azule::functor_t<Writer>::arg_type;
 		using Writer = std::function<void(T)>;
 		using Reader = std::function<T()>;
 
