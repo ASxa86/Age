@@ -109,7 +109,7 @@ EngineState Engine::getEngineState() const
 	return this->pimpl->engineState;
 }
 
-void Engine::setFixedDelta(std::chrono::microseconds x)
+void Engine::setFixedFrameDelta(std::chrono::microseconds x)
 {
 	this->pimpl->fixedDelta = x;
 }

@@ -38,6 +38,9 @@ namespace azule
 
 		const std::vector<std::unique_ptr<Property>>& getProperties() const noexcept;
 
+		void serialize(boost::archive::polymorphic_iarchive& ar, unsigned int version);
+		void serialize(boost::archive::polymorphic_oarchive& ar, unsigned int version) const;
+
 	private:
 		std::vector<std::unique_ptr<Property>> properties;
 	};

@@ -39,13 +39,14 @@ target_sources(${PROJECT_NAME} PRIVATE
 	FactoryRegister.cpp
 )
 
-find_package(Boost COMPONENTS filesystem)
+find_package(Boost COMPONENTS filesystem serialization)
 find_package(SFML 2 CONFIG COMPONENTS audio system graphics window)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
 	Boost::filesystem
+	Boost::serialization
 	sfml-audio
 	sfml-system
 	sfml-graphics

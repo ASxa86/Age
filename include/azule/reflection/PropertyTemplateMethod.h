@@ -51,6 +51,18 @@ namespace azule
 			return typeid(T);
 		}
 
+		void serialize(boost::archive::polymorphic_iarchive& ar, unsigned int version) override
+		{
+			T t{};
+			ar& boost::make_nvp(this->getName().data(), t);
+			this->writer(t);
+		}
+
+		void serialize(boost::archive::polymorphic_oarchive& ar, unsigned int version) const override
+		{
+			ar& boost::make_nvp(this->getName().data(), this->reader());
+		}
+
 	private:
 		Writer writer;
 		Reader reader;

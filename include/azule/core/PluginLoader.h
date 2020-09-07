@@ -2,21 +2,23 @@
 
 #include <azule/export.hxx>
 #include <boost/dll/shared_library.hpp>
+#include <azule/core/ObjectFactory.h>
 
 namespace azule
 {
 	class AZULE_EXPORT PluginLoader
 	{
 	public:
-		PluginLoader();
+		PluginLoader(ObjectFactory& x);
 		~PluginLoader();
 
-		PluginLoader(const PluginLoader& x);
-		PluginLoader(PluginLoader&& x) noexcept;
-		PluginLoader& operator=(const PluginLoader& x);
-		PluginLoader& operator=(PluginLoader&& x) noexcept;
+		PluginLoader(const PluginLoader& x) = delete;
+		PluginLoader(PluginLoader&& x) noexcept = delete;
+		PluginLoader& operator=(const PluginLoader& x) = delete;
+		PluginLoader& operator=(PluginLoader&& x) noexcept = delete;
 
 	private:
 		std::vector<boost::dll::shared_library> libraries;
+		ObjectFactory& factory;
 	};
 }

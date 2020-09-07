@@ -1,10 +1,13 @@
 #pragma once
 
-#include <azule/export.hxx>
-#include <nlohmann/json.hpp>
 #include <any>
+#include <azule/export.hxx>
 #include <string>
 #include <typeinfo>
+
+#include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
+#include <boost/serialization/string.hpp>
 
 namespace azule
 {
@@ -79,6 +82,9 @@ namespace azule
 		{
 			return this->getTypeInfo() == typeid(T);
 		}
+
+		virtual void serialize(boost::archive::polymorphic_iarchive& ar, unsigned int version) = 0;
+		virtual void serialize(boost::archive::polymorphic_oarchive& ar, unsigned int version) const = 0;
 
 	private:
 		std::string name;

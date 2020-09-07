@@ -2,6 +2,8 @@
 
 #include <azule/core/Event.h>
 #include <azule/core/Object.h>
+#include <azule/core/ObjectFactory.h>
+#include <azule/core/PluginLoader.h>
 #include <azule/utilities/Pimpl.h>
 #include <chrono>
 
@@ -48,9 +50,9 @@ namespace azule
 		///
 		///	Set the fixed rate at which to run fixed frames. Default 100Hz.
 		///
-		///	This does not effect graphical frame rate.
+		///	This does not effect graphical or variable frame rates.
 		///
-		void setFixedDelta(std::chrono::microseconds x);
+		void setFixedFrameDelta(std::chrono::microseconds x);
 
 		///
 		///	Set the maximum number of fixed frames that can be processed within a single engine frame.
@@ -63,6 +65,9 @@ namespace azule
 		void setFixedFrameLimit(uint8_t x);
 
 	private:
+		ObjectFactory factory;
+		PluginLoader loader{factory};
+
 		class Impl;
 		Pimpl<Impl> pimpl;
 	};

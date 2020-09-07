@@ -1,6 +1,9 @@
 #include <azule/core/ChildEvent.h>
 #include <azule/core/Object.h>
 #include <gtest/gtest.h>
+#include <azule/utilities/TypeName.h>
+
+#include <boost/archive/polymorphic_xml_oarchive.hpp>
 
 using namespace azule;
 
@@ -20,6 +23,9 @@ public:
 		//	EXPECT_TRUE(x->getChild() != nullptr);
 		//	ChildRemoved++;
 		//});
+
+		this->addProperty("ChildAdded", this->ChildAdded);
+		this->addProperty("ChildRemoved", this->ChildRemoved);
 	}
 
 	int ChildAdded;
@@ -40,6 +46,18 @@ TEST(Object, Constructor)
 	EXPECT_NO_THROW(Object());
 	EXPECT_NO_THROW(auto m = std::make_shared<Object>());
 	EXPECT_TRUE(std::make_shared<Object>() != nullptr);
+
+	std::stringstream ss;
+
+	{
+		boost::archive::polymorphic_xml_oarchive oa(ss);
+
+		ObjectOne one;
+		one.setID("Aaron");
+		oa& boost::make_nvp(TypeName(typeid(one)).c_str(), one);
+	}
+
+	std::cout << ss.str() << "\n";
 }
 
 TEST(Object, setID)

@@ -41,12 +41,11 @@ namespace azule
 	class AZULE_EXPORT ObjectFactory
 	{
 	public:
+		ObjectFactory() = default;
 		ObjectFactory(const ObjectFactory&) = delete;
 		ObjectFactory(ObjectFactory&& x) noexcept = delete;
 		ObjectFactory& operator=(const ObjectFactory&) = delete;
 		ObjectFactory& operator=(ObjectFactory&&) noexcept = delete;
-
-		static ObjectFactory& Instance();
 
 		template <typename T>
 		void registerType(std::string_view alias = {})
@@ -69,7 +68,6 @@ namespace azule
 		}
 
 	private:
-		ObjectFactory() = default;
 		std::vector<std::unique_ptr<impl::Type>> types;
 	};
 }

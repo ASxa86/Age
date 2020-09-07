@@ -47,6 +47,16 @@ namespace azule
 			return typeid(T);
 		}
 
+		void serialize(boost::archive::polymorphic_iarchive& ar, unsigned int version) override
+		{
+			ar& boost::make_nvp(this->getName().data(), this->property);
+		}
+
+		void serialize(boost::archive::polymorphic_oarchive& ar, unsigned int version) const override
+		{
+			ar& boost::make_nvp(this->getName().data(), this->property);
+		}
+
 	private:
 		T& property;
 	};

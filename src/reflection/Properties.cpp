@@ -19,3 +19,19 @@ const std::vector<std::unique_ptr<Property>>& Properties::getProperties() const 
 {
 	return this->properties;
 }
+
+void Properties::serialize(boost::archive::polymorphic_iarchive& ar, unsigned int version)
+{
+	for(auto& property : this->properties)
+	{
+		ar&* property;
+	}
+}
+
+void Properties::serialize(boost::archive::polymorphic_oarchive& ar, unsigned int version) const
+{
+	for(auto& property : this->properties)
+	{
+		ar&* property;
+	}
+}
