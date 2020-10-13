@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.7)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+enable_language(CXX)
 
 include(cmake/GenerateExportHeader.cmake)
 include(CMakePackageConfigHelpers)
@@ -35,11 +36,11 @@ include_directories(${PROJECT_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 if(BUILD_BENCHMARKS)
-	add_subdirectory(benchmarks)
+	# add_subdirectory(benchmarks)
 endif()
 
 if(BUILD_TESTS)
-	add_subdirectory(tests)
+	# add_subdirectory(tests)
 endif()
 
 add_subdirectory(apps)

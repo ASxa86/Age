@@ -1,0 +1,12 @@
+{
+  "name": "azule",
+  "version-string": "1",
+  "port-version": 1,
+  "homepage": "https://github.com/asxa86/azule",
+  "description": "Simple. Modern. Fast. Game. Engine.",
+  "dependencies": [
+    "boost",
+    "sfml",
+    "box2d"
+  ]
+}
